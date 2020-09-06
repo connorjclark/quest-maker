@@ -19,7 +19,7 @@ class Screen {
     for (let x = 0; x < screenWidth; x++) {
       this.tiles[x] = [];
       for (let y = 0; y < screenHeight; y++) {
-        let tile = 2;
+        let tile = 0;
         if (Math.random() > 0.8 && x * y != 0 && x !== screenWidth - 1 && y !== screenHeight - 1) tile = 1;
         this.tiles[x][y] = { tile };
       }
@@ -53,6 +53,11 @@ function createQuest(): QuestMaker.Quest {
     const y = Math.floor(i / 6) * (tileSize + 1) + 11;
     tiles.push({ spritesheet: 'link', x, y, walkable: true });
   }
+
+  // Make ground tile first.
+  let temp = tiles[0];
+  tiles[0] = tiles[2];
+  tiles[2] = temp;
 
   const screens: Screen[][] = [];
   for (let x = 0; x < 5; x++) {

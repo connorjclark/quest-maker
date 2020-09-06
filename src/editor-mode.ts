@@ -174,11 +174,20 @@ export class EditorMode extends QuestMakerMode {
             screen = inBounds(sx, sy, state.quest.screens.length, state.quest.screens[0].length) ? state.quest.screens[sx][sy] : null;
           }
 
-          const tile = screen ? screen.tiles[x0][y0].tile : 0;
-          const sprite = this.app.createTileSprite(tile);
+          let sprite;
+          if (screen) {
+            const tile = screen ? screen.tiles[x0][y0].tile : 0;
+            sprite = this.app.createTileSprite(tile);
+            if (state.currentScreen !== screen) sprite.tint = 0xaaaaaa;
+          } else {
+            sprite = new PIXI.Graphics();
+            sprite.beginFill(0);
+            sprite.drawRect(0, 0, tileSize, tileSize);
+            sprite.endFill();
+          }
+
           sprite.x = (x + 1) * tileSize;
           sprite.y = (y + 1) * tileSize;
-          if (state.currentScreen !== screen) sprite.tint = 0xaaaaaa;
           container.addChild(sprite);
         }
       }
