@@ -1,0 +1,15 @@
+{
+  "name": "quest-maker",
+  "scripts": {
+    "build": "cp -r gfx dist && parcel src/index.html"
+  },
+  "dependencies": {
+    "glob": "^7.1.6",
+    "pixi.js": "^5.3.3",
+    "src": "^1.1.2"
+  },
+  "devDependencies": {
+    "parcel": "^1.12.4",
+    "typescript": "^4.0.2"
+  }
+}
