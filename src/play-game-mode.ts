@@ -8,6 +8,8 @@ interface TextureFrame {
   scale?: { x: number, y: number };
 }
 
+const inBounds = (x: number, y: number, width: number, height: number) => x >= 0 && y >= 0 && x < width && y < height;
+
 // TODO: move to engine/
 class EntitySprite extends PIXI.AnimatedSprite {
   private textureFrames: Record<string, TextureFrame> = {};
@@ -42,19 +44,17 @@ export class PlayGameMode extends QuestMakerMode {
     super.show();
     const state = this.app.state;
 
-    this.container.scale.x = this.container.scale.y = 2;
     this.container.removeChildren();
     this.sprites.clear();
+    this.container.scale.x = this.container.scale.y = 2;
 
-    for (let x = 0; x < screenWidth; x++) {
-      for (let y = 0; y < screenHeight; y++) {
-        const { tile } = state.currentScreen.tiles[x][y];
-        const sprite = this.app.createTileSprite(tile);
-        sprite.x = x * tileSize;
-        sprite.y = y * tileSize;
-        this.container.addChild(sprite);
-      }
-    }
+    const mask = new PIXI.Graphics();
+    mask.beginFill(0);
+    mask.drawRect(0, 0, tileSize * screenWidth * this.container.scale.x, tileSize * screenHeight * this.container.scale.y);
+    mask.endFill();
+    this.container.mask = mask;
+
+    this.container.addChild(this.createScreenContainer(state.screenX, state.screenY));
 
     const heroSprite = new EntitySprite();
     heroSprite.addTextureFrame('down', [
@@ -84,8 +84,44 @@ export class PlayGameMode extends QuestMakerMode {
   }
 
   tick(dt: number) {
+    const state = this.app.state;
+
     const heroSprite = this.sprites.get(this.heroEntity);
     if (!heroSprite) throw new Error('...');
+
+    let transition = state.game.screenTransition;
+    if (transition) {
+      if (transition.frames === 0) {
+        this.container.addChildAt(transition.newScreenContainer, 0);
+        transition.newScreenContainer.x = screenWidth * tileSize * Math.sign(transition.screenDelta.x);
+        transition.newScreenContainer.y = screenHeight * tileSize * Math.sign(transition.screenDelta.y);
+      }
+
+      const duration = 50;
+      this.container.position.x = (transition.frames / duration) * screenWidth * tileSize * this.container.scale.x * Math.sign(-transition.screenDelta.x);
+      this.container.position.y = (transition.frames / duration) * screenHeight * tileSize * this.container.scale.y * Math.sign(-transition.screenDelta.y);
+
+      transition.frames += dt;
+      if (transition.frames >= duration) {
+        state.screenX = transition.screen.x;
+        state.screenY = transition.screen.y;
+        state.currentScreen = state.quest.screens[state.screenX][state.screenY];
+        delete state.game.screenTransition;
+        this.container.position.x = 0;
+        this.container.position.y = 0;
+
+        this.heroEntity.x = heroSprite.x;
+        this.heroEntity.y = heroSprite.y;
+        if (Math.sign(transition.screenDelta.x) === 1) this.heroEntity.x = 0;
+        else if (Math.sign(transition.screenDelta.x) === -1) this.heroEntity.x = tileSize * screenWidth;
+        else if (Math.sign(transition.screenDelta.y) === 1) this.heroEntity.y = 0;
+        else if (Math.sign(transition.screenDelta.y) === -1) this.heroEntity.y = tileSize * screenHeight;
+
+        this.show();
+      }
+
+      return;
+    }
 
     let dx = 0, dy = 0;
     if (this.app.keys.pressed['ArrowLeft']) dx -= 1;
@@ -106,7 +142,7 @@ export class PlayGameMode extends QuestMakerMode {
       heroSprite.x += dx * speed;
       heroSprite.y += dy * speed;
 
-      const sidePoints: Record<string, {x: number, y: number}> = {
+      const sidePoints: Record<string, { x: number, y: number }> = {
         bottomLeft: {
           x: heroSprite.x - heroSprite.anchor.x * heroSprite.width,
           y: heroSprite.y + heroSprite.anchor.y * heroSprite.height - 1,
@@ -125,7 +161,7 @@ export class PlayGameMode extends QuestMakerMode {
         },
       };
 
-      const sideTiles: Record<string, {x: number, y: number}> = {};
+      const sideTiles: Record<string, { x: number, y: number }> = {};
       for (const [name, point] of Object.entries(sidePoints)) {
         sideTiles[name] = {
           x: Math.floor(point.x / tileSize),
@@ -172,7 +208,7 @@ export class PlayGameMode extends QuestMakerMode {
       }
 
       let smallestCorrectionVector = null;
-      const dist = ({ x, y }: {x: number; y: number}) => Math.abs(x) + Math.abs(y);
+      const dist = ({ x, y }: { x: number; y: number }) => Math.abs(x) + Math.abs(y);
       for (const correctionVector of correctionVectors) {
         if (!smallestCorrectionVector || dist(smallestCorrectionVector) > dist(correctionVector)) {
           smallestCorrectionVector = correctionVector;
@@ -233,5 +269,48 @@ export class PlayGameMode extends QuestMakerMode {
     } else {
       heroSprite.stop();
     }
+
+    // Transition screen when hero enters edge.
+    let transitionX = 0;
+    let transitionY = 0;
+
+    if (heroSprite.x > tileSize * screenWidth) {
+      transitionX = 1;
+    } else if (heroSprite.x < 0) {
+      transitionX = -1;
+    } else if (heroSprite.y < 0) {
+      transitionY = -1;
+    } else if (heroSprite.y > tileSize * screenHeight) {
+      transitionY = 1;
+    }
+
+    if (transitionX !== 0 || transitionY !== 0) {
+      if (inBounds(state.screenX + transitionX, state.screenY + transitionY, state.quest.screens.length, state.quest.screens[0].length)) {
+        state.game.screenTransition = {
+          frames: 0,
+          screen: { x: state.screenX + transitionX, y: state.screenY + transitionY },
+          screenDelta: { x: transitionX, y: transitionY },
+          newScreenContainer: this.createScreenContainer(state.screenX + transitionX, state.screenY + transitionY),
+        };
+      }
+    }
+  }
+
+  createScreenContainer(sx: number, sy: number) {
+    const container = new PIXI.Container();
+    const state = this.app.state;
+    const screen = state.quest.screens[sx][sy];
+
+    for (let x = 0; x < screenWidth; x++) {
+      for (let y = 0; y < screenHeight; y++) {
+        const { tile } = screen.tiles[x][y];
+        const sprite = this.app.createTileSprite(tile);
+        sprite.x = x * tileSize;
+        sprite.y = y * tileSize;
+        container.addChild(sprite);
+      }
+    }
+
+    return container;
   }
 }

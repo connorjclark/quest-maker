@@ -45,9 +45,9 @@ export class EditorMode extends QuestMakerMode {
     else if (this.app.keys.down['ArrowDown']) dy += 1;
 
     if (dx !== 0 || dy !== 0) {
-      this.app.state.editor.screenX = clamp(0, this.app.state.editor.screenX + dx, this.app.state.quest.screens.length - 1);
-      this.app.state.editor.screenY = clamp(0, this.app.state.editor.screenY + dy, this.app.state.quest.screens[0].length - 1);
-      this.app.state.currentScreen = this.app.state.quest.screens[this.app.state.editor.screenX][this.app.state.editor.screenY];
+      this.app.state.screenX = clamp(0, this.app.state.screenX + dx, this.app.state.quest.screens.length - 1);
+      this.app.state.screenY = clamp(0, this.app.state.screenY + dy, this.app.state.quest.screens[0].length - 1);
+      this.app.state.currentScreen = this.app.state.quest.screens[this.app.state.screenX][this.app.state.screenY];
       containers.screenArea.render();
       containers.screenPicker.render();
     }
@@ -100,7 +100,7 @@ export class EditorMode extends QuestMakerMode {
           const screen = x < state.quest.screens.length && state.quest.screens[x][y];
           let color = 0;
           if (screen) color = 0x0000ff;
-          if (x === state.editor.screenX && y === state.editor.screenY) color = 0x00ff00;
+          if (x === state.screenX && y === state.screenY) color = 0x00ff00;
           gfx.beginFill(color);
           gfx.drawRect(x * size, y * size, size, size);
           gfx.endFill();
@@ -126,8 +126,8 @@ export class EditorMode extends QuestMakerMode {
         for (let y = -1; y <= screenHeight; y++) {
           let x0 = x;
           let y0 = y;
-          let sx = state.editor.screenX;
-          let sy = state.editor.screenY;
+          let sx = state.screenX;
+          let sy = state.screenY;
 
           if (x0 === -1) {
             sx -= 1;
@@ -146,7 +146,7 @@ export class EditorMode extends QuestMakerMode {
           }
 
           let screen: QuestMaker.Screen | null = state.currentScreen;
-          if (sx !== state.editor.screenX || sy !== state.editor.screenY) {
+          if (sx !== state.screenX || sy !== state.screenY) {
             screen = inBounds(sx, sy, state.quest.screens.length, state.quest.screens[0].length) ? state.quest.screens[sx][sy] : null;
           }
 

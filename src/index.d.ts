@@ -35,9 +35,17 @@ declare global {
       editor: {
         isPlayTesting: boolean;
         currentTile: number;
-        screenX: number;
-        screenY: number;
       };
+      game: {
+        screenTransition?: {
+          frames: number;
+          screen: { x: number, y: number };
+          screenDelta: { x: number, y: number };
+          newScreenContainer: PIXI.Container;
+        };
+      };
+      screenX: number;
+      screenY: number;
     }
 
     // Are these used?

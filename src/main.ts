@@ -76,10 +76,11 @@ const state = {
   quest,
   editor: {
     isPlayTesting: false,
-    screenX: 0,
-    screenY: 0,
     currentTile: 0,
   },
+  game: {},
+  screenX: 0,
+  screenY: 0,
   currentScreen: quest.screens[0][0],
 };
 
