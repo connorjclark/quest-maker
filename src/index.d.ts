@@ -22,7 +22,7 @@ declare global {
     }
 
     interface Quest {
-      screens: Screen[];
+      screens: Screen[][];
       tiles: Tile[];
       misc: {
         HERO_TILE_START: number;
@@ -33,8 +33,10 @@ declare global {
       quest: Quest;
       currentScreen: Screen;
       editor: {
-        currentTile: number;
         isPlayTesting: boolean;
+        currentTile: number;
+        screenX: number;
+        screenY: number;
       };
     }
 

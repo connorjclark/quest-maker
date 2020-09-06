@@ -3,11 +3,11 @@ import { EditorMode } from './editor-mode';
 import { PlayGameMode } from './play-game-mode';
 import { QuestMakerApp } from './quest-maker-app';
 
-const {screenWidth, screenHeight, tileSize} = constants;
+const { screenWidth, screenHeight, tileSize } = constants;
 
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
-const pixi = new PIXI.Application({width: 1000});
+const pixi = new PIXI.Application();
 pixi.renderer.backgroundColor = 0xaaaaaa;
 document.body.appendChild(pixi.view);
 
@@ -19,7 +19,9 @@ class Screen {
     for (let x = 0; x < screenWidth; x++) {
       this.tiles[x] = [];
       for (let y = 0; y < screenHeight; y++) {
-        this.tiles[x][y] = { tile: Math.random() > 0.8 ? 1 : 2 };
+        let tile = 2;
+        if (Math.random() > 0.8 && x * y != 0 && x !== screenWidth - 1 && y !== screenHeight - 1) tile = 1;
+        this.tiles[x][y] = { tile };
       }
     }
   }
@@ -52,9 +54,17 @@ function createQuest(): QuestMaker.Quest {
     tiles.push({ spritesheet: 'link', x, y, walkable: true });
   }
 
+  const screens: Screen[][] = [];
+  for (let x = 0; x < 5; x++) {
+    screens[x] = [];
+    for (let y = 0; y < 5; y++) {
+      screens[x].push(new Screen());
+    }
+  }
+
   return {
     tiles,
-    screens: [new Screen()],
+    screens,
     misc: {
       HERO_TILE_START,
     }
@@ -65,17 +75,18 @@ const quest = createQuest();
 const state = {
   quest,
   editor: {
-    currentTile: 0,
     isPlayTesting: false,
+    screenX: 0,
+    screenY: 0,
+    currentTile: 0,
   },
-  currentScreen: quest.screens[0],
+  currentScreen: quest.screens[0][0],
 };
 
 const app = new QuestMakerApp(pixi, state);
 const editorMode = new EditorMode(app);
 
 function load() {
-  // pixi.stage.scale.x = pixi.stage.scale.y = 2;
   pixi.ticker.add(tick);
   app.setMode(editorMode);
 }
