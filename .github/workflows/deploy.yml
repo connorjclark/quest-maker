@@ -1,0 +1,19 @@
+name: Deploy
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Deploying
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10
+      
+      - run: yarn
+      - run: yarn build
+
+      - run: npx surge dist quest-maker.surge.sh --token ${{ secrets.SURGE_TOKEN }}
