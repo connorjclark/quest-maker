@@ -61,31 +61,64 @@ export class EditorMode extends QuestMakerMode {
     const state = this.app.state;
 
     const container = new PIXI.Container();
-    container.scale.set(opts.scale);
-    container.interactive = true;
+    
+    const tabs: Record<string, {button: PIXI.Container, content: PIXI.Container}> = {};
+    
+    const tabButtons = new PIXI.Container();
+    const currentTabContents = new PIXI.Container();
+    currentTabContents.scale.set(opts.scale);
+    container.addChild(tabButtons);
+    container.addChild(currentTabContents);
 
-    const tilesAcross = Math.min(opts.width / (tileSize * opts.scale));
+    function addTab(name: string, content: PIXI.Container) {      
+      const tabButton = new PIXI.Text(name, {fontFamily : 'Arial', fontSize: 20, align : 'center'});
+      tabButton.x = tabButtons.width ? tabButtons.width + 10 : 0;
+      tabButtons.addChild(tabButton);
+      
+      tabButton.interactive = true;
+      tabButton.addListener('click', () => setTab(name));
 
-    for (let i = 0; i < state.quest.tiles.length; i++) {
-      const sprite = this.app.createTileSprite(i);
-      sprite.x = (i % tilesAcross) * sprite.width;
-      sprite.y = Math.floor(i / tilesAcross) * sprite.height;
-      container.addChild(sprite);
+      tabs[name] = {button: tabButton, content};
     }
 
-    const tilePicker = {
-      container,
+    function setTab(name: string) {
+      currentTabContents.y = tabButtons.height;
+      currentTabContents.removeChildren();
+      currentTabContents.addChild(tabs[name].content);
+
+      for (const [name_, {button}] of Object.entries(tabs)) {
+        button.alpha = name === name_ ? 1 : 0.5;
+      }
+    }
+
+    const createTilesTab = () => {
+      const contents = new PIXI.Container();
+      contents.interactive = true;
+      const tilesAcross = Math.min(opts.width / (tileSize * opts.scale));
+  
+      for (let i = 0; i < state.quest.tiles.length; i++) {
+        const sprite = this.app.createTileSprite(i);
+        sprite.x = (i % tilesAcross) * sprite.width;
+        sprite.y = Math.floor(i / tilesAcross) * sprite.height;
+        contents.addChild(sprite);
+      }
+  
+      contents.addListener('click', (e) => {
+        const pos = e.data.getLocalPosition(e.currentTarget);
+        state.editor.currentTile = Math.floor(pos.x / tileSize) + Math.floor(pos.y / tileSize) * tilesAcross;
+      });
+
+      return contents;
     };
 
-    container.addListener('click', (e) => {
-      const pos = e.data.getLocalPosition(e.currentTarget);
-      state.editor.currentTile = Math.floor(pos.x / tileSize) + Math.floor(pos.y / tileSize) * tilesAcross;
-    });
+    addTab('tiles', createTilesTab());
+    addTab('enemies', new PIXI.Container());
+    setTab('tiles');
 
     const borderContainer = new PIXI.Container();
     const border = new PIXI.Graphics();
     border.lineStyle(1);
-    border.lineTo(0, container.height);
+    border.lineTo(0, this.app.pixi.screen.height);
     borderContainer.addChild(border);
     container.addChild(borderContainer);
 
@@ -105,6 +138,9 @@ export class EditorMode extends QuestMakerMode {
     //   borderContainer.removeListener('mouseup', mouseup);
     // }
 
+    const tilePicker = {
+      container,
+    };
     return tilePicker;
   }
 
@@ -115,7 +151,11 @@ export class EditorMode extends QuestMakerMode {
     const gfx = new PIXI.Graphics();
     const size = 10;
     container.addChild(gfx);
-    container.interactive = true;
+    render();
+
+    const text = new PIXI.Text('Press Shift to toggle play test');
+    text.x = container.width;
+    container.addChild(text);
 
     function render() {
       gfx.clear();
@@ -132,7 +172,6 @@ export class EditorMode extends QuestMakerMode {
       }
     }
 
-    render();
     return { container, render };
   }
 
