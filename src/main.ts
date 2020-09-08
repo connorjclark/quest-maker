@@ -47,7 +47,7 @@ function createQuest(): QuestMaker.Quest {
     return tile;
   }
 
-  function makeTiles(opts: {spritesheet: string, n: number, tilesInRow?: number, startX?: number, startY?: number, spacing?: number}) {
+  function makeTiles(opts: { spritesheet: string, n: number, tilesInRow?: number, startX?: number, startY?: number, spacing?: number }) {
     const t = [];
 
     if (!opts.startX) opts.startX = 0;
