@@ -15,14 +15,21 @@ declare global {
     }
 
     interface Tile {
+      id: number;
       spritesheet: string;
       x: number;
       y: number;
       walkable: boolean;
     }
 
+    interface Enemy {
+      name: string;
+      frames: Record<string, number[]>;
+    }
+
     interface Quest {
       screens: Screen[][];
+      enemies: Enemy[];
       tiles: Tile[];
       misc: {
         HERO_TILE_START: number;

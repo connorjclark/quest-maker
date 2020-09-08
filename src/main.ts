@@ -39,25 +39,68 @@ document.body.onkeyup = (e) => {
 
 function createQuest(): QuestMaker.Quest {
   // Create tiles from gfx/
-  const tiles = [];
-  for (let i = 0; i < 48; i++) {
-    const x = (i % 6) * (tileSize + 1) + 1;
-    const y = Math.floor(i / 6) * (tileSize + 1) + 1;
-    let walkable = ![1, 3, 4, 5, 7, 8].includes(i);
-    tiles.push({ spritesheet: 'tiles', x, y, walkable });
+  const tiles: QuestMaker.Tile[] = [];
+
+  function makeTile(spritesheet: string, x: number, y: number): QuestMaker.Tile {
+    const tile = { id: tiles.length, spritesheet, x, y, walkable: true };
+    tiles.push(tile);
+    return tile;
   }
 
-  const HERO_TILE_START = tiles.length;
-  for (let i = 0; i < 6; i++) {
-    const x = (i % 6) * (tileSize + 1) + 1;
-    const y = Math.floor(i / 6) * (tileSize + 1) + 11;
-    tiles.push({ spritesheet: 'link', x, y, walkable: true });
+  function makeTiles(opts: {spritesheet: string, n: number, tilesInRow?: number, startX?: number, startY?: number, spacing?: number}) {
+    const t = [];
+
+    if (!opts.startX) opts.startX = 0;
+    if (!opts.startY) opts.startY = 0;
+    if (!opts.spacing) opts.spacing = 0;
+    if (!opts.tilesInRow) opts.tilesInRow = opts.n;
+
+    for (let i = 0; i < opts.n; i++) {
+      const x = (i % opts.tilesInRow) * (tileSize + opts.spacing) + opts.startX;
+      const y = Math.floor(i / opts.tilesInRow) * (tileSize + opts.spacing) + opts.startY;
+      const tile = makeTile(opts.spritesheet, x, y);
+      t.push(tile);
+    }
+
+    return t;
   }
 
-  // Make ground tile first.
-  let temp = tiles[0];
-  tiles[0] = tiles[2];
-  tiles[2] = temp;
+  const basicTiles = makeTiles({
+    spritesheet: 'tiles',
+    n: 48,
+    tilesInRow: 6,
+    startX: 1,
+    startY: 1,
+    spacing: 1,
+  });
+  for (const tile of basicTiles) {
+    tile.walkable = ![1, 3, 4, 5, 7, 8].includes(basicTiles.indexOf(tile));
+  }
+
+  const HERO_TILES = makeTiles({
+    spritesheet: 'link',
+    n: 6,
+    startX: 1,
+    startY: 11,
+    spacing: 1,
+  });
+
+  const octorokTiles = makeTiles({
+    spritesheet: 'enemies',
+    n: 4,
+    startX: 1,
+    startY: 11,
+    spacing: 1,
+  });
+
+  const enemies = [];
+  enemies.push({
+    name: 'Octorok (Red)',
+    frames: {
+      down: [octorokTiles[0].id, octorokTiles[1].id],
+      left: [octorokTiles[2].id, octorokTiles[3].id],
+    },
+  });
 
   const screens: Screen[][] = [];
   for (let x = 0; x < 5; x++) {
@@ -67,11 +110,17 @@ function createQuest(): QuestMaker.Quest {
     }
   }
 
+  // Make ground tile first.
+  let temp = tiles[0];
+  tiles[0] = tiles[2];
+  tiles[2] = temp;
+
   return {
     tiles,
+    enemies,
     screens,
     misc: {
-      HERO_TILE_START,
+      HERO_TILE_START: HERO_TILES[0].id,
     }
   }
 }
@@ -113,6 +162,7 @@ function tick(dt: number) {
 pixi.loader
   .add('tiles', 'gfx/tiles-overworld.png')
   .add('link', 'gfx/link.png')
+  .add('enemies', 'gfx/enemies.png')
   .load(load);
 
 // @ts-ignore

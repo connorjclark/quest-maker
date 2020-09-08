@@ -38,6 +38,7 @@ class EntitySprite extends PIXI.AnimatedSprite {
 
 export class PlayGameMode extends QuestMakerMode {
   private heroEntity: QuestMaker.Entity = { type: 0, x: screenWidth * tileSize / 2, y: screenHeight * tileSize / 2 };
+  private entities: QuestMaker.Entity[] = [];
   private sprites = new Map<QuestMaker.Entity, EntitySprite>();
 
   show() {
@@ -81,6 +82,35 @@ export class PlayGameMode extends QuestMakerMode {
 
     this.container.addChild(heroSprite);
     this.sprites.set(this.heroEntity, heroSprite);
+
+    this.onEnterScreen();
+  }
+
+  onEnterScreen() {
+    // Hardcode an enemy.
+    let enemy = this.app.state.quest.enemies[0];
+
+    let x = 2;
+    let y = 2;
+
+    const entity: QuestMaker.Entity = {
+      type: 0,
+      x: x * tileSize,
+      y: y * tileSize,
+    };
+    this.entities.push(entity);
+    const entitySprite = new EntitySprite();
+
+    for (const [name, frames] of Object.entries(enemy.frames)) {
+      const textures = frames.map(f => this.app.createTileSprite(f).texture);
+      entitySprite.addTextureFrame(name, textures);
+    }
+    entitySprite.setTextureFrame(Object.keys(enemy.frames)[0]);
+
+    this.sprites.set(entity, entitySprite);
+    entitySprite.x = entity.x;
+    entitySprite.y = entity.y;
+    this.container.addChild(entitySprite);
   }
 
   tick(dt: number) {
@@ -120,6 +150,7 @@ export class PlayGameMode extends QuestMakerMode {
         this.show();
       }
 
+      this.onEnterScreen();
       return;
     }
 
@@ -268,6 +299,17 @@ export class PlayGameMode extends QuestMakerMode {
       }
     } else {
       heroSprite.stop();
+    }
+
+    // Handle enemies.
+    for (let entity of this.entities) {
+      const sprite = this.sprites.get(entity);
+      if (!sprite) continue;
+
+      entity.x += 1 * dt;
+
+      sprite.x = entity.x;
+      sprite.y = entity.y;
     }
 
     // Transition screen when hero enters edge.
