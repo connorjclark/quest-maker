@@ -146,9 +146,16 @@ export class PlayGameMode extends QuestMakerMode {
   public heroSprite = new QuestEntitySprite();
   private entities: Array<{ sprite: QuestEntitySpriteBase }> = [];
 
+  private entityLayer = new PIXI.Container();
+  private tileLayer = new PIXI.Container();
+
   init() {
     super.init();
     const state = this.app.state;
+
+    this.container.scale.x = this.container.scale.y = 2;
+    this.container.addChild(this.tileLayer);
+    this.container.addChild(this.entityLayer);
 
     this.heroSprite.x = screenWidth * tileSize / 2;
     this.heroSprite.y = screenHeight * tileSize / 2;
@@ -179,9 +186,11 @@ export class PlayGameMode extends QuestMakerMode {
     super.show();
     const state = this.app.state;
 
-    this.container.removeChildren();
+    this.tileLayer.removeChildren();
+    this.entityLayer.removeChildren();
+
     this.entities = [];
-    this.container.scale.x = this.container.scale.y = 2;
+    this.entities.push({ sprite: this.heroSprite });
 
     const mask = new PIXI.Graphics();
     mask.beginFill(0);
@@ -189,10 +198,8 @@ export class PlayGameMode extends QuestMakerMode {
     mask.endFill();
     this.container.mask = mask;
 
-    this.container.addChild(this.createScreenContainer(state.screenX, state.screenY));
-    this.container.addChild(this.heroSprite);
-
-    this.entities.push({ sprite: this.heroSprite });
+    this.tileLayer.addChild(this.createScreenContainer(state.screenX, state.screenY));
+    this.entityLayer.addChild(this.heroSprite);
 
     this.onEnterScreen();
   }
@@ -414,7 +421,7 @@ export class PlayGameMode extends QuestMakerMode {
     entitySprite.setTextureFrame(Object.keys(enemy.frames)[0]);
 
     this.entities.push({ sprite: entitySprite });
-    this.container.addChild(entitySprite);
+    this.entityLayer.addChild(entitySprite);
     return entitySprite;
   }
 
@@ -430,7 +437,7 @@ export class PlayGameMode extends QuestMakerMode {
     entitySprite.setTextureFrame('default');
 
     this.entities.push({ sprite: entitySprite });
-    this.container.addChild(entitySprite);
+    this.entityLayer.addChild(entitySprite);
 
     return entitySprite;
   }
