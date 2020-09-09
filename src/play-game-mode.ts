@@ -14,7 +14,7 @@ const directions = [{ x: 0, y: -1 }, { x: 0, y: 1 }, { x: 1, y: 0 }, { x: -1, y:
 const inBounds = (x: number, y: number, width: number, height: number) => x >= 0 && y >= 0 && x < width && y < height;
 
 // TODO: move to engine/
-class EntitySprite extends PIXI.AnimatedSprite {
+class EntitySpriteBase extends PIXI.AnimatedSprite {
   private textureFrames: Record<string, TextureFrame> = {};
   private currentTextureFrame?: TextureFrame;
 
@@ -43,16 +43,20 @@ class EntitySprite extends PIXI.AnimatedSprite {
   }
 }
 
-class QuestProjectileSprite extends EntitySprite {
+abstract class QuestEntitySpriteBase extends EntitySpriteBase {
+  abstract tick(mode: PlayGameMode, dt: number): any;
+}
+
+class QuestProjectileSprite extends QuestEntitySpriteBase {
   public speed = 1;
-  public delta = {x: 0, y: 0};
+  public delta = { x: 0, y: 0 };
 
   tick(mode: PlayGameMode, dt: number) {
     const speed = this.speed * dt;
     this.x += this.delta.x * speed;
     this.y += this.delta.y * speed;
 
-    if (Math.abs(mode.heroEntity.x - this.x) < 8 && Math.abs(mode.heroEntity.y - this.y) < 8) {
+    if (Math.abs(mode.heroSprite.x - this.x) < 8 && Math.abs(mode.heroSprite.y - this.y) < 8) {
       console.log('ouch'); // TODO
     }
 
@@ -62,7 +66,7 @@ class QuestProjectileSprite extends EntitySprite {
   }
 }
 
-class QuestEntitySprite extends EntitySprite {
+class QuestEntitySprite extends QuestEntitySpriteBase {
   public delta = { x: 0, y: 0 };
   public speed = 1;
   public homingFactor = 64 / 255;
@@ -84,7 +88,7 @@ class QuestEntitySprite extends EntitySprite {
       if (notMoving || currentTile.x !== nextTile.x || currentTile.y !== nextTile.y) {
         if (Math.random() < this.haltFactor) {
           this.haltTimer = 10;
-          mode.createProjectile({x: Math.sign(this.delta.x), y: Math.sign(this.delta.y)}, nextTile.x, nextTile.y, 2);
+          mode.createProjectile({ x: Math.sign(this.delta.x), y: Math.sign(this.delta.y) }, nextTile.x, nextTile.y, 2);
         }
 
         if (Math.random() < this.homingFactor) {
@@ -139,18 +143,43 @@ class QuestEntitySprite extends EntitySprite {
 }
 
 export class PlayGameMode extends QuestMakerMode {
-  public heroEntity: QuestMaker.Entity = { type: 0, x: screenWidth * tileSize / 2, y: screenHeight * tileSize / 2 };
+  public heroSprite = new QuestEntitySprite();
+  private entities: Array<{ sprite: QuestEntitySpriteBase }> = [];
 
-  // TODO: this is trash.
-  private entities: QuestMaker.Entity[] = [];
-  private entitiyData = new Map<QuestMaker.Entity, { sprite: QuestEntitySprite | QuestProjectileSprite }>();
+  init() {
+    super.init();
+    const state = this.app.state;
+
+    this.heroSprite.x = screenWidth * tileSize / 2;
+    this.heroSprite.y = screenHeight * tileSize / 2;
+    this.heroSprite.isHero = true;
+    this.heroSprite.speed = 1.5;
+
+    this.heroSprite.addTextureFrame('down', [
+      this.app.createTileSprite(state.quest.misc.HERO_TILE_START).texture,
+      this.app.createTileSprite(state.quest.misc.HERO_TILE_START + 1).texture,
+    ]);
+    this.heroSprite.addTextureFrame('up', [
+      this.app.createTileSprite(state.quest.misc.HERO_TILE_START + 4).texture,
+      this.app.createTileSprite(state.quest.misc.HERO_TILE_START + 5).texture,
+    ]);
+    this.heroSprite.addTextureFrame('right', [
+      this.app.createTileSprite(state.quest.misc.HERO_TILE_START + 2).texture,
+      this.app.createTileSprite(state.quest.misc.HERO_TILE_START + 3).texture,
+    ]);
+    this.heroSprite.addTextureFrame('left', [
+      this.app.createTileSprite(state.quest.misc.HERO_TILE_START + 2).texture,
+      this.app.createTileSprite(state.quest.misc.HERO_TILE_START + 3).texture,
+    ], PIXI.groupD8.MIRROR_HORIZONTAL);
+
+    this.heroSprite.setTextureFrame('down');
+  }
 
   show() {
     super.show();
     const state = this.app.state;
 
     this.container.removeChildren();
-    this.entitiyData.clear();
     this.entities = [];
     this.container.scale.x = this.container.scale.y = 2;
 
@@ -161,50 +190,21 @@ export class PlayGameMode extends QuestMakerMode {
     this.container.mask = mask;
 
     this.container.addChild(this.createScreenContainer(state.screenX, state.screenY));
+    this.container.addChild(this.heroSprite);
 
-    const heroSprite = new QuestEntitySprite();
-    heroSprite.isHero = true;
-    heroSprite.speed = 1.5;
-    heroSprite.addTextureFrame('down', [
-      this.app.createTileSprite(state.quest.misc.HERO_TILE_START).texture,
-      this.app.createTileSprite(state.quest.misc.HERO_TILE_START + 1).texture,
-    ]);
-    heroSprite.addTextureFrame('up', [
-      this.app.createTileSprite(state.quest.misc.HERO_TILE_START + 4).texture,
-      this.app.createTileSprite(state.quest.misc.HERO_TILE_START + 5).texture,
-    ]);
-    heroSprite.addTextureFrame('right', [
-      this.app.createTileSprite(state.quest.misc.HERO_TILE_START + 2).texture,
-      this.app.createTileSprite(state.quest.misc.HERO_TILE_START + 3).texture,
-    ]);
-    heroSprite.addTextureFrame('left', [
-      this.app.createTileSprite(state.quest.misc.HERO_TILE_START + 2).texture,
-      this.app.createTileSprite(state.quest.misc.HERO_TILE_START + 3).texture,
-    ], PIXI.groupD8.MIRROR_HORIZONTAL);
-
-    heroSprite.x = this.heroEntity.x;
-    heroSprite.y = this.heroEntity.y;
-
-    heroSprite.setTextureFrame('down');
-
-    this.container.addChild(heroSprite);
-    this.entitiyData.set(this.heroEntity, { sprite: heroSprite });
+    this.entities.push({ sprite: this.heroSprite });
 
     this.onEnterScreen();
   }
 
   tick(dt: number) {
     const state = this.app.state;
+    const heroSprite = this.heroSprite;
 
     if (this.app.keys.up['Space']) {
       paused = !paused;
     }
-
     if (paused) return;
-
-    const heroData = this.entitiyData.get(this.heroEntity);
-    if (!heroData) throw new Error('...');
-    const heroSprite = heroData.sprite;
 
     let transition = state.game.screenTransition;
     if (transition) {
@@ -227,12 +227,10 @@ export class PlayGameMode extends QuestMakerMode {
         this.container.position.x = 0;
         this.container.position.y = 0;
 
-        this.heroEntity.x = heroSprite.x;
-        this.heroEntity.y = heroSprite.y;
-        if (Math.sign(transition.screenDelta.x) === 1) this.heroEntity.x = 0;
-        else if (Math.sign(transition.screenDelta.x) === -1) this.heroEntity.x = (tileSize - 1) * screenWidth;
-        else if (Math.sign(transition.screenDelta.y) === 1) this.heroEntity.y = 0;
-        else if (Math.sign(transition.screenDelta.y) === -1) this.heroEntity.y = (tileSize - 1) * screenHeight - 5; // ?
+        if (Math.sign(transition.screenDelta.x) === 1) this.heroSprite.x = 0;
+        else if (Math.sign(transition.screenDelta.x) === -1) this.heroSprite.x = (tileSize - 1) * screenWidth;
+        else if (Math.sign(transition.screenDelta.y) === 1) this.heroSprite.y = 0;
+        else if (Math.sign(transition.screenDelta.y) === -1) this.heroSprite.y = (tileSize - 1) * screenHeight - 5; // ?
 
         this.show();
       }
@@ -248,7 +246,7 @@ export class PlayGameMode extends QuestMakerMode {
     heroSprite.delta.x = dx;
     heroSprite.delta.y = dy;
 
-    for (let data of this.entitiyData.values()) {
+    for (let data of this.entities.values()) {
       data.sprite.tick(this, dt);
     }
 
@@ -396,15 +394,10 @@ export class PlayGameMode extends QuestMakerMode {
     return container;
   }
 
-  createEntity(enemy: QuestMaker.Enemy, x: number, y: number) {
-    const entity: QuestMaker.Entity = {
-      type: 0,
-      x: x * tileSize,
-      y: y * tileSize,
-    };
-    this.entities.push(entity);
-
+  createEntityFromEnemy(enemy: QuestMaker.Enemy, x: number, y: number) {
     const entitySprite = new QuestEntitySprite();
+    entitySprite.x = x * tileSize;
+    entitySprite.y = y * tileSize;
 
     for (const [name, frames] of Object.entries(enemy.frames)) {
       const textures = frames.map(f => this.app.createTileSprite(f).texture);
@@ -418,39 +411,28 @@ export class PlayGameMode extends QuestMakerMode {
       const textures = enemy.frames.down.map(f => this.app.createTileSprite(f).texture);
       entitySprite.addTextureFrame('up', textures, PIXI.groupD8.MIRROR_VERTICAL);
     }
-
     entitySprite.setTextureFrame(Object.keys(enemy.frames)[0]);
 
-    this.entitiyData.set(entity, { sprite: entitySprite });
-    entitySprite.x = entity.x;
-    entitySprite.y = entity.y;
+    this.entities.push({ sprite: entitySprite });
     this.container.addChild(entitySprite);
-
-    return entity;
+    return entitySprite;
   }
 
-  createProjectile(delta: {x: number, y: number}, x: number, y: number, speed: number) {
-    const entity: QuestMaker.Entity = {
-      type: 1,
-      x: x * tileSize,
-      y: y * tileSize,
-    };
-    this.entities.push(entity);
-
+  createProjectile(delta: { x: number, y: number }, x: number, y: number, speed: number) {
     const entitySprite = new QuestProjectileSprite();
+    entitySprite.x = x * tileSize;
+    entitySprite.y = y * tileSize;
     entitySprite.delta = delta;
     entitySprite.speed = speed;
+
     const textures = [7].map(f => this.app.createTileSprite(f).texture);
     entitySprite.addTextureFrame('default', textures);
+    entitySprite.setTextureFrame('default');
 
-    entitySprite.setTextureFrame('default'); // :(
-
-    this.entitiyData.set(entity, { sprite: entitySprite });
-    entitySprite.x = entity.x;
-    entitySprite.y = entity.y;
+    this.entities.push({ sprite: entitySprite });
     this.container.addChild(entitySprite);
 
-    return entity;
+    return entitySprite;
   }
 
   removeEntity() {
@@ -462,8 +444,7 @@ export class PlayGameMode extends QuestMakerMode {
     let enemy = this.app.state.quest.enemies[0];
     let x = 5;
     let y = 5;
-    let entity = this.createEntity(enemy, x, y);
-    // @ts-ignore
-    this.entitiyData.get(entity).sprite.speed = 0.75;
+    let entity = this.createEntityFromEnemy(enemy, x, y);
+    entity.speed = 0.75;
   }
 }

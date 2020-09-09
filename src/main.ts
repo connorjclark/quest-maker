@@ -13,7 +13,6 @@ document.body.appendChild(pixi.view);
 
 class Screen {
   public tiles: { tile: number }[][] = [];
-  public entities: QuestMaker.Entity[] = [];
 
   constructor() {
     for (let x = 0; x < screenWidth; x++) {

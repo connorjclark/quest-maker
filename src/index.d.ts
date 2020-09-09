@@ -5,13 +5,6 @@ declare global {
   namespace QuestMaker {
     interface Screen {
       tiles: { tile: number }[][];
-      entities: Entity[];
-    }
-
-    interface Entity {
-      type: number;
-      x: number;
-      y: number;
     }
 
     interface Tile {
