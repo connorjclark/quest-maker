@@ -41,24 +41,24 @@ class DomElementDisplayObject extends PIXI.DisplayObject {
   public el = document.createElement('div');
   private lastPoint = this.getGlobalPosition();
 
-  constructor(private app: QuestMaker.App, width: number, height: number) {
+  constructor(private app: QuestMaker.App, private width: number, private height: number) {
     super();
 
     this.el.style['position'] = 'absolute';
-    this.el.style.width = width + 'px';
-    this.el.style.height = height + 'px'; // ??
     document.body.appendChild(this.el);
   }
 
   render() {
     const pos = this.getGlobalPosition(undefined, true);
+    pos.x = pos.x / this.app.pixi.screen.width * this.app.pixi.view.clientWidth;
+    pos.y = pos.y / this.app.pixi.screen.height * this.app.pixi.view.clientHeight;
     if (pos.x !== this.lastPoint.x || pos.y !== this.lastPoint.y) {
       this.lastPoint = pos;
 
-      const x = pos.x / this.app.pixi.screen.width * this.app.pixi.view.clientWidth;
-      const y = pos.y / this.app.pixi.screen.height * this.app.pixi.view.clientHeight;
-      this.el.style.left = x + 'px';
-      this.el.style.top = y + 'px';
+      this.el.style.width = this.width / this.app.pixi.screen.width * this.app.pixi.view.clientWidth + 'px';
+      this.el.style.height = this.height / this.app.pixi.screen.height * this.app.pixi.view.clientHeight + 'px'; // ??
+      this.el.style.left = pos.x + 'px';
+      this.el.style.top = pos.y + 'px';
 
       this.show(true);
     }
@@ -172,9 +172,7 @@ export class EditorMode extends QuestMakerMode {
       const contents = new PIXI.Container();
       makeDomContainer(contents);
 
-      const w = opts.width / this.app.pixi.screen.width * this.app.pixi.view.clientWidth;
-
-      const elDisplayObject = new DomElementDisplayObject(this.app, w, 300);
+      const elDisplayObject = new DomElementDisplayObject(this.app, opts.width, 300);
       contents.addChild(elDisplayObject);
 
       const p = document.createElement('p');
