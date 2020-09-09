@@ -41,6 +41,13 @@ export class EditorMode extends QuestMakerMode {
     containers.screenPicker = screenPicker;
   }
 
+  show() {
+    super.show();
+
+    containers.screenArea.render();
+    containers.screenPicker.render();
+  }
+
   tick() {
     let dx = 0, dy = 0;
     if (this.app.keys.down['ArrowLeft']) dx -= 1;

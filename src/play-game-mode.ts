@@ -85,10 +85,17 @@ class QuestEntitySprite extends QuestEntitySpriteBase {
       const nextTile = { x: Math.floor((this.x + this.delta.x * speed) / tileSize), y: Math.floor((this.y + this.delta.y * speed) / tileSize) };
       const notMoving = this.delta.x === 0 && this.delta.y === 0;
 
+      if (this.haltTimer !== null) {
+        this.haltTimer -= dt;
+        if (this.haltTimer <= 0) this.haltTimer = null;
+        return;
+      }
+
       if (notMoving || currentTile.x !== nextTile.x || currentTile.y !== nextTile.y) {
         if (Math.random() < this.haltFactor) {
-          this.haltTimer = 10;
+          this.haltTimer = 30;
           mode.createProjectile({ x: Math.sign(this.delta.x), y: Math.sign(this.delta.y) }, nextTile.x, nextTile.y, 2);
+          return;
         }
 
         if (Math.random() < this.homingFactor) {
@@ -97,12 +104,6 @@ class QuestEntitySprite extends QuestEntitySpriteBase {
         } else if (Math.random() < this.directionChangeFactor || !notMoving) {
           this.delta = directions[Math.floor(Math.random() * 4)];
         }
-      }
-
-      if (this.haltTimer !== null) {
-        this.haltTimer -= dt;
-        if (this.haltTimer <= 0) this.haltTimer = null;
-        return;
       }
     }
 
@@ -216,14 +217,14 @@ export class PlayGameMode extends QuestMakerMode {
     let transition = state.game.screenTransition;
     if (transition) {
       if (transition.frames === 0) {
-        this.container.addChildAt(transition.newScreenContainer, 0);
+        this.tileLayer.addChildAt(transition.newScreenContainer, 0);
         transition.newScreenContainer.x = screenWidth * tileSize * Math.sign(transition.screenDelta.x);
         transition.newScreenContainer.y = screenHeight * tileSize * Math.sign(transition.screenDelta.y);
       }
 
       const duration = 50;
-      this.container.position.x = (transition.frames / duration) * screenWidth * tileSize * this.container.scale.x * Math.sign(-transition.screenDelta.x);
-      this.container.position.y = (transition.frames / duration) * screenHeight * tileSize * this.container.scale.y * Math.sign(-transition.screenDelta.y);
+      this.container.x = (transition.frames / duration) * screenWidth * tileSize * this.container.scale.x * Math.sign(-transition.screenDelta.x);
+      this.container.y = (transition.frames / duration) * screenHeight * tileSize * this.container.scale.y * Math.sign(-transition.screenDelta.y);
 
       transition.frames += dt;
       if (transition.frames >= duration) {
@@ -231,8 +232,8 @@ export class PlayGameMode extends QuestMakerMode {
         state.screenY = transition.screen.y;
         state.currentScreen = state.quest.screens[state.screenX][state.screenY];
         delete state.game.screenTransition;
-        this.container.position.x = 0;
-        this.container.position.y = 0;
+        this.container.x = 0;
+        this.container.y = 0;
 
         if (Math.sign(transition.screenDelta.x) === 1) this.heroSprite.x = 0;
         else if (Math.sign(transition.screenDelta.x) === -1) this.heroSprite.x = (tileSize - 1) * screenWidth;
