@@ -13,6 +13,13 @@ const directions = [{ x: 0, y: -1 }, { x: 0, y: 1 }, { x: 1, y: 0 }, { x: -1, y:
 
 const inBounds = (x: number, y: number, width: number, height: number) => x >= 0 && y >= 0 && x < width && y < height;
 
+const isSolid = (state: QuestMaker.State, x: number, y: number) => {
+  if (!inBounds(x, y, screenWidth, screenHeight)) return true;
+
+  const tileNumber = state.currentScreen.tiles[x][y].tile;
+  return !state.quest.tiles[tileNumber].walkable;
+};
+
 // TODO: move to engine/
 class EntitySpriteBase extends PIXI.AnimatedSprite {
   private textureFrames: Record<string, TextureFrame> = {};
@@ -67,7 +74,7 @@ class QuestProjectileSprite extends QuestEntitySpriteBase {
 }
 
 class QuestEntitySprite extends QuestEntitySpriteBase {
-  public delta = { x: 0, y: 0 };
+  public direction = { x: 0, y: 1 };
   public speed = 1;
   public homingFactor = 64 / 255;
   public directionChangeFactor = 4 / 16;
@@ -81,9 +88,29 @@ class QuestEntitySprite extends QuestEntitySpriteBase {
 
     if (!this.isHero) {
       // Every tile moved stats this algorithm.
-      const currentTile = { x: Math.floor(this.x / tileSize), y: Math.floor(this.y / tileSize) };
-      const nextTile = { x: Math.floor((this.x + this.delta.x * speed) / tileSize), y: Math.floor((this.y + this.delta.y * speed) / tileSize) };
-      const notMoving = this.delta.x === 0 && this.delta.y === 0;
+      let shouldChangeDirection = false;
+
+      let hitPoint = { x: this.x, y: this.y };
+      if (this.direction.x === 1) hitPoint.x += this.width;
+      if (this.direction.y === 1) hitPoint.y += this.height;
+
+      const currentTile = { x: Math.floor(hitPoint.x / tileSize), y: Math.floor(hitPoint.y / tileSize) };
+      const nextTile = { x: Math.floor((hitPoint.x + this.direction.x * speed) / tileSize), y: Math.floor((hitPoint.y + this.direction.y * speed) / tileSize) };
+
+      // @ts-ignore
+      if (window.debug) {
+        const debug = mode.app.debug(`nextTile ${mode.entities.findIndex(e => e.sprite === this)}`);
+        debug.alpha = 0.5;
+        debug.x = nextTile.x * tileSize;
+        debug.y = nextTile.y * tileSize;
+        debug.clear();
+        debug.lineStyle(1, 0x00ff00);
+        debug.beginFill();
+        debug.drawRect(0, 0, tileSize, tileSize);
+        debug.endFill();
+        // @ts-ignore
+        mode.container.addChild(debug);
+      }
 
       if (this.haltTimer !== null) {
         this.haltTimer -= dt;
@@ -91,24 +118,38 @@ class QuestEntitySprite extends QuestEntitySpriteBase {
         return;
       }
 
-      if (notMoving || currentTile.x !== nextTile.x || currentTile.y !== nextTile.y) {
+      if (isSolid(mode.app.state, nextTile.x, nextTile.y)) {
+        shouldChangeDirection = true;
+      }
+
+      if (shouldChangeDirection || currentTile.x !== nextTile.x || currentTile.y !== nextTile.y) {
         if (Math.random() < this.haltFactor) {
           this.haltTimer = 30;
-          mode.createProjectile({ x: Math.sign(this.delta.x), y: Math.sign(this.delta.y) }, nextTile.x, nextTile.y, 2);
+          mode.createProjectile({ x: Math.sign(this.direction.x), y: Math.sign(this.direction.y) }, currentTile.x, currentTile.y, 2);
           return;
         }
 
+        let availableDirections = directions.filter(d => {
+          return !isSolid(mode.app.state, currentTile.x + d.x, currentTile.y + d.y);
+        });
+        if (!availableDirections.length) availableDirections = directions;
+
         if (Math.random() < this.homingFactor) {
           // TODO
-          this.delta = directions[Math.floor(Math.random() * 4)];
-        } else if (Math.random() < this.directionChangeFactor || !notMoving) {
-          this.delta = directions[Math.floor(Math.random() * 4)];
+          this.direction = availableDirections[Math.floor(Math.random() * availableDirections.length)];
+          shouldChangeDirection = false;
+        } else if (Math.random() < this.directionChangeFactor) {
+          shouldChangeDirection = true;
+        }
+
+        if (shouldChangeDirection) {
+          this.direction = availableDirections[Math.floor(Math.random() * availableDirections.length)];
         }
       }
     }
 
-    const dx = this.delta.x;
-    const dy = this.delta.y;
+    const dx = this.direction.x;
+    const dy = this.direction.y;
     if (dx !== 0 || dy !== 0) {
       let direction = 'down';
       if (dx === 1) direction = 'right';
@@ -145,7 +186,7 @@ class QuestEntitySprite extends QuestEntitySpriteBase {
 
 export class PlayGameMode extends QuestMakerMode {
   public heroSprite = new QuestEntitySprite();
-  private entities: Array<{ sprite: QuestEntitySpriteBase }> = [];
+  public entities: Array<{ sprite: QuestEntitySpriteBase }> = [];
 
   private entityLayer = new PIXI.Container();
   private tileLayer = new PIXI.Container();
@@ -251,8 +292,8 @@ export class PlayGameMode extends QuestMakerMode {
     else if (this.app.keys.pressed['ArrowRight']) dx += 1;
     else if (this.app.keys.pressed['ArrowUp']) dy -= 1;
     else if (this.app.keys.pressed['ArrowDown']) dy += 1;
-    heroSprite.delta.x = dx;
-    heroSprite.delta.y = dy;
+    heroSprite.direction.x = dx;
+    heroSprite.direction.y = dy;
 
     for (let data of this.entities.values()) {
       data.sprite.tick(this, dt);
@@ -287,15 +328,11 @@ export class PlayGameMode extends QuestMakerMode {
       }
 
       const correctionVectors: Array<{ x: number, y: number }> = [];
-      const isSolid = (x: number, y: number) => {
-        const tileNumber = this.app.state.currentScreen.tiles[x][y].tile;
-        return !this.app.state.quest.tiles[tileNumber].walkable;
-      };
 
       for (const name of Object.keys(sideTiles)) {
         const tile = sideTiles[name];
         if (tile.x < 0 || tile.y < 0 || tile.x >= screenWidth || tile.y >= screenHeight) continue;
-        if (!isSolid(tile.x, tile.y)) continue;
+        if (!isSolid(state, tile.x, tile.y)) continue;
 
         const point = sidePoints[name];
         const isRight = name.includes('Right'); // lol
