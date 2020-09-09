@@ -14,9 +14,59 @@ function clamp(min: number, val: number, max: number) {
 const inBounds = (x: number, y: number, width: number, height: number) => x >= 0 && y >= 0 && x < width && y < height;
 
 // Get a ratio for resize in a bounds
-function getRatio(obj: {width: number, height: number}, w: number, h: number) {
+function getRatio(obj: { width: number, height: number }, w: number, h: number) {
   let r = Math.min(w / obj.width, h / obj.height);
   return r;
+}
+
+// move to engine/
+function makeDomContainer(container: PIXI.Container) {
+  function toggleDomElements(children: PIXI.DisplayObject[], show: boolean) {
+    for (const child of children) {
+      if (child.constructor === PIXI.Container) {
+        // @ts-ignore
+        toggleDomElements(child.children, show);
+      } else if (child.constructor === DomElementDisplayObject) {
+        // @ts-ignore
+        child.show(show);
+      }
+    }
+  }
+
+  container.addListener('added', () => toggleDomElements(container.children, true));
+  container.addListener('removed', () => toggleDomElements(container.children, false));
+}
+
+class DomElementDisplayObject extends PIXI.DisplayObject {
+  public el = document.createElement('div');
+  private lastPoint = this.getGlobalPosition();
+
+  constructor(private app: QuestMaker.App, width: number, height: number) {
+    super();
+
+    this.el.style['position'] = 'absolute';
+    this.el.style.width = width + 'px';
+    this.el.style.height = height + 'px'; // ??
+    document.body.appendChild(this.el);
+  }
+
+  render() {
+    const pos = this.getGlobalPosition(undefined, true);
+    if (pos.x !== this.lastPoint.x || pos.y !== this.lastPoint.y) {
+      this.lastPoint = pos;
+
+      const x = pos.x / this.app.pixi.screen.width * this.app.pixi.view.clientWidth;
+      const y = pos.y / this.app.pixi.screen.height * this.app.pixi.view.clientHeight;
+      this.el.style.left = x + 'px';
+      this.el.style.top = y + 'px';
+
+      this.show(true);
+    }
+  }
+
+  show(show: boolean) {
+    this.el.style.visibility = show ? 'visible' : 'hidden';
+  }
 }
 
 export class EditorMode extends QuestMakerMode {
@@ -29,7 +79,7 @@ export class EditorMode extends QuestMakerMode {
     this.container.addChild(screenArea.container);
     containers.screenArea = screenArea;
 
-    const tilePicker = this.createTilePicker({scale: 2, width: this.app.pixi.screen.width - screenArea.container.width});
+    const tilePicker = this.createTilePicker({ scale: 2, width: this.app.pixi.screen.width - screenArea.container.width });
     tilePicker.container.x = screenArea.container.width;
     this.container.addChild(tilePicker.container);
 
@@ -64,28 +114,28 @@ export class EditorMode extends QuestMakerMode {
     }
   }
 
-  private createTilePicker(opts: {scale: number, width: number}) {
+  private createTilePicker(opts: { scale: number, width: number }) {
     const state = this.app.state;
 
     const container = new PIXI.Container();
-    
-    const tabs: Record<string, {button: PIXI.Container, content: PIXI.Container}> = {};
-    
+
+    const tabs: Record<string, { button: PIXI.Container, content: PIXI.Container }> = {};
+
     const tabButtons = new PIXI.Container();
     const currentTabContents = new PIXI.Container();
     currentTabContents.scale.set(opts.scale);
     container.addChild(tabButtons);
     container.addChild(currentTabContents);
 
-    function addTab(name: string, content: PIXI.Container) {      
-      const tabButton = new PIXI.Text(name, {fontFamily : 'Arial', fontSize: 20, align : 'center'});
+    function addTab(name: string, content: PIXI.Container) {
+      const tabButton = new PIXI.Text(name, { fontFamily: 'Arial', fontSize: 20, align: 'center' });
       tabButton.x = tabButtons.width ? tabButtons.width + 10 : 0;
       tabButtons.addChild(tabButton);
-      
+
       tabButton.interactive = true;
       tabButton.addListener('click', () => setTab(name));
 
-      tabs[name] = {button: tabButton, content};
+      tabs[name] = { button: tabButton, content };
     }
 
     function setTab(name: string) {
@@ -93,7 +143,7 @@ export class EditorMode extends QuestMakerMode {
       currentTabContents.removeChildren();
       currentTabContents.addChild(tabs[name].content);
 
-      for (const [name_, {button}] of Object.entries(tabs)) {
+      for (const [name_, { button }] of Object.entries(tabs)) {
         button.alpha = name === name_ ? 1 : 0.5;
       }
     }
@@ -102,14 +152,14 @@ export class EditorMode extends QuestMakerMode {
       const contents = new PIXI.Container();
       contents.interactive = true;
       const tilesAcross = Math.min(opts.width / (tileSize * opts.scale));
-  
+
       for (let i = 0; i < state.quest.tiles.length; i++) {
         const sprite = this.app.createTileSprite(i);
         sprite.x = (i % tilesAcross) * sprite.width;
         sprite.y = Math.floor(i / tilesAcross) * sprite.height;
         contents.addChild(sprite);
       }
-  
+
       contents.addListener('click', (e) => {
         const pos = e.data.getLocalPosition(e.currentTarget);
         state.editor.currentTile = Math.floor(pos.x / tileSize) + Math.floor(pos.y / tileSize) * tilesAcross;
@@ -118,8 +168,25 @@ export class EditorMode extends QuestMakerMode {
       return contents;
     };
 
+    const createEnemiesTab = () => {
+      const contents = new PIXI.Container();
+      makeDomContainer(contents);
+
+      const w = opts.width / this.app.pixi.screen.width * this.app.pixi.view.clientWidth;
+
+      const elDisplayObject = new DomElementDisplayObject(this.app, w, 300);
+      contents.addChild(elDisplayObject);
+
+      const p = document.createElement('p');
+      p.innerText = 'hello world hello world hello world hello world hello world';
+      elDisplayObject.el.appendChild(p);
+      elDisplayObject.el.classList.add('tab-panel')
+
+      return contents;
+    };
+
     addTab('tiles', createTilesTab());
-    addTab('enemies', new PIXI.Container());
+    addTab('enemies', createEnemiesTab());
     setTab('tiles');
 
     const borderContainer = new PIXI.Container();
