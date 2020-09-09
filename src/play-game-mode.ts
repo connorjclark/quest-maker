@@ -9,6 +9,8 @@ interface TextureFrame {
 
 let paused = false;
 
+const directions = [{ x: 0, y: -1 }, { x: 0, y: 1 }, { x: 1, y: 0 }, { x: -1, y: 0 }];
+
 const inBounds = (x: number, y: number, width: number, height: number) => x >= 0 && y >= 0 && x < width && y < height;
 
 // TODO: move to engine/
@@ -41,41 +43,62 @@ class EntitySprite extends PIXI.AnimatedSprite {
   }
 }
 
-const directions = [{ x: 0, y: -1 }, { x: 0, y: 1 }, { x: 1, y: 0 }, { x: -1, y: 0 }];
+class QuestProjectileSprite extends EntitySprite {
+  public speed = 1;
+  public delta = {x: 0, y: 0};
+
+  tick(mode: PlayGameMode, dt: number) {
+    const speed = this.speed * dt;
+    this.x += this.delta.x * speed;
+    this.y += this.delta.y * speed;
+
+    if (Math.abs(mode.heroEntity.x - this.x) < 8 && Math.abs(mode.heroEntity.y - this.y) < 8) {
+      console.log('ouch'); // TODO
+    }
+
+    if (this.x < 0 || this.y < 0) {
+      // mode.removeEntity(this);
+    }
+  }
+}
 
 class QuestEntitySprite extends EntitySprite {
   public delta = { x: 0, y: 0 };
   public speed = 1;
   public homingFactor = 64 / 255;
   public directionChangeFactor = 4 / 16;
-  public haltFactor = 3 / 4;
+  public haltFactor = 3 / 16;
   public isHero = false;
 
-  private shootTimer = -1;
-  private lastActionTile: { x: number; y: number } | null = null;
+  private haltTimer: number | null = null;
 
-  tick(dt: number) {
-    // TODO: this is trash.
+  tick(mode: PlayGameMode, dt: number) {
+    const speed = this.speed * dt;
+
     if (!this.isHero) {
       // Every tile moved stats this algorithm.
-      const currentTile = { x: Math.floor((this.x) / tileSize), y: Math.floor((this.y) / tileSize) };
-      if (!this.lastActionTile || currentTile.x !== this.lastActionTile.x || currentTile.y !== this.lastActionTile.y) {
-        this.lastActionTile = currentTile;
+      const currentTile = { x: Math.floor(this.x / tileSize), y: Math.floor(this.y / tileSize) };
+      const nextTile = { x: Math.floor((this.x + this.delta.x * speed) / tileSize), y: Math.floor((this.y + this.delta.y * speed) / tileSize) };
+      const notMoving = this.delta.x === 0 && this.delta.y === 0;
 
-        // if (Math.random() < this.haltFactor) {
-        //   this.shootTimer = 10;
-        // }
+      if (notMoving || currentTile.x !== nextTile.x || currentTile.y !== nextTile.y) {
+        if (Math.random() < this.haltFactor) {
+          this.haltTimer = 10;
+          mode.createProjectile({x: Math.sign(this.delta.x), y: Math.sign(this.delta.y)}, nextTile.x, nextTile.y, 2);
+        }
 
         if (Math.random() < this.homingFactor) {
           // TODO
           this.delta = directions[Math.floor(Math.random() * 4)];
-        } else if (Math.random() < this.directionChangeFactor) {
+        } else if (Math.random() < this.directionChangeFactor || !notMoving) {
           this.delta = directions[Math.floor(Math.random() * 4)];
         }
       }
 
-      if (this.delta.x === 0 && this.delta.y === 0) {
-        this.delta = directions[Math.floor(Math.random() * 4)];
+      if (this.haltTimer !== null) {
+        this.haltTimer -= dt;
+        if (this.haltTimer <= 0) this.haltTimer = null;
+        return;
       }
     }
 
@@ -88,7 +111,6 @@ class QuestEntitySprite extends EntitySprite {
       else if (dy === -1) direction = 'up';
       else if (dy === 1) direction = 'down';
 
-      const speed = this.speed * dt;
       this.play();
       this.setTextureFrame(direction);
       this.x += dx * speed;
@@ -117,9 +139,11 @@ class QuestEntitySprite extends EntitySprite {
 }
 
 export class PlayGameMode extends QuestMakerMode {
-  private heroEntity: QuestMaker.Entity = { type: 0, x: screenWidth * tileSize / 2, y: screenHeight * tileSize / 2 };
+  public heroEntity: QuestMaker.Entity = { type: 0, x: screenWidth * tileSize / 2, y: screenHeight * tileSize / 2 };
+
+  // TODO: this is trash.
   private entities: QuestMaker.Entity[] = [];
-  private entitiyData = new Map<QuestMaker.Entity, { sprite: QuestEntitySprite }>();
+  private entitiyData = new Map<QuestMaker.Entity, { sprite: QuestEntitySprite | QuestProjectileSprite }>();
 
   show() {
     super.show();
@@ -225,7 +249,7 @@ export class PlayGameMode extends QuestMakerMode {
     heroSprite.delta.y = dy;
 
     for (let data of this.entitiyData.values()) {
-      data.sprite.tick(dt);
+      data.sprite.tick(this, dt);
     }
 
     if (dx !== 0 || dy !== 0) {
@@ -403,6 +427,34 @@ export class PlayGameMode extends QuestMakerMode {
     this.container.addChild(entitySprite);
 
     return entity;
+  }
+
+  createProjectile(delta: {x: number, y: number}, x: number, y: number, speed: number) {
+    const entity: QuestMaker.Entity = {
+      type: 1,
+      x: x * tileSize,
+      y: y * tileSize,
+    };
+    this.entities.push(entity);
+
+    const entitySprite = new QuestProjectileSprite();
+    entitySprite.delta = delta;
+    entitySprite.speed = speed;
+    const textures = [7].map(f => this.app.createTileSprite(f).texture);
+    entitySprite.addTextureFrame('default', textures);
+
+    entitySprite.setTextureFrame('default'); // :(
+
+    this.entitiyData.set(entity, { sprite: entitySprite });
+    entitySprite.x = entity.x;
+    entitySprite.y = entity.y;
+    this.container.addChild(entitySprite);
+
+    return entity;
+  }
+
+  removeEntity() {
+    // TODO
   }
 
   onEnterScreen() {
