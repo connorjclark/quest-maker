@@ -74,7 +74,7 @@ class QuestProjectileSprite extends QuestEntitySpriteBase {
 }
 
 class QuestEntitySprite extends QuestEntitySpriteBase {
-  public direction = { x: 0, y: 1 };
+  public direction = { ...directions[Math.floor(Math.random() * directions.length)] };
   public speed = 1;
   public homingFactor = 64 / 255;
   public directionChangeFactor = 4 / 16;
