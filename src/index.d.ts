@@ -12,17 +12,27 @@ declare global {
       spritesheet: string;
       x: number;
       y: number;
+      width: number;
+      height: number;
       walkable: boolean;
     }
 
     interface Enemy {
       name: string;
       frames: Record<string, number[]>;
+      weaponId?: number;
+    }
+
+    interface Weapon {
+      id: number;
+      name: string;
+      tile: number;
     }
 
     interface Quest {
       screens: Screen[][];
       enemies: Enemy[];
+      weapons: Weapon[];
       tiles: Tile[];
       misc: {
         HERO_TILE_START: number;

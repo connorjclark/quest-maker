@@ -40,28 +40,35 @@ function createQuest(): QuestMaker.Quest {
   // Create tiles from gfx/
   const tiles: QuestMaker.Tile[] = [];
 
-  function makeTile(spritesheet: string, x: number, y: number): QuestMaker.Tile {
-    const tile = { id: tiles.length, spritesheet, x, y, walkable: true };
+  function makeTile(spritesheet: string, x: number, y: number, width: number, height: number): QuestMaker.Tile {
+    const tile = { id: tiles.length, spritesheet, x, y, width, height, walkable: true };
     tiles.push(tile);
     return tile;
   }
 
-  function makeTiles(opts: { spritesheet: string, n: number, tilesInRow?: number, startX?: number, startY?: number, spacing?: number }) {
+  function makeTiles(opts: { spritesheet: string, n: number, tilesInRow?: number, startX?: number, startY?: number, spacing?: number, width?: number, height?: number }) {
     const t = [];
 
+    if (!opts.width) opts.width = tileSize;
+    if (!opts.height) opts.height = tileSize;
     if (!opts.startX) opts.startX = 0;
     if (!opts.startY) opts.startY = 0;
     if (!opts.spacing) opts.spacing = 0;
     if (!opts.tilesInRow) opts.tilesInRow = opts.n;
 
     for (let i = 0; i < opts.n; i++) {
-      const x = (i % opts.tilesInRow) * (tileSize + opts.spacing) + opts.startX;
-      const y = Math.floor(i / opts.tilesInRow) * (tileSize + opts.spacing) + opts.startY;
-      const tile = makeTile(opts.spritesheet, x, y);
+      const x = (i % opts.tilesInRow) * (opts.width + opts.spacing) + opts.startX;
+      const y = Math.floor(i / opts.tilesInRow) * (opts.height + opts.spacing) + opts.startY;
+      const tile = makeTile(opts.spritesheet, x, y, opts.width, opts.height);
       t.push(tile);
     }
 
     return t;
+  }
+
+  const weapons: QuestMaker.Weapon[] = [];
+  function makeWeapon(weapon: Omit<QuestMaker.Weapon, 'id'>) {
+    weapons.push({ id: weapons.length + 1, ...weapon });
   }
 
   const basicTiles = makeTiles({
@@ -86,19 +93,26 @@ function createQuest(): QuestMaker.Quest {
 
   const octorokTiles = makeTiles({
     spritesheet: 'enemies',
-    n: 4,
+    n: 5,
     startX: 1,
     startY: 11,
     spacing: 1,
   });
 
-  const enemies = [];
+  const enemies: QuestMaker.Enemy[] = [];
   enemies.push({
     name: 'Octorok (Red)',
+    weaponId: 1,
     frames: {
       down: [octorokTiles[0].id, octorokTiles[1].id],
       left: [octorokTiles[2].id, octorokTiles[3].id],
     },
+  });
+
+  octorokTiles[octorokTiles.length - 1].width = tileSize / 2;
+  makeWeapon({
+    name: 'Rock',
+    tile: octorokTiles[octorokTiles.length - 1].id,
   });
 
   const screens: Screen[][] = [];
@@ -117,6 +131,7 @@ function createQuest(): QuestMaker.Quest {
   return {
     tiles,
     enemies,
+    weapons,
     screens,
     misc: {
       HERO_TILE_START: HERO_TILES[0].id,

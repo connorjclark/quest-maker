@@ -80,6 +80,7 @@ class QuestEntitySprite extends QuestEntitySpriteBase {
   public directionChangeFactor = 4 / 16;
   public haltFactor = 3 / 16;
   public isHero = false;
+  public weaponId = 0;
 
   private haltTimer: number | null = null;
 
@@ -125,7 +126,9 @@ class QuestEntitySprite extends QuestEntitySpriteBase {
       if (shouldChangeDirection || currentTile.x !== nextTile.x || currentTile.y !== nextTile.y) {
         if (Math.random() < this.haltFactor) {
           this.haltTimer = 30;
-          mode.createProjectile({ x: Math.sign(this.direction.x), y: Math.sign(this.direction.y) }, currentTile.x, currentTile.y, 2);
+          if (this.weaponId) {
+            mode.createProjectile(this.weaponId, { x: Math.sign(this.direction.x), y: Math.sign(this.direction.y) }, currentTile.x, currentTile.y, 2);
+          }
           return;
         }
 
@@ -440,9 +443,11 @@ export class PlayGameMode extends QuestMakerMode {
   }
 
   createEntityFromEnemy(enemy: QuestMaker.Enemy, x: number, y: number) {
+    // TODO: rename to entity.
     const entitySprite = new QuestEntitySprite();
     entitySprite.x = x * tileSize;
     entitySprite.y = y * tileSize;
+    entitySprite.weaponId = enemy.weaponId || 0;
 
     for (const [name, frames] of Object.entries(enemy.frames)) {
       const textures = frames.map(f => this.app.createTileSprite(f).texture);
@@ -463,14 +468,17 @@ export class PlayGameMode extends QuestMakerMode {
     return entitySprite;
   }
 
-  createProjectile(delta: { x: number, y: number }, x: number, y: number, speed: number) {
+  createProjectile(weaponId: number, delta: { x: number, y: number }, x: number, y: number, speed: number) {
+    const weapon = this.app.state.quest.weapons[weaponId - 1];
+    const tile = this.app.state.quest.tiles[weapon.tile];
+
     const entitySprite = new QuestProjectileSprite();
-    entitySprite.x = x * tileSize;
-    entitySprite.y = y * tileSize;
+    entitySprite.x = x * tileSize + (tileSize - tile.width) / 2;
+    entitySprite.y = y * tileSize + (tileSize - tile.height) / 2;
     entitySprite.delta = delta;
     entitySprite.speed = speed;
 
-    const textures = [7].map(f => this.app.createTileSprite(f).texture);
+    const textures = [weapon.tile].map(f => this.app.createTileSprite(f).texture);
     entitySprite.addTextureFrame('default', textures);
     entitySprite.setTextureFrame('default');
 
