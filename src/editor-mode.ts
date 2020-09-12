@@ -1,5 +1,6 @@
 import * as constants from './constants';
 import { QuestMakerMode } from "./quest-maker-mode";
+import { ReactiveContainer } from './engine/reactive-container';
 
 const { screenWidth, screenHeight, tileSize } = constants;
 
@@ -149,16 +150,26 @@ export class EditorMode extends QuestMakerMode {
       const n = 2 as number; // hard code for now.
       const scale = n === 2 ? 1.5 : 1;
 
+      const currentTileContainer = new ReactiveContainer((container, { currentTile }) => {
+        container.removeChildren();
+        container.addChild(this.app.createTileSprite(currentTile));
+      }, () => ({ currentTile: this.app.state.editor.currentTile }));
+      currentTileContainer.scale.set(2);
+      contents.addChild(currentTileContainer);
+
       const picker1 = this.createTilePicker({ scale });
+      picker1.y = currentTileContainer.height + 8;
       contents.addChild(picker1);
 
       const picker2 = this.createTilePicker({ scale });
       picker2.x = picker1.width + 16;
+      picker2.y = currentTileContainer.height + 8;
       contents.addChild(picker2);
 
       if (n === 3) {
         const picker3 = this.createTilePicker({ scale });
         picker3.x = picker2.x + picker2.width + 16;
+        picker3.y = currentTileContainer.height + 8;
         contents.addChild(picker3);
       }
 
