@@ -17,6 +17,16 @@ export class App<S> {
       pressed: {},
       up: {},
     };
+
+    // Listen for global events on the <canvas> element and convert those into scroll event.
+    pixi.stage.interactive = true;
+    pixi.view.addEventListener('mousewheel', (e: Event) => {
+      const mousePosition = pixi.renderer.plugins.interaction.mouse.global;
+      const local = pixi.stage.toLocal(mousePosition);
+      // Returns element directly under mouse.
+      const found = pixi.renderer.plugins.interaction.hitTest(local, pixi.stage);
+      if (found) found.emit('scroll', e);
+    });
   }
 
   createSprite(spritesheet: string, x: number, y: number, width: number, height: number) {

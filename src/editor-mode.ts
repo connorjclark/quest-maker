@@ -74,14 +74,13 @@ export class EditorMode extends QuestMakerMode {
     super.init();
 
     const screenArea = this.createScreenArea();
-    const screenAreaRatio = getRatio(screenArea.container, this.app.pixi.screen.width * 0.8, this.app.pixi.screen.height * 0.8);
-    screenArea.container.scale.set(screenAreaRatio);
+    screenArea.container.scale.set(2);
     this.container.addChild(screenArea.container);
     containers.screenArea = screenArea;
 
-    const tilePicker = this.createTilePicker({ scale: 2, width: this.app.pixi.screen.width - screenArea.container.width });
-    tilePicker.container.x = screenArea.container.width;
-    this.container.addChild(tilePicker.container);
+    const rightPanel = this.createRightPanel();
+    rightPanel.container.x = screenArea.container.width;
+    this.container.addChild(rightPanel.container);
 
     const screenPicker = this.createScreenPicker();
     screenPicker.container.y = screenArea.container.height;
@@ -114,16 +113,13 @@ export class EditorMode extends QuestMakerMode {
     }
   }
 
-  private createTilePicker(opts: { scale: number, width: number }) {
-    const state = this.app.state;
-
+  private createRightPanel() {
     const container = new PIXI.Container();
 
     const tabs: Record<string, { button: PIXI.Container, content: PIXI.Container }> = {};
 
     const tabButtons = new PIXI.Container();
     const currentTabContents = new PIXI.Container();
-    currentTabContents.scale.set(opts.scale);
     container.addChild(tabButtons);
     container.addChild(currentTabContents);
 
@@ -150,20 +146,21 @@ export class EditorMode extends QuestMakerMode {
 
     const createTilesTab = () => {
       const contents = new PIXI.Container();
-      contents.interactive = true;
-      const tilesAcross = Math.min(opts.width / (tileSize * opts.scale));
+      const n = 2 as number; // hard code for now.
+      const scale = n === 2 ? 1.5 : 1;
 
-      for (let i = 0; i < state.quest.tiles.length; i++) {
-        const sprite = this.app.createTileSprite(i);
-        sprite.x = (i % tilesAcross) * sprite.width;
-        sprite.y = Math.floor(i / tilesAcross) * sprite.height;
-        contents.addChild(sprite);
+      const picker1 = this.createTilePicker({ scale });
+      contents.addChild(picker1);
+
+      const picker2 = this.createTilePicker({ scale });
+      picker2.x = picker1.width + 16;
+      contents.addChild(picker2);
+
+      if (n === 3) {
+        const picker3 = this.createTilePicker({ scale });
+        picker3.x = picker2.x + picker2.width + 16;
+        contents.addChild(picker3);
       }
-
-      contents.addListener('click', (e) => {
-        const pos = e.data.getLocalPosition(e.currentTarget);
-        state.editor.currentTile = Math.floor(pos.x / tileSize) + Math.floor(pos.y / tileSize) * tilesAcross;
-      });
 
       return contents;
     };
@@ -172,7 +169,7 @@ export class EditorMode extends QuestMakerMode {
       const contents = new PIXI.Container();
       makeDomContainer(contents);
 
-      const elDisplayObject = new DomElementDisplayObject(this.app, opts.width, 300);
+      const elDisplayObject = new DomElementDisplayObject(this.app, container.width, 300);
       contents.addChild(elDisplayObject);
 
       const p = document.createElement('p');
@@ -210,10 +207,55 @@ export class EditorMode extends QuestMakerMode {
     //   borderContainer.removeListener('mouseup', mouseup);
     // }
 
-    const tilePicker = {
+    const rightPanel = {
       container,
     };
-    return tilePicker;
+    return rightPanel;
+  }
+
+  private createTilePicker(opts: { scale: number }) {
+    const state = this.app.state;
+    const scaledTileSize = opts.scale * tileSize;
+
+    const container = new PIXI.Container();
+    container.interactive = true;
+
+    const tilesAcross = 4;
+    const tilesVertical = Math.ceil(state.quest.tiles.length / tilesAcross);
+
+    const mask = new PIXI.Graphics();
+    mask.beginFill(0);
+    mask.drawRect(0, 0, tilesAcross * scaledTileSize, tilesVertical * scaledTileSize);
+    mask.endFill();
+    container.addChild(mask);
+
+    const tilesContainer = new PIXI.Container();
+    tilesContainer.mask = mask;
+    container.addChild(tilesContainer);
+
+    const spriteToTileNumber = new Map();
+    for (let i = 0; i < state.quest.tiles.length; i++) {
+      const sprite = this.app.createTileSprite(i);
+      sprite.scale.set(opts.scale);
+      sprite.interactive = true;
+      sprite.x = (i % tilesAcross) * scaledTileSize;
+      sprite.y = Math.floor(i / tilesAcross) * scaledTileSize;
+      sprite.addListener('scroll', onScroll);
+      tilesContainer.addChild(sprite);
+      spriteToTileNumber.set(sprite, i);
+    }
+
+    container.addListener('click', (e) => {
+      const tileNumber = spriteToTileNumber.get(e.target);
+      if (tileNumber !== undefined) state.editor.currentTile = spriteToTileNumber.get(e.target);
+    });
+
+    function onScroll(e: WheelEvent) {
+      tilesContainer.y = clamp(-tilesContainer.height, tilesContainer.y - e.deltaY * 0.5, 0);
+    }
+    container.addListener('scroll', onScroll);
+
+    return container;
   }
 
   private createScreenPicker() {

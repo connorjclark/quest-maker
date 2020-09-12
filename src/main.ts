@@ -129,7 +129,7 @@ function createQuest(): QuestMaker.Quest {
   tiles[2] = temp;
 
   return {
-    tiles,
+    tiles: [...tiles, ...tiles, ...tiles, ...tiles],
     enemies,
     weapons,
     screens,
