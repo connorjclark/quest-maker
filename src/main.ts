@@ -20,6 +20,7 @@ class Screen {
       for (let y = 0; y < screenHeight; y++) {
         let tile = 0;
         if (Math.random() > 0.8 && x * y != 0 && x !== screenWidth - 1 && y !== screenHeight - 1) tile = 1;
+        if (x > screenWidth / 2 - 2 && x < screenWidth / 2 + 2 && y > screenHeight / 2 - 2 && y < screenHeight / 2 + 2) tile = 0;
         this.tiles[x][y] = { tile };
       }
     }
@@ -40,7 +41,7 @@ function createQuest(): QuestMaker.Quest {
   // Create tiles from gfx/
   const tiles: QuestMaker.Tile[] = [];
 
-  function makeTile(opts: Omit<QuestMaker.Tile, 'id'|'type'|'walkable'>): QuestMaker.Tile {
+  function makeTile(opts: Omit<QuestMaker.Tile, 'id' | 'type' | 'walkable'>): QuestMaker.Tile {
     const tile = {
       id: tiles.length,
       type: 'default' as QuestMaker.TileType,
@@ -141,6 +142,8 @@ function createQuest(): QuestMaker.Quest {
 
   // Stairs.
   tiles[2].type = 'warp';
+
+  screens[0][0].tiles[9][7].tile = 2;
 
   return {
     tiles: [...tiles, ...tiles, ...tiles, ...tiles],
