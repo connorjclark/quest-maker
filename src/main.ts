@@ -40,8 +40,13 @@ function createQuest(): QuestMaker.Quest {
   // Create tiles from gfx/
   const tiles: QuestMaker.Tile[] = [];
 
-  function makeTile(spritesheet: string, x: number, y: number, width: number, height: number): QuestMaker.Tile {
-    const tile = { id: tiles.length, spritesheet, x, y, width, height, walkable: true };
+  function makeTile(opts: Omit<QuestMaker.Tile, 'id'|'type'|'walkable'>): QuestMaker.Tile {
+    const tile = {
+      id: tiles.length,
+      type: 'default' as QuestMaker.TileType,
+      walkable: true,
+      ...opts,
+    };
     tiles.push(tile);
     return tile;
   }
@@ -59,7 +64,13 @@ function createQuest(): QuestMaker.Quest {
     for (let i = 0; i < opts.n; i++) {
       const x = (i % opts.tilesInRow) * (opts.width + opts.spacing) + opts.startX;
       const y = Math.floor(i / opts.tilesInRow) * (opts.height + opts.spacing) + opts.startY;
-      const tile = makeTile(opts.spritesheet, x, y, opts.width, opts.height);
+      const tile = makeTile({
+        spritesheet: opts.spritesheet,
+        x,
+        y,
+        width: opts.width,
+        height: opts.height,
+      });
       t.push(tile);
     }
 
@@ -127,6 +138,9 @@ function createQuest(): QuestMaker.Quest {
   let temp = tiles[0];
   tiles[0] = tiles[2];
   tiles[2] = temp;
+
+  // Stairs.
+  tiles[2].type = 'warp';
 
   return {
     tiles: [...tiles, ...tiles, ...tiles, ...tiles],

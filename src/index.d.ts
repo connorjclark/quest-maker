@@ -7,8 +7,13 @@ declare global {
       tiles: { tile: number }[][];
     }
 
+    type TileType =
+      | 'default'
+      | 'warp';
+
     interface Tile {
       id: number;
+      type: TileType;
       spritesheet: string;
       x: number;
       y: number;
@@ -48,6 +53,7 @@ declare global {
       };
       game: {
         screenTransition?: {
+          type: 'direct' | 'scroll';
           frames: number;
           screen: { x: number, y: number };
           screenDelta: { x: number, y: number };

@@ -260,33 +260,7 @@ export class PlayGameMode extends QuestMakerMode {
 
     let transition = state.game.screenTransition;
     if (transition) {
-      if (transition.frames === 0) {
-        this.tileLayer.addChildAt(transition.newScreenContainer, 0);
-        transition.newScreenContainer.x = screenWidth * tileSize * Math.sign(transition.screenDelta.x);
-        transition.newScreenContainer.y = screenHeight * tileSize * Math.sign(transition.screenDelta.y);
-      }
-
-      const duration = 50;
-      this.container.x = (transition.frames / duration) * screenWidth * tileSize * this.container.scale.x * Math.sign(-transition.screenDelta.x);
-      this.container.y = (transition.frames / duration) * screenHeight * tileSize * this.container.scale.y * Math.sign(-transition.screenDelta.y);
-
-      transition.frames += dt;
-      if (transition.frames >= duration) {
-        state.screenX = transition.screen.x;
-        state.screenY = transition.screen.y;
-        state.currentScreen = state.quest.screens[state.screenX][state.screenY];
-        delete state.game.screenTransition;
-        this.container.x = 0;
-        this.container.y = 0;
-
-        if (Math.sign(transition.screenDelta.x) === 1) this.heroEntity.x = 0;
-        else if (Math.sign(transition.screenDelta.x) === -1) this.heroEntity.x = (tileSize - 1) * screenWidth;
-        else if (Math.sign(transition.screenDelta.y) === 1) this.heroEntity.y = 0;
-        else if (Math.sign(transition.screenDelta.y) === -1) this.heroEntity.y = (tileSize - 1) * screenHeight - 5; // ?
-
-        this.show();
-      }
-
+      this.performScreenTransition(transition);
       return;
     }
 
@@ -323,6 +297,7 @@ export class PlayGameMode extends QuestMakerMode {
       };
 
       const sideTiles: Record<string, { x: number, y: number }> = {};
+      // TODO: name => direction?
       for (const [name, point] of Object.entries(sidePoints)) {
         sideTiles[name] = {
           x: Math.floor(point.x / tileSize),
@@ -396,6 +371,30 @@ export class PlayGameMode extends QuestMakerMode {
           this.container.addChild(debug);
         }
       }
+
+      // Interact with touched tiles.
+      // TODO: should this also be done when dx,dy === 0?
+      // First group by point.
+      const sideTilesByPoints: Array<{ x: number, y: number, names: string[] }> = [];
+      for (const [name, point] of Object.entries(sideTiles)) {
+        let grouped = sideTilesByPoints.find(g => g.x === point.x && g.y === point.y);
+        if (!grouped) {
+          grouped = { ...point, names: [] };
+          sideTilesByPoints.push(grouped);
+        }
+        grouped.names.push(name);
+      }
+      for (const { x, y, names } of sideTilesByPoints) {
+        if (!inBounds(x, y, screenWidth, screenHeight)) continue;
+
+        const { tile } = state.currentScreen.tiles[x][y];
+        const tile_ = state.quest.tiles[tile]; // ... naming issue ....
+        if (tile_.type === 'default') continue;
+
+        if (tile_.type === 'warp') {
+          this.performTileAction(tile_.type, names);
+        }
+      }
     }
 
     // Transition screen when hero enters edge.
@@ -415,6 +414,7 @@ export class PlayGameMode extends QuestMakerMode {
     if (transitionX !== 0 || transitionY !== 0) {
       if (inBounds(state.screenX + transitionX, state.screenY + transitionY, state.quest.screens.length, state.quest.screens[0].length)) {
         state.game.screenTransition = {
+          type: 'scroll',
           frames: 0,
           screen: { x: state.screenX + transitionX, y: state.screenY + transitionY },
           screenDelta: { x: transitionX, y: transitionY },
@@ -498,5 +498,84 @@ export class PlayGameMode extends QuestMakerMode {
     let y = 5;
     let entity = this.createEntityFromEnemy(enemy, x, y);
     entity.speed = 0.75;
+  }
+
+  performScreenTransition(transition: Exclude<QuestMaker.State['game']['screenTransition'], undefined>) {
+    const state = this.app.state;
+
+    let duration;
+    if (transition.type === 'scroll') {
+      if (transition.frames === 0) {
+        this.tileLayer.addChildAt(transition.newScreenContainer, 0);
+        transition.newScreenContainer.x = screenWidth * tileSize * Math.sign(transition.screenDelta.x);
+        transition.newScreenContainer.y = screenHeight * tileSize * Math.sign(transition.screenDelta.y);
+      }
+
+      duration = 50;
+      this.container.x = (transition.frames / duration) * screenWidth * tileSize * this.container.scale.x * Math.sign(-transition.screenDelta.x);
+      this.container.y = (transition.frames / duration) * screenHeight * tileSize * this.container.scale.y * Math.sign(-transition.screenDelta.y);
+    } else if (transition.type === 'direct') {
+      const durations = [50, 50, 50];
+      duration = durations.reduce((cur, acc) => cur + acc);
+      let step = 0;
+      let stepFrames = transition.frames;
+      while (stepFrames > durations[step]) {
+        stepFrames -= durations[step];
+        step++;
+      }
+
+      if (step === 0) {
+        this.container.alpha = 1 - (stepFrames / durations[step]);
+      } else if (step === 1) {
+        if (stepFrames === 1) {
+          this.tileLayer.removeChildren();
+          for (const child of this.entityLayer.children) {
+            if (child !== this.heroEntity) this.entityLayer.removeChild(child);
+          }
+          this.tileLayer.addChild(transition.newScreenContainer);
+        }
+      } else if (step === 2) {
+        this.container.alpha = stepFrames / durations[step];
+      }
+    } else {
+      throw new Error();
+    }
+
+    transition.frames += 1;
+    if (transition.frames >= duration) {
+      delete state.game.screenTransition;
+      state.screenX = transition.screen.x;
+      state.screenY = transition.screen.y;
+      state.currentScreen = state.quest.screens[state.screenX][state.screenY];
+      this.container.x = 0;
+      this.container.y = 0;
+
+      if (transition.type === 'scroll') {
+        if (Math.sign(transition.screenDelta.x) === 1) this.heroEntity.x = 0;
+        else if (Math.sign(transition.screenDelta.x) === -1) this.heroEntity.x = (tileSize - 1) * screenWidth;
+        else if (Math.sign(transition.screenDelta.y) === 1) this.heroEntity.y = 0;
+        else if (Math.sign(transition.screenDelta.y) === -1) this.heroEntity.y = (tileSize - 1) * screenHeight - 5; // ?
+      }
+
+      this.show();
+    }
+  }
+
+  performTileAction(type: QuestMaker.TileType, names: string[]) {
+    const state = this.app.state;
+
+    if (type === 'warp') {
+      if (names.includes('bottomLeft') && names.includes('bottomRight')) {
+        const transitionX = 0;
+        const transitionY = 1;
+        state.game.screenTransition = {
+          type: 'direct',
+          frames: 0,
+          screen: { x: state.screenX + transitionX, y: state.screenY + transitionY },
+          screenDelta: { x: transitionX, y: transitionY },
+          newScreenContainer: this.createScreenContainer(state.screenX + transitionX, state.screenY + transitionY),
+        };
+      }
+    }
   }
 }
