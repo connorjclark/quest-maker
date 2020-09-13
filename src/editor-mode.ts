@@ -405,15 +405,26 @@ export class EditorMode extends QuestMakerMode {
       walkableTile.scale.set(4);
       container.addChild(walkableTile);
 
-      if (!props.tile.walkable) {
-        walkableTile.tint = 0xff0000;
+      for (let quadrant = 0; quadrant < props.tile.walkable.length; quadrant++) {
+        if (props.tile.walkable[quadrant]) continue;
+        const gfx = new PIXI.Graphics();
+        if (quadrant % 2 === 1) gfx.x = tileSize / 2;
+        if (quadrant >= 2) gfx.y = tileSize / 2;
+        gfx.beginFill(0xff0000, 0.8);
+        gfx.drawRect(0, 0, tileSize / 2, tileSize / 2);
+        gfx.endFill();
+        walkableTile.addChild(gfx);
       }
 
       walkableTile.interactive = true;
-      walkableTile.addListener('click', () => {
-        state.quest.tiles[state.editor.currentTile].walkable = !state.quest.tiles[state.editor.currentTile].walkable;
+      walkableTile.addListener('click', (e) => {
+        let quadrant = 0;
+        const pos = e.data.getLocalPosition(e.target);
+        if (pos.x / tileSize > 0.5) quadrant += 1;
+        if (pos.y / tileSize > 0.5) quadrant += 2;
+        state.quest.tiles[props.tile.id].walkable[quadrant] = !state.quest.tiles[props.tile.id].walkable[quadrant];
       });
-    }, () => ({ tile: { ...state.quest.tiles[state.editor.currentTile] } }));
+    }, () => ({ tile: state.quest.tiles[state.editor.currentTile] }));
 
     this.createPopupWindow(tileEditorContainer);
   }

@@ -45,7 +45,7 @@ function createQuest(): QuestMaker.Quest {
     const tile = {
       id: tiles.length,
       type: 'default' as QuestMaker.TileType,
-      walkable: true,
+      walkable: [true, true, true, true] as QuestMaker.Tile['walkable'],
       ...opts,
     };
     tiles.push(tile);
@@ -92,7 +92,11 @@ function createQuest(): QuestMaker.Quest {
     spacing: 1,
   });
   for (const tile of basicTiles) {
-    tile.walkable = ![1, 3, 4, 5, 7, 8].includes(basicTiles.indexOf(tile));
+    if ([1, 3, 4, 5, 7, 8].includes(basicTiles.indexOf(tile))) {
+      tile.walkable = [false, false, false, false];
+    } else {
+      tile.walkable = [true, true, true, true];
+    }
   }
 
   const HERO_TILES = makeTiles({

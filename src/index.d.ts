@@ -19,7 +19,8 @@ declare global {
       y: number;
       width: number;
       height: number;
-      walkable: boolean;
+      /* top left, top right, bottom left, bottom right */
+      walkable: [boolean, boolean, boolean, boolean];
     }
 
     interface Enemy {

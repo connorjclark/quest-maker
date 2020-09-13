@@ -17,7 +17,7 @@ const isSolid = (state: QuestMaker.State, x: number, y: number) => {
   if (!inBounds(x, y, screenWidth, screenHeight)) return true;
 
   const tileNumber = state.currentScreen.tiles[x][y].tile;
-  return !state.quest.tiles[tileNumber].walkable;
+  return !state.quest.tiles[tileNumber].walkable[0];
 };
 
 // TODO: move to engine/
