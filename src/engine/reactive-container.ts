@@ -8,18 +8,18 @@ function deepObjectCompare(a: any, b: any): boolean {
 }
 
 export class ReactiveContainer<T> extends PIXI.Container {
-  private lastRenderedState: T;
+  private lastRenderedProps: T;
 
-  constructor(private renderFn: (container: PIXI.Container, state: T) => void, private getState: () => T) {
+  constructor(private renderFn: (container: PIXI.Container, props: T) => void, private getProps: () => T) {
     super();
-    this.lastRenderedState = getState();
-    renderFn(this, this.lastRenderedState);
+    this.lastRenderedProps = getProps();
+    renderFn(this, this.lastRenderedProps);
   }
 
   public _render() {
-    const newState = this.getState();
-    if (deepObjectCompare(newState, this.lastRenderedState)) return;
-    this.lastRenderedState = newState;
-    setTimeout(() => this.renderFn(this, newState));
+    const newProps = this.getProps();
+    if (deepObjectCompare(newProps, this.lastRenderedProps)) return;
+    this.lastRenderedProps = newProps;
+    setTimeout(() => this.renderFn(this, newProps));
   }
 }

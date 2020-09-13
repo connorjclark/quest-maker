@@ -140,6 +140,9 @@ function createQuest(): QuestMaker.Quest {
   tiles[0] = tiles[2];
   tiles[2] = temp;
 
+  // Set ids manually (fixes manually swapped tile ids)
+  for (let i = 0; i < tiles.length; i++) tiles[i].id = i;
+
   // Stairs.
   tiles[2].type = 'warp';
 

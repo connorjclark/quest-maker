@@ -157,6 +157,9 @@ export class EditorMode extends QuestMakerMode {
       currentTileContainer.scale.set(2);
       contents.addChild(currentTileContainer);
 
+      currentTileContainer.interactive = true;
+      currentTileContainer.addListener('click', () => this.openTileEditor());
+
       const picker1 = this.createTilePicker({ scale });
       picker1.y = currentTileContainer.height + 8;
       contents.addChild(picker1);
@@ -385,5 +388,72 @@ export class EditorMode extends QuestMakerMode {
       container,
       render,
     };
+  }
+
+  openTileEditor() {
+    const state = this.app.state;
+
+    const tileEditorContainer = new ReactiveContainer((container, props) => {
+      container.removeChildren();
+
+      const selectedTile = this.app.createTileSprite(props.tile.id);
+      selectedTile.scale.set(4);
+      container.addChild(selectedTile);
+
+      const walkableTile = this.app.createTileSprite(props.tile.id);
+      walkableTile.x = selectedTile.width + 20;
+      walkableTile.scale.set(4);
+      container.addChild(walkableTile);
+
+      if (!props.tile.walkable) {
+        walkableTile.tint = 0xff0000;
+      }
+
+      walkableTile.interactive = true;
+      walkableTile.addListener('click', () => {
+        state.quest.tiles[state.editor.currentTile].walkable = !state.quest.tiles[state.editor.currentTile].walkable;
+      });
+    }, () => ({ tile: { ...state.quest.tiles[state.editor.currentTile] } }));
+
+    this.createPopupWindow(tileEditorContainer);
+  }
+
+  createPopupWindow(contents: PIXI.Container) {
+    const windowContainer = new PIXI.Container();
+    this.container.addChild(windowContainer);
+
+    const background = new PIXI.Graphics();
+    background.interactive = true;
+    background.beginFill(0, 0.5);
+    background.drawRect(0, 0, this.app.pixi.screen.width, this.app.pixi.screen.height);
+    background.endFill();
+    windowContainer.addChild(background);
+
+    const innerContainer = new PIXI.Container();
+    windowContainer.addChild(innerContainer);
+
+    const insetSize = 5;
+    const innerWidth = contents.width + insetSize * 2;
+    const innerHeight = contents.height + insetSize * 2;
+    const innerBackground = new PIXI.Graphics();
+    innerBackground.interactive = true;
+    innerBackground.beginFill(0);
+    innerBackground.x = (this.app.pixi.screen.width - innerWidth) / 2;
+    innerBackground.y = (this.app.pixi.screen.height - innerHeight) / 2;
+    innerBackground.drawRect(0, 0, innerWidth, innerHeight);
+    innerBackground.endFill();
+    innerContainer.addChild(innerBackground);
+
+    contents.x = innerBackground.x + insetSize;
+    contents.y = innerBackground.y + insetSize;
+    innerContainer.addChild(contents);
+
+    const onClickOutside = () => {
+      background.removeListener('click', onClickOutside);
+      this.container.removeChild(windowContainer);
+    };
+    background.addListener('click', onClickOutside);
+
+    return windowContainer;
   }
 }
