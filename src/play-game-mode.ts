@@ -13,12 +13,23 @@ const directions = [{ x: 0, y: -1 }, { x: 0, y: 1 }, { x: 1, y: 0 }, { x: -1, y:
 
 const inBounds = (x: number, y: number, width: number, height: number) => x >= 0 && y >= 0 && x < width && y < height;
 
-const isSolid = (state: QuestMaker.State, x: number, y: number) => {
+const isSolid = (state: QuestMaker.State, x: number, y: number, quadrant?: number) => {
   if (!inBounds(x, y, screenWidth, screenHeight)) return true;
 
   const tileNumber = state.currentScreen.tiles[x][y].tile;
-  return !state.quest.tiles[tileNumber].walkable[0];
+  if (quadrant === undefined) {
+    return !state.quest.tiles[tileNumber].walkable.every(b => b);
+  } else {
+    return !state.quest.tiles[tileNumber].walkable[quadrant];
+  }
 };
+
+function pointToQuadrant(x: number, y: number) {
+  let quadrant = 0;
+  if (x % tileSize > tileSize / 2) quadrant += 1;
+  if (y % tileSize > tileSize / 2) quadrant += 2;
+  return quadrant;
+}
 
 // TODO: move to engine/
 class EntityBase extends PIXI.AnimatedSprite {
@@ -277,31 +288,57 @@ export class PlayGameMode extends QuestMakerMode {
     }
 
     if (dx !== 0 || dy !== 0) {
-      const sidePoints: Record<string, { x: number, y: number }> = {
+      const delta = 3;
+      const center = {
+        x: heroEntity.x + heroEntity.width / 2,
+        y: heroEntity.y + heroEntity.height - delta - 1,
+      };
+      const sidePoints: Record<string, { x: number, y: number, dx: number, dy: number }> = {
         bottomLeft: {
-          x: heroEntity.x,
-          y: heroEntity.y + heroEntity.height - 1,
+          x: heroEntity.x + 1,
+          y: center.y + delta,
+          dx: -1,
+          dy: 1,
+        },
+        bottom: {
+          x: center.x,
+          y: center.y + delta,
+          dx: 0,
+          dy: 1,
         },
         bottomRight: {
           x: heroEntity.x + heroEntity.width - 1,
-          y: heroEntity.y + heroEntity.height - 1,
+          y: center.y + delta,
+          dx: 1,
+          dy: 1,
         },
         topLeft: {
-          x: heroEntity.x,
-          y: heroEntity.y + heroEntity.height / 2,
+          x: heroEntity.x + 1,
+          y: center.y - delta,
+          dx: -1,
+          dy: -1,
+        },
+        top: {
+          x: center.x,
+          y: center.y - delta,
+          dx: 0,
+          dy: -1,
         },
         topRight: {
           x: heroEntity.x + heroEntity.width - 1,
-          y: heroEntity.y + heroEntity.height / 2,
+          y: center.y - delta,
+          dx: 1,
+          dy: -1,
         },
       };
 
-      const sideTiles: Record<string, { x: number, y: number }> = {};
+      const sideTiles: Record<string, { x: number, y: number, quadrant: number }> = {};
       // TODO: name => direction?
       for (const [name, point] of Object.entries(sidePoints)) {
         sideTiles[name] = {
           x: Math.floor(point.x / tileSize),
           y: Math.floor(point.y / tileSize),
+          quadrant: pointToQuadrant(point.x, point.y),
         };
       }
 
@@ -310,22 +347,24 @@ export class PlayGameMode extends QuestMakerMode {
       for (const name of Object.keys(sideTiles)) {
         const tile = sideTiles[name];
         if (tile.x < 0 || tile.y < 0 || tile.x >= screenWidth || tile.y >= screenHeight) continue;
-        if (!isSolid(state, tile.x, tile.y)) continue;
+        if (!isSolid(state, tile.x, tile.y, tile.quadrant)) continue;
 
-        const point = sidePoints[name];
-        const isRight = name.includes('Right'); // lol
-        const isTop = name.includes('top'); // lol
+        const qx = tile.quadrant % 2 === 0 ? 0 : tileSize / 2;
+        const qy = tile.quadrant < 2 ? 0 : tileSize / 2;
+        const point = { ...sidePoints[name] };
+        point.x += qx;
+        point.y += qy;
 
-        if (isRight) {
-          correctionVectors.push({ x: -point.x % 16, y: 0 });
-        } else {
-          correctionVectors.push({ x: 16 - point.x % 16, y: 0 });
+        if (point.dx > 0) {
+          correctionVectors.push({ x: -point.x % 8, y: 0 });
+        } else if (point.dx < 0) {
+          correctionVectors.push({ x: 8 - point.x % 8, y: 0 });
         }
 
-        if (isTop) {
-          correctionVectors.push({ x: 0, y: 16 - point.y % 16 });
-        } else {
-          correctionVectors.push({ x: 0, y: -point.y % 16 });
+        if (point.dy > 0) {
+          correctionVectors.push({ x: 0, y: -point.y % 8 });
+        } else if (point.dy < 0) {
+          correctionVectors.push({ x: 0, y: 8 - point.y % 8 });
         }
       }
 
@@ -364,8 +403,8 @@ export class PlayGameMode extends QuestMakerMode {
           debug.x = sidePoint.x;
           debug.y = sidePoint.y;
           debug.clear();
-          debug.lineStyle(1, 0x00ff00);
-          debug.beginFill();
+          debug.lineStyle(1);
+          debug.beginFill(0x00ff00);
           debug.drawRect(-1, -1, 2, 2);
           debug.endFill();
           this.container.addChild(debug);
