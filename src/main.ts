@@ -2,6 +2,7 @@ import * as constants from './constants';
 import { EditorMode } from './editor-mode';
 import { PlayGameMode } from './play-game-mode';
 import { QuestMakerApp } from './quest-maker-app';
+import { TileType } from './types';
 
 const { screenWidth, screenHeight, tileSize } = constants;
 
@@ -138,7 +139,7 @@ function createQuest(): QuestMaker.Quest {
   for (let i = 0; i < tiles.length; i++) tiles[i].id = i;
 
   // Stairs.
-  tiles[2].type = 'warp';
+  tiles[2].type = TileType.WARP;
 
   screens[0][0].tiles[9][7].tile = 2;
 

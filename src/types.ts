@@ -1,15 +1,19 @@
 import { QuestMakerApp } from "./quest-maker-app";
 import { QuestMakerMode } from "./quest-maker-mode";
 
+export enum TileType {
+  DEFAULT = 'default',
+  WARP = 'warp',
+}
+type TileType_ = TileType;
+
 declare global {
   namespace QuestMaker {
     interface Screen {
       tiles: { tile: number }[][];
     }
 
-    type TileType =
-      | 'default'
-      | 'warp';
+    type TileType = TileType_;
 
     interface Tile {
       id: number;

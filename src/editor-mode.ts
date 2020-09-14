@@ -1,6 +1,7 @@
 import * as constants from './constants';
 import { QuestMakerMode } from "./quest-maker-mode";
 import { ReactiveContainer } from './engine/reactive-container';
+import { TileType } from './types';
 
 const { screenWidth, screenHeight, tileSize } = constants;
 
@@ -14,21 +15,13 @@ function clamp(min: number, val: number, max: number) {
 
 const inBounds = (x: number, y: number, width: number, height: number) => x >= 0 && y >= 0 && x < width && y < height;
 
-// Get a ratio for resize in a bounds
-function getRatio(obj: { width: number, height: number }, w: number, h: number) {
-  let r = Math.min(w / obj.width, h / obj.height);
-  return r;
-}
-
 // move to engine/
 function makeDomContainer(container: PIXI.Container) {
   function toggleDomElements(children: PIXI.DisplayObject[], show: boolean) {
     for (const child of children) {
-      if (child.constructor === PIXI.Container) {
-        // @ts-ignore
+      if (child instanceof PIXI.Container) {
         toggleDomElements(child.children, show);
-      } else if (child.constructor === DomElementDisplayObject) {
-        // @ts-ignore
+      } else if (child instanceof DomElementDisplayObject) {
         child.show(show);
       }
     }
@@ -36,6 +29,29 @@ function makeDomContainer(container: PIXI.Container) {
 
   container.addListener('added', () => toggleDomElements(container.children, true));
   container.addListener('removed', () => toggleDomElements(container.children, false));
+}
+
+type HTMLElementByTagName = HTMLElementTagNameMap & { [id: string]: HTMLElement };
+class DOM {
+  static createElement(name: string, className?: string, attrs: Record<string, (string | undefined)> = {}): HTMLElement {
+    const element = window.document.createElement(name);
+    if (className) {
+      element.className = className;
+    }
+    Object.keys(attrs).forEach(key => {
+      const value = attrs[key];
+      if (typeof value !== 'undefined') {
+        element.setAttribute(key, value);
+      }
+    });
+    return element;
+  }
+
+  static createChildOf(parentElem: Element, elementName: string, className?: string, attrs: Record<string, (string | undefined)> = {}): HTMLElement {
+    const element = this.createElement(elementName, className, attrs);
+    parentElem.appendChild(element);
+    return element;
+  }
 }
 
 class DomElementDisplayObject extends PIXI.DisplayObject {
@@ -47,6 +63,16 @@ class DomElementDisplayObject extends PIXI.DisplayObject {
 
     this.el.style['position'] = 'absolute';
     document.body.appendChild(this.el);
+  }
+
+  calculateBounds() {
+    this._bounds.clear();
+    const { x, y } = this.getGlobalPosition(undefined, true);
+    const rect = this.el.getBoundingClientRect();
+    this._bounds.addPoint({ x: x, y: y });
+    this._bounds.addPoint({ x: x + rect.width, y: y });
+    this._bounds.addPoint({ x: x + rect.width, y: y + rect.height });
+    this._bounds.addPoint({ x: x, y: y + rect.height });
   }
 
   render() {
@@ -393,6 +419,7 @@ export class EditorMode extends QuestMakerMode {
   openTileEditor() {
     const state = this.app.state;
 
+    const elDisplayObject = new DomElementDisplayObject(this.app, 300, 300);
     const tileEditorContainer = new ReactiveContainer((container, props) => {
       container.removeChildren();
 
@@ -424,9 +451,24 @@ export class EditorMode extends QuestMakerMode {
         if (pos.y / tileSize > 0.5) quadrant += 2;
         state.quest.tiles[props.tile.id].walkable[quadrant] = !state.quest.tiles[props.tile.id].walkable[quadrant];
       });
+
+      elDisplayObject.y = walkableTile.height + 10;
+      elDisplayObject.el.innerHTML = '';
+      container.addChild(elDisplayObject);
+
+      DOM.createChildOf(elDisplayObject.el, 'label', undefined, { style: 'color: white' }).innerText = 'Type: ';
+      const typeSelectEl = DOM.createChildOf(elDisplayObject.el, 'select') as HTMLInputElement;
+      for (const type of Object.values(TileType)) {
+        const selected = props.tile.type === type ? 'true' : undefined;
+        const el = DOM.createChildOf(typeSelectEl, 'option', undefined, { value: type, selected });
+        el.innerText = type;
+      }
+      typeSelectEl.addEventListener('change', () => {
+        state.quest.tiles[props.tile.id].type = typeSelectEl.value as QuestMaker.TileType;
+      });
     }, () => ({ tile: state.quest.tiles[state.editor.currentTile] }));
 
-    this.createPopupWindow(tileEditorContainer);
+    makeDomContainer(this.createPopupWindow(tileEditorContainer));
   }
 
   createPopupWindow(contents: PIXI.Container) {
