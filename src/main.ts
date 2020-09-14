@@ -27,16 +27,6 @@ class Screen {
   }
 }
 
-document.body.onkeydown = (e) => {
-  app.keys.down[e.code] = true;
-  app.keys.pressed[e.code] = true;
-};
-document.body.onkeyup = (e) => {
-  delete app.keys.down[e.code];
-  app.keys.up[e.code] = true;
-  app.keys.pressed[e.code] = false;
-};
-
 function createQuest(): QuestMaker.Quest {
   // Create tiles from gfx/
   const tiles: QuestMaker.Tile[] = [];
@@ -163,35 +153,79 @@ function createQuest(): QuestMaker.Quest {
   }
 }
 
-const quest = createQuest();
-const state = {
-  quest,
-  editor: {
-    isPlayTesting: false,
-    currentTile: 0,
-  },
-  game: {},
-  screenX: 0,
-  screenY: 0,
-  currentScreen: quest.screens[0][0],
-};
-
-const app = new QuestMakerApp(pixi, state);
-const editorMode = new EditorMode(app);
-
-function load() {
-  pixi.ticker.add(tick);
-  app.setMode(editorMode);
+// TODO: real quest loading/saving.
+function loadQuest(): QuestMaker.Quest {
+  const json = localStorage.getItem('quest');
+  if (json) {
+    return JSON.parse(json);
+  } else {
+    return createQuest();
+  }
 }
 
-function tick(dt: number) {
+function deleteQuest() {
+  localStorage.clear();
+  // @ts-ignore
+  window.app.state.quest = createQuest();
+  window.location.reload();
+}
+
+function saveQuest(quest: QuestMaker.Quest) {
+  localStorage.setItem('quest', JSON.stringify(quest));
+}
+// @ts-ignore
+window.save = () => saveQuest(window.app.state.quest);
+// @ts-ignore
+window.deleteQuest = deleteQuest;
+// @ts-ignore
+window.addEventListener('unload', window.save);
+// @ts-ignore
+setInterval(window.save, 1000 * 60);
+
+function load() {
+  const quest = loadQuest();
+  const state = {
+    quest,
+    editor: {
+      isPlayTesting: false,
+      currentTile: 0,
+    },
+    game: {},
+    screenX: 0,
+    screenY: 0,
+    currentScreen: quest.screens[0][0],
+  };
+
+  const app = new QuestMakerApp(pixi, state);
+  editorMode = new EditorMode(app);
+
+  // TODO: move to engine.
+  document.body.onkeydown = (e) => {
+    app.keys.down[e.code] = true;
+    app.keys.pressed[e.code] = true;
+  };
+  document.body.onkeyup = (e) => {
+    delete app.keys.down[e.code];
+    app.keys.up[e.code] = true;
+    app.keys.pressed[e.code] = false;
+  };
+
+  pixi.ticker.add(dt => tick(app, dt));
+  app.setMode(editorMode);
+
+  // @ts-ignore
+  window.app = app;
+}
+
+let editorMode: EditorMode;
+function tick(app: QuestMaker.App, dt: number) {
   if (app.keys.down['ShiftLeft'] || app.keys.down['ShiftRight']) {
-    if (state.editor.isPlayTesting) {
+    if (app.state.editor.isPlayTesting) {
       app.setMode(editorMode);
     } else {
       app.setMode(new PlayGameMode(app));
     }
-    state.editor.isPlayTesting = !state.editor.isPlayTesting;
+    app.state.editor.isPlayTesting = !app.state.editor.isPlayTesting;
   }
 
   app.tick(dt);
@@ -202,6 +236,3 @@ pixi.loader
   .add('link', 'gfx/link.png')
   .add('enemies', 'gfx/enemies.png')
   .load(load);
-
-// @ts-ignore
-window.app = app;
