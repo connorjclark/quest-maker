@@ -81,8 +81,8 @@ class QuestProjectileEntity extends QuestEntityBase {
       console.log('ouch'); // TODO
     }
 
-    if (this.x < 0 || this.y < 0) {
-      // mode.removeEntity(this);
+    if (!inBounds(this.x + this.width / 2, this.y + this.height / 2, (screenWidth + 1) * tileSize, (screenHeight + 1) * tileSize)) {
+      mode.removeEntity(this);
     }
   }
 }
@@ -529,8 +529,9 @@ export class PlayGameMode extends QuestMakerMode {
     return entity;
   }
 
-  removeEntity() {
-    // TODO
+  removeEntity(entity: QuestEntityBase) {
+    this.entityLayer.removeChild(entity);
+    this.entities.slice(this.entities.findIndex(e => e.sprite === entity));
   }
 
   onEnterScreen() {
@@ -571,8 +572,8 @@ export class PlayGameMode extends QuestMakerMode {
       } else if (step === 1) {
         if (stepFrames === 1) {
           this.tileLayer.removeChildren();
-          for (const child of this.entityLayer.children) {
-            if (child !== this.heroEntity) this.entityLayer.removeChild(child);
+          for (const {sprite: entity} of this.entities) {
+            if (entity !== this.heroEntity) this.removeEntity(entity);
           }
           this.tileLayer.addChild(transition.newScreenContainer);
         }
