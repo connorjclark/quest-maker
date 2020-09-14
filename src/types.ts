@@ -65,6 +65,7 @@ declare global {
           screenDelta: { x: number, y: number };
           newScreenContainer: PIXI.Container;
         };
+        moveFreeze?: number;
       };
       screenX: number;
       screenY: number;

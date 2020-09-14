@@ -96,6 +96,7 @@ class QuestProjectileEntity extends QuestEntityBase {
 
 class QuestEntity extends QuestEntityBase {
   public direction = { ...directions[Math.floor(Math.random() * directions.length)] };
+  public moving = true;
   public speed = 1;
   public homingFactor = 64 / 255;
   public directionChangeFactor = 4 / 16;
@@ -172,14 +173,11 @@ class QuestEntity extends QuestEntityBase {
       }
     }
 
-    const dx = this.direction.x;
-    const dy = this.direction.y;
-    if (dx !== 0 || dy !== 0) {
-      let direction = 'down';
-      if (dx === 1) direction = 'right';
-      else if (dx === -1) direction = 'left';
-      else if (dy === -1) direction = 'up';
-      else if (dy === 1) direction = 'down';
+    if (this.moving) {
+      let direction = this.getDirectionName();
+
+      const dx = this.direction.x;
+      const dy = this.direction.y;
 
       this.play();
       this.setTextureFrame(direction);
@@ -205,6 +203,19 @@ class QuestEntity extends QuestEntityBase {
     } else {
       this.stop();
     }
+  }
+
+  getDirectionName() {
+    const dx = this.direction.x;
+    const dy = this.direction.y;
+
+    let direction = 'down';
+    if (dx === 1) direction = 'right';
+    else if (dx === -1) direction = 'left';
+    else if (dy === -1) direction = 'up';
+    else if (dy === 1) direction = 'down';
+
+    return direction;
   }
 }
 
@@ -244,6 +255,18 @@ export class PlayGameMode extends QuestMakerMode {
     this.heroEntity.addTextureFrame('left', [
       this.app.createTileSprite(state.quest.misc.HERO_TILE_START + 2).texture,
       this.app.createTileSprite(state.quest.misc.HERO_TILE_START + 3).texture,
+    ], PIXI.groupD8.MIRROR_HORIZONTAL);
+    this.heroEntity.addTextureFrame('useItem-down', [
+      this.app.createTileSprite(state.quest.misc.HERO_TILE_START + 6).texture,
+    ]);
+    this.heroEntity.addTextureFrame('useItem-right', [
+      this.app.createTileSprite(state.quest.misc.HERO_TILE_START + 7).texture,
+    ]);
+    this.heroEntity.addTextureFrame('useItem-left', [
+      this.app.createTileSprite(state.quest.misc.HERO_TILE_START + 7).texture,
+    ], PIXI.groupD8.MIRROR_HORIZONTAL);
+    this.heroEntity.addTextureFrame('useItem-up', [
+      this.app.createTileSprite(state.quest.misc.HERO_TILE_START + 8).texture,
     ], PIXI.groupD8.MIRROR_HORIZONTAL);
 
     this.heroEntity.setTextureFrame('down');
@@ -291,8 +314,29 @@ export class PlayGameMode extends QuestMakerMode {
     else if (this.app.keys.pressed['ArrowRight']) dx += 1;
     else if (this.app.keys.pressed['ArrowUp']) dy -= 1;
     else if (this.app.keys.pressed['ArrowDown']) dy += 1;
-    heroEntity.direction.x = dx;
-    heroEntity.direction.y = dy;
+
+    if (dx !== 0 || dy !== 0) {
+      heroEntity.direction.x = dx;
+      heroEntity.direction.y = dy;
+      this.heroEntity.moving = true;
+    } else {
+      this.heroEntity.moving = false;
+    }
+
+    if (this.app.keys.down['KeyX']) {
+      heroEntity.setTextureFrame('useItem-' + heroEntity.getDirectionName());
+      state.game.moveFreeze = 10;
+    }
+
+    if (state.game.moveFreeze !== undefined) {
+      if (state.game.moveFreeze <= 0) {
+        delete state.game.moveFreeze;
+        heroEntity.setTextureFrame(heroEntity.getDirectionName());
+      } else {
+        state.game.moveFreeze -= 1;
+        heroEntity.moving = false;
+      }
+    }
 
     for (let data of this.entities.values()) {
       data.sprite.tick(this, dt);

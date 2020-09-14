@@ -90,10 +90,17 @@ function createQuest(): QuestMaker.Quest {
     }
   }
 
-  const HERO_TILES = makeTiles({
+  const HERO_BASIC_TILES = makeTiles({
     spritesheet: 'link',
     n: 6,
     startX: 1,
+    startY: 11,
+    spacing: 1,
+  });
+  const HERO_USE_ITEM_TILES = makeTiles({
+    spritesheet: 'link',
+    n: 3,
+    startX: 107,
     startY: 11,
     spacing: 1,
   });
@@ -149,13 +156,15 @@ function createQuest(): QuestMaker.Quest {
     weapons,
     screens,
     misc: {
-      HERO_TILE_START: HERO_TILES[0].id,
+      HERO_TILE_START: HERO_BASIC_TILES[0].id,
     }
   }
 }
 
 // TODO: real quest loading/saving.
 function loadQuest(): QuestMaker.Quest {
+  if (window.location.search.includes('fresh')) return createQuest();
+
   const json = localStorage.getItem('quest');
   if (json) {
     return JSON.parse(json);
