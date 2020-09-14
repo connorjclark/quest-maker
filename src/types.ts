@@ -3,6 +3,7 @@ import { QuestMakerMode } from "./quest-maker-mode";
 
 export enum TileType {
   DEFAULT = 'default',
+  SLOW_WALK = 'slow walk',
   WARP = 'warp',
 }
 type TileType_ = TileType;

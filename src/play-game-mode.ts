@@ -1,11 +1,14 @@
 import * as constants from './constants';
 import { QuestMakerMode } from "./quest-maker-mode";
+import { TileType } from './types';
 
 const { screenWidth, screenHeight, tileSize } = constants;
 
 interface TextureFrame {
   textures: PIXI.Texture[];
 }
+
+const DEFAULT_SPEED = 1.5;
 
 let paused = false;
 
@@ -216,7 +219,8 @@ export class PlayGameMode extends QuestMakerMode {
     this.heroEntity.x = screenWidth * tileSize / 2;
     this.heroEntity.y = screenHeight * tileSize / 2;
     this.heroEntity.isHero = true;
-    this.heroEntity.speed = 1.5;
+
+    this.heroEntity.speed = DEFAULT_SPEED;
 
     this.heroEntity.addTextureFrame('down', [
       this.app.createTileSprite(state.quest.misc.HERO_TILE_START).texture,
@@ -287,61 +291,63 @@ export class PlayGameMode extends QuestMakerMode {
       data.sprite.tick(this, dt);
     }
 
+    heroEntity.speed = DEFAULT_SPEED;
+
+    const delta = 3;
+    const center = {
+      x: heroEntity.x + heroEntity.width / 2,
+      y: heroEntity.y + heroEntity.height - delta - 1,
+    };
+    const sidePoints: Record<string, { x: number, y: number, dx: number, dy: number }> = {
+      bottomLeft: {
+        x: heroEntity.x + 1,
+        y: center.y + delta,
+        dx: -1,
+        dy: 1,
+      },
+      bottom: {
+        x: center.x,
+        y: center.y + delta,
+        dx: 0,
+        dy: 1,
+      },
+      bottomRight: {
+        x: heroEntity.x + heroEntity.width - 1,
+        y: center.y + delta,
+        dx: 1,
+        dy: 1,
+      },
+      topLeft: {
+        x: heroEntity.x + 1,
+        y: center.y - delta,
+        dx: -1,
+        dy: -1,
+      },
+      top: {
+        x: center.x,
+        y: center.y - delta,
+        dx: 0,
+        dy: -1,
+      },
+      topRight: {
+        x: heroEntity.x + heroEntity.width - 1,
+        y: center.y - delta,
+        dx: 1,
+        dy: -1,
+      },
+    };
+
+    const sideTiles: Record<string, { x: number, y: number, quadrant: number }> = {};
+    // TODO: name => direction?
+    for (const [name, point] of Object.entries(sidePoints)) {
+      sideTiles[name] = {
+        x: Math.floor(point.x / tileSize),
+        y: Math.floor(point.y / tileSize),
+        quadrant: pointToQuadrant(point.x, point.y),
+      };
+    }
+
     if (dx !== 0 || dy !== 0) {
-      const delta = 3;
-      const center = {
-        x: heroEntity.x + heroEntity.width / 2,
-        y: heroEntity.y + heroEntity.height - delta - 1,
-      };
-      const sidePoints: Record<string, { x: number, y: number, dx: number, dy: number }> = {
-        bottomLeft: {
-          x: heroEntity.x + 1,
-          y: center.y + delta,
-          dx: -1,
-          dy: 1,
-        },
-        bottom: {
-          x: center.x,
-          y: center.y + delta,
-          dx: 0,
-          dy: 1,
-        },
-        bottomRight: {
-          x: heroEntity.x + heroEntity.width - 1,
-          y: center.y + delta,
-          dx: 1,
-          dy: 1,
-        },
-        topLeft: {
-          x: heroEntity.x + 1,
-          y: center.y - delta,
-          dx: -1,
-          dy: -1,
-        },
-        top: {
-          x: center.x,
-          y: center.y - delta,
-          dx: 0,
-          dy: -1,
-        },
-        topRight: {
-          x: heroEntity.x + heroEntity.width - 1,
-          y: center.y - delta,
-          dx: 1,
-          dy: -1,
-        },
-      };
-
-      const sideTiles: Record<string, { x: number, y: number, quadrant: number }> = {};
-      // TODO: name => direction?
-      for (const [name, point] of Object.entries(sidePoints)) {
-        sideTiles[name] = {
-          x: Math.floor(point.x / tileSize),
-          y: Math.floor(point.y / tileSize),
-          quadrant: pointToQuadrant(point.x, point.y),
-        };
-      }
-
       const correctionVectors: Array<{ x: number, y: number }> = [];
 
       for (const name of Object.keys(sideTiles)) {
@@ -380,60 +386,57 @@ export class PlayGameMode extends QuestMakerMode {
         heroEntity.x += smallestCorrectionVector.x;
         heroEntity.y += smallestCorrectionVector.y;
       }
+    }
 
-      // @ts-ignore
-      if (window.debug) {
-        for (const name of Object.keys(sidePoints)) {
-          const sideTile = sideTiles[name];
-          const debug = this.app.debug(`sideTile ${name}`);
-          debug.alpha = 0.3;
-          debug.x = sideTile.x * tileSize;
-          debug.y = sideTile.y * tileSize;
-          debug.clear();
-          debug.lineStyle(1, 0xff0000);
-          debug.beginFill();
-          debug.drawRect(0, 0, tileSize, tileSize);
-          debug.endFill();
-          this.container.addChild(debug);
-        }
-
-        for (const name of Object.keys(sidePoints)) {
-          const sidePoint = sidePoints[name];
-          const debug = this.app.debug(`sidePoint ${name}`);
-          debug.x = sidePoint.x;
-          debug.y = sidePoint.y;
-          debug.clear();
-          debug.lineStyle(1);
-          debug.beginFill(0x00ff00);
-          debug.drawRect(-1, -1, 2, 2);
-          debug.endFill();
-          this.container.addChild(debug);
-        }
+    // @ts-ignore
+    if (window.debug) {
+      for (const name of Object.keys(sidePoints)) {
+        const sideTile = sideTiles[name];
+        const debug = this.app.debug(`sideTile ${name}`);
+        debug.alpha = 0.3;
+        debug.x = sideTile.x * tileSize;
+        debug.y = sideTile.y * tileSize;
+        debug.clear();
+        debug.lineStyle(1, 0xff0000);
+        debug.beginFill();
+        debug.drawRect(0, 0, tileSize, tileSize);
+        debug.endFill();
+        this.container.addChild(debug);
       }
 
-      // Interact with touched tiles.
-      // TODO: should this also be done when dx,dy === 0?
-      // First group by point.
-      const sideTilesByPoints: Array<{ x: number, y: number, names: string[] }> = [];
-      for (const [name, point] of Object.entries(sideTiles)) {
-        let grouped = sideTilesByPoints.find(g => g.x === point.x && g.y === point.y);
-        if (!grouped) {
-          grouped = { ...point, names: [] };
-          sideTilesByPoints.push(grouped);
-        }
-        grouped.names.push(name);
+      for (const name of Object.keys(sidePoints)) {
+        const sidePoint = sidePoints[name];
+        const debug = this.app.debug(`sidePoint ${name}`);
+        debug.x = sidePoint.x;
+        debug.y = sidePoint.y;
+        debug.clear();
+        debug.lineStyle(1);
+        debug.beginFill(0x00ff00);
+        debug.drawRect(-1, -1, 2, 2);
+        debug.endFill();
+        this.container.addChild(debug);
       }
-      for (const { x, y, names } of sideTilesByPoints) {
-        if (!inBounds(x, y, screenWidth, screenHeight)) continue;
+    }
 
-        const { tile } = state.currentScreen.tiles[x][y];
-        const tile_ = state.quest.tiles[tile]; // ... naming issue ....
-        if (tile_.type === 'default') continue;
-
-        if (tile_.type === 'warp') {
-          this.performTileAction(tile_.type, names);
-        }
+    // Interact with touched tiles.
+    // First group by point.
+    const sideTilesByPoints: Array<{ x: number, y: number, names: string[] }> = [];
+    for (const [name, point] of Object.entries(sideTiles)) {
+      let grouped = sideTilesByPoints.find(g => g.x === point.x && g.y === point.y);
+      if (!grouped) {
+        grouped = { ...point, names: [] };
+        sideTilesByPoints.push(grouped);
       }
+      grouped.names.push(name);
+    }
+    for (const { x, y, names } of sideTilesByPoints) {
+      if (!inBounds(x, y, screenWidth, screenHeight)) continue;
+
+      const { tile } = state.currentScreen.tiles[x][y];
+      const tile_ = state.quest.tiles[tile]; // ... naming issue ....
+      if (tile_.type === 'default') continue;
+
+      this.performTileAction(tile_.type, names);
     }
 
     // Transition screen when hero enters edge.
@@ -603,7 +606,7 @@ export class PlayGameMode extends QuestMakerMode {
   performTileAction(type: QuestMaker.TileType, names: string[]) {
     const state = this.app.state;
 
-    if (type === 'warp') {
+    if (type === TileType.WARP) {
       if (names.includes('bottomLeft') && names.includes('bottomRight')) {
         const transitionX = 0;
         const transitionY = 1;
@@ -615,6 +618,8 @@ export class PlayGameMode extends QuestMakerMode {
           newScreenContainer: this.createScreenContainer(state.screenX + transitionX, state.screenY + transitionY),
         };
       }
+    } else if (type === TileType.SLOW_WALK) {
+      this.heroEntity.speed = DEFAULT_SPEED * 0.5;
     }
   }
 }
