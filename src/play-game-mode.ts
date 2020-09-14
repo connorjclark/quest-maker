@@ -81,9 +81,16 @@ class QuestProjectileEntity extends QuestEntityBase {
       console.log('ouch'); // TODO
     }
 
-    if (!inBounds(this.x + this.width / 2, this.y + this.height / 2, (screenWidth + 1) * tileSize, (screenHeight + 1) * tileSize)) {
-      mode.removeEntity(this);
+    let shouldRemove = !inBounds(this.x + this.width / 2, this.y + this.height / 2, (screenWidth + 1) * tileSize, (screenHeight + 1) * tileSize);
+
+    const x = Math.floor((this.x + this.width / 2) / tileSize);
+    const y = Math.floor((this.y + this.height / 2) / tileSize);
+    const quadrant = pointToQuadrant(this.x, this.y);
+    if (isSolid(mode.app.state, x, y, quadrant)) {
+      shouldRemove = true;
     }
+
+    if (shouldRemove) mode.removeEntity(this);
   }
 }
 
@@ -531,7 +538,8 @@ export class PlayGameMode extends QuestMakerMode {
 
   removeEntity(entity: QuestEntityBase) {
     this.entityLayer.removeChild(entity);
-    this.entities.slice(this.entities.findIndex(e => e.sprite === entity));
+    const index = this.entities.findIndex(e => e.sprite === entity);
+    if (index !== -1) this.entities.splice(index, 1);
   }
 
   onEnterScreen() {
@@ -572,7 +580,7 @@ export class PlayGameMode extends QuestMakerMode {
       } else if (step === 1) {
         if (stepFrames === 1) {
           this.tileLayer.removeChildren();
-          for (const {sprite: entity} of this.entities) {
+          for (const { sprite: entity } of [...this.entities]) {
             if (entity !== this.heroEntity) this.removeEntity(entity);
           }
           this.tileLayer.addChild(transition.newScreenContainer);
