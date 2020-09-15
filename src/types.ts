@@ -47,6 +47,7 @@ declare global {
       tiles: Tile[];
       misc: {
         HERO_TILE_START: number;
+        SWORD_TILE_START: number;
       };
     }
 

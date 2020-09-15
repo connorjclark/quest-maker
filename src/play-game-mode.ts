@@ -225,14 +225,22 @@ export class PlayGameMode extends QuestMakerMode {
 
   private entityLayer = new PIXI.Container();
   private tileLayer = new PIXI.Container();
+  private layers: PIXI.Container[] = [
+    new PIXI.Container(),
+    this.tileLayer,
+    new PIXI.Container(),
+    this.entityLayer,
+    new PIXI.Container(),
+  ];
 
   init() {
     super.init();
     const state = this.app.state;
 
     this.container.scale.x = this.container.scale.y = 2;
-    this.container.addChild(this.tileLayer);
-    this.container.addChild(this.entityLayer);
+    for (const layer of this.layers) {
+      this.container.addChild(layer);
+    }
 
     this.heroEntity.x = screenWidth * tileSize / 2;
     this.heroEntity.y = screenHeight * tileSize / 2;
@@ -325,6 +333,7 @@ export class PlayGameMode extends QuestMakerMode {
 
     if (this.app.keys.down['KeyX']) {
       heroEntity.setTextureFrame('useItem-' + heroEntity.getDirectionName());
+      this.performSwordAttack();
       state.game.moveFreeze = 10;
     }
 
@@ -332,6 +341,7 @@ export class PlayGameMode extends QuestMakerMode {
       if (state.game.moveFreeze <= 0) {
         delete state.game.moveFreeze;
         heroEntity.setTextureFrame(heroEntity.getDirectionName());
+        this.layers[2].removeChildren(); // ugh.
       } else {
         state.game.moveFreeze -= 1;
         heroEntity.moving = false;
@@ -593,6 +603,22 @@ export class PlayGameMode extends QuestMakerMode {
     let y = 5;
     let entity = this.createEntityFromEnemy(enemy, x, y);
     entity.speed = 0.75;
+  }
+
+  performSwordAttack() {
+    const sword = this.app.createTileSprite(this.app.state.quest.misc.SWORD_TILE_START);
+    sword.anchor.x = 0.5;
+    sword.anchor.y = 0.5;
+    sword.texture.rotate = PIXI.groupD8.byDirection(-this.heroEntity.direction.y, -this.heroEntity.direction.x);
+    if (this.heroEntity.direction.x !== 0) {
+      sword.width = 16;
+      sword.height = 8;
+    }
+    sword.x = this.heroEntity.x + this.heroEntity.width / 2 + this.heroEntity.direction.x * tileSize / 2;
+    sword.y = this.heroEntity.y + this.heroEntity.height / 2 + this.heroEntity.direction.y * tileSize / 2;
+
+    // TOOD: real pixi layers?
+    this.layers[2].addChild(sword);
   }
 
   performScreenTransition(transition: Exclude<QuestMaker.State['game']['screenTransition'], undefined>) {

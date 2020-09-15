@@ -69,6 +69,33 @@ function createQuest(): QuestMaker.Quest {
     return t;
   }
 
+  function makeTilesAdvanced(opts: { spritesheet: string, n: number, startX?: number, startY?: number, spacing?: number, width?: number[], height?: number[] }) {
+    const t = [];
+
+    if (!opts.startX) opts.startX = 0;
+    if (!opts.startY) opts.startY = 0;
+    if (!opts.spacing) opts.spacing = 0;
+
+    let x = opts.startX;
+    let y = opts.startY;
+    for (let i = 0; i < opts.n; i++) {
+      const width = opts.width ? opts.width[i % opts.width.length] : tileSize;
+      const height = opts.height ? opts.height[i % opts.height.length] : tileSize;
+      const tile = makeTile({
+        spritesheet: opts.spritesheet,
+        x,
+        y,
+        width,
+        height,
+      });
+      t.push(tile);
+
+      x += width + opts.spacing;
+    }
+
+    return t;
+  }
+
   const weapons: QuestMaker.Weapon[] = [];
   function makeWeapon(weapon: Omit<QuestMaker.Weapon, 'id'>) {
     weapons.push({ id: weapons.length + 1, ...weapon });
@@ -110,6 +137,16 @@ function createQuest(): QuestMaker.Quest {
     n: 5,
     startX: 1,
     startY: 11,
+    spacing: 1,
+  });
+
+  const swordTiles = makeTilesAdvanced({
+    spritesheet: 'link',
+    n: 3 * 4,
+    width: [tileSize / 2, tileSize, tileSize / 2],
+    height: [tileSize],
+    startX: 1,
+    startY: 154,
     spacing: 1,
   });
 
@@ -157,6 +194,7 @@ function createQuest(): QuestMaker.Quest {
     screens,
     misc: {
       HERO_TILE_START: HERO_BASIC_TILES[0].id,
+      SWORD_TILE_START: swordTiles[0].id,
     }
   }
 }
@@ -181,6 +219,7 @@ function deleteQuest() {
 }
 
 function saveQuest(quest: QuestMaker.Quest) {
+  if (window.location.search.includes('fresh')) return;
   localStorage.setItem('quest', JSON.stringify(quest));
 }
 // @ts-ignore
