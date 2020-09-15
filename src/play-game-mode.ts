@@ -16,6 +16,13 @@ const directions = [{ x: 0, y: -1 }, { x: 0, y: 1 }, { x: 1, y: 0 }, { x: -1, y:
 
 const inBounds = (x: number, y: number, width: number, height: number) => x >= 0 && y >= 0 && x < width && y < height;
 
+const isIntersecting = (r1: PIXI.Rectangle, r2: PIXI.Rectangle) => {
+  return !(r2.x > (r1.x + r1.width) ||
+    (r2.x + r2.width) < r1.x ||
+    r2.y > (r1.y + r1.height) ||
+    (r2.y + r2.height) < r1.y);
+}
+
 const isSolid = (state: QuestMaker.State, x: number, y: number, quadrant?: number) => {
   if (!inBounds(x, y, screenWidth, screenHeight)) return true;
 
@@ -233,6 +240,8 @@ export class PlayGameMode extends QuestMakerMode {
     new PIXI.Container(),
   ];
 
+  private swordSprite = this.app.createTileSprite(this.app.state.quest.misc.SWORD_TILE_START);
+
   init() {
     super.init();
     const state = this.app.state;
@@ -241,6 +250,9 @@ export class PlayGameMode extends QuestMakerMode {
     for (const layer of this.layers) {
       this.container.addChild(layer);
     }
+
+    this.layers[2].addChild(this.swordSprite);
+    this.swordSprite.alpha = 0;
 
     this.heroEntity.x = screenWidth * tileSize / 2;
     this.heroEntity.y = screenHeight * tileSize / 2;
@@ -335,13 +347,20 @@ export class PlayGameMode extends QuestMakerMode {
       heroEntity.setTextureFrame('useItem-' + heroEntity.getDirectionName());
       this.performSwordAttack();
       state.game.moveFreeze = 10;
+
+      for (const entity of this.entities) {
+        if (entity.sprite === this.heroEntity) continue;
+        if (!isIntersecting(entity.sprite.getBounds(), this.swordSprite.getBounds())) continue;
+
+        this.removeEntity(entity.sprite);
+      }
     }
 
     if (state.game.moveFreeze !== undefined) {
       if (state.game.moveFreeze <= 0) {
         delete state.game.moveFreeze;
         heroEntity.setTextureFrame(heroEntity.getDirectionName());
-        this.layers[2].removeChildren(); // ugh.
+        this.swordSprite.alpha = 0;
       } else {
         state.game.moveFreeze -= 1;
         heroEntity.moving = false;
@@ -606,19 +625,20 @@ export class PlayGameMode extends QuestMakerMode {
   }
 
   performSwordAttack() {
-    const sword = this.app.createTileSprite(this.app.state.quest.misc.SWORD_TILE_START);
-    sword.anchor.x = 0.5;
-    sword.anchor.y = 0.5;
-    sword.texture.rotate = PIXI.groupD8.byDirection(-this.heroEntity.direction.y, -this.heroEntity.direction.x);
-    if (this.heroEntity.direction.x !== 0) {
-      sword.width = 16;
-      sword.height = 8;
+    this.swordSprite.anchor.x = 0.5;
+    this.swordSprite.anchor.y = 0.5;
+    this.swordSprite.texture.rotate = PIXI.groupD8.byDirection(-this.heroEntity.direction.y, -this.heroEntity.direction.x);
+    if (this.heroEntity.direction.x === 0) {
+      this.swordSprite.width = 8;
+      this.swordSprite.height = 16;
+    } else {
+      this.swordSprite.width = 16;
+      this.swordSprite.height = 8;
     }
-    sword.x = this.heroEntity.x + this.heroEntity.width / 2 + this.heroEntity.direction.x * tileSize / 2;
-    sword.y = this.heroEntity.y + this.heroEntity.height / 2 + this.heroEntity.direction.y * tileSize / 2;
 
-    // TOOD: real pixi layers?
-    this.layers[2].addChild(sword);
+    this.swordSprite.x = this.heroEntity.x + this.heroEntity.width / 2 + this.heroEntity.direction.x * tileSize / 2;
+    this.swordSprite.y = this.heroEntity.y + this.heroEntity.height / 2 + this.heroEntity.direction.y * tileSize / 2;
+    this.swordSprite.alpha = 1;
   }
 
   performScreenTransition(transition: Exclude<QuestMaker.State['game']['screenTransition'], undefined>) {
