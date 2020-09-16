@@ -113,6 +113,9 @@ class QuestEntity extends QuestEntityBase {
 
   private haltTimer: number | null = null;
 
+  private hitDirection?: { x: number, y: number };
+  private hitTimer = 0;
+
   tick(mode: PlayGameMode, dt: number) {
     const speed = this.speed * dt;
 
@@ -142,54 +145,70 @@ class QuestEntity extends QuestEntityBase {
         mode.container.addChild(debug);
       }
 
-      if (this.haltTimer !== null) {
-        this.haltTimer -= dt;
-        if (this.haltTimer <= 0) this.haltTimer = null;
-        return;
-      }
-
-      if (isSolid(mode.app.state, nextTile.x, nextTile.y)) {
-        shouldChangeDirection = true;
-      }
-
-      if (shouldChangeDirection || currentTile.x !== nextTile.x || currentTile.y !== nextTile.y) {
-        if (Math.random() < this.haltFactor) {
-          this.haltTimer = 30;
-          if (this.weaponId) {
-            mode.createProjectile(this.weaponId, { x: Math.sign(this.direction.x), y: Math.sign(this.direction.y) }, currentTile.x, currentTile.y, 2);
-          }
-          return;
-        }
-
-        let availableDirections = directions.filter(d => {
-          return !isSolid(mode.app.state, currentTile.x + d.x, currentTile.y + d.y);
-        });
-        if (!availableDirections.length) availableDirections = directions;
-
-        if (Math.random() < this.homingFactor) {
-          // TODO
-          this.direction = availableDirections[Math.floor(Math.random() * availableDirections.length)];
-          shouldChangeDirection = false;
-        } else if (Math.random() < this.directionChangeFactor) {
+      if (this.haltTimer === null) {
+        if (isSolid(mode.app.state, nextTile.x, nextTile.y)) {
           shouldChangeDirection = true;
         }
 
-        if (shouldChangeDirection) {
-          this.direction = availableDirections[Math.floor(Math.random() * availableDirections.length)];
+        if (shouldChangeDirection || currentTile.x !== nextTile.x || currentTile.y !== nextTile.y) {
+          if (Math.random() < this.haltFactor) {
+            this.haltTimer = 30;
+            if (this.weaponId) {
+              mode.createProjectile(this.weaponId, { x: Math.sign(this.direction.x), y: Math.sign(this.direction.y) }, currentTile.x, currentTile.y, 2);
+            }
+            return;
+          }
+
+          let availableDirections = directions.filter(d => {
+            return !isSolid(mode.app.state, currentTile.x + d.x, currentTile.y + d.y);
+          });
+          if (!availableDirections.length) availableDirections = directions;
+
+          if (Math.random() < this.homingFactor) {
+            // TODO
+            this.direction = availableDirections[Math.floor(Math.random() * availableDirections.length)];
+            shouldChangeDirection = false;
+          } else if (Math.random() < this.directionChangeFactor) {
+            shouldChangeDirection = true;
+          }
+
+          if (shouldChangeDirection) {
+            this.direction = availableDirections[Math.floor(Math.random() * availableDirections.length)];
+          }
         }
       }
     }
 
-    if (this.moving) {
-      let direction = this.getDirectionName();
+    let dx = 0;
+    let dy = 0;
 
-      const dx = this.direction.x;
-      const dy = this.direction.y;
+    if (this.hitDirection) {
+      dx += this.hitDirection.x * 4;
+      dy += this.hitDirection.y * 4;
 
-      this.play();
-      this.setTextureFrame(direction);
-      this.x += dx * speed;
-      this.y += dy * speed;
+      if (this.hitTimer-- <= 0) {
+        this.hitTimer = 0;
+        delete this.hitDirection;
+      }
+    }
+
+    if (this.moving && !this.hitDirection) {
+      let canMove = true;
+      if (!this.isHero && this.haltTimer !== null) {
+        this.haltTimer -= dt;
+        if (this.haltTimer <= 0) this.haltTimer = null;
+        canMove = false;
+      }
+
+      if (canMove) {
+        dx += this.direction.x * speed;
+        dy += this.direction.y * speed;
+      }
+    }
+
+    if (dx !== 0 || dy !== 0) {
+      this.x += dx;
+      this.y += dy;
 
       // Align with half-axis if moving in other direction.
       const halfSize = tileSize / 2;
@@ -207,6 +226,11 @@ class QuestEntity extends QuestEntityBase {
           this.y = Math.round(this.y);
         }
       }
+    }
+
+    if (this.moving) {
+      this.setTextureFrame(this.getDirectionName());
+      this.play();
     } else {
       this.stop();
     }
@@ -223,6 +247,13 @@ class QuestEntity extends QuestEntityBase {
     else if (dy === 1) direction = 'down';
 
     return direction;
+  }
+
+  hit(direction: { x: number, y: number }) {
+    if (this.hitDirection) return;
+
+    this.hitDirection = direction;
+    this.hitTimer = 10;
   }
 }
 
@@ -352,7 +383,9 @@ export class PlayGameMode extends QuestMakerMode {
         if (entity.sprite === this.heroEntity) continue;
         if (!isIntersecting(entity.sprite.getBounds(), this.swordSprite.getBounds())) continue;
 
-        this.removeEntity(entity.sprite);
+        // @ts-ignore
+        entity.sprite.hit && entity.sprite.hit(heroEntity.direction);
+        // this.removeEntity(entity.sprite);
       }
     }
 
