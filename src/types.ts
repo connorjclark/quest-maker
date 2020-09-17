@@ -22,16 +22,21 @@ declare global {
       };
     }
 
+    interface Graphic {
+      id: number;
+      file: string;
+      x: number;
+      y: number;
+      width: number;
+      height: number;
+    }
+
     type TileType = TileType_;
 
     interface Tile {
       id: number;
       type: TileType;
-      spritesheet: string;
-      x: number;
-      y: number;
-      width: number;
-      height: number;
+      graphicId: number;
       /* top left, top right, bottom left, bottom right */
       walkable: [boolean, boolean, boolean, boolean];
     }
@@ -52,6 +57,7 @@ declare global {
       screens: Screen[][];
       enemies: Enemy[];
       weapons: Weapon[];
+      graphics: Graphic[];
       tiles: Tile[];
       misc: {
         HERO_TILE_START: number;

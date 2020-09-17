@@ -720,8 +720,9 @@ export class PlayGameMode extends QuestMakerMode {
     const tile = this.app.state.quest.tiles[weapon.tile];
 
     const entity = new QuestProjectileEntity();
-    entity.x = x * tileSize + (tileSize - tile.width) / 2;
-    entity.y = y * tileSize + (tileSize - tile.height) / 2;
+    const graphic = this.app.state.quest.graphics[tile.graphicId];
+    entity.x = x * tileSize + (tileSize - graphic.width) / 2;
+    entity.y = y * tileSize + (tileSize - graphic.height) / 2;
     entity.delta = delta;
     entity.speed = speed;
 

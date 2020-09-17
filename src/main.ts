@@ -30,21 +30,32 @@ class Screen {
 }
 
 function createQuest(): QuestMaker.Quest {
-  // Create tiles from gfx/
+  const graphics: QuestMaker.Graphic[] = [];
   const tiles: QuestMaker.Tile[] = [];
 
-  function makeTile(opts: Omit<QuestMaker.Tile, 'id' | 'type' | 'walkable'>): QuestMaker.Tile {
+  function makeTile(opts: Omit<QuestMaker.Tile, 'id' | 'graphicId' | 'type' | 'walkable'> & Omit<QuestMaker.Graphic, 'id'>): QuestMaker.Tile {
+    const graphic = {
+      id: graphics.length,
+      file: opts.file,
+      x: opts.x,
+      y: opts.y,
+      width: opts.width,
+      height: opts.height,
+    };
+    graphics.push(graphic);
+
     const tile = {
       id: tiles.length,
       type: 'default' as QuestMaker.TileType,
+      graphicId: graphic.id,
       walkable: [true, true, true, true] as QuestMaker.Tile['walkable'],
-      ...opts,
     };
     tiles.push(tile);
+
     return tile;
   }
 
-  function makeTiles(opts: { spritesheet: string, n: number, tilesInRow?: number, startX?: number, startY?: number, spacing?: number, width?: number, height?: number }) {
+  function makeTiles(opts: { file: string, n: number, tilesInRow?: number, startX?: number, startY?: number, spacing?: number, width?: number, height?: number }) {
     const t = [];
 
     if (!opts.width) opts.width = tileSize;
@@ -58,7 +69,7 @@ function createQuest(): QuestMaker.Quest {
       const x = (i % opts.tilesInRow) * (opts.width + opts.spacing) + opts.startX;
       const y = Math.floor(i / opts.tilesInRow) * (opts.height + opts.spacing) + opts.startY;
       const tile = makeTile({
-        spritesheet: opts.spritesheet,
+        file: opts.file,
         x,
         y,
         width: opts.width,
@@ -70,7 +81,7 @@ function createQuest(): QuestMaker.Quest {
     return t;
   }
 
-  function makeTilesAdvanced(opts: { spritesheet: string, n: number, startX?: number, startY?: number, spacing?: number, width?: number[], height?: number[] }) {
+  function makeTilesAdvanced(opts: { file: string, n: number, startX?: number, startY?: number, spacing?: number, width?: number[], height?: number[] }) {
     const t = [];
 
     if (!opts.startX) opts.startX = 0;
@@ -83,7 +94,7 @@ function createQuest(): QuestMaker.Quest {
       const width = opts.width ? opts.width[i % opts.width.length] : tileSize;
       const height = opts.height ? opts.height[i % opts.height.length] : tileSize;
       const tile = makeTile({
-        spritesheet: opts.spritesheet,
+        file: opts.file,
         x,
         y,
         width,
@@ -103,7 +114,7 @@ function createQuest(): QuestMaker.Quest {
   }
 
   const basicTiles = makeTiles({
-    spritesheet: 'tiles',
+    file: 'tiles',
     n: 48,
     tilesInRow: 6,
     startX: 1,
@@ -119,14 +130,14 @@ function createQuest(): QuestMaker.Quest {
   }
 
   const HERO_BASIC_TILES = makeTiles({
-    spritesheet: 'link',
+    file: 'link',
     n: 6,
     startX: 1,
     startY: 11,
     spacing: 1,
   });
   const HERO_USE_ITEM_TILES = makeTiles({
-    spritesheet: 'link',
+    file: 'link',
     n: 3,
     startX: 107,
     startY: 11,
@@ -134,7 +145,7 @@ function createQuest(): QuestMaker.Quest {
   });
 
   const octorokTiles = makeTiles({
-    spritesheet: 'enemies',
+    file: 'enemies',
     n: 5,
     startX: 1,
     startY: 11,
@@ -142,7 +153,7 @@ function createQuest(): QuestMaker.Quest {
   });
 
   const swordTiles = makeTilesAdvanced({
-    spritesheet: 'link',
+    file: 'link',
     n: 3 * 4,
     width: [tileSize / 2, tileSize, tileSize / 2],
     height: [tileSize],
@@ -161,7 +172,7 @@ function createQuest(): QuestMaker.Quest {
     },
   });
 
-  octorokTiles[octorokTiles.length - 1].width = tileSize / 2;
+  graphics[octorokTiles[octorokTiles.length - 1].graphicId].width = tileSize / 2;
   makeWeapon({
     name: 'Rock',
     tile: octorokTiles[octorokTiles.length - 1].id,
@@ -189,6 +200,7 @@ function createQuest(): QuestMaker.Quest {
   screens[0][0].tiles[9][7].tile = 2;
 
   return {
+    graphics,
     tiles: [...tiles, ...tiles, ...tiles, ...tiles],
     enemies,
     weapons,

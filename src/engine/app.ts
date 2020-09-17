@@ -29,8 +29,8 @@ export class App<S> {
     });
   }
 
-  createSprite(spritesheet: string, x: number, y: number, width: number, height: number) {
-    const baseTexture = this.pixi.loader.resources[spritesheet].texture.baseTexture;
+  createSprite(file: string, x: number, y: number, width: number, height: number) {
+    const baseTexture = this.pixi.loader.resources[file].texture.baseTexture;
     const rect = new PIXI.Rectangle(x, y, width, height);
     const texture = new PIXI.Texture(baseTexture, rect);
     return new PIXI.Sprite(texture);
