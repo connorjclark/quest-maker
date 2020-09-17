@@ -14,6 +14,7 @@ document.body.appendChild(pixi.view);
 
 class Screen {
   public tiles: { tile: number }[][] = [];
+  public warps = {};
 
   constructor() {
     for (let x = 0; x < screenWidth; x++) {

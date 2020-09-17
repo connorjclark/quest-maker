@@ -205,23 +205,24 @@ export class EditorMode extends QuestMakerMode {
       return contents;
     };
 
-    const createEnemiesTab = () => {
+    const createMiscTab = () => {
       const contents = new PIXI.Container();
       makeDomContainer(contents);
 
       const elDisplayObject = new DomElementDisplayObject(this.app, container.width, 300);
+      elDisplayObject.el.classList.add('tab-panel');
       contents.addChild(elDisplayObject);
 
-      const p = document.createElement('p');
-      p.innerText = 'hello world hello world hello world hello world hello world';
-      elDisplayObject.el.appendChild(p);
-      elDisplayObject.el.classList.add('tab-panel')
+      const button = document.createElement('button');
+      button.innerText = 'Warps';
+      button.addEventListener('click', () => this.openWarpEditor());
+      elDisplayObject.el.appendChild(button);
 
       return contents;
     };
 
     addTab('tiles', createTilesTab());
-    addTab('enemies', createEnemiesTab());
+    addTab('misc', createMiscTab());
     setTab('tiles');
 
     const borderContainer = new PIXI.Container();
@@ -420,7 +421,7 @@ export class EditorMode extends QuestMakerMode {
     const state = this.app.state;
 
     const elDisplayObject = new DomElementDisplayObject(this.app, 300, 300);
-    const tileEditorContainer = new ReactiveContainer((container, props) => {
+    const contents = new ReactiveContainer((container, props) => {
       container.removeChildren();
 
       const selectedTile = this.app.createTileSprite(props.tile.id);
@@ -468,7 +469,47 @@ export class EditorMode extends QuestMakerMode {
       });
     }, () => ({ tile: state.quest.tiles[state.editor.currentTile] }));
 
-    makeDomContainer(this.createPopupWindow(tileEditorContainer));
+    makeDomContainer(this.createPopupWindow(contents));
+  }
+
+  openWarpEditor() {
+    const state = this.app.state;
+
+    const elDisplayObject = new DomElementDisplayObject(this.app, 300, 300);
+    const contents = new ReactiveContainer((container, props) => {
+      container.removeChildren();
+
+      elDisplayObject.el.innerHTML = '';
+      container.addChild(elDisplayObject);
+
+      const onChange = () => {
+        // TODO: remove, put in deserializing code when start caring about data size.
+        state.currentScreen.warps.a = state.currentScreen.warps.a || { x: 0, y: 0, screenX: 0, screenY: 0 };
+
+        state.currentScreen.warps.a.screenX = clamp(0, inputs.screenX.valueAsNumber, 100);
+        state.currentScreen.warps.a.screenY = clamp(0, inputs.screenY.valueAsNumber, 100);
+        state.currentScreen.warps.a.x = clamp(0, inputs.x.valueAsNumber, screenWidth);
+        state.currentScreen.warps.a.y = clamp(0, inputs.y.valueAsNumber, screenHeight);
+      };
+
+      const inputs: Record<string, HTMLInputElement> = {};
+      function makeInput(name: string, value: any, label: string) {
+        DOM.createChildOf(elDisplayObject.el, 'label', undefined, { style: 'color: white' }).innerText = label + ': ';
+        const inputEl = DOM.createChildOf(elDisplayObject.el, 'input', undefined, {
+          type: 'number',
+          value: String(value),
+        }) as HTMLInputElement;
+        inputs[name] = inputEl;
+        inputEl.addEventListener('change', onChange);
+      }
+
+      makeInput('screenX', props.screen.warps.a?.screenX || 0, 'Screen X');
+      makeInput('screenY', props.screen.warps.a?.screenY || 0, 'Screen Y');
+      makeInput('x', props.screen.warps.a?.x, 'X');
+      makeInput('y', props.screen.warps.a?.y, 'Y');
+    }, () => ({ screen: state.currentScreen }));
+
+    makeDomContainer(this.createPopupWindow(contents));
   }
 
   createPopupWindow(contents: PIXI.Container) {

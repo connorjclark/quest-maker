@@ -12,6 +12,14 @@ declare global {
   namespace QuestMaker {
     interface Screen {
       tiles: { tile: number }[][];
+      warps: {
+        a?: {
+          screenX: number;
+          screenY: number;
+          x?: number;
+          y?: number;
+        };
+      };
     }
 
     type TileType = TileType_;

@@ -126,7 +126,6 @@ class QuestEntity extends QuestEntityBase {
     const speed = this.speed * dt;
 
     if (!this.isHero && this.life) {
-      // Every tile moved stats this algorithm.
       let shouldChangeDirection = false;
 
       let hitPoint = { x: this.x, y: this.y };
@@ -834,14 +833,16 @@ export class PlayGameMode extends QuestMakerMode {
 
     if (type === TileType.WARP) {
       if (names.includes('bottomLeft') && names.includes('bottomRight')) {
-        const transitionX = 0;
-        const transitionY = 1;
+        let newScreenLocation = { x: state.screenX, y: state.screenY + 1 };
+        if (state.currentScreen.warps.a) {
+          newScreenLocation = { x: state.currentScreen.warps.a.screenX, y: state.currentScreen.warps.a.screenY };
+        }
         state.game.screenTransition = {
           type: 'direct',
           frames: 0,
-          screen: { x: state.screenX + transitionX, y: state.screenY + transitionY },
-          screenDelta: { x: transitionX, y: transitionY },
-          newScreenContainer: this.createScreenContainer(state.screenX + transitionX, state.screenY + transitionY),
+          screen: newScreenLocation,
+          screenDelta: { x: 0, y: 0 },
+          newScreenContainer: this.createScreenContainer(newScreenLocation.x, newScreenLocation.y),
         };
       }
     } else if (type === TileType.SLOW_WALK) {
