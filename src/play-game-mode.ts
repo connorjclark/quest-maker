@@ -75,14 +75,26 @@ class EntityBase extends PIXI.AnimatedSprite {
 }
 
 abstract class QuestEntityBase extends EntityBase {
+  public life = 3;
+  public speed = 1;
   public vx = 0;
   public vy = 0;
 
+  public hitDirection?: { x: number, y: number };
+  public hitTimer = 0;
+
   abstract tick(mode: PlayGameMode, dt: number): any;
+
+  hit(direction: { x: number, y: number }) {
+    if (this.hitDirection) return;
+
+    this.life -= 1;
+    this.hitDirection = direction;
+    this.hitTimer = 10;
+  }
 }
 
 class QuestProjectileEntity extends QuestEntityBase {
-  public speed = 1;
   public delta = { x: 0, y: 0 };
 
   tick(mode: PlayGameMode, dt: number) {
@@ -94,10 +106,6 @@ class QuestProjectileEntity extends QuestEntityBase {
     this.x += this.vx;
     this.y += this.vy;
 
-    if (Math.abs(mode.heroEntity.x - this.x) < 8 && Math.abs(mode.heroEntity.y - this.y) < 8) {
-      console.log('ouch'); // TODO
-    }
-
     const shouldRemove = !inBounds(this.x + this.width / 2, this.y + this.height / 2, (screenWidth + 1) * tileSize, (screenHeight + 1) * tileSize);
     if (shouldRemove) mode.removeEntity(this);
   }
@@ -106,7 +114,6 @@ class QuestProjectileEntity extends QuestEntityBase {
 class QuestEntity extends QuestEntityBase {
   public direction = { ...directions[Math.floor(Math.random() * directions.length)] };
   public moving = true;
-  public speed = 1;
   public homingFactor = 64 / 255;
   public directionChangeFactor = 4 / 16;
   public haltFactor = 3 / 16;
@@ -115,13 +122,10 @@ class QuestEntity extends QuestEntityBase {
 
   private haltTimer: number | null = null;
 
-  private hitDirection?: { x: number, y: number };
-  private hitTimer = 0;
-
   tick(mode: PlayGameMode, dt: number) {
     const speed = this.speed * dt;
 
-    if (!this.isHero) {
+    if (!this.isHero && this.life) {
       // Every tile moved stats this algorithm.
       let shouldChangeDirection = false;
 
@@ -188,9 +192,17 @@ class QuestEntity extends QuestEntityBase {
       dx += this.hitDirection.x * 4;
       dy += this.hitDirection.y * 4;
 
+      this.alpha = Math.floor(this.hitTimer * 1.5) % 2;
+
       if (this.hitTimer-- <= 0) {
         this.hitTimer = 0;
+        this.alpha = 1;
         delete this.hitDirection;
+
+        if (this.life <= 0) {
+          mode.removeEntity(this);
+          return;
+        }
       }
     }
 
@@ -207,6 +219,9 @@ class QuestEntity extends QuestEntityBase {
         dy += this.direction.y * speed;
       }
     }
+
+    this.vx = dx;
+    this.vy = dy;
 
     if (dx !== 0 || dy !== 0) {
       this.x += dx;
@@ -250,13 +265,6 @@ class QuestEntity extends QuestEntityBase {
 
     return direction;
   }
-
-  hit(direction: { x: number, y: number }) {
-    if (this.hitDirection) return;
-
-    this.hitDirection = direction;
-    this.hitTimer = 10;
-  }
 }
 
 class HitTest {
@@ -285,15 +293,18 @@ class HitTest {
     this.container.addChild(gfx);
   }
 
-  hit(object: PIXI.DisplayObject, objects: PIXI.DisplayObject[]) {
-    // @ts-ignore
-    return Bump.hit(object, objects, true, false, false);
+  hit(object: PIXI.DisplayObject, objects: PIXI.DisplayObject[]): string | false {
+    let result: string | false = false;
+    Bump.hit(object, objects, true, false, false, (collision: string | false) => {
+      result = collision;
+    });
+    return result;
   }
 
   test(object: PIXI.DisplayObject, objects: PIXI.DisplayObject[]) {
     let result = false;
-    Bump.hit(object, objects, false, false, false, () => {
-      result = true;
+    Bump.hit(object, objects, false, false, false, (collision: boolean) => {
+      result = collision;
     });
     return result;
   }
@@ -332,6 +343,7 @@ export class PlayGameMode extends QuestMakerMode {
     this.heroEntity.x = screenWidth * tileSize / 2;
     this.heroEntity.y = screenHeight * tileSize / 2;
     this.heroEntity.isHero = true;
+    this.heroEntity.life = Number.MAX_SAFE_INTEGER;
 
     this.heroEntity.speed = DEFAULT_SPEED;
 
@@ -455,6 +467,17 @@ export class PlayGameMode extends QuestMakerMode {
       }
     }
 
+    // Hacky way to make only bottom half of hero solid.
+    const heroHitSprite = new PIXI.Graphics();
+    heroHitSprite.drawRect(0, 0, 1, 1)
+    heroHitSprite.x = this.heroEntity.x;
+    heroHitSprite.y = this.heroEntity.y + tileSize / 2;
+    heroHitSprite.width = tileSize;
+    heroHitSprite.height = tileSize / 2;
+    this.hitTest.hit(heroHitSprite, this.hitTest.sections.screen.objects);
+    this.heroEntity.x = heroHitSprite.x;
+    this.heroEntity.y = heroHitSprite.y - tileSize / 2;
+
     for (let data of this.entities.values()) {
       data.sprite.tick(this, dt);
       if (data.sprite === this.heroEntity) continue;
@@ -466,21 +489,18 @@ export class PlayGameMode extends QuestMakerMode {
       } else {
         this.hitTest.hit(data.sprite, this.hitTest.sections.screen.objects);
       }
-    }
 
-    {
-      // Hacky way to make only bottom half of hero solid.
-      let tmp = new PIXI.Graphics();
-      tmp.drawRect(0, 0, 1, 1)
-      tmp.x = this.heroEntity.x;
-      tmp.y = this.heroEntity.y + tileSize / 2;
-      tmp.width = tileSize;
-      tmp.height = tileSize / 2;
-
-      this.hitTest.hit(tmp, this.hitTest.sections.screen.objects);
-
-      this.heroEntity.x = tmp.x;
-      this.heroEntity.y = tmp.y - tileSize / 2;
+      // TODO: need to fork Bump and make `.test` return a side.
+      const collision = !data.sprite.hitTimer && this.hitTest.hit(heroHitSprite, [data.sprite]);
+      if (collision) {
+        const dir = { x: 0, y: 0 };
+        if (collision === 'left') dir.x = 1;
+        if (collision === 'right') dir.x -= 1;
+        if (collision === 'top') dir.y += 1;
+        if (collision === 'bottom') dir.y -= 1;
+        this.heroEntity.hit(dir);
+        if (data.sprite instanceof QuestProjectileEntity) this.removeEntity(data.sprite);
+      }
     }
 
     heroEntity.speed = DEFAULT_SPEED;
@@ -675,6 +695,7 @@ export class PlayGameMode extends QuestMakerMode {
     entity.x = x * tileSize;
     entity.y = y * tileSize;
     entity.weaponId = enemy.weaponId || 0;
+    entity.life = 2;
 
     for (const [name, frames] of Object.entries(enemy.frames)) {
       const textures = frames.map(f => this.app.createTileSprite(f).texture);
