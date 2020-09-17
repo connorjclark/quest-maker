@@ -1,6 +1,9 @@
 import * as constants from './constants';
 import { QuestMakerMode } from "./quest-maker-mode";
 import { TileType } from './types';
+import 'pixi-plugin-bump';
+
+const Bump = new PIXI.extras.Bump();
 
 const { screenWidth, screenHeight, tileSize } = constants;
 
@@ -72,6 +75,9 @@ class EntityBase extends PIXI.AnimatedSprite {
 }
 
 abstract class QuestEntityBase extends EntityBase {
+  public vx = 0;
+  public vy = 0;
+
   abstract tick(mode: PlayGameMode, dt: number): any;
 }
 
@@ -257,6 +263,38 @@ class QuestEntity extends QuestEntityBase {
   }
 }
 
+class HitTest {
+  public sections: Record<string, { color: number, objects: PIXI.DisplayObject[] }> = {};
+  public container = new PIXI.Container();
+
+  addSection(name: string, color: number) {
+    this.sections[name] = { color, objects: [] };
+  }
+
+  clear() {
+    this.sections = {};
+    this.container.removeChildren();
+  }
+
+  add(sectionName: string, x: number, y: number, width: number, height: number) {
+    const section = this.sections[sectionName];
+    const gfx = new PIXI.Graphics();
+    gfx.x = x;
+    gfx.y = y;
+    gfx.beginFill(section.color, 0.5);
+    gfx.drawRect(0, 0, width, height);
+    gfx.endFill();
+
+    section.objects.push(gfx);
+    this.container.addChild(gfx);
+  }
+
+  hit(object: PIXI.DisplayObject, objects: PIXI.DisplayObject[]) {
+    // @ts-ignore
+    return Bump.hit(object, objects, true, false, false);
+  }
+}
+
 export class PlayGameMode extends QuestMakerMode {
   public heroEntity = new QuestEntity();
   public entities: Array<{ sprite: QuestEntityBase }> = [];
@@ -272,6 +310,8 @@ export class PlayGameMode extends QuestMakerMode {
   ];
 
   private swordSprite = this.app.createTileSprite(this.app.state.quest.misc.SWORD_TILE_START);
+
+  private hitTest = new HitTest();
 
   init() {
     super.init();
@@ -342,6 +382,13 @@ export class PlayGameMode extends QuestMakerMode {
     this.tileLayer.addChild(this.createScreenContainer(state.screenX, state.screenY));
     this.entityLayer.addChild(this.heroEntity);
 
+    this.hitTest.clear();
+    this.createScreenHitAreas();
+    // @ts-ignore
+    if (window.debug) {
+      this.layers[4].addChild(this.hitTest.container);
+    }
+
     this.onEnterScreen();
   }
 
@@ -369,6 +416,10 @@ export class PlayGameMode extends QuestMakerMode {
     if (dx !== 0 || dy !== 0) {
       heroEntity.direction.x = dx;
       heroEntity.direction.y = dy;
+
+      // TODO: this can skip thru walls if there is lag (see Bump).
+      heroEntity.vx = dx * heroEntity.speed * dt;
+      heroEntity.vy = dy * heroEntity.speed * dt;
       this.heroEntity.moving = true;
     } else {
       this.heroEntity.moving = false;
@@ -402,6 +453,21 @@ export class PlayGameMode extends QuestMakerMode {
 
     for (let data of this.entities.values()) {
       data.sprite.tick(this, dt);
+    }
+
+    {
+      // Hacky way to make only bottom half of hero solid.
+      let tmp = new PIXI.Graphics();
+      tmp.drawRect(0, 0, 1, 1)
+      tmp.x = this.heroEntity.x;
+      tmp.y = this.heroEntity.y + tileSize / 2;
+      tmp.width = tileSize;
+      tmp.height = tileSize / 2;
+
+      this.hitTest.hit(tmp, this.hitTest.sections.screen.objects);
+
+      this.heroEntity.x = tmp.x;
+      this.heroEntity.y = tmp.y - tileSize / 2;
     }
 
     heroEntity.speed = DEFAULT_SPEED;
@@ -458,47 +524,6 @@ export class PlayGameMode extends QuestMakerMode {
         y: Math.floor(point.y / tileSize),
         quadrant: pointToQuadrant(point.x, point.y),
       };
-    }
-
-    if (dx !== 0 || dy !== 0) {
-      const correctionVectors: Array<{ x: number, y: number }> = [];
-
-      for (const name of Object.keys(sideTiles)) {
-        const tile = sideTiles[name];
-        if (tile.x < 0 || tile.y < 0 || tile.x >= screenWidth || tile.y >= screenHeight) continue;
-        if (!isSolid(state, tile.x, tile.y, tile.quadrant)) continue;
-
-        const qx = tile.quadrant % 2 === 0 ? 0 : tileSize / 2;
-        const qy = tile.quadrant < 2 ? 0 : tileSize / 2;
-        const point = { ...sidePoints[name] };
-        point.x += qx;
-        point.y += qy;
-
-        if (point.dx > 0) {
-          correctionVectors.push({ x: -point.x % 8, y: 0 });
-        } else if (point.dx < 0) {
-          correctionVectors.push({ x: 8 - point.x % 8, y: 0 });
-        }
-
-        if (point.dy > 0) {
-          correctionVectors.push({ x: 0, y: -point.y % 8 });
-        } else if (point.dy < 0) {
-          correctionVectors.push({ x: 0, y: 8 - point.y % 8 });
-        }
-      }
-
-      let smallestCorrectionVector = null;
-      const dist = ({ x, y }: { x: number; y: number }) => Math.abs(x) + Math.abs(y);
-      for (const correctionVector of correctionVectors) {
-        if (!smallestCorrectionVector || dist(smallestCorrectionVector) > dist(correctionVector)) {
-          smallestCorrectionVector = correctionVector;
-        }
-      }
-
-      if (smallestCorrectionVector) {
-        heroEntity.x += smallestCorrectionVector.x;
-        heroEntity.y += smallestCorrectionVector.y;
-      }
     }
 
     // @ts-ignore
@@ -595,6 +620,41 @@ export class PlayGameMode extends QuestMakerMode {
     }
 
     return container;
+  }
+
+  createScreenHitAreas() {
+    this.hitTest.addSection('screen', 0xff0000);
+
+    const state = this.app.state;
+    const screen = state.currentScreen;
+
+    const add = (x: number, y: number, size: number) => {
+      this.hitTest.add('screen', x, y, size, size);
+    };
+
+    for (let x = 0; x < screenWidth; x++) {
+      for (let y = 0; y < screenHeight; y++) {
+        const { tile } = screen.tiles[x][y];
+        const walkable = state.quest.tiles[tile].walkable;
+        const allSolid = walkable.every(w => !w);
+
+        // Just make one big square. Should make hit tests faster.
+        if (allSolid) {
+          add(x * tileSize, y * tileSize, tileSize);
+          continue;
+        }
+
+        for (let quadrant = 0; quadrant < walkable.length; quadrant++) {
+          if (walkable[quadrant]) continue;
+
+          let hx = x * tileSize;
+          let hy = y * tileSize;
+          if (quadrant % 2 === 1) hx += tileSize / 2;
+          if (quadrant >= 2) hy += tileSize / 2;
+          add(hx, hy, tileSize / 2);
+        }
+      }
+    }
   }
 
   createEntityFromEnemy(enemy: QuestMaker.Enemy, x: number, y: number) {
