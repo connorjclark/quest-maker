@@ -87,22 +87,18 @@ class QuestProjectileEntity extends QuestEntityBase {
 
   tick(mode: PlayGameMode, dt: number) {
     const speed = this.speed * dt;
-    this.x += this.delta.x * speed;
-    this.y += this.delta.y * speed;
+
+    this.vx = this.delta.x * speed;
+    this.vy = this.delta.y * speed;
+
+    this.x += this.vx;
+    this.y += this.vy;
 
     if (Math.abs(mode.heroEntity.x - this.x) < 8 && Math.abs(mode.heroEntity.y - this.y) < 8) {
       console.log('ouch'); // TODO
     }
 
-    let shouldRemove = !inBounds(this.x + this.width / 2, this.y + this.height / 2, (screenWidth + 1) * tileSize, (screenHeight + 1) * tileSize);
-
-    const x = Math.floor((this.x + this.width / 2) / tileSize);
-    const y = Math.floor((this.y + this.height / 2) / tileSize);
-    const quadrant = pointToQuadrant(this.x, this.y);
-    if (isSolid(mode.app.state, x, y, quadrant)) {
-      shouldRemove = true;
-    }
-
+    const shouldRemove = !inBounds(this.x + this.width / 2, this.y + this.height / 2, (screenWidth + 1) * tileSize, (screenHeight + 1) * tileSize);
     if (shouldRemove) mode.removeEntity(this);
   }
 }
@@ -293,6 +289,14 @@ class HitTest {
     // @ts-ignore
     return Bump.hit(object, objects, true, false, false);
   }
+
+  test(object: PIXI.DisplayObject, objects: PIXI.DisplayObject[]) {
+    let result = false;
+    Bump.hit(object, objects, false, false, false, () => {
+      result = true;
+    });
+    return result;
+  }
 }
 
 export class PlayGameMode extends QuestMakerMode {
@@ -453,6 +457,15 @@ export class PlayGameMode extends QuestMakerMode {
 
     for (let data of this.entities.values()) {
       data.sprite.tick(this, dt);
+      if (data.sprite === this.heroEntity) continue;
+
+      if (data.sprite instanceof QuestProjectileEntity) {
+        if (this.hitTest.test(data.sprite, this.hitTest.sections.screen.objects)) {
+          this.removeEntity(data.sprite);
+        }
+      } else {
+        this.hitTest.hit(data.sprite, this.hitTest.sections.screen.objects);
+      }
     }
 
     {
