@@ -323,7 +323,7 @@ export class PlayGameMode extends QuestMakerMode {
     new PIXI.Container(),
   ];
 
-  private swordSprite = this.app.createTileSprite(this.app.state.quest.misc.SWORD_TILE_START);
+  private swordSprite = this.app.createGraphicSprite(this.app.state.quest.misc.SWORD_GFX_START);
 
   private hitTest = new HitTest();
 
@@ -347,32 +347,32 @@ export class PlayGameMode extends QuestMakerMode {
     this.heroEntity.speed = DEFAULT_SPEED;
 
     this.heroEntity.addTextureFrame('down', [
-      this.app.createTileSprite(state.quest.misc.HERO_TILE_START).texture,
-      this.app.createTileSprite(state.quest.misc.HERO_TILE_START + 1).texture,
+      this.app.createGraphicSprite(state.quest.misc.HERO_GFX_START).texture,
+      this.app.createGraphicSprite(state.quest.misc.HERO_GFX_START + 1).texture,
     ]);
     this.heroEntity.addTextureFrame('up', [
-      this.app.createTileSprite(state.quest.misc.HERO_TILE_START + 4).texture,
-      this.app.createTileSprite(state.quest.misc.HERO_TILE_START + 5).texture,
+      this.app.createGraphicSprite(state.quest.misc.HERO_GFX_START + 4).texture,
+      this.app.createGraphicSprite(state.quest.misc.HERO_GFX_START + 5).texture,
     ]);
     this.heroEntity.addTextureFrame('right', [
-      this.app.createTileSprite(state.quest.misc.HERO_TILE_START + 2).texture,
-      this.app.createTileSprite(state.quest.misc.HERO_TILE_START + 3).texture,
+      this.app.createGraphicSprite(state.quest.misc.HERO_GFX_START + 2).texture,
+      this.app.createGraphicSprite(state.quest.misc.HERO_GFX_START + 3).texture,
     ]);
     this.heroEntity.addTextureFrame('left', [
-      this.app.createTileSprite(state.quest.misc.HERO_TILE_START + 2).texture,
-      this.app.createTileSprite(state.quest.misc.HERO_TILE_START + 3).texture,
+      this.app.createGraphicSprite(state.quest.misc.HERO_GFX_START + 2).texture,
+      this.app.createGraphicSprite(state.quest.misc.HERO_GFX_START + 3).texture,
     ], PIXI.groupD8.MIRROR_HORIZONTAL);
     this.heroEntity.addTextureFrame('useItem-down', [
-      this.app.createTileSprite(state.quest.misc.HERO_TILE_START + 6).texture,
+      this.app.createGraphicSprite(state.quest.misc.HERO_GFX_START + 6).texture,
     ]);
     this.heroEntity.addTextureFrame('useItem-right', [
-      this.app.createTileSprite(state.quest.misc.HERO_TILE_START + 7).texture,
+      this.app.createGraphicSprite(state.quest.misc.HERO_GFX_START + 7).texture,
     ]);
     this.heroEntity.addTextureFrame('useItem-left', [
-      this.app.createTileSprite(state.quest.misc.HERO_TILE_START + 7).texture,
+      this.app.createGraphicSprite(state.quest.misc.HERO_GFX_START + 7).texture,
     ], PIXI.groupD8.MIRROR_HORIZONTAL);
     this.heroEntity.addTextureFrame('useItem-up', [
-      this.app.createTileSprite(state.quest.misc.HERO_TILE_START + 8).texture,
+      this.app.createGraphicSprite(state.quest.misc.HERO_GFX_START + 8).texture,
     ], PIXI.groupD8.MIRROR_HORIZONTAL);
 
     this.heroEntity.setTextureFrame('down');
@@ -697,15 +697,15 @@ export class PlayGameMode extends QuestMakerMode {
     entity.life = 2;
 
     for (const [name, frames] of Object.entries(enemy.frames)) {
-      const textures = frames.map(f => this.app.createTileSprite(f).texture);
+      const textures = frames.map(f => this.app.createGraphicSprite(f).texture);
       entity.addTextureFrame(name, textures);
     }
     if (enemy.frames.left && !enemy.frames.right) {
-      const textures = enemy.frames.left.map(f => this.app.createTileSprite(f).texture);
+      const textures = enemy.frames.left.map(f => this.app.createGraphicSprite(f).texture);
       entity.addTextureFrame('right', textures, PIXI.groupD8.MIRROR_HORIZONTAL);
     }
     if (enemy.frames.down && !enemy.frames.up) {
-      const textures = enemy.frames.down.map(f => this.app.createTileSprite(f).texture);
+      const textures = enemy.frames.down.map(f => this.app.createGraphicSprite(f).texture);
       entity.addTextureFrame('up', textures, PIXI.groupD8.MIRROR_VERTICAL);
     }
     entity.setTextureFrame(Object.keys(enemy.frames)[0]);
@@ -726,7 +726,7 @@ export class PlayGameMode extends QuestMakerMode {
     entity.delta = delta;
     entity.speed = speed;
 
-    const textures = [weapon.tile].map(f => this.app.createTileSprite(f).texture);
+    const textures = [weapon.tile].map(f => this.app.createGraphicSprite(f).texture);
     entity.addTextureFrame('default', textures);
     entity.setTextureFrame('default');
 

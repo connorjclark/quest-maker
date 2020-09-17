@@ -60,8 +60,8 @@ declare global {
       graphics: Graphic[];
       tiles: Tile[];
       misc: {
-        HERO_TILE_START: number;
-        SWORD_TILE_START: number;
+        HERO_GFX_START: number;
+        SWORD_GFX_START: number;
       };
     }
 
