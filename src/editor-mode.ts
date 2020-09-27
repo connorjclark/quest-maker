@@ -31,7 +31,6 @@ function makeDomContainer(container: PIXI.Container) {
   container.addListener('removed', () => toggleDomElements(container.children, false));
 }
 
-type HTMLElementByTagName = HTMLElementTagNameMap & { [id: string]: HTMLElement };
 class DOM {
   static createElement(name: string, className?: string, attrs: Record<string, (string | undefined)> = {}): HTMLElement {
     const element = window.document.createElement(name);
@@ -336,8 +335,15 @@ export class EditorMode extends QuestMakerMode {
     const container = new PIXI.Container();
     container.interactive = true;
 
+    const tilesContainer = new PIXI.Container();
+    tilesContainer.interactive = true;
+    container.addChild(tilesContainer);
+
+    const tilePreviewContainer = new PIXI.Container();
+    tilePreviewContainer.alpha = 0.6;
+
     const render = () => {
-      container.removeChildren();
+      tilesContainer.removeChildren();
 
       // First/last row/column is from neighboring screen.
       for (let x = -1; x <= screenWidth; x++) {
@@ -382,12 +388,14 @@ export class EditorMode extends QuestMakerMode {
 
           sprite.x = (x + 1) * tileSize;
           sprite.y = (y + 1) * tileSize;
-          container.addChild(sprite);
+          tilesContainer.addChild(sprite);
         }
       }
+
+      tilesContainer.addChild(tilePreviewContainer);
     };
 
-    function onMouseMove(e: PIXI.InteractionEvent) {
+    const setTile = (e: PIXI.InteractionEvent) => {
       const pos = e.data.getLocalPosition(e.currentTarget);
       const x = Math.floor(pos.x / tileSize) - 1;
       const y = Math.floor(pos.y / tileSize) - 1;
@@ -397,18 +405,37 @@ export class EditorMode extends QuestMakerMode {
         state.currentScreen.tiles[x][y].tile = state.editor.currentTile;
         render();
       }
-    }
+    };
 
-    container.addListener('mousedown', (e) => {
-      container.addListener('mousemove', onMouseMove);
-      onMouseMove(e);
+    const setPreviewTile = (e: PIXI.InteractionEvent) => {
+      tilePreviewContainer.removeChildren();
+
+      const tilePreviewSprite = this.app.createTileSprite(state.editor.currentTile);
+      const pos = e.data.getLocalPosition(e.currentTarget);
+      const x = Math.floor(pos.x / tileSize);
+      const y = Math.floor(pos.y / tileSize);
+      if (!inBounds(x - 1, y - 1, screenWidth, screenHeight)) return;
+
+      tilePreviewContainer.x = x * tileSize;
+      tilePreviewContainer.y = y * tileSize;
+      tilePreviewContainer.addChild(tilePreviewSprite);
+    };
+
+    tilesContainer.addListener('mousedown', (e) => {
+      tilesContainer.addListener('mousemove', setTile);
+      setTile(e);
     });
-    container.addListener('mouseup', (e) => {
-      container.removeListener('mousemove', onMouseMove);
+    tilesContainer.addListener('mouseup', (e) => {
+      tilesContainer.removeListener('mousemove', setTile);
     });
-    // container.addListener('mouseout', (e) => {
-    //   container.removeListener('mousemove', onMouseMove);
-    // });
+
+    tilesContainer.addListener('mouseover', (e) => {
+      tilesContainer.addListener('mousemove', setPreviewTile);
+    });
+    tilesContainer.addListener('mouseout', (e) => {
+      tilePreviewContainer.removeChildren();
+      tilesContainer.removeListener('mousemove', setPreviewTile);
+    });
 
     render();
     return {
