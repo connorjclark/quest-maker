@@ -717,16 +717,14 @@ export class PlayGameMode extends QuestMakerMode {
 
   createProjectile(weaponId: number, delta: { x: number, y: number }, x: number, y: number, speed: number) {
     const weapon = this.app.state.quest.weapons[weaponId - 1];
-    const tile = this.app.state.quest.tiles[weapon.tile];
-
     const entity = new QuestProjectileEntity();
-    const graphic = this.app.state.quest.graphics[tile.graphicId];
+    const graphic = this.app.state.quest.graphics[weapon.graphic];
     entity.x = x * tileSize + (tileSize - graphic.width) / 2;
     entity.y = y * tileSize + (tileSize - graphic.height) / 2;
     entity.delta = delta;
     entity.speed = speed;
 
-    const textures = [weapon.tile].map(f => this.app.createGraphicSprite(f).texture);
+    const textures = [weapon.graphic].map(f => this.app.createGraphicSprite(f).texture);
     entity.addTextureFrame('default', textures);
     entity.setTextureFrame('default');
 

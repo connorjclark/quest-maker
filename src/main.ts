@@ -131,6 +131,7 @@ function createQuest(): QuestMaker.Quest {
   const weapons: QuestMaker.Weapon[] = [];
   function makeWeapon(weapon: Omit<QuestMaker.Weapon, 'id'>) {
     weapons.push({ id: weapons.length + 1, ...weapon });
+    return weapons[weapons.length - 1];
   }
 
   const basicTiles = make({
@@ -167,15 +168,6 @@ function createQuest(): QuestMaker.Quest {
     spacing: 1,
   }).graphics;
 
-  const octorokGraphics = make({
-    tile: false,
-    file: 'enemies',
-    n: 5,
-    startX: 1,
-    startY: 11,
-    spacing: 1,
-  }).graphics;
-
   const swordGraphics = makeAdvanced({
     tile: false,
     file: 'link',
@@ -187,20 +179,29 @@ function createQuest(): QuestMaker.Quest {
     spacing: 1,
   }).graphics;
 
+  const enemyGraphics = make({
+    tile: false,
+    file: 'enemies',
+    n: 100,
+    tilesInRow: 19,
+  }).graphics;
+
+  enemyGraphics[4].width = tileSize / 2;
+  const rockWeapon = makeWeapon({
+    name: 'Rock',
+    graphic: enemyGraphics[4].id,
+  });
+
   const enemies: QuestMaker.Enemy[] = [];
+
+  const octorokGraphics = enemyGraphics.slice(0, 4);
   enemies.push({
     name: 'Octorok (Red)',
-    weaponId: 1,
+    weaponId: rockWeapon.id,
     frames: {
       down: [octorokGraphics[0].id, octorokGraphics[1].id],
       left: [octorokGraphics[2].id, octorokGraphics[3].id],
     },
-  });
-
-  octorokGraphics[octorokGraphics.length - 1].width = tileSize / 2;
-  makeWeapon({
-    name: 'Rock',
-    tile: octorokGraphics[octorokGraphics.length - 1].id,
   });
 
   const screens: Screen[][] = [];

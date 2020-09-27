@@ -212,10 +212,15 @@ export class EditorMode extends QuestMakerMode {
       elDisplayObject.el.classList.add('tab-panel');
       contents.addChild(elDisplayObject);
 
-      const button = document.createElement('button');
-      button.innerText = 'Warps';
-      button.addEventListener('click', () => this.openWarpEditor());
-      elDisplayObject.el.appendChild(button);
+      const graphicsButton = document.createElement('button');
+      graphicsButton.innerText = 'Gfx';
+      graphicsButton.addEventListener('click', () => this.openGfxViewer());
+      elDisplayObject.el.appendChild(graphicsButton);
+
+      const warpButton = document.createElement('button');
+      warpButton.innerText = 'Warps';
+      warpButton.addEventListener('click', () => this.openWarpEditor());
+      elDisplayObject.el.appendChild(warpButton);
 
       return contents;
     };
@@ -497,6 +502,27 @@ export class EditorMode extends QuestMakerMode {
     }, () => ({ tile: state.quest.tiles[state.editor.currentTile] }));
 
     makeDomContainer(this.createPopupWindow(contents));
+  }
+
+  openGfxViewer() {
+    const state = this.app.state;
+
+    const contents = new ReactiveContainer((container, props) => {
+      container.removeChildren();
+
+      for (let i = 0; i < props.graphics.length; i++) {
+        const tilesInRow = 19;
+        const x = (i % tilesInRow) * tileSize;
+        const y = Math.floor(i / tilesInRow) * tileSize;
+        const sprite = this.app.createGraphicSprite(i);
+        sprite.x = x;
+        sprite.y = y;
+        container.addChild(sprite);
+      }
+    }, () => ({ graphics: state.quest.graphics }));
+    contents.scale.set(2, 2);
+
+    this.createPopupWindow(contents);
   }
 
   openWarpEditor() {

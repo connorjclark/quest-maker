@@ -50,7 +50,7 @@ declare global {
     interface Weapon {
       id: number;
       name: string;
-      tile: number;
+      graphic: number;
     }
 
     interface Quest {
