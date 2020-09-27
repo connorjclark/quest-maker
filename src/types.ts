@@ -51,6 +51,7 @@ declare global {
       id: number;
       name: string;
       graphic: number;
+      rotate?: boolean;
     }
 
     interface Quest {

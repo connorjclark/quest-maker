@@ -182,7 +182,7 @@ function createQuest(): QuestMaker.Quest {
   const enemyGraphics = make({
     tile: false,
     file: 'enemies',
-    n: 100,
+    n: 19 * 13,
     tilesInRow: 19,
   }).graphics;
 
@@ -192,15 +192,45 @@ function createQuest(): QuestMaker.Quest {
     graphic: enemyGraphics[4].id,
   });
 
-  const enemies: QuestMaker.Enemy[] = [];
+  const arrowWeapon = makeWeapon({
+    name: 'Arrow',
+    graphic: enemyGraphics[9].id,
+    rotate: true,
+  });
 
-  const octorokGraphics = enemyGraphics.slice(0, 4);
+  const enemies: QuestMaker.Enemy[] = [];
+  let gfx;
+
+  const subarray = <T>(arr: T[], start: number, num: number) => arr.slice(start, start + num);
+
+  gfx = subarray(enemyGraphics, 0, 4);
   enemies.push({
     name: 'Octorok (Red)',
     weaponId: rockWeapon.id,
     frames: {
-      down: [octorokGraphics[0].id, octorokGraphics[1].id],
-      left: [octorokGraphics[2].id, octorokGraphics[3].id],
+      down: [gfx[0].id, gfx[1].id],
+      left: [gfx[2].id, gfx[3].id],
+    },
+  });
+
+  gfx = subarray(enemyGraphics, 19, 4);
+  enemies.push({
+    name: 'Octorok (Blue)',
+    weaponId: rockWeapon.id,
+    frames: {
+      down: [gfx[0].id, gfx[1].id],
+      left: [gfx[2].id, gfx[3].id],
+    },
+  });
+
+  gfx = subarray(enemyGraphics, 5, 4);
+  enemies.push({
+    name: 'Moblin',
+    weaponId: arrowWeapon.id,
+    frames: {
+      down: [gfx[0].id],
+      up: [gfx[1].id],
+      right: [gfx[2].id, gfx[3].id],
     },
   });
 

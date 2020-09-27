@@ -704,6 +704,10 @@ export class PlayGameMode extends QuestMakerMode {
       const textures = enemy.frames.left.map(f => this.app.createGraphicSprite(f).texture);
       entity.addTextureFrame('right', textures, PIXI.groupD8.MIRROR_HORIZONTAL);
     }
+    if (!enemy.frames.left && enemy.frames.right) {
+      const textures = enemy.frames.right.map(f => this.app.createGraphicSprite(f).texture);
+      entity.addTextureFrame('left', textures, PIXI.groupD8.MIRROR_HORIZONTAL);
+    }
     if (enemy.frames.down && !enemy.frames.up) {
       const textures = enemy.frames.down.map(f => this.app.createGraphicSprite(f).texture);
       entity.addTextureFrame('up', textures, PIXI.groupD8.MIRROR_VERTICAL);
@@ -724,13 +728,35 @@ export class PlayGameMode extends QuestMakerMode {
     entity.delta = delta;
     entity.speed = speed;
 
-    const textures = [weapon.graphic].map(f => this.app.createGraphicSprite(f).texture);
-    entity.addTextureFrame('default', textures);
-    entity.setTextureFrame('default');
+    const makeTextures = () => [weapon.graphic].map(f => this.app.createGraphicSprite(f).texture);
+
+    if (weapon.rotate) {
+      entity.addTextureFrame('up', makeTextures());
+      entity.addTextureFrame('down', makeTextures(), PIXI.groupD8.MIRROR_VERTICAL);
+      entity.addTextureFrame('left', makeTextures(), PIXI.groupD8.S);
+      entity.addTextureFrame('right', makeTextures(), PIXI.groupD8.N);
+
+      // TODO: make projectile share same code as normal entity?
+      function getDirectionName() {
+        const dx = delta.x;
+        const dy = delta.y;
+
+        let direction = 'down';
+        if (dx === 1) direction = 'right';
+        else if (dx === -1) direction = 'left';
+        else if (dy === -1) direction = 'up';
+        else if (dy === 1) direction = 'down';
+
+        return direction;
+      }
+      entity.setTextureFrame(getDirectionName());
+    } else {
+      entity.addTextureFrame('default', makeTextures());
+      entity.setTextureFrame('default');
+    }
 
     this.entities.push({ sprite: entity });
     this.entityLayer.addChild(entity);
-
     return entity;
   }
 
@@ -742,11 +768,15 @@ export class PlayGameMode extends QuestMakerMode {
 
   onEnterScreen() {
     // Hardcode an enemy.
-    let enemy = this.app.state.quest.enemies[0];
-    let x = 5;
-    let y = 5;
-    let entity = this.createEntityFromEnemy(enemy, x, y);
-    entity.speed = 0.75;
+    const num = Math.floor(Math.random() * 3) + 1;
+    for (let i = 0; i < num; i++) {
+      const type = Math.floor(Math.random() * this.app.state.quest.enemies.length);
+      const enemy = this.app.state.quest.enemies[type];
+      const x = 5;
+      const y = 5;
+      const entity = this.createEntityFromEnemy(enemy, x, y);
+      entity.speed = 0.75;
+    }
   }
 
   performSwordAttack() {
