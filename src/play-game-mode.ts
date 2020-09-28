@@ -694,7 +694,7 @@ export class PlayGameMode extends QuestMakerMode {
     const spawnEntity = new QuestEntity();
     spawnEntity.x = x * tileSize;
     spawnEntity.y = y * tileSize;
-    
+
     const textures = [
       this.app.state.quest.misc.SPAWN_GFX_START,
       this.app.state.quest.misc.SPAWN_GFX_START + 1,
@@ -792,11 +792,23 @@ export class PlayGameMode extends QuestMakerMode {
   }
 
   onEnterScreen() {
+    const walkableAreas = [];
+    for (let x = 0; x < screenWidth; x++) {
+      for (let y = 0; y < screenHeight; y++) {
+        if (isSolid(this.app.state, x, y)) continue;
+        if (Math.abs(x - this.heroEntity.x / tileSize) <= 1) continue;
+        if (Math.abs(y - this.heroEntity.y / tileSize) <= 1) continue;
+
+        walkableAreas.push({ x, y });
+      }
+    }
+
     for (const { enemyId } of this.app.state.currentScreen.enemies) {
+      if (walkableAreas.length === 0) break;
+
       const enemy = this.app.state.quest.enemies[enemyId];
-      const x = Utils.random(0, screenWidth);
-      const y = Utils.random(0, screenHeight);
-      this.spawnEnemy(enemy, x, y);
+      const [pos] = walkableAreas.splice(Utils.random(0, walkableAreas.length - 1), 1);
+      this.spawnEnemy(enemy, pos.x, pos.y);
     }
   }
 
