@@ -327,7 +327,9 @@ function load() {
       isPlayTesting: false,
       currentTile: 0,
     },
-    game: {},
+    game: {
+      screenStates: new Map(),
+    },
     screenX: 0,
     screenY: 0,
     currentScreen: quest.screens[0][0],

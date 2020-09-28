@@ -86,6 +86,9 @@ declare global {
           newScreenContainer: PIXI.Container;
         };
         moveFreeze?: number;
+        screenStates: Map<Screen, {
+          enemiesKilled: number
+        }>;
       };
       screenX: number;
       screenY: number;

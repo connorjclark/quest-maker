@@ -201,6 +201,8 @@ class QuestEntity extends QuestEntityBase {
 
         if (this.life <= 0) {
           mode.removeEntity(this);
+          console.log('die');
+          mode.getScreenState().enemiesKilled += 1;
           return;
         }
       }
@@ -331,6 +333,8 @@ export class PlayGameMode extends QuestMakerMode {
   init() {
     super.init();
     const state = this.app.state;
+
+    state.game.screenStates.clear();
 
     this.container.scale.x = this.container.scale.y = 2;
     for (const layer of this.layers) {
@@ -791,22 +795,38 @@ export class PlayGameMode extends QuestMakerMode {
     if (index !== -1) this.entities.splice(index, 1);
   }
 
+  getScreenState() {
+    const state = this.app.state;
+    let screenState = state.game.screenStates.get(state.currentScreen);
+    if (!screenState) {
+      screenState = { enemiesKilled: 0 };
+      state.game.screenStates.set(state.currentScreen, screenState);
+    }
+    return screenState;
+  }
+
   onEnterScreen() {
+    const state = this.app.state;
+
     const walkableAreas = [];
     for (let x = 0; x < screenWidth; x++) {
       for (let y = 0; y < screenHeight; y++) {
-        if (isSolid(this.app.state, x, y)) continue;
-        if (Math.abs(x - this.heroEntity.x / tileSize) <= 1) continue;
-        if (Math.abs(y - this.heroEntity.y / tileSize) <= 1) continue;
+        if (isSolid(state, x, y)) continue;
+        if (Math.abs(x - this.heroEntity.x / tileSize) <= 1 && Math.abs(y - this.heroEntity.y / tileSize) <= 1) continue;
 
         walkableAreas.push({ x, y });
       }
     }
 
-    for (const { enemyId } of this.app.state.currentScreen.enemies) {
+    const enemies = [...state.currentScreen.enemies]
+      .sort(() => Math.random() - 0.5);
+    const screenState = this.getScreenState();
+    enemies.splice(0, screenState.enemiesKilled);
+
+    for (const { enemyId } of enemies) {
       if (walkableAreas.length === 0) break;
 
-      const enemy = this.app.state.quest.enemies[enemyId];
+      const enemy = state.quest.enemies[enemyId];
       const [pos] = walkableAreas.splice(Utils.random(0, walkableAreas.length - 1), 1);
       this.spawnEnemy(enemy, pos.x, pos.y);
     }
