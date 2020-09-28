@@ -12,8 +12,10 @@ const pixi = new PIXI.Application();
 pixi.renderer.backgroundColor = 0xaaaaaa;
 document.body.appendChild(pixi.view);
 
+// TODO: why is this a class?
 class Screen {
   public tiles: { tile: number }[][] = [];
+  public enemies: QuestMaker.Screen['enemies'] = [];
   public warps = {};
 
   constructor() {
@@ -25,6 +27,13 @@ class Screen {
         if (x > screenWidth / 2 - 2 && x < screenWidth / 2 + 2 && y > screenHeight / 2 - 2 && y < screenHeight / 2 + 2) tile = 0;
         this.tiles[x][y] = { tile };
       }
+    }
+
+    // Hardcode enemies.
+    const num = Math.floor(Math.random() * 4);
+    for (let i = 0; i < num; i++) {
+      const enemyId = Math.floor(Math.random() * 3);
+      this.enemies.push({ enemyId });
     }
   }
 }

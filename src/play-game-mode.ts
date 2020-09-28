@@ -2,6 +2,7 @@ import * as constants from './constants';
 import { QuestMakerMode } from "./quest-maker-mode";
 import { TileType } from './types';
 import 'pixi-plugin-bump';
+import * as Utils from './utils';
 
 const Bump = new PIXI.extras.Bump();
 
@@ -767,13 +768,10 @@ export class PlayGameMode extends QuestMakerMode {
   }
 
   onEnterScreen() {
-    // Hardcode an enemy.
-    const num = Math.floor(Math.random() * 3) + 1;
-    for (let i = 0; i < num; i++) {
-      const type = Math.floor(Math.random() * this.app.state.quest.enemies.length);
-      const enemy = this.app.state.quest.enemies[type];
-      const x = 5;
-      const y = 5;
+    for (const { enemyId } of this.app.state.currentScreen.enemies) {
+      const enemy = this.app.state.quest.enemies[enemyId];
+      const x = Utils.random(0, screenWidth);
+      const y = Utils.random(0, screenHeight);
       const entity = this.createEntityFromEnemy(enemy, x, y);
       entity.speed = 0.75;
     }

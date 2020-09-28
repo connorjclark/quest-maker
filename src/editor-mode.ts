@@ -204,6 +204,54 @@ export class EditorMode extends QuestMakerMode {
       return contents;
     };
 
+    const createEnemiesTab = () => {
+      const contents = new PIXI.Container();
+      contents.scale.set(2, 2);
+
+      const enemyPickerContainer = new ReactiveContainer((container, props) => {
+        container.removeChildren();
+
+        const tilesAcross = 3;
+        for (let i = 0; i < props.enemies.length; i++) {
+          const enemy = props.enemies[i];
+          const frame = Object.values(enemy.frames)[0][0];
+          const sprite = this.app.createGraphicSprite(frame);
+          sprite.x = (i % tilesAcross) * tileSize;
+          sprite.y = Math.floor(i / tilesAcross) * tileSize;
+          container.addChild(sprite);
+
+          sprite.interactive = true;
+          sprite.addListener('click', () => {
+            this.app.state.currentScreen.enemies.push({ enemyId: i });
+          });
+        }
+      }, () => ({ enemies: this.app.state.quest.enemies }));
+      contents.addChild(enemyPickerContainer);
+
+      const enemySelectionContainer = new ReactiveContainer((container, props) => {
+        container.removeChildren();
+
+        const tilesAcross = 3;
+        for (let i = 0; i < props.enemies.length; i++) {
+          const enemy = this.app.state.quest.enemies[props.enemies[i].enemyId];
+          const frame = Object.values(enemy.frames)[0][0];
+          const sprite = this.app.createGraphicSprite(frame);
+          sprite.x = (i % tilesAcross) * tileSize;
+          sprite.y = Math.floor(i / tilesAcross) * tileSize;
+          container.addChild(sprite);
+
+          sprite.interactive = true;
+          sprite.addListener('click', () => {
+            this.app.state.currentScreen.enemies.splice(i, 1);
+          });
+        }
+      }, () => ({ enemies: this.app.state.currentScreen.enemies }));
+      enemySelectionContainer.y = enemyPickerContainer.height + 10;
+      contents.addChild(enemySelectionContainer);
+
+      return contents;
+    };
+
     const createMiscTab = () => {
       const contents = new PIXI.Container();
       makeDomContainer(contents);
@@ -226,6 +274,7 @@ export class EditorMode extends QuestMakerMode {
     };
 
     addTab('tiles', createTilesTab());
+    addTab('enemies', createEnemiesTab());
     addTab('misc', createMiscTab());
     setTab('tiles');
 

@@ -12,6 +12,9 @@ declare global {
   namespace QuestMaker {
     interface Screen {
       tiles: { tile: number }[][];
+      enemies: Array<{
+        enemyId: number;
+      }>;
       warps: {
         a?: {
           screenX: number;
