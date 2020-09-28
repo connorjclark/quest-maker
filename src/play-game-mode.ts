@@ -690,12 +690,36 @@ export class PlayGameMode extends QuestMakerMode {
     }
   }
 
+  spawnEnemy(enemy: QuestMaker.Enemy, x: number, y: number) {
+    const spawnEntity = new QuestEntity();
+    spawnEntity.x = x * tileSize;
+    spawnEntity.y = y * tileSize;
+    
+    const textures = [
+      this.app.state.quest.misc.SPAWN_GFX_START,
+      this.app.state.quest.misc.SPAWN_GFX_START + 1,
+      this.app.state.quest.misc.SPAWN_GFX_START + 2,
+    ].map(f => this.app.createGraphicSprite(f).texture);
+    spawnEntity.addTextureFrame('default', textures);
+    spawnEntity.setTextureFrame('default');
+    spawnEntity.loop = false;
+
+    spawnEntity.onComplete = () => {
+      this.removeEntity(spawnEntity);
+      this.createEntityFromEnemy(enemy, x, y);
+    };
+
+    // There's no tick needed, so don't add to this.entities.
+    this.entityLayer.addChild(spawnEntity);
+  }
+
   createEntityFromEnemy(enemy: QuestMaker.Enemy, x: number, y: number) {
     const entity = new QuestEntity();
     entity.x = x * tileSize;
     entity.y = y * tileSize;
     entity.weaponId = enemy.weaponId || 0;
     entity.life = 2;
+    entity.speed = 0.75;
 
     for (const [name, frames] of Object.entries(enemy.frames)) {
       const textures = frames.map(f => this.app.createGraphicSprite(f).texture);
@@ -772,8 +796,7 @@ export class PlayGameMode extends QuestMakerMode {
       const enemy = this.app.state.quest.enemies[enemyId];
       const x = Utils.random(0, screenWidth);
       const y = Utils.random(0, screenHeight);
-      const entity = this.createEntityFromEnemy(enemy, x, y);
-      entity.speed = 0.75;
+      this.spawnEnemy(enemy, x, y);
     }
   }
 

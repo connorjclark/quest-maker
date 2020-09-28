@@ -64,6 +64,7 @@ declare global {
       graphics: Graphic[];
       tiles: Tile[];
       misc: {
+        SPAWN_GFX_START: number;
         HERO_GFX_START: number;
         SWORD_GFX_START: number;
       };

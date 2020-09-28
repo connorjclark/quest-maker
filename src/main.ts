@@ -188,6 +188,15 @@ function createQuest(): QuestMaker.Quest {
     spacing: 1,
   }).graphics;
 
+  const spawnGraphics = make({
+    tile: false,
+    file: 'link',
+    n: 3,
+    startX: 138,
+    startY: 185,
+    spacing: 1,
+  }).graphics;
+
   const enemyGraphics = make({
     tile: false,
     file: 'enemies',
@@ -271,6 +280,7 @@ function createQuest(): QuestMaker.Quest {
     weapons,
     screens,
     misc: {
+      SPAWN_GFX_START: spawnGraphics[0].id,
       HERO_GFX_START: HERO_BASIC_GFX[0].id,
       SWORD_GFX_START: swordGraphics[0].id,
     }
