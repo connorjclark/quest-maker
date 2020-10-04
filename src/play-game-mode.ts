@@ -4,8 +4,6 @@ import { TileType } from './types';
 import 'pixi-plugin-bump';
 import * as Utils from './utils';
 
-const Bump = new PIXI.extras.Bump();
-
 const { screenWidth, screenHeight, tileSize } = constants;
 
 interface TextureFrame {
@@ -272,6 +270,7 @@ class QuestEntity extends QuestEntityBase {
 class HitTest {
   public sections: Record<string, { color: number, objects: PIXI.DisplayObject[] }> = {};
   public container = new PIXI.Container();
+  private bump = new PIXI.extras.Bump();
 
   addSection(name: string, color: number) {
     this.sections[name] = { color, objects: [] };
@@ -297,7 +296,7 @@ class HitTest {
 
   hit(object: PIXI.DisplayObject, objects: PIXI.DisplayObject[]): string | false {
     let result: string | false = false;
-    Bump.hit(object, objects, true, false, false, (collision: string | false) => {
+    this.bump.hit(object, objects, true, false, false, (collision: string | false) => {
       result = collision;
     });
     return result;
@@ -305,7 +304,7 @@ class HitTest {
 
   test(object: PIXI.DisplayObject, objects: PIXI.DisplayObject[]) {
     let result = false;
-    Bump.hit(object, objects, false, false, false, (collision: boolean) => {
+    this.bump.hit(object, objects, false, false, false, (collision: boolean) => {
       result = collision;
     });
     return result;
@@ -492,6 +491,8 @@ export class PlayGameMode extends QuestMakerMode {
         }
       } else {
         this.hitTest.hit(data.sprite, this.hitTest.sections.screen.objects);
+        data.sprite.x = Utils.clamp(0, data.sprite.x, screenWidth * tileSize - data.sprite.width);
+        data.sprite.y = Utils.clamp(0, data.sprite.y, screenHeight * tileSize - data.sprite.height);
       }
 
       // TODO: need to fork Bump and make `.test` return a side.

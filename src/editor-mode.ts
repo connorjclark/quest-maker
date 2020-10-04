@@ -2,16 +2,11 @@ import * as constants from './constants';
 import { QuestMakerMode } from "./quest-maker-mode";
 import { ReactiveContainer } from './engine/reactive-container';
 import { TileType } from './types';
+import * as Utils from './utils';
 
 const { screenWidth, screenHeight, tileSize } = constants;
 
 const containers: Record<string, { render(): void }> = {};
-
-function clamp(min: number, val: number, max: number) {
-  if (min > val) return min;
-  if (max < val) return max;
-  return val;
-}
 
 const inBounds = (x: number, y: number, width: number, height: number) => x >= 0 && y >= 0 && x < width && y < height;
 
@@ -131,8 +126,8 @@ export class EditorMode extends QuestMakerMode {
     else if (this.app.keys.down['ArrowDown']) dy += 1;
 
     if (dx !== 0 || dy !== 0) {
-      this.app.state.screenX = clamp(0, this.app.state.screenX + dx, this.app.state.quest.screens.length - 1);
-      this.app.state.screenY = clamp(0, this.app.state.screenY + dy, this.app.state.quest.screens[0].length - 1);
+      this.app.state.screenX = Utils.clamp(0, this.app.state.screenX + dx, this.app.state.quest.screens.length - 1);
+      this.app.state.screenY = Utils.clamp(0, this.app.state.screenY + dy, this.app.state.quest.screens[0].length - 1);
       this.app.state.currentScreen = this.app.state.quest.screens[this.app.state.screenX][this.app.state.screenY];
       containers.screenArea.render();
       containers.screenPicker.render();
@@ -345,7 +340,7 @@ export class EditorMode extends QuestMakerMode {
     });
 
     function onScroll(e: WheelEvent) {
-      tilesContainer.y = clamp(-tilesContainer.height, tilesContainer.y - e.deltaY * 0.5, 0);
+      tilesContainer.y = Utils.clamp(-tilesContainer.height, tilesContainer.y - e.deltaY * 0.5, 0);
     }
     container.addListener('scroll', onScroll);
 
@@ -588,10 +583,10 @@ export class EditorMode extends QuestMakerMode {
         // TODO: remove, put in deserializing code when start caring about data size.
         state.currentScreen.warps.a = state.currentScreen.warps.a || { x: 0, y: 0, screenX: 0, screenY: 0 };
 
-        state.currentScreen.warps.a.screenX = clamp(0, inputs.screenX.valueAsNumber, 100);
-        state.currentScreen.warps.a.screenY = clamp(0, inputs.screenY.valueAsNumber, 100);
-        state.currentScreen.warps.a.x = clamp(0, inputs.x.valueAsNumber, screenWidth);
-        state.currentScreen.warps.a.y = clamp(0, inputs.y.valueAsNumber, screenHeight);
+        state.currentScreen.warps.a.screenX = Utils.clamp(0, inputs.screenX.valueAsNumber, 100);
+        state.currentScreen.warps.a.screenY = Utils.clamp(0, inputs.screenY.valueAsNumber, 100);
+        state.currentScreen.warps.a.x = Utils.clamp(0, inputs.x.valueAsNumber, screenWidth);
+        state.currentScreen.warps.a.y = Utils.clamp(0, inputs.y.valueAsNumber, screenHeight);
       };
 
       const inputs: Record<string, HTMLInputElement> = {};
