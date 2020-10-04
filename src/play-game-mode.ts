@@ -724,7 +724,10 @@ export class PlayGameMode extends QuestMakerMode {
     entity.y = y * tileSize;
     entity.weaponId = enemy.weaponId || 0;
     entity.life = 2;
-    entity.speed = 0.75;
+    entity.speed = enemy.speed;
+    entity.directionChangeFactor = enemy.directionChangeFactor;
+    entity.homingFactor = enemy.homingFactor;
+    entity.haltFactor = enemy.haltFactor;
 
     for (const [name, frames] of Object.entries(enemy.frames)) {
       const textures = frames.map(f => this.app.createGraphicSprite(f).texture);

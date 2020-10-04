@@ -216,13 +216,25 @@ function createQuest(): QuestMaker.Quest {
     rotate: true,
   });
 
+  type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
+
   const enemies: QuestMaker.Enemy[] = [];
   let gfx;
+  function makeEnemy(opts: WithOptional<QuestMaker.Enemy, 'homingFactor' | 'directionChangeFactor' | 'haltFactor' | 'speed'>) {
+    const enemy = {
+      speed: 0.75,
+      homingFactor: 64 / 255,
+      directionChangeFactor: 4 / 16,
+      haltFactor: 3 / 16,
+      ...opts,
+    };
+    enemies.push(enemy);
+  }
 
   const subarray = <T>(arr: T[], start: number, num: number) => arr.slice(start, start + num);
 
   gfx = subarray(enemyGraphics, 0, 4);
-  enemies.push({
+  makeEnemy({
     name: 'Octorok (Red)',
     weaponId: rockWeapon.id,
     frames: {
@@ -232,17 +244,20 @@ function createQuest(): QuestMaker.Quest {
   });
 
   gfx = subarray(enemyGraphics, 19, 4);
-  enemies.push({
+  makeEnemy({
     name: 'Octorok (Blue)',
     weaponId: rockWeapon.id,
     frames: {
       down: [gfx[0].id, gfx[1].id],
       left: [gfx[2].id, gfx[3].id],
     },
+    speed: 1,
+    homingFactor: 128 / 255,
+    directionChangeFactor: 6 / 16,
   });
 
   gfx = subarray(enemyGraphics, 5, 4);
-  enemies.push({
+  makeEnemy({
     name: 'Moblin',
     weaponId: arrowWeapon.id,
     frames: {

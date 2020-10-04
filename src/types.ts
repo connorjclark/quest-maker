@@ -48,6 +48,10 @@ declare global {
       name: string;
       frames: Record<string, number[]>;
       weaponId?: number;
+      speed: number;
+      homingFactor: number;
+      directionChangeFactor: number;
+      haltFactor: number;
     }
 
     interface Weapon {
