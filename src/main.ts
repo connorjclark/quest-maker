@@ -279,10 +279,27 @@ function createQuest(): QuestMaker.Quest {
     attributes: {
       'enemy.homing': 0,
       'enemy.directionChange': 0,
+      'enemy.leever.emergeStyle': 'in-place',
     },
     frames: {
       moving: [gfx[3].id, gfx[4].id],
       emerging: [gfx[0].id, gfx[1].id, gfx[2].id],
+    },
+  });
+
+  gfx = subarray(enemyGraphics, 4 * 19, 5);
+  const prevEmerging = enemies[enemies.length - 1].frames.emerging;
+  makeEnemy({
+    name: 'Blue Leever',
+    type: EnemyType.LEEVER,
+    attributes: {
+      'enemy.homing': 0,
+      'enemy.directionChange': 0,
+      'enemy.leever.emergeStyle': 'in-place',
+    },
+    frames: {
+      moving: [gfx[3].id, gfx[4].id],
+      emerging: [prevEmerging[0], prevEmerging[1], gfx[2].id],
     },
   });
 

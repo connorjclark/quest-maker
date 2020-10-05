@@ -50,7 +50,7 @@ declare global {
       walkable: [boolean, boolean, boolean, boolean];
     }
 
-    type Attributes = EnemyAttributes;
+    type Attributes = EnemyAttributes & ScreenAttributes;
 
     interface EnemyAttributes {
       'enemy.directionChange': number;
@@ -58,10 +58,14 @@ declare global {
       'enemy.homing': number;
       /** Pixels per frame. */
       'enemy.speed': number;
-      'enemy.weapon': number;
-      'enemy.leever.emergedAt': number;
       'enemy.leever.emergedState': 'submerged' | 'emerged' | 'submerging';
-      'enemy.leever.lastEmergedTime': number;
+      'enemy.leever.emergedStateTimeChanged': number;
+      'enemy.leever.emergeStyle': 'hero-path' | 'in-place';
+      'enemy.weapon': number;
+    }
+
+    interface ScreenAttributes {
+      'screen.leever.lastEmergedTime': number;
     }
 
     interface Enemy {

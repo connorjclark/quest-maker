@@ -110,14 +110,15 @@ class QuestProjectileEntity extends QuestEntityBase {
   }
 }
 
-class MiscBag {
-  private data: Record<string, any> = {};
+class MiscBag<A extends Record<string, any>> {
+  private data: Partial<A> = {};
 
-  get<T extends keyof QuestMaker.Attributes>(id: T): QuestMaker.Attributes[T] {
+  get<T extends keyof A>(id: T): A[T] {
+    // @ts-ignore
     return this.data[id];
   }
 
-  set<T extends keyof QuestMaker.Attributes>(id: T, value: QuestMaker.Attributes[T]) {
+  set<T extends keyof A>(id: T, value: A[T]) {
     this.data[id] = value;
   }
 
@@ -131,7 +132,7 @@ class QuestEntity extends QuestEntityBase {
   public direction = { ...directions[Math.floor(Math.random() * directions.length)] };
   public moving = true;
   public isHero = false;
-  public misc = new MiscBag();
+  public misc = new MiscBag<QuestMaker.EnemyAttributes>();
 
   private haltTimer: number | null = null;
 
@@ -292,20 +293,21 @@ class QuestEntity extends QuestEntityBase {
 
   _leeverMovement(mode: PlayGameMode, speed: number) {
     // TODO: have init step.
+    // TODO: no hit if not emerged.
     if (!this.misc.get('enemy.leever.emergedState')) {
       this.misc.set('enemy.leever.emergedState', 'submerged');
     }
 
     const emergedState = this.misc.get('enemy.leever.emergedState');
-    const lastEmergedTime = mode.misc.get('enemy.leever.lastEmergedTime') || 0;
+    const emergedStyle = this.misc.get('enemy.leever.emergeStyle');
+    const timeSinceStateChange = Date.now() - (this.misc.get('enemy.leever.emergedStateTimeChanged') || 0);
+    const timeSinceLastEmerge = Date.now() - (mode.screenAttributes.get('screen.leever.lastEmergedTime') || 0);
 
     if (emergedState === 'submerged') {
       this.haltTimer = 100;
       this.visible = false;
-      this.x = -100;
-      this.y = -100;
 
-      const numberEmergedLeeches = mode.entities.reduce((acc, cur) => {
+      const numberEmergedLeevers = mode.entities.reduce((acc, cur) => {
         const entity = cur.sprite as QuestEntity;
         if (entity.misc) {
           const state = entity.misc.get('enemy.leever.emergedState');
@@ -315,26 +317,30 @@ class QuestEntity extends QuestEntityBase {
         return acc;
       }, 0);
 
-      if (numberEmergedLeeches < 2 && Date.now() - lastEmergedTime > 500) {
+      if (numberEmergedLeevers < 2 && timeSinceLastEmerge > 500 && timeSinceStateChange > 1000) {
         this.misc.set('enemy.leever.emergedState', 'emerged');
-        this.misc.set('enemy.leever.emergedAt', +Date.now());
-        mode.misc.set('enemy.leever.lastEmergedTime', +Date.now());
+        this.misc.set('enemy.leever.emergedStateTimeChanged', Date.now());
+        mode.screenAttributes.set('screen.leever.lastEmergedTime', Date.now());
 
-        const pos = {
-          x: Math.round(mode.heroEntity.x / tileSize),
-          y: Math.round(mode.heroEntity.y / tileSize),
-        };
-        if (mode.heroEntity.direction.x !== 0) {
-          pos.x += Math.sign(mode.heroEntity.direction.x) * 3;
+        if (emergedStyle === 'hero-path') {
+          const pos = {
+            x: Math.round(mode.heroEntity.x / tileSize),
+            y: Math.round(mode.heroEntity.y / tileSize),
+          };
+          if (mode.heroEntity.direction.x !== 0) {
+            pos.x += Math.sign(mode.heroEntity.direction.x) * 3;
+          } else {
+            pos.y += Math.sign(mode.heroEntity.direction.y) * 3;
+          }
+          this.x = pos.x * tileSize;
+          this.y = pos.y * tileSize;
+
+          this.direction = { ...mode.heroEntity.direction };
+          this.direction.x *= -1;
+          this.direction.y *= -1;
         } else {
-          pos.y += Math.sign(mode.heroEntity.direction.y) * 3;
+          this.direction = { ...directions[Utils.random(0, directions.length)] };
         }
-
-        this.x = pos.x * tileSize;
-        this.y = pos.y * tileSize;
-        this.direction = { ...mode.heroEntity.direction };
-        this.direction.x *= -1;
-        this.direction.y *= -1;
 
         this.setTextureFrame('emerging');
         this.loop = false;
@@ -342,19 +348,22 @@ class QuestEntity extends QuestEntityBase {
           this.setTextureFrame('moving');
           this.haltTimer = 0;
           this.loop = true;
+          delete this.onComplete;
         };
       }
     } else if (emergedState === 'emerged') {
       this.visible = true;
 
-      const emergedAt = this.misc.get('enemy.leever.emergedAt') || 0;
-      if (+Date.now() - emergedAt > 1000 * 2) {
+      if (timeSinceStateChange > 1000 * 2) {
         this.misc.set('enemy.leever.emergedState', 'submerging');
+        this.misc.set('enemy.leever.emergedStateTimeChanged', Date.now());
 
         this.setTextureFrame('submerging');
         this.loop = false;
         this.onComplete = () => {
           this.misc.set('enemy.leever.emergedState', 'submerged');
+          this.misc.set('enemy.leever.emergedStateTimeChanged', Date.now());
+          delete this.onComplete;
         };
       }
     }
@@ -421,7 +430,7 @@ class HitTest {
 export class PlayGameMode extends QuestMakerMode {
   public heroEntity = new QuestEntity({});
   public entities: Array<{ sprite: QuestEntityBase }> = [];
-  public misc = new MiscBag();
+  public screenAttributes = new MiscBag<QuestMaker.ScreenAttributes>();
 
   private entityLayer = new PIXI.Container();
   private tileLayer = new PIXI.Container();
@@ -441,7 +450,7 @@ export class PlayGameMode extends QuestMakerMode {
     const state = this.app.state;
 
     state.game.screenStates.clear();
-    this.misc.clear();
+    this.screenAttributes.clear();
 
     this.container.scale.x = this.container.scale.y = 2;
     for (const layer of this.layers) {
