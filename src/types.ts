@@ -50,6 +50,14 @@ declare global {
       walkable: [boolean, boolean, boolean, boolean];
     }
 
+    type Attributes = EnemyAttributes;
+
+    interface EnemyAttributes {
+      'enemy.leever.emergedAt': number;
+      'enemy.leever.emergedState': 'submerged' | 'emerged' | 'submerging';
+      'enemy.leever.lastEmergedTime': number;
+    }
+
     interface Enemy {
       name: string;
       type: EnemyType_;

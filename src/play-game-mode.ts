@@ -113,19 +113,11 @@ class QuestProjectileEntity extends QuestEntityBase {
 class MiscBag {
   private data: Record<string, any> = {};
 
-  getBoolean(id: string): boolean {
+  get<T extends keyof QuestMaker.Attributes>(id: T): QuestMaker.Attributes[T] {
     return this.data[id];
   }
 
-  getNumber(id: string): number {
-    return this.data[id];
-  }
-
-  getString(id: string): string {
-    return this.data[id];
-  }
-
-  set(id: string, value: any) {
+  set<T extends keyof QuestMaker.Attributes>(id: T, value: QuestMaker.Attributes[T]) {
     this.data[id] = value;
   }
 
@@ -288,17 +280,13 @@ class QuestEntity extends QuestEntityBase {
   }
 
   _leeverMovement(mode: PlayGameMode, speed: number) {
-    const SUBMERGED = 'submerged';
-    const EMERGED = 'emerged';
-    const SUBMERGING = 'submerging';
-
     // TODO: have init step.
-    if (!this.misc.getString('enemy.leever.emergedState')) {
-      this.misc.set('enemy.leever.emergedState', SUBMERGED);
+    if (!this.misc.get('enemy.leever.emergedState')) {
+      this.misc.set('enemy.leever.emergedState', 'submerged');
     }
 
-    const emergedState = this.misc.getString('enemy.leever.emergedState');
-    const lastEmergedTime = mode.misc.getNumber('enemy.leever.lastEmergedTime') || 0;
+    const emergedState = this.misc.get('enemy.leever.emergedState');
+    const lastEmergedTime = mode.misc.get('enemy.leever.lastEmergedTime') || 0;
 
     if (emergedState === 'submerged') {
       this.haltTimer = 100;
@@ -309,15 +297,15 @@ class QuestEntity extends QuestEntityBase {
       const numberEmergedLeeches = mode.entities.reduce((acc, cur) => {
         const entity = cur.sprite as QuestEntity;
         if (entity.misc) {
-          const state = entity.misc.getString('enemy.leever.emergedState');
+          const state = entity.misc.get('enemy.leever.emergedState');
           if (!state) return acc;
-          return acc + (state === SUBMERGED ? 0 : 1);
+          return acc + (state === 'submerged' ? 0 : 1);
         }
         return acc;
       }, 0);
 
       if (numberEmergedLeeches < 2 && Date.now() - lastEmergedTime > 500) {
-        this.misc.set('enemy.leever.emergedState', EMERGED);
+        this.misc.set('enemy.leever.emergedState', 'emerged');
         this.misc.set('enemy.leever.emergedAt', +Date.now());
         mode.misc.set('enemy.leever.lastEmergedTime', +Date.now());
 
@@ -345,17 +333,17 @@ class QuestEntity extends QuestEntityBase {
           this.loop = true;
         };
       }
-    } else if (emergedState === EMERGED) {
+    } else if (emergedState === 'emerged') {
       this.visible = true;
 
-      const emergedAt = this.misc.getNumber('enemy.leever.emergedAt') || 0;
+      const emergedAt = this.misc.get('enemy.leever.emergedAt') || 0;
       if (+Date.now() - emergedAt > 1000 * 2) {
-        this.misc.set('enemy.leever.emergedState', SUBMERGING);
+        this.misc.set('enemy.leever.emergedState', 'submerging');
 
         this.setTextureFrame('submerging');
         this.loop = false;
         this.onComplete = () => {
-          this.misc.set('enemy.leever.emergedState', SUBMERGED);
+          this.misc.set('enemy.leever.emergedState', 'submerged');
         };
       }
     }
