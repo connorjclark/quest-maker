@@ -216,11 +216,9 @@ function createQuest(): QuestMaker.Quest {
     rotate: true,
   });
 
-  type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
-
   const enemies: QuestMaker.Enemy[] = [];
   let gfx;
-  function makeEnemy(opts: WithOptional<QuestMaker.Enemy, 'homingFactor' | 'directionChangeFactor' | 'haltFactor' | 'speed' | 'type'>) {
+  function makeEnemy(opts: Pick<QuestMaker.Enemy, 'name' | 'frames' | 'attributes'> & { type?: EnemyType }) {
     const enemy = {
       type: EnemyType.NORMAL,
       speed: 50 / 100,
@@ -237,7 +235,9 @@ function createQuest(): QuestMaker.Quest {
   gfx = subarray(enemyGraphics, 0, 4);
   makeEnemy({
     name: 'Octorok (Red)',
-    weaponId: rockWeapon.id,
+    attributes: {
+      'enemy.weapon': rockWeapon.id,
+    },
     frames: {
       down: [gfx[0].id, gfx[1].id],
       left: [gfx[2].id, gfx[3].id],
@@ -247,20 +247,24 @@ function createQuest(): QuestMaker.Quest {
   gfx = subarray(enemyGraphics, 19, 4);
   makeEnemy({
     name: 'Octorok (Blue)',
-    weaponId: rockWeapon.id,
+    attributes: {
+      'enemy.directionChange': 6 / 16,
+      'enemy.homing': 128 / 255,
+      'enemy.speed': 1,
+      'enemy.weapon': rockWeapon.id,
+    },
     frames: {
       down: [gfx[0].id, gfx[1].id],
       left: [gfx[2].id, gfx[3].id],
     },
-    speed: 1,
-    homingFactor: 128 / 255,
-    directionChangeFactor: 6 / 16,
   });
 
   gfx = subarray(enemyGraphics, 5, 4);
   makeEnemy({
     name: 'Moblin',
-    weaponId: arrowWeapon.id,
+    attributes: {
+      'enemy.weapon': arrowWeapon.id,
+    },
     frames: {
       down: [gfx[0].id],
       up: [gfx[1].id],
@@ -272,12 +276,14 @@ function createQuest(): QuestMaker.Quest {
   makeEnemy({
     name: 'Leever',
     type: EnemyType.LEEVER,
+    attributes: {
+      'enemy.homing': 0,
+      'enemy.directionChange': 0,
+    },
     frames: {
       moving: [gfx[3].id, gfx[4].id],
       emerging: [gfx[0].id, gfx[1].id, gfx[2].id],
     },
-    homingFactor: 0,
-    directionChangeFactor: 0,
   });
 
   const screens: Screen[][] = [];

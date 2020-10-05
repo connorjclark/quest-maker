@@ -130,14 +130,20 @@ class QuestEntity extends QuestEntityBase {
   public type = EnemyType.NORMAL;
   public direction = { ...directions[Math.floor(Math.random() * directions.length)] };
   public moving = true;
-  public homingFactor = 64 / 255;
-  public directionChangeFactor = 4 / 16;
-  public haltFactor = 3 / 16;
   public isHero = false;
-  public weaponId = 0;
   public misc = new MiscBag();
 
   private haltTimer: number | null = null;
+
+  constructor(attributes: Partial<QuestMaker.EnemyAttributes>) {
+    super();
+    for (const [id, value] of Object.entries(attributes)) {
+      // @ts-ignore
+      this.misc.set(id, value);
+    }
+
+    this.speed = this.misc.get('enemy.speed') || 0.5;
+  }
 
   tick(mode: PlayGameMode, dt: number) {
     const speed = this.speed * dt;
@@ -221,6 +227,11 @@ class QuestEntity extends QuestEntityBase {
   }
 
   _normalMovement(mode: PlayGameMode, speed: number) {
+    const weaponId = this.misc.get('enemy.weapon');
+    const homingFactor = this.misc.get('enemy.homing');
+    const directionChangeFactor = this.misc.get('enemy.directionChange');
+    const haltFactor = this.misc.get('enemy.halt');
+
     let shouldChangeDirection = false;
 
     let hitPoint = { x: this.x, y: this.y };
@@ -251,10 +262,10 @@ class QuestEntity extends QuestEntityBase {
       }
 
       if (shouldChangeDirection || currentTile.x !== nextTile.x || currentTile.y !== nextTile.y) {
-        if (Math.random() < this.haltFactor) {
+        if (Math.random() < haltFactor) {
           this.haltTimer = 30;
-          if (this.weaponId) {
-            mode.createProjectile(this.weaponId, { x: Math.sign(this.direction.x), y: Math.sign(this.direction.y) }, currentTile.x, currentTile.y, 2);
+          if (weaponId) {
+            mode.createProjectile(weaponId, { x: Math.sign(this.direction.x), y: Math.sign(this.direction.y) }, currentTile.x, currentTile.y, 2);
           }
           return;
         }
@@ -264,11 +275,11 @@ class QuestEntity extends QuestEntityBase {
         });
         if (!availableDirections.length) availableDirections = directions;
 
-        if (Math.random() < this.homingFactor) {
+        if (Math.random() < homingFactor) {
           // TODO
           this.direction = availableDirections[Math.floor(Math.random() * availableDirections.length)];
           shouldChangeDirection = false;
-        } else if (Math.random() < this.directionChangeFactor) {
+        } else if (Math.random() < directionChangeFactor) {
           shouldChangeDirection = true;
         }
 
@@ -408,7 +419,7 @@ class HitTest {
 }
 
 export class PlayGameMode extends QuestMakerMode {
-  public heroEntity = new QuestEntity();
+  public heroEntity = new QuestEntity({});
   public entities: Array<{ sprite: QuestEntityBase }> = [];
   public misc = new MiscBag();
 
@@ -796,7 +807,7 @@ export class PlayGameMode extends QuestMakerMode {
   spawnEnemy(enemy: QuestMaker.Enemy, x: number, y: number) {
     const shouldSpawnWithCloud = enemy.type !== EnemyType.LEEVER;
     if (shouldSpawnWithCloud) {
-      const spawnEntity = new QuestEntity();
+      const spawnEntity = new QuestEntity({});
       spawnEntity.x = x * tileSize;
       spawnEntity.y = y * tileSize;
 
@@ -822,16 +833,11 @@ export class PlayGameMode extends QuestMakerMode {
   }
 
   createEntityFromEnemy(enemy: QuestMaker.Enemy, x: number, y: number) {
-    const entity = new QuestEntity();
+    const entity = new QuestEntity(enemy.attributes);
     entity.x = x * tileSize;
     entity.y = y * tileSize;
     entity.type = enemy.type;
-    entity.weaponId = enemy.weaponId || 0;
     entity.life = 2;
-    entity.speed = enemy.speed;
-    entity.directionChangeFactor = enemy.directionChangeFactor;
-    entity.homingFactor = enemy.homingFactor;
-    entity.haltFactor = enemy.haltFactor;
 
     for (const [name, frames] of Object.entries(enemy.frames)) {
       const textures = frames.map(f => this.app.createGraphicSprite(f).texture);

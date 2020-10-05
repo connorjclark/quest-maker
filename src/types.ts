@@ -46,13 +46,19 @@ declare global {
       id: number;
       type: TileType;
       graphicId: number;
-      /* top left, top right, bottom left, bottom right */
+      /** top left, top right, bottom left, bottom right */
       walkable: [boolean, boolean, boolean, boolean];
     }
 
     type Attributes = EnemyAttributes;
 
     interface EnemyAttributes {
+      'enemy.directionChange': number;
+      'enemy.halt': number;
+      'enemy.homing': number;
+      /** Pixels per frame. */
+      'enemy.speed': number;
+      'enemy.weapon': number;
       'enemy.leever.emergedAt': number;
       'enemy.leever.emergedState': 'submerged' | 'emerged' | 'submerging';
       'enemy.leever.lastEmergedTime': number;
@@ -62,12 +68,7 @@ declare global {
       name: string;
       type: EnemyType_;
       frames: Record<string, number[]>;
-      weaponId?: number;
-      /* Pixels per frame. */
-      speed: number;
-      homingFactor: number;
-      directionChangeFactor: number;
-      haltFactor: number;
+      attributes: Partial<EnemyAttributes>;
     }
 
     interface Weapon {
@@ -109,7 +110,6 @@ declare global {
         screenStates: Map<Screen, {
           enemiesKilled: number
         }>;
-        miscellaneous: Record<string, any>;
       };
       screenX: number;
       screenY: number;
