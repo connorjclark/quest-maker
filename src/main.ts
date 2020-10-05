@@ -2,7 +2,7 @@ import * as constants from './constants';
 import { EditorMode } from './editor-mode';
 import { PlayGameMode } from './play-game-mode';
 import { QuestMakerApp } from './quest-maker-app';
-import { TileType } from './types';
+import { TileType, EnemyType } from './types';
 
 const { screenWidth, screenHeight, tileSize } = constants;
 
@@ -32,7 +32,7 @@ class Screen {
     // Hardcode enemies.
     const num = Math.floor(Math.random() * 4);
     for (let i = 0; i < num; i++) {
-      const enemyId = Math.floor(Math.random() * 3);
+      const enemyId = Math.floor(Math.random() * 4);
       this.enemies.push({ enemyId });
     }
   }
@@ -220,9 +220,10 @@ function createQuest(): QuestMaker.Quest {
 
   const enemies: QuestMaker.Enemy[] = [];
   let gfx;
-  function makeEnemy(opts: WithOptional<QuestMaker.Enemy, 'homingFactor' | 'directionChangeFactor' | 'haltFactor' | 'speed'>) {
+  function makeEnemy(opts: WithOptional<QuestMaker.Enemy, 'homingFactor' | 'directionChangeFactor' | 'haltFactor' | 'speed' | 'type'>) {
     const enemy = {
-      speed: 0.75,
+      type: EnemyType.NORMAL,
+      speed: 50 / 100,
       homingFactor: 64 / 255,
       directionChangeFactor: 4 / 16,
       haltFactor: 3 / 16,
@@ -265,6 +266,18 @@ function createQuest(): QuestMaker.Quest {
       up: [gfx[1].id],
       right: [gfx[2].id, gfx[3].id],
     },
+  });
+
+  gfx = subarray(enemyGraphics, 3 * 19, 5);
+  makeEnemy({
+    name: 'Leever',
+    type: EnemyType.LEEVER,
+    frames: {
+      moving: [gfx[3].id, gfx[4].id],
+      emerging: [gfx[0].id, gfx[1].id, gfx[2].id],
+    },
+    homingFactor: 0,
+    directionChangeFactor: 0,
   });
 
   const screens: Screen[][] = [];

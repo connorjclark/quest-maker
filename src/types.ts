@@ -8,6 +8,12 @@ export enum TileType {
 }
 type TileType_ = TileType;
 
+export enum EnemyType {
+  NORMAL = 'normal',
+  LEEVER = 'leever',
+}
+type EnemyType_ = EnemyType;
+
 declare global {
   namespace QuestMaker {
     interface Screen {
@@ -46,8 +52,10 @@ declare global {
 
     interface Enemy {
       name: string;
+      type: EnemyType_;
       frames: Record<string, number[]>;
       weaponId?: number;
+      /* Pixels per frame. */
       speed: number;
       homingFactor: number;
       directionChangeFactor: number;
@@ -93,6 +101,7 @@ declare global {
         screenStates: Map<Screen, {
           enemiesKilled: number
         }>;
+        miscellaneous: Record<string, any>;
       };
       screenX: number;
       screenY: number;

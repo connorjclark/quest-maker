@@ -1,6 +1,6 @@
 import * as constants from './constants';
 import { QuestMakerMode } from "./quest-maker-mode";
-import { TileType } from './types';
+import { TileType, EnemyType } from './types';
 import 'pixi-plugin-bump';
 import * as Utils from './utils';
 
@@ -10,7 +10,7 @@ interface TextureFrame {
   textures: PIXI.Texture[];
 }
 
-const DEFAULT_SPEED = 1.5;
+const DEFAULT_HERO_SPEED = 1.5;
 
 let paused = false;
 
@@ -110,7 +110,32 @@ class QuestProjectileEntity extends QuestEntityBase {
   }
 }
 
+class MiscBag {
+  private data: Record<string, any> = {};
+
+  getBoolean(id: string): boolean {
+    return this.data[id];
+  }
+
+  getNumber(id: string): number {
+    return this.data[id];
+  }
+
+  getString(id: string): string {
+    return this.data[id];
+  }
+
+  set(id: string, value: any) {
+    this.data[id] = value;
+  }
+
+  clear() {
+    this.data = {};
+  }
+}
+
 class QuestEntity extends QuestEntityBase {
+  public type = EnemyType.NORMAL;
   public direction = { ...directions[Math.floor(Math.random() * directions.length)] };
   public moving = true;
   public homingFactor = 64 / 255;
@@ -118,6 +143,7 @@ class QuestEntity extends QuestEntityBase {
   public haltFactor = 3 / 16;
   public isHero = false;
   public weaponId = 0;
+  public misc = new MiscBag();
 
   private haltTimer: number | null = null;
 
@@ -125,61 +151,10 @@ class QuestEntity extends QuestEntityBase {
     const speed = this.speed * dt;
 
     if (!this.isHero && this.life) {
-      let shouldChangeDirection = false;
-
-      let hitPoint = { x: this.x, y: this.y };
-      if (this.direction.x === 1) hitPoint.x += this.width;
-      if (this.direction.y === 1) hitPoint.y += this.height;
-
-      const currentTile = { x: Math.floor(hitPoint.x / tileSize), y: Math.floor(hitPoint.y / tileSize) };
-      const nextTile = { x: Math.floor((hitPoint.x + this.direction.x * speed) / tileSize), y: Math.floor((hitPoint.y + this.direction.y * speed) / tileSize) };
-
-      // @ts-ignore
-      if (window.debug) {
-        const debug = mode.app.debug(`nextTile ${mode.entities.findIndex(e => e.sprite === this)}`);
-        debug.alpha = 0.5;
-        debug.x = nextTile.x * tileSize;
-        debug.y = nextTile.y * tileSize;
-        debug.clear();
-        debug.lineStyle(1, 0x00ff00);
-        debug.beginFill();
-        debug.drawRect(0, 0, tileSize, tileSize);
-        debug.endFill();
-        // @ts-ignore
-        mode.container.addChild(debug);
-      }
-
-      if (this.haltTimer === null) {
-        if (isSolid(mode.app.state, nextTile.x, nextTile.y)) {
-          shouldChangeDirection = true;
-        }
-
-        if (shouldChangeDirection || currentTile.x !== nextTile.x || currentTile.y !== nextTile.y) {
-          if (Math.random() < this.haltFactor) {
-            this.haltTimer = 30;
-            if (this.weaponId) {
-              mode.createProjectile(this.weaponId, { x: Math.sign(this.direction.x), y: Math.sign(this.direction.y) }, currentTile.x, currentTile.y, 2);
-            }
-            return;
-          }
-
-          let availableDirections = directions.filter(d => {
-            return !isSolid(mode.app.state, currentTile.x + d.x, currentTile.y + d.y);
-          });
-          if (!availableDirections.length) availableDirections = directions;
-
-          if (Math.random() < this.homingFactor) {
-            // TODO
-            this.direction = availableDirections[Math.floor(Math.random() * availableDirections.length)];
-            shouldChangeDirection = false;
-          } else if (Math.random() < this.directionChangeFactor) {
-            shouldChangeDirection = true;
-          }
-
-          if (shouldChangeDirection) {
-            this.direction = availableDirections[Math.floor(Math.random() * availableDirections.length)];
-          }
-        }
+      if (this.type === EnemyType.NORMAL) {
+        this._normalMovement(mode, speed);
+      } else if (this.type === EnemyType.LEEVER) {
+        this._leeverMovement(mode, speed);
       }
     }
 
@@ -253,6 +228,139 @@ class QuestEntity extends QuestEntityBase {
     }
   }
 
+  _normalMovement(mode: PlayGameMode, speed: number) {
+    let shouldChangeDirection = false;
+
+    let hitPoint = { x: this.x, y: this.y };
+    if (this.direction.x === 1) hitPoint.x += this.width;
+    if (this.direction.y === 1) hitPoint.y += this.height;
+
+    const currentTile = { x: Math.floor(hitPoint.x / tileSize), y: Math.floor(hitPoint.y / tileSize) };
+    const nextTile = { x: Math.floor((hitPoint.x + this.direction.x * speed) / tileSize), y: Math.floor((hitPoint.y + this.direction.y * speed) / tileSize) };
+
+    // @ts-ignore
+    if (window.debug) {
+      const debug = mode.app.debug(`nextTile ${mode.entities.findIndex(e => e.sprite === this)}`);
+      debug.alpha = 0.5;
+      debug.x = nextTile.x * tileSize;
+      debug.y = nextTile.y * tileSize;
+      debug.clear();
+      debug.lineStyle(1, 0x00ff00);
+      debug.beginFill();
+      debug.drawRect(0, 0, tileSize, tileSize);
+      debug.endFill();
+      // @ts-ignore
+      mode.container.addChild(debug);
+    }
+
+    if (this.haltTimer === null) {
+      if (isSolid(mode.app.state, nextTile.x, nextTile.y)) {
+        shouldChangeDirection = true;
+      }
+
+      if (shouldChangeDirection || currentTile.x !== nextTile.x || currentTile.y !== nextTile.y) {
+        if (Math.random() < this.haltFactor) {
+          this.haltTimer = 30;
+          if (this.weaponId) {
+            mode.createProjectile(this.weaponId, { x: Math.sign(this.direction.x), y: Math.sign(this.direction.y) }, currentTile.x, currentTile.y, 2);
+          }
+          return;
+        }
+
+        let availableDirections = directions.filter(d => {
+          return !isSolid(mode.app.state, currentTile.x + d.x, currentTile.y + d.y);
+        });
+        if (!availableDirections.length) availableDirections = directions;
+
+        if (Math.random() < this.homingFactor) {
+          // TODO
+          this.direction = availableDirections[Math.floor(Math.random() * availableDirections.length)];
+          shouldChangeDirection = false;
+        } else if (Math.random() < this.directionChangeFactor) {
+          shouldChangeDirection = true;
+        }
+
+        if (shouldChangeDirection) {
+          this.direction = availableDirections[Math.floor(Math.random() * availableDirections.length)];
+        }
+      }
+    }
+  }
+
+  _leeverMovement(mode: PlayGameMode, speed: number) {
+    const SUBMERGED = 'submerged';
+    const EMERGED = 'emerged';
+    const SUBMERGING = 'submerging';
+
+    // TODO: have init step.
+    if (!this.misc.getString('enemy.leever.emergedState')) {
+      this.misc.set('enemy.leever.emergedState', SUBMERGED);
+    }
+
+    const emergedState = this.misc.getString('enemy.leever.emergedState');
+    const lastEmergedTime = mode.misc.getNumber('enemy.leever.lastEmergedTime') || 0;
+
+    if (emergedState === 'submerged') {
+      this.haltTimer = 100;
+      this.visible = false;
+      this.x = -100;
+      this.y = -100;
+
+      const numberEmergedLeeches = mode.entities.reduce((acc, cur) => {
+        const entity = cur.sprite as QuestEntity;
+        if (entity.misc) {
+          const state = entity.misc.getString('enemy.leever.emergedState');
+          if (!state) return acc;
+          return acc + (state === SUBMERGED ? 0 : 1);
+        }
+        return acc;
+      }, 0);
+
+      if (numberEmergedLeeches < 2 && Date.now() - lastEmergedTime > 500) {
+        this.misc.set('enemy.leever.emergedState', EMERGED);
+        this.misc.set('enemy.leever.emergedAt', +Date.now());
+        mode.misc.set('enemy.leever.lastEmergedTime', +Date.now());
+
+        const pos = {
+          x: Math.round(mode.heroEntity.x / tileSize),
+          y: Math.round(mode.heroEntity.y / tileSize),
+        };
+        if (mode.heroEntity.direction.x !== 0) {
+          pos.x += Math.sign(mode.heroEntity.direction.x) * 3;
+        } else {
+          pos.y += Math.sign(mode.heroEntity.direction.y) * 3;
+        }
+
+        this.x = pos.x * tileSize;
+        this.y = pos.y * tileSize;
+        this.direction = { ...mode.heroEntity.direction };
+        this.direction.x *= -1;
+        this.direction.y *= -1;
+
+        this.setTextureFrame('emerging');
+        this.loop = false;
+        this.onComplete = () => {
+          this.setTextureFrame('moving');
+          this.haltTimer = 0;
+          this.loop = true;
+        };
+      }
+    } else if (emergedState === EMERGED) {
+      this.visible = true;
+
+      const emergedAt = this.misc.getNumber('enemy.leever.emergedAt') || 0;
+      if (+Date.now() - emergedAt > 1000 * 2) {
+        this.misc.set('enemy.leever.emergedState', SUBMERGING);
+
+        this.setTextureFrame('submerging');
+        this.loop = false;
+        this.onComplete = () => {
+          this.misc.set('enemy.leever.emergedState', SUBMERGED);
+        };
+      }
+    }
+  }
+
   getDirectionName() {
     const dx = this.direction.x;
     const dy = this.direction.y;
@@ -314,6 +422,7 @@ class HitTest {
 export class PlayGameMode extends QuestMakerMode {
   public heroEntity = new QuestEntity();
   public entities: Array<{ sprite: QuestEntityBase }> = [];
+  public misc = new MiscBag();
 
   private entityLayer = new PIXI.Container();
   private tileLayer = new PIXI.Container();
@@ -326,7 +435,6 @@ export class PlayGameMode extends QuestMakerMode {
   ];
 
   private swordSprite = this.app.createGraphicSprite(this.app.state.quest.misc.SWORD_GFX_START);
-
   private hitTest = new HitTest();
 
   init() {
@@ -334,6 +442,7 @@ export class PlayGameMode extends QuestMakerMode {
     const state = this.app.state;
 
     state.game.screenStates.clear();
+    this.misc.clear();
 
     this.container.scale.x = this.container.scale.y = 2;
     for (const layer of this.layers) {
@@ -348,7 +457,7 @@ export class PlayGameMode extends QuestMakerMode {
     this.heroEntity.isHero = true;
     this.heroEntity.life = Number.MAX_SAFE_INTEGER;
 
-    this.heroEntity.speed = DEFAULT_SPEED;
+    this.heroEntity.speed = DEFAULT_HERO_SPEED;
 
     this.heroEntity.addTextureFrame('down', [
       this.app.createGraphicSprite(state.quest.misc.HERO_GFX_START).texture,
@@ -477,6 +586,7 @@ export class PlayGameMode extends QuestMakerMode {
     heroHitSprite.y = this.heroEntity.y + tileSize / 2;
     heroHitSprite.width = tileSize;
     heroHitSprite.height = tileSize / 2;
+    // TODO: skip if hittimer.
     this.hitTest.hit(heroHitSprite, this.hitTest.sections.screen.objects);
     this.heroEntity.x = heroHitSprite.x;
     this.heroEntity.y = heroHitSprite.y - tileSize / 2;
@@ -508,7 +618,7 @@ export class PlayGameMode extends QuestMakerMode {
       }
     }
 
-    heroEntity.speed = DEFAULT_SPEED;
+    heroEntity.speed = DEFAULT_HERO_SPEED;
 
     const delta = 3;
     const center = {
@@ -696,32 +806,38 @@ export class PlayGameMode extends QuestMakerMode {
   }
 
   spawnEnemy(enemy: QuestMaker.Enemy, x: number, y: number) {
-    const spawnEntity = new QuestEntity();
-    spawnEntity.x = x * tileSize;
-    spawnEntity.y = y * tileSize;
+    const shouldSpawnWithCloud = enemy.type !== EnemyType.LEEVER;
+    if (shouldSpawnWithCloud) {
+      const spawnEntity = new QuestEntity();
+      spawnEntity.x = x * tileSize;
+      spawnEntity.y = y * tileSize;
 
-    const textures = [
-      this.app.state.quest.misc.SPAWN_GFX_START,
-      this.app.state.quest.misc.SPAWN_GFX_START + 1,
-      this.app.state.quest.misc.SPAWN_GFX_START + 2,
-    ].map(f => this.app.createGraphicSprite(f).texture);
-    spawnEntity.addTextureFrame('default', textures);
-    spawnEntity.setTextureFrame('default');
-    spawnEntity.loop = false;
+      const textures = [
+        this.app.state.quest.misc.SPAWN_GFX_START,
+        this.app.state.quest.misc.SPAWN_GFX_START + 1,
+        this.app.state.quest.misc.SPAWN_GFX_START + 2,
+      ].map(f => this.app.createGraphicSprite(f).texture);
+      spawnEntity.addTextureFrame('default', textures);
+      spawnEntity.setTextureFrame('default');
+      spawnEntity.loop = false;
 
-    spawnEntity.onComplete = () => {
-      this.removeEntity(spawnEntity);
+      spawnEntity.onComplete = () => {
+        this.removeEntity(spawnEntity);
+        this.createEntityFromEnemy(enemy, x, y);
+      };
+
+      // There's no tick needed, so don't add to this.entities.
+      this.entityLayer.addChild(spawnEntity);
+    } else {
       this.createEntityFromEnemy(enemy, x, y);
-    };
-
-    // There's no tick needed, so don't add to this.entities.
-    this.entityLayer.addChild(spawnEntity);
+    }
   }
 
   createEntityFromEnemy(enemy: QuestMaker.Enemy, x: number, y: number) {
     const entity = new QuestEntity();
     entity.x = x * tileSize;
     entity.y = y * tileSize;
+    entity.type = enemy.type;
     entity.weaponId = enemy.weaponId || 0;
     entity.life = 2;
     entity.speed = enemy.speed;
@@ -744,6 +860,10 @@ export class PlayGameMode extends QuestMakerMode {
     if (enemy.frames.down && !enemy.frames.up) {
       const textures = enemy.frames.down.map(f => this.app.createGraphicSprite(f).texture);
       entity.addTextureFrame('up', textures, PIXI.groupD8.MIRROR_VERTICAL);
+    }
+    if (enemy.frames.emerging && !enemy.frames.submerging) {
+      const textures = enemy.frames.emerging.map(f => this.app.createGraphicSprite(f).texture);
+      entity.addTextureFrame('submerging', textures.reverse());
     }
     entity.setTextureFrame(Object.keys(enemy.frames)[0]);
 
@@ -932,7 +1052,7 @@ export class PlayGameMode extends QuestMakerMode {
         };
       }
     } else if (type === TileType.SLOW_WALK) {
-      this.heroEntity.speed = DEFAULT_SPEED * 0.5;
+      this.heroEntity.speed = DEFAULT_HERO_SPEED * 0.5;
     }
   }
 }
