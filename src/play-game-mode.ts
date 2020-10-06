@@ -15,6 +15,11 @@ const DEFAULT_HERO_SPEED = 1.5;
 let paused = false;
 
 const directions = [{ x: 0, y: -1 }, { x: 0, y: 1 }, { x: 1, y: 0 }, { x: -1, y: 0 }];
+function getAvailableDirections(state: QuestMaker.State, pos: { x: number, y: number }) {
+  return directions.filter(d => {
+    return !isSolid(state, pos.x + d.x, pos.y + d.y);
+  });
+}
 
 const inBounds = (x: number, y: number, width: number, height: number) => x >= 0 && y >= 0 && x < width && y < height;
 
@@ -271,9 +276,7 @@ class QuestEntity extends QuestEntityBase {
           return;
         }
 
-        let availableDirections = directions.filter(d => {
-          return !isSolid(mode.app.state, currentTile.x + d.x, currentTile.y + d.y);
-        });
+        let availableDirections = getAvailableDirections(mode.app.state, currentTile);
         if (!availableDirections.length) availableDirections = directions;
 
         if (Math.random() < homingFactor) {
@@ -339,7 +342,13 @@ class QuestEntity extends QuestEntityBase {
           this.direction.x *= -1;
           this.direction.y *= -1;
         } else {
-          this.direction = { ...directions[Utils.random(0, directions.length)] };
+          const pos = {
+            x: Math.round(this.x / tileSize),
+            y: Math.round(this.y / tileSize),
+          };
+          let availableDirections = getAvailableDirections(mode.app.state, pos);
+          if (!availableDirections.length) availableDirections = directions;
+          this.direction = { ...availableDirections[Utils.random(0, availableDirections.length)] };
         }
 
         this.setTextureFrame('emerging');
