@@ -84,17 +84,20 @@ abstract class QuestEntityBase extends EntityBase {
   public vx = 0;
   public vy = 0;
 
-  public hitDirection?: { x: number, y: number };
-  public hitTimer = 0;
+  public impulseDirection?: { x: number, y: number };
+  public impulseTimer = 0;
+  public invulnerableTimer = 0;
 
   abstract tick(mode: PlayGameMode, dt: number): any;
 
   hit(direction: { x: number, y: number }) {
-    if (this.hitDirection) return;
+    if (this.invulnerableTimer > 0) return;
 
     this.life -= 1;
-    this.hitDirection = direction;
-    this.hitTimer = 10;
+
+    this.impulseDirection = direction;
+    this.impulseTimer = 10;
+    this.invulnerableTimer = 25;
   }
 }
 
@@ -162,20 +165,11 @@ class QuestEntity extends QuestEntityBase {
       }
     }
 
-    let dx = 0;
-    let dy = 0;
+    if (this.invulnerableTimer) {
+      this.alpha = Math.floor(this.invulnerableTimer * 1.5) % 2;
 
-    if (this.hitDirection) {
-      dx += this.hitDirection.x * 4;
-      dy += this.hitDirection.y * 4;
-
-      this.alpha = Math.floor(this.hitTimer * 1.5) % 2;
-
-      if (this.hitTimer-- <= 0) {
-        this.hitTimer = 0;
+      if (--this.invulnerableTimer <= 0) {
         this.alpha = 1;
-        delete this.hitDirection;
-
         if (this.life <= 0) {
           mode.removeEntity(this);
           console.log('die');
@@ -185,7 +179,18 @@ class QuestEntity extends QuestEntityBase {
       }
     }
 
-    if (this.moving && !this.hitDirection) {
+    let dx = 0;
+    let dy = 0;
+
+    if (this.impulseDirection) {
+      dx += this.impulseDirection.x * 4;
+      dy += this.impulseDirection.y * 4;
+
+      if (--this.impulseTimer <= 0) {
+        delete this.impulseDirection;
+        this.impulseTimer = 0;
+      }
+    } else if (this.moving) {
       let canMove = true;
       if (!this.isHero && this.haltTimer !== null) {
         this.haltTimer -= dt;
@@ -346,6 +351,9 @@ class QuestEntity extends QuestEntityBase {
             x: Math.round(this.x / tileSize),
             y: Math.round(this.y / tileSize),
           };
+          this.x = pos.x * tileSize;
+          this.y = pos.y * tileSize;
+
           let availableDirections = getAvailableDirections(mode.app.state, pos);
           if (!availableDirections.length) availableDirections = directions;
           this.direction = { ...availableDirections[Utils.random(0, availableDirections.length)] };
@@ -603,7 +611,7 @@ export class PlayGameMode extends QuestMakerMode {
     heroHitSprite.y = this.heroEntity.y + tileSize / 2;
     heroHitSprite.width = tileSize;
     heroHitSprite.height = tileSize / 2;
-    // TODO: skip if hittimer.
+
     this.hitTest.hit(heroHitSprite, this.hitTest.sections.screen.objects);
     this.heroEntity.x = heroHitSprite.x;
     this.heroEntity.y = heroHitSprite.y - tileSize / 2;
@@ -623,7 +631,7 @@ export class PlayGameMode extends QuestMakerMode {
       }
 
       // TODO: need to fork Bump and make `.test` return a side.
-      const collision = !data.sprite.hitTimer && this.hitTest.hit(heroHitSprite, [data.sprite]);
+      const collision = !this.heroEntity.invulnerableTimer && this.hitTest.hit(heroHitSprite, [data.sprite]);
       if (collision) {
         const dir = { x: 0, y: 0 };
         if (collision === 'left') dir.x = 1;
