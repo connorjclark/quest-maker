@@ -46,6 +46,8 @@ declare global {
       id: number;
       type: TileType;
       graphicId: number;
+      flipHorizontal?: boolean;
+      flipVertical?: boolean;
       /** top left, top right, bottom left, bottom right */
       walkable: [boolean, boolean, boolean, boolean];
     }

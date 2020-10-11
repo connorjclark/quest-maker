@@ -111745,7 +111745,8 @@
         false,
         false
       ],
-      "graphicId": 9384
+      "graphicId": 9384,
+      "flipHorizontal": true
     },
     {
       "id": 515,
@@ -111767,7 +111768,8 @@
         false,
         false
       ],
-      "graphicId": 9386
+      "graphicId": 9386,
+      "flipHorizontal": true
     },
     {
       "id": 517,
@@ -111778,7 +111780,8 @@
         false,
         false
       ],
-      "graphicId": 9443
+      "graphicId": 9443,
+      "flipHorizontal": true
     },
     {
       "id": 518,
@@ -111833,7 +111836,8 @@
         false,
         false
       ],
-      "graphicId": 9404
+      "graphicId": 9404,
+      "flipHorizontal": true
     },
     {
       "id": 523,
@@ -111855,7 +111859,8 @@
         false,
         false
       ],
-      "graphicId": 9406
+      "graphicId": 9406,
+      "flipHorizontal": true
     },
     {
       "id": 525,
@@ -111965,7 +111970,8 @@
         false,
         false
       ],
-      "graphicId": 9444
+      "graphicId": 9444,
+      "flipHorizontal": true
     },
     {
       "id": 535,
@@ -111987,7 +111993,8 @@
         false,
         false
       ],
-      "graphicId": 9446
+      "graphicId": 9446,
+      "flipHorizontal": true
     },
     {
       "id": 537,
@@ -111998,7 +112005,8 @@
         false,
         false
       ],
-      "graphicId": 9443
+      "graphicId": 9443,
+      "flipHorizontal": true
     },
     {
       "id": 538,
@@ -112053,7 +112061,8 @@
         false,
         false
       ],
-      "graphicId": 9464
+      "graphicId": 9464,
+      "flipHorizontal": true
     },
     {
       "id": 543,
@@ -112075,7 +112084,8 @@
         false,
         false
       ],
-      "graphicId": 9466
+      "graphicId": 9466,
+      "flipHorizontal": true
     },
     {
       "id": 545,
@@ -112229,7 +112239,8 @@
         false,
         false
       ],
-      "graphicId": 9524
+      "graphicId": 9524,
+      "flipHorizontal": true
     },
     {
       "id": 559,
@@ -112251,7 +112262,8 @@
         false,
         false
       ],
-      "graphicId": 9526
+      "graphicId": 9526,
+      "flipHorizontal": true
     },
     {
       "id": 561,
@@ -112262,7 +112274,8 @@
         false,
         false
       ],
-      "graphicId": 9443
+      "graphicId": 9443,
+      "flipHorizontal": true
     },
     {
       "id": 562,
@@ -112317,7 +112330,8 @@
         false,
         false
       ],
-      "graphicId": 9544
+      "graphicId": 9544,
+      "flipHorizontal": true
     },
     {
       "id": 567,
@@ -112339,7 +112353,8 @@
         false,
         false
       ],
-      "graphicId": 9546
+      "graphicId": 9546,
+      "flipHorizontal": true
     },
     {
       "id": 569,
@@ -114792,7 +114807,8 @@
         false,
         false
       ],
-      "graphicId": 9802
+      "graphicId": 9802,
+      "flipHorizontal": true
     },
     {
       "id": 792,
@@ -114836,7 +114852,8 @@
         false,
         false
       ],
-      "graphicId": 9822
+      "graphicId": 9822,
+      "flipHorizontal": true
     },
     {
       "id": 796,
@@ -114880,7 +114897,8 @@
         false,
         false
       ],
-      "graphicId": 9862
+      "graphicId": 9862,
+      "flipHorizontal": true
     },
     {
       "id": 800,
@@ -114913,7 +114931,8 @@
         false,
         false
       ],
-      "graphicId": 9860
+      "graphicId": 9860,
+      "flipHorizontal": true
     },
     {
       "id": 803,
@@ -114968,7 +114987,8 @@
         true,
         true
       ],
-      "graphicId": 9057
+      "graphicId": 9057,
+      "flipHorizontal": true
     },
     {
       "id": 808,
@@ -115012,7 +115032,8 @@
         true,
         true
       ],
-      "graphicId": 9097
+      "graphicId": 9097,
+      "flipHorizontal": true
     },
     {
       "id": 812,
@@ -115573,7 +115594,8 @@
         true,
         true
       ],
-      "graphicId": 9111
+      "graphicId": 9111,
+      "flipHorizontal": true
     },
     {
       "id": 863,
@@ -115617,7 +115639,8 @@
         false,
         false
       ],
-      "graphicId": 9131
+      "graphicId": 9131,
+      "flipHorizontal": true
     },
     {
       "id": 867,
@@ -115661,7 +115684,8 @@
         false,
         false
       ],
-      "graphicId": 9171
+      "graphicId": 9171,
+      "flipHorizontal": true
     },
     {
       "id": 871,
@@ -115705,7 +115729,8 @@
         false,
         false
       ],
-      "graphicId": 9191
+      "graphicId": 9191,
+      "flipHorizontal": true
     },
     {
       "id": 875,
@@ -115749,7 +115774,8 @@
         false,
         false
       ],
-      "graphicId": 9211
+      "graphicId": 9211,
+      "flipHorizontal": true
     },
     {
       "id": 879,
@@ -115793,7 +115819,8 @@
         false,
         false
       ],
-      "graphicId": 9231
+      "graphicId": 9231,
+      "flipHorizontal": true
     },
     {
       "id": 883,
@@ -115837,7 +115864,8 @@
         false,
         false
       ],
-      "graphicId": 9251
+      "graphicId": 9251,
+      "flipHorizontal": true
     },
     {
       "id": 887,
@@ -115881,7 +115909,8 @@
         false,
         false
       ],
-      "graphicId": 9271
+      "graphicId": 9271,
+      "flipHorizontal": true
     },
     {
       "id": 891,
@@ -115925,7 +115954,8 @@
         false,
         false
       ],
-      "graphicId": 9291
+      "graphicId": 9291,
+      "flipHorizontal": true
     },
     {
       "id": 895,
@@ -115969,7 +115999,8 @@
         false,
         false
       ],
-      "graphicId": 9311
+      "graphicId": 9311,
+      "flipHorizontal": true
     },
     {
       "id": 899,
@@ -116013,7 +116044,8 @@
         false,
         false
       ],
-      "graphicId": 9331
+      "graphicId": 9331,
+      "flipHorizontal": true
     },
     {
       "id": 903,
@@ -116057,7 +116089,8 @@
         false,
         false
       ],
-      "graphicId": 9351
+      "graphicId": 9351,
+      "flipHorizontal": true
     },
     {
       "id": 907,
@@ -116365,7 +116398,8 @@
         true,
         true
       ],
-      "graphicId": 9114
+      "graphicId": 9114,
+      "flipHorizontal": true
     },
     {
       "id": 935,
@@ -116376,7 +116410,8 @@
         true,
         true
       ],
-      "graphicId": 9113
+      "graphicId": 9113,
+      "flipHorizontal": true
     },
     {
       "id": 936,
@@ -116409,7 +116444,8 @@
         true,
         true
       ],
-      "graphicId": 9134
+      "graphicId": 9134,
+      "flipHorizontal": true
     },
     {
       "id": 939,
@@ -116420,7 +116456,8 @@
         false,
         false
       ],
-      "graphicId": 9133
+      "graphicId": 9133,
+      "flipHorizontal": true
     },
     {
       "id": 940,
@@ -116453,7 +116490,8 @@
         false,
         false
       ],
-      "graphicId": 9174
+      "graphicId": 9174,
+      "flipHorizontal": true
     },
     {
       "id": 943,
@@ -116464,7 +116502,8 @@
         false,
         false
       ],
-      "graphicId": 9173
+      "graphicId": 9173,
+      "flipHorizontal": true
     },
     {
       "id": 944,
@@ -116497,7 +116536,8 @@
         true,
         true
       ],
-      "graphicId": 9194
+      "graphicId": 9194,
+      "flipHorizontal": true
     },
     {
       "id": 947,
@@ -116508,7 +116548,8 @@
         false,
         false
       ],
-      "graphicId": 9193
+      "graphicId": 9193,
+      "flipHorizontal": true
     },
     {
       "id": 948,
@@ -116541,7 +116582,8 @@
         false,
         false
       ],
-      "graphicId": 9214
+      "graphicId": 9214,
+      "flipHorizontal": true
     },
     {
       "id": 951,
@@ -116552,7 +116594,8 @@
         false,
         false
       ],
-      "graphicId": 9213
+      "graphicId": 9213,
+      "flipHorizontal": true
     },
     {
       "id": 952,
@@ -116585,7 +116628,8 @@
         true,
         true
       ],
-      "graphicId": 9234
+      "graphicId": 9234,
+      "flipHorizontal": true
     },
     {
       "id": 955,
@@ -116596,7 +116640,8 @@
         false,
         false
       ],
-      "graphicId": 9233
+      "graphicId": 9233,
+      "flipHorizontal": true
     },
     {
       "id": 956,
@@ -116629,7 +116674,8 @@
         false,
         false
       ],
-      "graphicId": 9254
+      "graphicId": 9254,
+      "flipHorizontal": true
     },
     {
       "id": 959,
@@ -116640,7 +116686,8 @@
         false,
         false
       ],
-      "graphicId": 9253
+      "graphicId": 9253,
+      "flipHorizontal": true
     },
     {
       "id": 960,
@@ -116673,7 +116720,8 @@
         true,
         true
       ],
-      "graphicId": 9274
+      "graphicId": 9274,
+      "flipHorizontal": true
     },
     {
       "id": 963,
@@ -116684,7 +116732,8 @@
         false,
         false
       ],
-      "graphicId": 9273
+      "graphicId": 9273,
+      "flipHorizontal": true
     },
     {
       "id": 964,
@@ -116717,7 +116766,8 @@
         false,
         false
       ],
-      "graphicId": 9294
+      "graphicId": 9294,
+      "flipHorizontal": true
     },
     {
       "id": 967,
@@ -116728,7 +116778,8 @@
         false,
         false
       ],
-      "graphicId": 9293
+      "graphicId": 9293,
+      "flipHorizontal": true
     },
     {
       "id": 968,
@@ -116761,7 +116812,8 @@
         true,
         true
       ],
-      "graphicId": 9314
+      "graphicId": 9314,
+      "flipHorizontal": true
     },
     {
       "id": 971,
@@ -116772,7 +116824,8 @@
         false,
         false
       ],
-      "graphicId": 9313
+      "graphicId": 9313,
+      "flipHorizontal": true
     },
     {
       "id": 972,
@@ -116805,7 +116858,8 @@
         false,
         false
       ],
-      "graphicId": 9334
+      "graphicId": 9334,
+      "flipHorizontal": true
     },
     {
       "id": 975,
@@ -116816,7 +116870,8 @@
         false,
         false
       ],
-      "graphicId": 9333
+      "graphicId": 9333,
+      "flipHorizontal": true
     },
     {
       "id": 976,
@@ -116849,7 +116904,8 @@
         true,
         true
       ],
-      "graphicId": 9354
+      "graphicId": 9354,
+      "flipHorizontal": true
     },
     {
       "id": 979,
@@ -116860,7 +116916,8 @@
         false,
         false
       ],
-      "graphicId": 9353
+      "graphicId": 9353,
+      "flipHorizontal": true
     },
     {
       "id": 980,
@@ -117421,7 +117478,8 @@
         true,
         true
       ],
-      "graphicId": 9119
+      "graphicId": 9119,
+      "flipHorizontal": true
     },
     {
       "id": 1031,
@@ -117432,7 +117490,8 @@
         true,
         true
       ],
-      "graphicId": 9118
+      "graphicId": 9118,
+      "flipHorizontal": true
     },
     {
       "id": 1032,
@@ -117465,7 +117524,8 @@
         true,
         true
       ],
-      "graphicId": 9139
+      "graphicId": 9139,
+      "flipHorizontal": true
     },
     {
       "id": 1035,
@@ -117476,7 +117536,8 @@
         false,
         false
       ],
-      "graphicId": 9138
+      "graphicId": 9138,
+      "flipHorizontal": true
     },
     {
       "id": 1036,
@@ -117509,7 +117570,8 @@
         false,
         false
       ],
-      "graphicId": 9179
+      "graphicId": 9179,
+      "flipHorizontal": true
     },
     {
       "id": 1039,
@@ -117520,7 +117582,8 @@
         false,
         false
       ],
-      "graphicId": 9178
+      "graphicId": 9178,
+      "flipHorizontal": true
     },
     {
       "id": 1040,
@@ -117553,7 +117616,8 @@
         true,
         true
       ],
-      "graphicId": 9199
+      "graphicId": 9199,
+      "flipHorizontal": true
     },
     {
       "id": 1043,
@@ -117564,7 +117628,8 @@
         false,
         false
       ],
-      "graphicId": 9198
+      "graphicId": 9198,
+      "flipHorizontal": true
     },
     {
       "id": 1044,
@@ -117597,7 +117662,8 @@
         false,
         false
       ],
-      "graphicId": 9219
+      "graphicId": 9219,
+      "flipHorizontal": true
     },
     {
       "id": 1047,
@@ -117608,7 +117674,8 @@
         false,
         false
       ],
-      "graphicId": 9218
+      "graphicId": 9218,
+      "flipHorizontal": true
     },
     {
       "id": 1048,
@@ -117641,7 +117708,8 @@
         true,
         true
       ],
-      "graphicId": 9239
+      "graphicId": 9239,
+      "flipHorizontal": true
     },
     {
       "id": 1051,
@@ -117652,7 +117720,8 @@
         false,
         false
       ],
-      "graphicId": 9238
+      "graphicId": 9238,
+      "flipHorizontal": true
     },
     {
       "id": 1052,
@@ -117685,7 +117754,8 @@
         false,
         false
       ],
-      "graphicId": 9259
+      "graphicId": 9259,
+      "flipHorizontal": true
     },
     {
       "id": 1055,
@@ -117696,7 +117766,8 @@
         false,
         false
       ],
-      "graphicId": 9258
+      "graphicId": 9258,
+      "flipHorizontal": true
     },
     {
       "id": 1056,
@@ -117729,7 +117800,8 @@
         true,
         true
       ],
-      "graphicId": 9279
+      "graphicId": 9279,
+      "flipHorizontal": true
     },
     {
       "id": 1059,
@@ -117740,7 +117812,8 @@
         false,
         false
       ],
-      "graphicId": 9278
+      "graphicId": 9278,
+      "flipHorizontal": true
     },
     {
       "id": 1060,
@@ -117773,7 +117846,8 @@
         false,
         false
       ],
-      "graphicId": 9299
+      "graphicId": 9299,
+      "flipHorizontal": true
     },
     {
       "id": 1063,
@@ -117784,7 +117858,8 @@
         false,
         false
       ],
-      "graphicId": 9298
+      "graphicId": 9298,
+      "flipHorizontal": true
     },
     {
       "id": 1064,
@@ -117817,7 +117892,8 @@
         true,
         true
       ],
-      "graphicId": 9319
+      "graphicId": 9319,
+      "flipHorizontal": true
     },
     {
       "id": 1067,
@@ -117828,7 +117904,8 @@
         false,
         false
       ],
-      "graphicId": 9318
+      "graphicId": 9318,
+      "flipHorizontal": true
     },
     {
       "id": 1068,
@@ -117861,7 +117938,8 @@
         false,
         false
       ],
-      "graphicId": 9339
+      "graphicId": 9339,
+      "flipHorizontal": true
     },
     {
       "id": 1071,
@@ -117872,7 +117950,8 @@
         false,
         false
       ],
-      "graphicId": 9338
+      "graphicId": 9338,
+      "flipHorizontal": true
     },
     {
       "id": 1072,
@@ -117905,7 +117984,8 @@
         true,
         true
       ],
-      "graphicId": 9359
+      "graphicId": 9359,
+      "flipHorizontal": true
     },
     {
       "id": 1075,
@@ -117916,7 +117996,8 @@
         false,
         false
       ],
-      "graphicId": 9358
+      "graphicId": 9358,
+      "flipHorizontal": true
     },
     {
       "id": 1076,
@@ -119291,7 +119372,8 @@
         false,
         false
       ],
-      "graphicId": 9972
+      "graphicId": 9972,
+      "flipHorizontal": true
     },
     {
       "id": 1201,
@@ -119302,7 +119384,8 @@
         false,
         false
       ],
-      "graphicId": 9968
+      "graphicId": 9968,
+      "flipHorizontal": true
     },
     {
       "id": 1202,
@@ -119313,7 +119396,8 @@
         false,
         false
       ],
-      "graphicId": 9964
+      "graphicId": 9964,
+      "flipHorizontal": true
     },
     {
       "id": 1203,
@@ -119335,7 +119419,8 @@
         false,
         false
       ],
-      "graphicId": 9944
+      "graphicId": 9944,
+      "flipHorizontal": true
     },
     {
       "id": 1205,
@@ -119346,7 +119431,8 @@
         false,
         false
       ],
-      "graphicId": 9952
+      "graphicId": 9952,
+      "flipHorizontal": true
     },
     {
       "id": 1206,
@@ -119357,7 +119443,8 @@
         false,
         false
       ],
-      "graphicId": 10072
+      "graphicId": 10072,
+      "flipHorizontal": true
     },
     {
       "id": 1207,
@@ -119379,7 +119466,8 @@
         false,
         false
       ],
-      "graphicId": 9948
+      "graphicId": 9948,
+      "flipHorizontal": true
     },
     {
       "id": 1209,
@@ -119390,7 +119478,8 @@
         false,
         false
       ],
-      "graphicId": 9956
+      "graphicId": 9956,
+      "flipHorizontal": true
     },
     {
       "id": 1210,
@@ -119533,7 +119622,8 @@
         false,
         false
       ],
-      "graphicId": 9984
+      "graphicId": 9984,
+      "flipHorizontal": true
     },
     {
       "id": 1223,
@@ -119544,7 +119634,8 @@
         false,
         false
       ],
-      "graphicId": 9992
+      "graphicId": 9992,
+      "flipHorizontal": true
     },
     {
       "id": 1224,
@@ -119555,7 +119646,8 @@
         false,
         false
       ],
-      "graphicId": 10012
+      "graphicId": 10012,
+      "flipHorizontal": true
     },
     {
       "id": 1225,
@@ -119566,7 +119658,8 @@
         false,
         false
       ],
-      "graphicId": 10004
+      "graphicId": 10004,
+      "flipHorizontal": true
     },
     {
       "id": 1226,
@@ -119687,7 +119780,8 @@
         false,
         false
       ],
-      "graphicId": 9988
+      "graphicId": 9988,
+      "flipHorizontal": true
     },
     {
       "id": 1237,
@@ -119698,7 +119792,8 @@
         false,
         false
       ],
-      "graphicId": 9988
+      "graphicId": 9988,
+      "flipHorizontal": true
     },
     {
       "id": 1238,
@@ -119731,7 +119826,8 @@
         false,
         false
       ],
-      "graphicId": 10008
+      "graphicId": 10008,
+      "flipHorizontal": true
     },
     {
       "id": 1241,
@@ -119742,7 +119838,8 @@
         false,
         false
       ],
-      "graphicId": 10008
+      "graphicId": 10008,
+      "flipHorizontal": true
     },
     {
       "id": 1242,
@@ -119808,7 +119905,8 @@
         false,
         false
       ],
-      "graphicId": 10068
+      "graphicId": 10068,
+      "flipHorizontal": true
     },
     {
       "id": 1248,
@@ -119830,7 +119928,8 @@
         true,
         true
       ],
-      "graphicId": 10324
+      "graphicId": 10324,
+      "flipHorizontal": true
     },
     {
       "id": 1250,
@@ -119863,7 +119962,8 @@
         false,
         false
       ],
-      "graphicId": 9960
+      "graphicId": 9960,
+      "flipHorizontal": true
     },
     {
       "id": 1253,
@@ -119907,7 +120007,8 @@
         true,
         true
       ],
-      "graphicId": 10208
+      "graphicId": 10208,
+      "flipHorizontal": true
     },
     {
       "id": 1257,
@@ -120215,7 +120316,8 @@
         true,
         false
       ],
-      "graphicId": 10216
+      "graphicId": 10216,
+      "flipHorizontal": true
     },
     {
       "id": 1285,
@@ -120248,7 +120350,8 @@
         true,
         true
       ],
-      "graphicId": 10296
+      "graphicId": 10296,
+      "flipHorizontal": true
     },
     {
       "id": 1288,
@@ -120281,7 +120384,8 @@
         true,
         true
       ],
-      "graphicId": 10296
+      "graphicId": 10296,
+      "flipVertical": true
     },
     {
       "id": 1291,
@@ -120292,7 +120396,9 @@
         true,
         true
       ],
-      "graphicId": 10296
+      "graphicId": 10296,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 1292,
@@ -120336,7 +120442,8 @@
         true,
         true
       ],
-      "graphicId": 10280
+      "graphicId": 10280,
+      "flipHorizontal": true
     },
     {
       "id": 1296,
@@ -120424,7 +120531,8 @@
         false,
         false
       ],
-      "graphicId": 10212
+      "graphicId": 10212,
+      "flipHorizontal": true
     },
     {
       "id": 1304,
@@ -120457,7 +120565,8 @@
         true,
         true
       ],
-      "graphicId": 10028
+      "graphicId": 10028,
+      "flipHorizontal": true
     },
     {
       "id": 1307,
@@ -120501,7 +120610,8 @@
         true,
         true
       ],
-      "graphicId": 10048
+      "graphicId": 10048,
+      "flipHorizontal": true
     },
     {
       "id": 1311,
@@ -120523,7 +120633,8 @@
         true,
         true
       ],
-      "graphicId": 10028
+      "graphicId": 10028,
+      "flipVertical": true
     },
     {
       "id": 1313,
@@ -120534,7 +120645,8 @@
         true,
         true
       ],
-      "graphicId": 10020
+      "graphicId": 10020,
+      "flipVertical": true
     },
     {
       "id": 1314,
@@ -120545,7 +120657,9 @@
         true,
         true
       ],
-      "graphicId": 10028
+      "graphicId": 10028,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 1315,
@@ -120567,7 +120681,8 @@
         true,
         true
       ],
-      "graphicId": 10040
+      "graphicId": 10040,
+      "flipHorizontal": true
     },
     {
       "id": 1317,
@@ -120611,7 +120726,9 @@
         true,
         true
       ],
-      "graphicId": 10040
+      "graphicId": 10040,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 1321,
@@ -120622,7 +120739,8 @@
         true,
         true
       ],
-      "graphicId": 10040
+      "graphicId": 10040,
+      "flipVertical": true
     },
     {
       "id": 1322,
@@ -120677,7 +120795,8 @@
         false,
         false
       ],
-      "graphicId": 10401
+      "graphicId": 10401,
+      "flipHorizontal": true
     },
     {
       "id": 1327,
@@ -120721,7 +120840,8 @@
         false,
         false
       ],
-      "graphicId": 10421
+      "graphicId": 10421,
+      "flipHorizontal": true
     },
     {
       "id": 1331,
@@ -120765,7 +120885,8 @@
         false,
         false
       ],
-      "graphicId": 10441
+      "graphicId": 10441,
+      "flipHorizontal": true
     },
     {
       "id": 1335,
@@ -120897,7 +121018,8 @@
         true,
         true
       ],
-      "graphicId": 10413
+      "graphicId": 10413,
+      "flipHorizontal": true
     },
     {
       "id": 1347,
@@ -120941,7 +121063,8 @@
         true,
         true
       ],
-      "graphicId": 10433
+      "graphicId": 10433,
+      "flipHorizontal": true
     },
     {
       "id": 1351,
@@ -120985,7 +121108,8 @@
         true,
         true
       ],
-      "graphicId": 10453
+      "graphicId": 10453,
+      "flipHorizontal": true
     },
     {
       "id": 1355,
@@ -121326,7 +121450,8 @@
         false,
         false
       ],
-      "graphicId": 10583
+      "graphicId": 10583,
+      "flipHorizontal": true
     },
     {
       "id": 1386,
@@ -121337,7 +121462,8 @@
         false,
         false
       ],
-      "graphicId": 10563
+      "graphicId": 10563,
+      "flipHorizontal": true
     },
     {
       "id": 1387,
@@ -121766,7 +121892,8 @@
         false,
         false
       ],
-      "graphicId": 10587
+      "graphicId": 10587,
+      "flipHorizontal": true
     },
     {
       "id": 1426,
@@ -121777,7 +121904,8 @@
         false,
         false
       ],
-      "graphicId": 10567
+      "graphicId": 10567,
+      "flipHorizontal": true
     },
     {
       "id": 1427,
@@ -122206,7 +122334,8 @@
         false,
         false
       ],
-      "graphicId": 10591
+      "graphicId": 10591,
+      "flipHorizontal": true
     },
     {
       "id": 1466,
@@ -122217,7 +122346,8 @@
         false,
         false
       ],
-      "graphicId": 10571
+      "graphicId": 10571,
+      "flipHorizontal": true
     },
     {
       "id": 1467,
@@ -124637,7 +124767,8 @@
         false,
         false
       ],
-      "graphicId": 10708
+      "graphicId": 10708,
+      "flipHorizontal": true
     },
     {
       "id": 1687,
@@ -124681,7 +124812,8 @@
         false,
         false
       ],
-      "graphicId": 10728
+      "graphicId": 10728,
+      "flipHorizontal": true
     },
     {
       "id": 1691,
@@ -124725,7 +124857,8 @@
         false,
         false
       ],
-      "graphicId": 10711
+      "graphicId": 10711,
+      "flipHorizontal": true
     },
     {
       "id": 1695,
@@ -124769,7 +124902,8 @@
         false,
         false
       ],
-      "graphicId": 10731
+      "graphicId": 10731,
+      "flipHorizontal": true
     },
     {
       "id": 1699,
@@ -124813,7 +124947,8 @@
         false,
         false
       ],
-      "graphicId": 10671
+      "graphicId": 10671,
+      "flipHorizontal": true
     },
     {
       "id": 1703,
@@ -124857,7 +124992,8 @@
         false,
         false
       ],
-      "graphicId": 10691
+      "graphicId": 10691,
+      "flipHorizontal": true
     },
     {
       "id": 1707,
@@ -124901,7 +125037,8 @@
         false,
         false
       ],
-      "graphicId": 10668
+      "graphicId": 10668,
+      "flipHorizontal": true
     },
     {
       "id": 1711,
@@ -124945,7 +125082,8 @@
         false,
         false
       ],
-      "graphicId": 10688
+      "graphicId": 10688,
+      "flipHorizontal": true
     },
     {
       "id": 1715,
@@ -125209,7 +125347,8 @@
         false,
         false
       ],
-      "graphicId": 10751
+      "graphicId": 10751,
+      "flipHorizontal": true
     },
     {
       "id": 1739,
@@ -125605,7 +125744,8 @@
         false,
         false
       ],
-      "graphicId": 10660
+      "graphicId": 10660,
+      "flipHorizontal": true
     },
     {
       "id": 1775,
@@ -125649,7 +125789,8 @@
         false,
         false
       ],
-      "graphicId": 10680
+      "graphicId": 10680,
+      "flipHorizontal": true
     },
     {
       "id": 1779,
@@ -125693,7 +125834,8 @@
         false,
         false
       ],
-      "graphicId": 10700
+      "graphicId": 10700,
+      "flipHorizontal": true
     },
     {
       "id": 1783,
@@ -125737,7 +125879,8 @@
         false,
         false
       ],
-      "graphicId": 10720
+      "graphicId": 10720,
+      "flipHorizontal": true
     },
     {
       "id": 1787,
@@ -125781,7 +125924,8 @@
         false,
         false
       ],
-      "graphicId": 10740
+      "graphicId": 10740,
+      "flipHorizontal": true
     },
     {
       "id": 1791,
@@ -125825,7 +125969,8 @@
         false,
         false
       ],
-      "graphicId": 10760
+      "graphicId": 10760,
+      "flipHorizontal": true
     },
     {
       "id": 1795,
@@ -125869,7 +126014,8 @@
         false,
         false
       ],
-      "graphicId": 10780
+      "graphicId": 10780,
+      "flipHorizontal": true
     },
     {
       "id": 1799,
@@ -125913,7 +126059,8 @@
         false,
         false
       ],
-      "graphicId": 10800
+      "graphicId": 10800,
+      "flipHorizontal": true
     },
     {
       "id": 1803,
@@ -125957,7 +126104,8 @@
         false,
         false
       ],
-      "graphicId": 10820
+      "graphicId": 10820,
+      "flipHorizontal": true
     },
     {
       "id": 1807,
@@ -126001,7 +126149,8 @@
         false,
         false
       ],
-      "graphicId": 10840
+      "graphicId": 10840,
+      "flipHorizontal": true
     },
     {
       "id": 1811,
@@ -127057,7 +127206,8 @@
         false,
         false
       ],
-      "graphicId": 10941
+      "graphicId": 10941,
+      "flipHorizontal": true
     },
     {
       "id": 1907,
@@ -127068,7 +127218,8 @@
         false,
         false
       ],
-      "graphicId": 10940
+      "graphicId": 10940,
+      "flipHorizontal": true
     },
     {
       "id": 1908,
@@ -127101,7 +127252,8 @@
         false,
         false
       ],
-      "graphicId": 11041
+      "graphicId": 11041,
+      "flipHorizontal": true
     },
     {
       "id": 1911,
@@ -127112,7 +127264,8 @@
         false,
         false
       ],
-      "graphicId": 11040
+      "graphicId": 11040,
+      "flipHorizontal": true
     },
     {
       "id": 1912,
@@ -127145,7 +127298,8 @@
         false,
         false
       ],
-      "graphicId": 11061
+      "graphicId": 11061,
+      "flipHorizontal": true
     },
     {
       "id": 1915,
@@ -127156,7 +127310,8 @@
         false,
         false
       ],
-      "graphicId": 11060
+      "graphicId": 11060,
+      "flipHorizontal": true
     },
     {
       "id": 1916,
@@ -127189,7 +127344,8 @@
         true,
         false
       ],
-      "graphicId": 11081
+      "graphicId": 11081,
+      "flipHorizontal": true
     },
     {
       "id": 1919,
@@ -127200,7 +127356,8 @@
         false,
         false
       ],
-      "graphicId": 11140
+      "graphicId": 11140,
+      "flipHorizontal": true
     },
     {
       "id": 1920,
@@ -127233,7 +127390,8 @@
         true,
         false
       ],
-      "graphicId": 11101
+      "graphicId": 11101,
+      "flipHorizontal": true
     },
     {
       "id": 1923,
@@ -127321,7 +127479,8 @@
         false,
         false
       ],
-      "graphicId": 11021
+      "graphicId": 11021,
+      "flipHorizontal": true
     },
     {
       "id": 1931,
@@ -127332,7 +127491,8 @@
         false,
         false
       ],
-      "graphicId": 11020
+      "graphicId": 11020,
+      "flipHorizontal": true
     },
     {
       "id": 1932,
@@ -127442,7 +127602,8 @@
         false,
         false
       ],
-      "graphicId": 11080
+      "graphicId": 11080,
+      "flipHorizontal": true
     },
     {
       "id": 1942,
@@ -127464,7 +127625,8 @@
         false,
         false
       ],
-      "graphicId": 11142
+      "graphicId": 11142,
+      "flipHorizontal": true
     },
     {
       "id": 1944,
@@ -127497,7 +127659,8 @@
         false,
         false
       ],
-      "graphicId": 10921
+      "graphicId": 10921,
+      "flipHorizontal": true
     },
     {
       "id": 1947,
@@ -127508,7 +127671,8 @@
         false,
         false
       ],
-      "graphicId": 10920
+      "graphicId": 10920,
+      "flipHorizontal": true
     },
     {
       "id": 1948,
@@ -127541,7 +127705,8 @@
         false,
         false
       ],
-      "graphicId": 11041
+      "graphicId": 11041,
+      "flipHorizontal": true
     },
     {
       "id": 1951,
@@ -127552,7 +127717,8 @@
         false,
         false
       ],
-      "graphicId": 11040
+      "graphicId": 11040,
+      "flipHorizontal": true
     },
     {
       "id": 1952,
@@ -127585,7 +127751,8 @@
         false,
         false
       ],
-      "graphicId": 11061
+      "graphicId": 11061,
+      "flipHorizontal": true
     },
     {
       "id": 1955,
@@ -127596,7 +127763,8 @@
         false,
         false
       ],
-      "graphicId": 11060
+      "graphicId": 11060,
+      "flipHorizontal": true
     },
     {
       "id": 1956,
@@ -127629,7 +127797,8 @@
         true,
         false
       ],
-      "graphicId": 11081
+      "graphicId": 11081,
+      "flipHorizontal": true
     },
     {
       "id": 1959,
@@ -127640,7 +127809,8 @@
         false,
         false
       ],
-      "graphicId": 11161
+      "graphicId": 11161,
+      "flipHorizontal": true
     },
     {
       "id": 1960,
@@ -129521,7 +129691,8 @@
         false,
         false
       ],
-      "graphicId": 11211
+      "graphicId": 11211,
+      "flipHorizontal": true
     },
     {
       "id": 2131,
@@ -129554,7 +129725,8 @@
         false,
         false
       ],
-      "graphicId": 11211
+      "graphicId": 11211,
+      "flipVertical": true
     },
     {
       "id": 2134,
@@ -129565,7 +129737,9 @@
         false,
         false
       ],
-      "graphicId": 11211
+      "graphicId": 11211,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2135,
@@ -129576,7 +129750,9 @@
         false,
         false
       ],
-      "graphicId": 11210
+      "graphicId": 11210,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2136,
@@ -129620,7 +129796,9 @@
         false,
         false
       ],
-      "graphicId": 11190
+      "graphicId": 11190,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2140,
@@ -129653,7 +129831,8 @@
         false,
         false
       ],
-      "graphicId": 11229
+      "graphicId": 11229,
+      "flipHorizontal": true
     },
     {
       "id": 2143,
@@ -129664,7 +129843,9 @@
         false,
         false
       ],
-      "graphicId": 11268
+      "graphicId": 11268,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2144,
@@ -129697,7 +129878,8 @@
         false,
         false
       ],
-      "graphicId": 11249
+      "graphicId": 11249,
+      "flipHorizontal": true
     },
     {
       "id": 2147,
@@ -129708,7 +129890,9 @@
         false,
         false
       ],
-      "graphicId": 11248
+      "graphicId": 11248,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2148,
@@ -129741,7 +129925,8 @@
         false,
         false
       ],
-      "graphicId": 11269
+      "graphicId": 11269,
+      "flipHorizontal": true
     },
     {
       "id": 2151,
@@ -129752,7 +129937,9 @@
         false,
         false
       ],
-      "graphicId": 11228
+      "graphicId": 11228,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2152,
@@ -129851,7 +130038,8 @@
         false,
         false
       ],
-      "graphicId": 11207
+      "graphicId": 11207,
+      "flipVertical": true
     },
     {
       "id": 2161,
@@ -129862,7 +130050,8 @@
         false,
         false
       ],
-      "graphicId": 11208
+      "graphicId": 11208,
+      "flipVertical": true
     },
     {
       "id": 2162,
@@ -129873,7 +130062,8 @@
         false,
         false
       ],
-      "graphicId": 11209
+      "graphicId": 11209,
+      "flipVertical": true
     },
     {
       "id": 2163,
@@ -129895,7 +130085,9 @@
         false,
         false
       ],
-      "graphicId": 11189
+      "graphicId": 11189,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2165,
@@ -129906,7 +130098,9 @@
         false,
         false
       ],
-      "graphicId": 11188
+      "graphicId": 11188,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2166,
@@ -129917,7 +130111,9 @@
         false,
         false
       ],
-      "graphicId": 11187
+      "graphicId": 11187,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2167,
@@ -130005,7 +130201,8 @@
         true,
         false
       ],
-      "graphicId": 11214
+      "graphicId": 11214,
+      "flipHorizontal": true
     },
     {
       "id": 2175,
@@ -130027,7 +130224,8 @@
         false,
         false
       ],
-      "graphicId": 11212
+      "graphicId": 11212,
+      "flipVertical": true
     },
     {
       "id": 2177,
@@ -130038,7 +130236,8 @@
         false,
         true
       ],
-      "graphicId": 11214
+      "graphicId": 11214,
+      "flipVertical": true
     },
     {
       "id": 2178,
@@ -130049,7 +130248,9 @@
         true,
         false
       ],
-      "graphicId": 11214
+      "graphicId": 11214,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2179,
@@ -130060,7 +130261,8 @@
         false,
         false
       ],
-      "graphicId": 11212
+      "graphicId": 11212,
+      "flipVertical": true
     },
     {
       "id": 2180,
@@ -130126,7 +130328,8 @@
         false,
         false
       ],
-      "graphicId": 11231
+      "graphicId": 11231,
+      "flipVertical": true
     },
     {
       "id": 2186,
@@ -130137,7 +130340,9 @@
         false,
         false
       ],
-      "graphicId": 11231
+      "graphicId": 11231,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2187,
@@ -130148,7 +130353,9 @@
         false,
         false
       ],
-      "graphicId": 11230
+      "graphicId": 11230,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2188,
@@ -130258,7 +130465,8 @@
         false,
         false
       ],
-      "graphicId": 11251
+      "graphicId": 11251,
+      "flipVertical": true
     },
     {
       "id": 2198,
@@ -130302,7 +130510,8 @@
         false,
         false
       ],
-      "graphicId": 11231
+      "graphicId": 11231,
+      "flipVertical": true
     },
     {
       "id": 2202,
@@ -130313,7 +130522,9 @@
         false,
         false
       ],
-      "graphicId": 11231
+      "graphicId": 11231,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2203,
@@ -130324,7 +130535,9 @@
         false,
         false
       ],
-      "graphicId": 11230
+      "graphicId": 11230,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2204,
@@ -130445,7 +130658,8 @@
         true,
         true
       ],
-      "graphicId": 11294
+      "graphicId": 11294,
+      "flipVertical": true
     },
     {
       "id": 2215,
@@ -130456,7 +130670,8 @@
         true,
         true
       ],
-      "graphicId": 11295
+      "graphicId": 11295,
+      "flipVertical": true
     },
     {
       "id": 2216,
@@ -130489,7 +130704,8 @@
         false,
         true
       ],
-      "graphicId": 11274
+      "graphicId": 11274,
+      "flipVertical": true
     },
     {
       "id": 2219,
@@ -130500,7 +130716,8 @@
         true,
         false
       ],
-      "graphicId": 11275
+      "graphicId": 11275,
+      "flipVertical": true
     },
     {
       "id": 2220,
@@ -130533,7 +130750,8 @@
         true,
         true
       ],
-      "graphicId": 11233
+      "graphicId": 11233,
+      "flipHorizontal": true
     },
     {
       "id": 2223,
@@ -130544,7 +130762,8 @@
         true,
         true
       ],
-      "graphicId": 11232
+      "graphicId": 11232,
+      "flipHorizontal": true
     },
     {
       "id": 2224,
@@ -130566,7 +130785,8 @@
         false,
         false
       ],
-      "graphicId": 11234
+      "graphicId": 11234,
+      "flipHorizontal": true
     },
     {
       "id": 2226,
@@ -130588,7 +130808,8 @@
         false,
         false
       ],
-      "graphicId": 11252
+      "graphicId": 11252,
+      "flipHorizontal": true
     },
     {
       "id": 2228,
@@ -130599,7 +130820,8 @@
         false,
         false
       ],
-      "graphicId": 11234
+      "graphicId": 11234,
+      "flipVertical": true
     },
     {
       "id": 2229,
@@ -130610,7 +130832,9 @@
         false,
         false
       ],
-      "graphicId": 11234
+      "graphicId": 11234,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2230,
@@ -130632,7 +130856,8 @@
         false,
         false
       ],
-      "graphicId": 11272
+      "graphicId": 11272,
+      "flipHorizontal": true
     },
     {
       "id": 2232,
@@ -130665,7 +130890,8 @@
         false,
         false
       ],
-      "graphicId": 11252
+      "graphicId": 11252,
+      "flipVertical": true
     },
     {
       "id": 2235,
@@ -130676,7 +130902,9 @@
         false,
         false
       ],
-      "graphicId": 11252
+      "graphicId": 11252,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2236,
@@ -130709,7 +130937,8 @@
         false,
         false
       ],
-      "graphicId": 11254
+      "graphicId": 11254,
+      "flipHorizontal": true
     },
     {
       "id": 2239,
@@ -130720,7 +130949,8 @@
         true,
         false
       ],
-      "graphicId": 11214
+      "graphicId": 11214,
+      "flipHorizontal": true
     },
     {
       "id": 2240,
@@ -130731,7 +130961,8 @@
         false,
         false
       ],
-      "graphicId": 11254
+      "graphicId": 11254,
+      "flipVertical": true
     },
     {
       "id": 2241,
@@ -130742,7 +130973,8 @@
         false,
         true
       ],
-      "graphicId": 11214
+      "graphicId": 11214,
+      "flipVertical": true
     },
     {
       "id": 2242,
@@ -130753,7 +130985,9 @@
         false,
         false
       ],
-      "graphicId": 11254
+      "graphicId": 11254,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2243,
@@ -130764,7 +130998,9 @@
         true,
         false
       ],
-      "graphicId": 11214
+      "graphicId": 11214,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2244,
@@ -130797,7 +131033,8 @@
         false,
         false
       ],
-      "graphicId": 11253
+      "graphicId": 11253,
+      "flipHorizontal": true
     },
     {
       "id": 2247,
@@ -130819,7 +131056,8 @@
         false,
         false
       ],
-      "graphicId": 11273
+      "graphicId": 11273,
+      "flipVertical": true
     },
     {
       "id": 2249,
@@ -130841,7 +131079,9 @@
         false,
         false
       ],
-      "graphicId": 11273
+      "graphicId": 11273,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2251,
@@ -130852,7 +131092,8 @@
         true,
         true
       ],
-      "graphicId": 11271
+      "graphicId": 11271,
+      "flipHorizontal": true
     },
     {
       "id": 2252,
@@ -130863,7 +131104,8 @@
         false,
         false
       ],
-      "graphicId": 11253
+      "graphicId": 11253,
+      "flipVertical": true
     },
     {
       "id": 2253,
@@ -130874,7 +131116,8 @@
         false,
         false
       ],
-      "graphicId": 11251
+      "graphicId": 11251,
+      "flipVertical": true
     },
     {
       "id": 2254,
@@ -130885,7 +131128,9 @@
         false,
         false
       ],
-      "graphicId": 11253
+      "graphicId": 11253,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2255,
@@ -130896,7 +131141,9 @@
         false,
         false
       ],
-      "graphicId": 11251
+      "graphicId": 11251,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2256,
@@ -130940,7 +131187,8 @@
         true,
         false
       ],
-      "graphicId": 11214
+      "graphicId": 11214,
+      "flipHorizontal": true
     },
     {
       "id": 2260,
@@ -130951,7 +131199,8 @@
         false,
         false
       ],
-      "graphicId": 11236
+      "graphicId": 11236,
+      "flipVertical": true
     },
     {
       "id": 2261,
@@ -130962,7 +131211,8 @@
         false,
         true
       ],
-      "graphicId": 11214
+      "graphicId": 11214,
+      "flipVertical": true
     },
     {
       "id": 2262,
@@ -130973,7 +131223,8 @@
         false,
         false
       ],
-      "graphicId": 11237
+      "graphicId": 11237,
+      "flipVertical": true
     },
     {
       "id": 2263,
@@ -130984,7 +131235,9 @@
         true,
         false
       ],
-      "graphicId": 11214
+      "graphicId": 11214,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2264,
@@ -131017,7 +131270,8 @@
         false,
         false
       ],
-      "graphicId": 11253
+      "graphicId": 11253,
+      "flipHorizontal": true
     },
     {
       "id": 2267,
@@ -131039,7 +131293,9 @@
         false,
         false
       ],
-      "graphicId": 11277
+      "graphicId": 11277,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2269,
@@ -131061,7 +131317,8 @@
         false,
         false
       ],
-      "graphicId": 11277
+      "graphicId": 11277,
+      "flipVertical": true
     },
     {
       "id": 2271,
@@ -131072,7 +131329,8 @@
         true,
         true
       ],
-      "graphicId": 11271
+      "graphicId": 11271,
+      "flipHorizontal": true
     },
     {
       "id": 2272,
@@ -131083,7 +131341,8 @@
         false,
         false
       ],
-      "graphicId": 11253
+      "graphicId": 11253,
+      "flipVertical": true
     },
     {
       "id": 2273,
@@ -131094,7 +131353,8 @@
         false,
         false
       ],
-      "graphicId": 11251
+      "graphicId": 11251,
+      "flipVertical": true
     },
     {
       "id": 2274,
@@ -131105,7 +131365,9 @@
         false,
         false
       ],
-      "graphicId": 11253
+      "graphicId": 11253,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2275,
@@ -131116,7 +131378,9 @@
         false,
         false
       ],
-      "graphicId": 11251
+      "graphicId": 11251,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2276,
@@ -134196,7 +134460,8 @@
         true,
         false
       ],
-      "graphicId": 11707
+      "graphicId": 11707,
+      "flipHorizontal": true
     },
     {
       "id": 2556,
@@ -134306,7 +134571,8 @@
         false,
         false
       ],
-      "graphicId": 11784
+      "graphicId": 11784,
+      "flipHorizontal": true
     },
     {
       "id": 2566,
@@ -134350,7 +134616,8 @@
         false,
         false
       ],
-      "graphicId": 11804
+      "graphicId": 11804,
+      "flipHorizontal": true
     },
     {
       "id": 2570,
@@ -134361,7 +134628,8 @@
         false,
         true
       ],
-      "graphicId": 11767
+      "graphicId": 11767,
+      "flipVertical": true
     },
     {
       "id": 2571,
@@ -134372,7 +134640,8 @@
         true,
         false
       ],
-      "graphicId": 11768
+      "graphicId": 11768,
+      "flipVertical": true
     },
     {
       "id": 2572,
@@ -134383,7 +134652,8 @@
         false,
         false
       ],
-      "graphicId": 11784
+      "graphicId": 11784,
+      "flipVertical": true
     },
     {
       "id": 2573,
@@ -134394,7 +134664,9 @@
         false,
         false
       ],
-      "graphicId": 11784
+      "graphicId": 11784,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2574,
@@ -134427,7 +134699,8 @@
         false,
         false
       ],
-      "graphicId": 11789
+      "graphicId": 11789,
+      "flipVertical": true
     },
     {
       "id": 2577,
@@ -134438,7 +134711,8 @@
         false,
         false
       ],
-      "graphicId": 11790
+      "graphicId": 11790,
+      "flipVertical": true
     },
     {
       "id": 2578,
@@ -134449,7 +134723,8 @@
         false,
         true
       ],
-      "graphicId": 11751
+      "graphicId": 11751,
+      "flipVertical": true
     },
     {
       "id": 2579,
@@ -134460,7 +134735,8 @@
         true,
         false
       ],
-      "graphicId": 11752
+      "graphicId": 11752,
+      "flipVertical": true
     },
     {
       "id": 2580,
@@ -134471,7 +134747,8 @@
         false,
         true
       ],
-      "graphicId": 11747
+      "graphicId": 11747,
+      "flipVertical": true
     },
     {
       "id": 2581,
@@ -134482,7 +134759,8 @@
         true,
         false
       ],
-      "graphicId": 11748
+      "graphicId": 11748,
+      "flipVertical": true
     },
     {
       "id": 2582,
@@ -134493,7 +134771,8 @@
         false,
         true
       ],
-      "graphicId": 11707
+      "graphicId": 11707,
+      "flipVertical": true
     },
     {
       "id": 2583,
@@ -134504,7 +134783,9 @@
         false,
         false
       ],
-      "graphicId": 11707
+      "graphicId": 11707,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2584,
@@ -134537,7 +134818,8 @@
         false,
         false
       ],
-      "graphicId": 11783
+      "graphicId": 11783,
+      "flipHorizontal": true
     },
     {
       "id": 2587,
@@ -134548,7 +134830,8 @@
         false,
         false
       ],
-      "graphicId": 11782
+      "graphicId": 11782,
+      "flipHorizontal": true
     },
     {
       "id": 2588,
@@ -134581,7 +134864,8 @@
         true,
         true
       ],
-      "graphicId": 11803
+      "graphicId": 11803,
+      "flipHorizontal": true
     },
     {
       "id": 2591,
@@ -134592,7 +134876,8 @@
         true,
         true
       ],
-      "graphicId": 11802
+      "graphicId": 11802,
+      "flipHorizontal": true
     },
     {
       "id": 2592,
@@ -134603,7 +134888,8 @@
         false,
         false
       ],
-      "graphicId": 11782
+      "graphicId": 11782,
+      "flipVertical": true
     },
     {
       "id": 2593,
@@ -134614,7 +134900,8 @@
         false,
         false
       ],
-      "graphicId": 11783
+      "graphicId": 11783,
+      "flipVertical": true
     },
     {
       "id": 2594,
@@ -134625,7 +134912,9 @@
         false,
         false
       ],
-      "graphicId": 11783
+      "graphicId": 11783,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2595,
@@ -134636,7 +134925,9 @@
         false,
         false
       ],
-      "graphicId": 11782
+      "graphicId": 11782,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2596,
@@ -134669,7 +134960,8 @@
         true,
         true
       ],
-      "graphicId": 11824
+      "graphicId": 11824,
+      "flipHorizontal": true
     },
     {
       "id": 2599,
@@ -134779,7 +135071,8 @@
         false,
         false
       ],
-      "graphicId": 11787
+      "graphicId": 11787,
+      "flipVertical": true
     },
     {
       "id": 2609,
@@ -134790,7 +135083,8 @@
         false,
         true
       ],
-      "graphicId": 11767
+      "graphicId": 11767,
+      "flipVertical": true
     },
     {
       "id": 2610,
@@ -134801,7 +135095,8 @@
         false,
         false
       ],
-      "graphicId": 11788
+      "graphicId": 11788,
+      "flipVertical": true
     },
     {
       "id": 2611,
@@ -134812,7 +135107,8 @@
         true,
         false
       ],
-      "graphicId": 11768
+      "graphicId": 11768,
+      "flipVertical": true
     },
     {
       "id": 2612,
@@ -134845,7 +135141,8 @@
         false,
         false
       ],
-      "graphicId": 11744
+      "graphicId": 11744,
+      "flipHorizontal": true
     },
     {
       "id": 2615,
@@ -134856,7 +135153,8 @@
         false,
         false
       ],
-      "graphicId": 11783
+      "graphicId": 11783,
+      "flipHorizontal": true
     },
     {
       "id": 2616,
@@ -134889,7 +135187,8 @@
         false,
         false
       ],
-      "graphicId": 11764
+      "graphicId": 11764,
+      "flipHorizontal": true
     },
     {
       "id": 2619,
@@ -134900,7 +135199,8 @@
         true,
         true
       ],
-      "graphicId": 11803
+      "graphicId": 11803,
+      "flipHorizontal": true
     },
     {
       "id": 2620,
@@ -134911,7 +135211,8 @@
         false,
         false
       ],
-      "graphicId": 11744
+      "graphicId": 11744,
+      "flipVertical": true
     },
     {
       "id": 2621,
@@ -134922,7 +135223,8 @@
         false,
         false
       ],
-      "graphicId": 11783
+      "graphicId": 11783,
+      "flipVertical": true
     },
     {
       "id": 2622,
@@ -134933,7 +135235,9 @@
         false,
         false
       ],
-      "graphicId": 11744
+      "graphicId": 11744,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2623,
@@ -134944,7 +135248,9 @@
         false,
         false
       ],
-      "graphicId": 11783
+      "graphicId": 11783,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2624,
@@ -134999,7 +135305,8 @@
         false,
         false
       ],
-      "graphicId": 11847
+      "graphicId": 11847,
+      "flipVertical": true
     },
     {
       "id": 2629,
@@ -135010,7 +135317,8 @@
         false,
         true
       ],
-      "graphicId": 11767
+      "graphicId": 11767,
+      "flipVertical": true
     },
     {
       "id": 2630,
@@ -135021,7 +135329,8 @@
         false,
         false
       ],
-      "graphicId": 11848
+      "graphicId": 11848,
+      "flipVertical": true
     },
     {
       "id": 2631,
@@ -135032,7 +135341,8 @@
         true,
         false
       ],
-      "graphicId": 11768
+      "graphicId": 11768,
+      "flipVertical": true
     },
     {
       "id": 2632,
@@ -135065,7 +135375,8 @@
         false,
         false
       ],
-      "graphicId": 11846
+      "graphicId": 11846,
+      "flipHorizontal": true
     },
     {
       "id": 2635,
@@ -135076,7 +135387,8 @@
         false,
         false
       ],
-      "graphicId": 11783
+      "graphicId": 11783,
+      "flipHorizontal": true
     },
     {
       "id": 2636,
@@ -135109,7 +135421,8 @@
         false,
         false
       ],
-      "graphicId": 11866
+      "graphicId": 11866,
+      "flipHorizontal": true
     },
     {
       "id": 2639,
@@ -135120,7 +135433,8 @@
         true,
         true
       ],
-      "graphicId": 11803
+      "graphicId": 11803,
+      "flipHorizontal": true
     },
     {
       "id": 2640,
@@ -135131,7 +135445,8 @@
         false,
         false
       ],
-      "graphicId": 11846
+      "graphicId": 11846,
+      "flipVertical": true
     },
     {
       "id": 2641,
@@ -135142,7 +135457,8 @@
         false,
         false
       ],
-      "graphicId": 11783
+      "graphicId": 11783,
+      "flipVertical": true
     },
     {
       "id": 2642,
@@ -135153,7 +135469,9 @@
         false,
         false
       ],
-      "graphicId": 11846
+      "graphicId": 11846,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2643,
@@ -135164,7 +135482,9 @@
         false,
         false
       ],
-      "graphicId": 11783
+      "graphicId": 11783,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2644,
@@ -135351,7 +135671,8 @@
         false,
         false
       ],
-      "graphicId": 11703
+      "graphicId": 11703,
+      "flipHorizontal": true
     },
     {
       "id": 2661,
@@ -135362,7 +135683,8 @@
         false,
         false
       ],
-      "graphicId": 11702
+      "graphicId": 11702,
+      "flipHorizontal": true
     },
     {
       "id": 2662,
@@ -135373,7 +135695,8 @@
         false,
         false
       ],
-      "graphicId": 11701
+      "graphicId": 11701,
+      "flipHorizontal": true
     },
     {
       "id": 2663,
@@ -135384,7 +135707,8 @@
         false,
         false
       ],
-      "graphicId": 11700
+      "graphicId": 11700,
+      "flipHorizontal": true
     },
     {
       "id": 2664,
@@ -135395,7 +135719,8 @@
         false,
         false
       ],
-      "graphicId": 11723
+      "graphicId": 11723,
+      "flipHorizontal": true
     },
     {
       "id": 2665,
@@ -135406,7 +135731,8 @@
         false,
         false
       ],
-      "graphicId": 11722
+      "graphicId": 11722,
+      "flipHorizontal": true
     },
     {
       "id": 2666,
@@ -135417,7 +135743,8 @@
         false,
         false
       ],
-      "graphicId": 11721
+      "graphicId": 11721,
+      "flipHorizontal": true
     },
     {
       "id": 2667,
@@ -135428,7 +135755,8 @@
         false,
         false
       ],
-      "graphicId": 11720
+      "graphicId": 11720,
+      "flipHorizontal": true
     },
     {
       "id": 2668,
@@ -135439,7 +135767,8 @@
         false,
         false
       ],
-      "graphicId": 11707
+      "graphicId": 11707,
+      "flipHorizontal": true
     },
     {
       "id": 2669,
@@ -135450,7 +135779,8 @@
         false,
         false
       ],
-      "graphicId": 11706
+      "graphicId": 11706,
+      "flipHorizontal": true
     },
     {
       "id": 2670,
@@ -135461,7 +135791,8 @@
         false,
         false
       ],
-      "graphicId": 11705
+      "graphicId": 11705,
+      "flipHorizontal": true
     },
     {
       "id": 2671,
@@ -135472,7 +135803,8 @@
         false,
         false
       ],
-      "graphicId": 11704
+      "graphicId": 11704,
+      "flipHorizontal": true
     },
     {
       "id": 2672,
@@ -135483,7 +135815,8 @@
         false,
         false
       ],
-      "graphicId": 11727
+      "graphicId": 11727,
+      "flipHorizontal": true
     },
     {
       "id": 2673,
@@ -135494,7 +135827,8 @@
         false,
         false
       ],
-      "graphicId": 11726
+      "graphicId": 11726,
+      "flipHorizontal": true
     },
     {
       "id": 2674,
@@ -135505,7 +135839,8 @@
         false,
         false
       ],
-      "graphicId": 11725
+      "graphicId": 11725,
+      "flipHorizontal": true
     },
     {
       "id": 2675,
@@ -135516,7 +135851,8 @@
         false,
         false
       ],
-      "graphicId": 11724
+      "graphicId": 11724,
+      "flipHorizontal": true
     },
     {
       "id": 2676,
@@ -135549,7 +135885,8 @@
         false,
         false
       ],
-      "graphicId": 11741
+      "graphicId": 11741,
+      "flipHorizontal": true
     },
     {
       "id": 2679,
@@ -135560,7 +135897,8 @@
         false,
         false
       ],
-      "graphicId": 11740
+      "graphicId": 11740,
+      "flipHorizontal": true
     },
     {
       "id": 2680,
@@ -135593,7 +135931,8 @@
         false,
         false
       ],
-      "graphicId": 11761
+      "graphicId": 11761,
+      "flipHorizontal": true
     },
     {
       "id": 2683,
@@ -135604,7 +135943,8 @@
         false,
         false
       ],
-      "graphicId": 11760
+      "graphicId": 11760,
+      "flipHorizontal": true
     },
     {
       "id": 2684,
@@ -135637,7 +135977,8 @@
         false,
         false
       ],
-      "graphicId": 11781
+      "graphicId": 11781,
+      "flipHorizontal": true
     },
     {
       "id": 2687,
@@ -135648,7 +135989,8 @@
         false,
         false
       ],
-      "graphicId": 11780
+      "graphicId": 11780,
+      "flipHorizontal": true
     },
     {
       "id": 2688,
@@ -135681,7 +136023,8 @@
         false,
         false
       ],
-      "graphicId": 11801
+      "graphicId": 11801,
+      "flipHorizontal": true
     },
     {
       "id": 2691,
@@ -135692,7 +136035,8 @@
         false,
         false
       ],
-      "graphicId": 11800
+      "graphicId": 11800,
+      "flipHorizontal": true
     },
     {
       "id": 2692,
@@ -135703,7 +136047,8 @@
         false,
         false
       ],
-      "graphicId": 11780
+      "graphicId": 11780,
+      "flipVertical": true
     },
     {
       "id": 2693,
@@ -135714,7 +136059,8 @@
         false,
         false
       ],
-      "graphicId": 11781
+      "graphicId": 11781,
+      "flipVertical": true
     },
     {
       "id": 2694,
@@ -135725,7 +136071,9 @@
         false,
         false
       ],
-      "graphicId": 11781
+      "graphicId": 11781,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2695,
@@ -135736,7 +136084,9 @@
         false,
         false
       ],
-      "graphicId": 11780
+      "graphicId": 11780,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2696,
@@ -135747,7 +136097,8 @@
         false,
         false
       ],
-      "graphicId": 11760
+      "graphicId": 11760,
+      "flipVertical": true
     },
     {
       "id": 2697,
@@ -135758,7 +136109,8 @@
         false,
         false
       ],
-      "graphicId": 11761
+      "graphicId": 11761,
+      "flipVertical": true
     },
     {
       "id": 2698,
@@ -135769,7 +136121,9 @@
         false,
         false
       ],
-      "graphicId": 11761
+      "graphicId": 11761,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2699,
@@ -135780,7 +136134,9 @@
         false,
         false
       ],
-      "graphicId": 11760
+      "graphicId": 11760,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2700,
@@ -135791,7 +136147,8 @@
         false,
         false
       ],
-      "graphicId": 11740
+      "graphicId": 11740,
+      "flipVertical": true
     },
     {
       "id": 2701,
@@ -135802,7 +136159,8 @@
         false,
         false
       ],
-      "graphicId": 11741
+      "graphicId": 11741,
+      "flipVertical": true
     },
     {
       "id": 2702,
@@ -135813,7 +136171,9 @@
         false,
         false
       ],
-      "graphicId": 11741
+      "graphicId": 11741,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2703,
@@ -135824,7 +136184,9 @@
         false,
         false
       ],
-      "graphicId": 11740
+      "graphicId": 11740,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2704,
@@ -135835,7 +136197,8 @@
         false,
         false
       ],
-      "graphicId": 11720
+      "graphicId": 11720,
+      "flipVertical": true
     },
     {
       "id": 2705,
@@ -135846,7 +136209,8 @@
         false,
         false
       ],
-      "graphicId": 11721
+      "graphicId": 11721,
+      "flipVertical": true
     },
     {
       "id": 2706,
@@ -135857,7 +136221,8 @@
         false,
         false
       ],
-      "graphicId": 11722
+      "graphicId": 11722,
+      "flipVertical": true
     },
     {
       "id": 2707,
@@ -135868,7 +136233,8 @@
         false,
         false
       ],
-      "graphicId": 11723
+      "graphicId": 11723,
+      "flipVertical": true
     },
     {
       "id": 2708,
@@ -135879,7 +136245,8 @@
         false,
         false
       ],
-      "graphicId": 11700
+      "graphicId": 11700,
+      "flipVertical": true
     },
     {
       "id": 2709,
@@ -135890,7 +136257,8 @@
         false,
         false
       ],
-      "graphicId": 11701
+      "graphicId": 11701,
+      "flipVertical": true
     },
     {
       "id": 2710,
@@ -135901,7 +136269,8 @@
         false,
         false
       ],
-      "graphicId": 11702
+      "graphicId": 11702,
+      "flipVertical": true
     },
     {
       "id": 2711,
@@ -135912,7 +136281,8 @@
         false,
         false
       ],
-      "graphicId": 11703
+      "graphicId": 11703,
+      "flipVertical": true
     },
     {
       "id": 2712,
@@ -135923,7 +136293,8 @@
         false,
         false
       ],
-      "graphicId": 11724
+      "graphicId": 11724,
+      "flipVertical": true
     },
     {
       "id": 2713,
@@ -135934,7 +136305,8 @@
         false,
         false
       ],
-      "graphicId": 11725
+      "graphicId": 11725,
+      "flipVertical": true
     },
     {
       "id": 2714,
@@ -135945,7 +136317,8 @@
         false,
         false
       ],
-      "graphicId": 11726
+      "graphicId": 11726,
+      "flipVertical": true
     },
     {
       "id": 2715,
@@ -135956,7 +136329,8 @@
         false,
         false
       ],
-      "graphicId": 11727
+      "graphicId": 11727,
+      "flipVertical": true
     },
     {
       "id": 2716,
@@ -135967,7 +136341,8 @@
         false,
         false
       ],
-      "graphicId": 11704
+      "graphicId": 11704,
+      "flipVertical": true
     },
     {
       "id": 2717,
@@ -135978,7 +136353,8 @@
         false,
         false
       ],
-      "graphicId": 11705
+      "graphicId": 11705,
+      "flipVertical": true
     },
     {
       "id": 2718,
@@ -135989,7 +136365,8 @@
         false,
         false
       ],
-      "graphicId": 11706
+      "graphicId": 11706,
+      "flipVertical": true
     },
     {
       "id": 2719,
@@ -136000,7 +136377,8 @@
         false,
         false
       ],
-      "graphicId": 11707
+      "graphicId": 11707,
+      "flipVertical": true
     },
     {
       "id": 2720,
@@ -136011,7 +136389,9 @@
         false,
         false
       ],
-      "graphicId": 11723
+      "graphicId": 11723,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2721,
@@ -136022,7 +136402,9 @@
         false,
         false
       ],
-      "graphicId": 11722
+      "graphicId": 11722,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2722,
@@ -136033,7 +136415,9 @@
         false,
         false
       ],
-      "graphicId": 11721
+      "graphicId": 11721,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2723,
@@ -136044,7 +136428,9 @@
         false,
         false
       ],
-      "graphicId": 11720
+      "graphicId": 11720,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2724,
@@ -136055,7 +136441,9 @@
         false,
         false
       ],
-      "graphicId": 11703
+      "graphicId": 11703,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2725,
@@ -136066,7 +136454,9 @@
         false,
         false
       ],
-      "graphicId": 11702
+      "graphicId": 11702,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2726,
@@ -136077,7 +136467,9 @@
         false,
         false
       ],
-      "graphicId": 11701
+      "graphicId": 11701,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2727,
@@ -136088,7 +136480,9 @@
         false,
         false
       ],
-      "graphicId": 11700
+      "graphicId": 11700,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2728,
@@ -136099,7 +136493,9 @@
         false,
         false
       ],
-      "graphicId": 11727
+      "graphicId": 11727,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2729,
@@ -136110,7 +136506,9 @@
         false,
         false
       ],
-      "graphicId": 11726
+      "graphicId": 11726,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2730,
@@ -136121,7 +136519,9 @@
         false,
         false
       ],
-      "graphicId": 11725
+      "graphicId": 11725,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2731,
@@ -136132,7 +136532,9 @@
         false,
         false
       ],
-      "graphicId": 11724
+      "graphicId": 11724,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2732,
@@ -136143,7 +136545,9 @@
         false,
         false
       ],
-      "graphicId": 11707
+      "graphicId": 11707,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2733,
@@ -136154,7 +136558,9 @@
         false,
         false
       ],
-      "graphicId": 11706
+      "graphicId": 11706,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2734,
@@ -136165,7 +136571,9 @@
         false,
         false
       ],
-      "graphicId": 11705
+      "graphicId": 11705,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2735,
@@ -136176,7 +136584,9 @@
         false,
         false
       ],
-      "graphicId": 11704
+      "graphicId": 11704,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2736,
@@ -136209,7 +136619,8 @@
         false,
         false
       ],
-      "graphicId": 11852
+      "graphicId": 11852,
+      "flipHorizontal": true
     },
     {
       "id": 2739,
@@ -136220,7 +136631,8 @@
         false,
         false
       ],
-      "graphicId": 11851
+      "graphicId": 11851,
+      "flipHorizontal": true
     },
     {
       "id": 2740,
@@ -136253,7 +136665,8 @@
         false,
         false
       ],
-      "graphicId": 11872
+      "graphicId": 11872,
+      "flipHorizontal": true
     },
     {
       "id": 2743,
@@ -136264,7 +136677,8 @@
         false,
         false
       ],
-      "graphicId": 11871
+      "graphicId": 11871,
+      "flipHorizontal": true
     },
     {
       "id": 2744,
@@ -136275,7 +136689,8 @@
         false,
         false
       ],
-      "graphicId": 11871
+      "graphicId": 11871,
+      "flipVertical": true
     },
     {
       "id": 2745,
@@ -136286,7 +136701,8 @@
         false,
         false
       ],
-      "graphicId": 11872
+      "graphicId": 11872,
+      "flipVertical": true
     },
     {
       "id": 2746,
@@ -136297,7 +136713,9 @@
         false,
         false
       ],
-      "graphicId": 11872
+      "graphicId": 11872,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2747,
@@ -136308,7 +136726,9 @@
         false,
         false
       ],
-      "graphicId": 11871
+      "graphicId": 11871,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2748,
@@ -136319,7 +136739,8 @@
         false,
         false
       ],
-      "graphicId": 11851
+      "graphicId": 11851,
+      "flipVertical": true
     },
     {
       "id": 2749,
@@ -136330,7 +136751,8 @@
         false,
         false
       ],
-      "graphicId": 11852
+      "graphicId": 11852,
+      "flipVertical": true
     },
     {
       "id": 2750,
@@ -136341,7 +136763,9 @@
         false,
         false
       ],
-      "graphicId": 11852
+      "graphicId": 11852,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2751,
@@ -136352,7 +136776,9 @@
         false,
         false
       ],
-      "graphicId": 11851
+      "graphicId": 11851,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2752,
@@ -136451,7 +136877,8 @@
         false,
         false
       ],
-      "graphicId": 11762
+      "graphicId": 11762,
+      "flipVertical": true
     },
     {
       "id": 2761,
@@ -136462,7 +136889,8 @@
         false,
         false
       ],
-      "graphicId": 11763
+      "graphicId": 11763,
+      "flipVertical": true
     },
     {
       "id": 2762,
@@ -136473,7 +136901,8 @@
         false,
         false
       ],
-      "graphicId": 11811
+      "graphicId": 11811,
+      "flipVertical": true
     },
     {
       "id": 2763,
@@ -136484,7 +136913,8 @@
         false,
         false
       ],
-      "graphicId": 11812
+      "graphicId": 11812,
+      "flipVertical": true
     },
     {
       "id": 2764,
@@ -136495,7 +136925,8 @@
         false,
         false
       ],
-      "graphicId": 11742
+      "graphicId": 11742,
+      "flipVertical": true
     },
     {
       "id": 2765,
@@ -136506,7 +136937,8 @@
         false,
         false
       ],
-      "graphicId": 11743
+      "graphicId": 11743,
+      "flipVertical": true
     },
     {
       "id": 2766,
@@ -136517,7 +136949,8 @@
         false,
         false
       ],
-      "graphicId": 11812
+      "graphicId": 11812,
+      "flipHorizontal": true
     },
     {
       "id": 2767,
@@ -136528,7 +136961,8 @@
         false,
         false
       ],
-      "graphicId": 11811
+      "graphicId": 11811,
+      "flipHorizontal": true
     },
     {
       "id": 2768,
@@ -136561,7 +136995,8 @@
         true,
         true
       ],
-      "graphicId": 11832
+      "graphicId": 11832,
+      "flipHorizontal": true
     },
     {
       "id": 2771,
@@ -136572,7 +137007,8 @@
         false,
         false
       ],
-      "graphicId": 11831
+      "graphicId": 11831,
+      "flipHorizontal": true
     },
     {
       "id": 2772,
@@ -136605,7 +137041,9 @@
         false,
         false
       ],
-      "graphicId": 11812
+      "graphicId": 11812,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2775,
@@ -136616,7 +137054,9 @@
         false,
         false
       ],
-      "graphicId": 11811
+      "graphicId": 11811,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2776,
@@ -136627,7 +137067,8 @@
         false,
         false
       ],
-      "graphicId": 11862
+      "graphicId": 11862,
+      "flipVertical": true
     },
     {
       "id": 2777,
@@ -136638,7 +137079,8 @@
         false,
         false
       ],
-      "graphicId": 11863
+      "graphicId": 11863,
+      "flipVertical": true
     },
     {
       "id": 2778,
@@ -136649,7 +137091,9 @@
         false,
         false
       ],
-      "graphicId": 11863
+      "graphicId": 11863,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2779,
@@ -136660,7 +137104,9 @@
         false,
         false
       ],
-      "graphicId": 11862
+      "graphicId": 11862,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2780,
@@ -136671,7 +137117,8 @@
         false,
         false
       ],
-      "graphicId": 11842
+      "graphicId": 11842,
+      "flipVertical": true
     },
     {
       "id": 2781,
@@ -136682,7 +137129,8 @@
         false,
         false
       ],
-      "graphicId": 11843
+      "graphicId": 11843,
+      "flipVertical": true
     },
     {
       "id": 2782,
@@ -136693,7 +137141,9 @@
         false,
         false
       ],
-      "graphicId": 11843
+      "graphicId": 11843,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2783,
@@ -136704,7 +137154,9 @@
         false,
         false
       ],
-      "graphicId": 11842
+      "graphicId": 11842,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2784,
@@ -136737,7 +137189,8 @@
         false,
         false
       ],
-      "graphicId": 11843
+      "graphicId": 11843,
+      "flipHorizontal": true
     },
     {
       "id": 2787,
@@ -136748,7 +137201,8 @@
         false,
         false
       ],
-      "graphicId": 11842
+      "graphicId": 11842,
+      "flipHorizontal": true
     },
     {
       "id": 2788,
@@ -136781,7 +137235,8 @@
         false,
         false
       ],
-      "graphicId": 11863
+      "graphicId": 11863,
+      "flipHorizontal": true
     },
     {
       "id": 2791,
@@ -136792,7 +137247,8 @@
         false,
         false
       ],
-      "graphicId": 11862
+      "graphicId": 11862,
+      "flipHorizontal": true
     },
     {
       "id": 2792,
@@ -136803,7 +137259,8 @@
         false,
         false
       ],
-      "graphicId": 11750
+      "graphicId": 11750,
+      "flipHorizontal": true
     },
     {
       "id": 2793,
@@ -136814,7 +137271,8 @@
         false,
         false
       ],
-      "graphicId": 11749
+      "graphicId": 11749,
+      "flipHorizontal": true
     },
     {
       "id": 2794,
@@ -136847,7 +137305,8 @@
         false,
         false
       ],
-      "graphicId": 11770
+      "graphicId": 11770,
+      "flipHorizontal": true
     },
     {
       "id": 2797,
@@ -136858,7 +137317,8 @@
         false,
         false
       ],
-      "graphicId": 11769
+      "graphicId": 11769,
+      "flipHorizontal": true
     },
     {
       "id": 2798,
@@ -136891,7 +137351,9 @@
         false,
         false
       ],
-      "graphicId": 11770
+      "graphicId": 11770,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2801,
@@ -136902,7 +137364,9 @@
         false,
         false
       ],
-      "graphicId": 11769
+      "graphicId": 11769,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2802,
@@ -136913,7 +137377,8 @@
         false,
         false
       ],
-      "graphicId": 11769
+      "graphicId": 11769,
+      "flipVertical": true
     },
     {
       "id": 2803,
@@ -136924,7 +137389,8 @@
         false,
         false
       ],
-      "graphicId": 11770
+      "graphicId": 11770,
+      "flipVertical": true
     },
     {
       "id": 2804,
@@ -136935,7 +137401,9 @@
         false,
         false
       ],
-      "graphicId": 11750
+      "graphicId": 11750,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2805,
@@ -136946,7 +137414,9 @@
         false,
         false
       ],
-      "graphicId": 11749
+      "graphicId": 11749,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2806,
@@ -136957,7 +137427,8 @@
         false,
         false
       ],
-      "graphicId": 11749
+      "graphicId": 11749,
+      "flipVertical": true
     },
     {
       "id": 2807,
@@ -136968,7 +137439,8 @@
         false,
         false
       ],
-      "graphicId": 11750
+      "graphicId": 11750,
+      "flipVertical": true
     },
     {
       "id": 2808,
@@ -137001,7 +137473,8 @@
         false,
         false
       ],
-      "graphicId": 12109
+      "graphicId": 12109,
+      "flipHorizontal": true
     },
     {
       "id": 2811,
@@ -137045,7 +137518,8 @@
         false,
         false
       ],
-      "graphicId": 12129
+      "graphicId": 12129,
+      "flipHorizontal": true
     },
     {
       "id": 2815,
@@ -137067,7 +137541,8 @@
         false,
         false
       ],
-      "graphicId": 12109
+      "graphicId": 12109,
+      "flipVertical": true
     },
     {
       "id": 2817,
@@ -137078,7 +137553,8 @@
         false,
         false
       ],
-      "graphicId": 12110
+      "graphicId": 12110,
+      "flipVertical": true
     },
     {
       "id": 2818,
@@ -137089,7 +137565,9 @@
         false,
         false
       ],
-      "graphicId": 12109
+      "graphicId": 12109,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2819,
@@ -137199,7 +137677,8 @@
         false,
         false
       ],
-      "graphicId": 11787
+      "graphicId": 11787,
+      "flipVertical": true
     },
     {
       "id": 2829,
@@ -137210,7 +137689,8 @@
         false,
         false
       ],
-      "graphicId": 11788
+      "graphicId": 11788,
+      "flipVertical": true
     },
     {
       "id": 2830,
@@ -137221,7 +137701,8 @@
         false,
         false
       ],
-      "graphicId": 11847
+      "graphicId": 11847,
+      "flipVertical": true
     },
     {
       "id": 2831,
@@ -137232,7 +137713,8 @@
         false,
         false
       ],
-      "graphicId": 11848
+      "graphicId": 11848,
+      "flipVertical": true
     },
     {
       "id": 2832,
@@ -137254,7 +137736,8 @@
         false,
         false
       ],
-      "graphicId": 11744
+      "graphicId": 11744,
+      "flipHorizontal": true
     },
     {
       "id": 2834,
@@ -137276,7 +137759,8 @@
         false,
         false
       ],
-      "graphicId": 11846
+      "graphicId": 11846,
+      "flipHorizontal": true
     },
     {
       "id": 2836,
@@ -137298,7 +137782,8 @@
         false,
         false
       ],
-      "graphicId": 11764
+      "graphicId": 11764,
+      "flipHorizontal": true
     },
     {
       "id": 2838,
@@ -137320,7 +137805,8 @@
         false,
         false
       ],
-      "graphicId": 11866
+      "graphicId": 11866,
+      "flipHorizontal": true
     },
     {
       "id": 2840,
@@ -137331,7 +137817,8 @@
         false,
         false
       ],
-      "graphicId": 11744
+      "graphicId": 11744,
+      "flipVertical": true
     },
     {
       "id": 2841,
@@ -137342,7 +137829,9 @@
         false,
         false
       ],
-      "graphicId": 11744
+      "graphicId": 11744,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2842,
@@ -137353,7 +137842,8 @@
         false,
         false
       ],
-      "graphicId": 11846
+      "graphicId": 11846,
+      "flipVertical": true
     },
     {
       "id": 2843,
@@ -137364,7 +137854,9 @@
         false,
         false
       ],
-      "graphicId": 11846
+      "graphicId": 11846,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 2844,
@@ -139938,7 +140430,8 @@
         false,
         false
       ],
-      "graphicId": 12044
+      "graphicId": 12044,
+      "flipHorizontal": true
     },
     {
       "id": 3078,
@@ -139982,7 +140475,8 @@
         false,
         false
       ],
-      "graphicId": 12064
+      "graphicId": 12064,
+      "flipHorizontal": true
     },
     {
       "id": 3082,
@@ -139993,7 +140487,8 @@
         false,
         true
       ],
-      "graphicId": 12027
+      "graphicId": 12027,
+      "flipVertical": true
     },
     {
       "id": 3083,
@@ -140004,7 +140499,8 @@
         true,
         false
       ],
-      "graphicId": 12028
+      "graphicId": 12028,
+      "flipVertical": true
     },
     {
       "id": 3084,
@@ -140015,7 +140511,8 @@
         false,
         false
       ],
-      "graphicId": 12044
+      "graphicId": 12044,
+      "flipVertical": true
     },
     {
       "id": 3085,
@@ -140026,7 +140523,9 @@
         false,
         false
       ],
-      "graphicId": 12044
+      "graphicId": 12044,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3086,
@@ -140059,7 +140558,8 @@
         false,
         false
       ],
-      "graphicId": 12049
+      "graphicId": 12049,
+      "flipVertical": true
     },
     {
       "id": 3089,
@@ -140070,7 +140570,8 @@
         false,
         false
       ],
-      "graphicId": 12050
+      "graphicId": 12050,
+      "flipVertical": true
     },
     {
       "id": 3090,
@@ -140081,7 +140582,8 @@
         false,
         true
       ],
-      "graphicId": 12011
+      "graphicId": 12011,
+      "flipVertical": true
     },
     {
       "id": 3091,
@@ -140092,7 +140594,8 @@
         true,
         false
       ],
-      "graphicId": 12012
+      "graphicId": 12012,
+      "flipVertical": true
     },
     {
       "id": 3092,
@@ -140103,7 +140606,8 @@
         false,
         true
       ],
-      "graphicId": 12007
+      "graphicId": 12007,
+      "flipVertical": true
     },
     {
       "id": 3093,
@@ -140114,7 +140618,8 @@
         true,
         false
       ],
-      "graphicId": 12008
+      "graphicId": 12008,
+      "flipVertical": true
     },
     {
       "id": 3094,
@@ -140169,7 +140674,8 @@
         false,
         false
       ],
-      "graphicId": 12043
+      "graphicId": 12043,
+      "flipHorizontal": true
     },
     {
       "id": 3099,
@@ -140180,7 +140686,8 @@
         false,
         false
       ],
-      "graphicId": 12042
+      "graphicId": 12042,
+      "flipHorizontal": true
     },
     {
       "id": 3100,
@@ -140213,7 +140720,8 @@
         true,
         true
       ],
-      "graphicId": 12063
+      "graphicId": 12063,
+      "flipHorizontal": true
     },
     {
       "id": 3103,
@@ -140224,7 +140732,8 @@
         true,
         true
       ],
-      "graphicId": 12062
+      "graphicId": 12062,
+      "flipHorizontal": true
     },
     {
       "id": 3104,
@@ -140235,7 +140744,8 @@
         false,
         false
       ],
-      "graphicId": 12042
+      "graphicId": 12042,
+      "flipVertical": true
     },
     {
       "id": 3105,
@@ -140246,7 +140756,8 @@
         false,
         false
       ],
-      "graphicId": 12043
+      "graphicId": 12043,
+      "flipVertical": true
     },
     {
       "id": 3106,
@@ -140257,7 +140768,9 @@
         false,
         false
       ],
-      "graphicId": 12043
+      "graphicId": 12043,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3107,
@@ -140268,7 +140781,9 @@
         false,
         false
       ],
-      "graphicId": 12042
+      "graphicId": 12042,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3108,
@@ -140301,7 +140816,8 @@
         true,
         true
       ],
-      "graphicId": 12084
+      "graphicId": 12084,
+      "flipHorizontal": true
     },
     {
       "id": 3111,
@@ -140312,7 +140828,8 @@
         true,
         true
       ],
-      "graphicId": 12060
+      "graphicId": 12060,
+      "flipHorizontal": true
     },
     {
       "id": 3112,
@@ -140411,7 +140928,8 @@
         false,
         false
       ],
-      "graphicId": 12047
+      "graphicId": 12047,
+      "flipVertical": true
     },
     {
       "id": 3121,
@@ -140422,7 +140940,8 @@
         false,
         true
       ],
-      "graphicId": 12027
+      "graphicId": 12027,
+      "flipVertical": true
     },
     {
       "id": 3122,
@@ -140433,7 +140952,8 @@
         false,
         false
       ],
-      "graphicId": 12048
+      "graphicId": 12048,
+      "flipVertical": true
     },
     {
       "id": 3123,
@@ -140444,7 +140964,8 @@
         true,
         false
       ],
-      "graphicId": 12028
+      "graphicId": 12028,
+      "flipVertical": true
     },
     {
       "id": 3124,
@@ -140477,7 +140998,8 @@
         false,
         false
       ],
-      "graphicId": 12004
+      "graphicId": 12004,
+      "flipHorizontal": true
     },
     {
       "id": 3127,
@@ -140488,7 +141010,8 @@
         false,
         false
       ],
-      "graphicId": 12043
+      "graphicId": 12043,
+      "flipHorizontal": true
     },
     {
       "id": 3128,
@@ -140521,7 +141044,8 @@
         false,
         false
       ],
-      "graphicId": 12024
+      "graphicId": 12024,
+      "flipHorizontal": true
     },
     {
       "id": 3131,
@@ -140532,7 +141056,8 @@
         true,
         true
       ],
-      "graphicId": 12063
+      "graphicId": 12063,
+      "flipHorizontal": true
     },
     {
       "id": 3132,
@@ -140543,7 +141068,8 @@
         false,
         false
       ],
-      "graphicId": 12004
+      "graphicId": 12004,
+      "flipVertical": true
     },
     {
       "id": 3133,
@@ -140554,7 +141080,8 @@
         false,
         false
       ],
-      "graphicId": 12043
+      "graphicId": 12043,
+      "flipVertical": true
     },
     {
       "id": 3134,
@@ -140565,7 +141092,9 @@
         false,
         false
       ],
-      "graphicId": 12004
+      "graphicId": 12004,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3135,
@@ -140576,7 +141105,9 @@
         false,
         false
       ],
-      "graphicId": 12043
+      "graphicId": 12043,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3136,
@@ -140631,7 +141162,8 @@
         false,
         false
       ],
-      "graphicId": 12107
+      "graphicId": 12107,
+      "flipVertical": true
     },
     {
       "id": 3141,
@@ -140642,7 +141174,8 @@
         false,
         true
       ],
-      "graphicId": 12027
+      "graphicId": 12027,
+      "flipVertical": true
     },
     {
       "id": 3142,
@@ -140653,7 +141186,8 @@
         false,
         false
       ],
-      "graphicId": 12108
+      "graphicId": 12108,
+      "flipVertical": true
     },
     {
       "id": 3143,
@@ -140664,7 +141198,8 @@
         true,
         false
       ],
-      "graphicId": 12028
+      "graphicId": 12028,
+      "flipVertical": true
     },
     {
       "id": 3144,
@@ -140697,7 +141232,8 @@
         false,
         false
       ],
-      "graphicId": 12106
+      "graphicId": 12106,
+      "flipHorizontal": true
     },
     {
       "id": 3147,
@@ -140708,7 +141244,8 @@
         false,
         false
       ],
-      "graphicId": 12043
+      "graphicId": 12043,
+      "flipHorizontal": true
     },
     {
       "id": 3148,
@@ -140741,7 +141278,8 @@
         false,
         false
       ],
-      "graphicId": 12126
+      "graphicId": 12126,
+      "flipHorizontal": true
     },
     {
       "id": 3151,
@@ -140752,7 +141290,8 @@
         true,
         true
       ],
-      "graphicId": 12063
+      "graphicId": 12063,
+      "flipHorizontal": true
     },
     {
       "id": 3152,
@@ -140763,7 +141302,8 @@
         false,
         false
       ],
-      "graphicId": 12106
+      "graphicId": 12106,
+      "flipVertical": true
     },
     {
       "id": 3153,
@@ -140774,7 +141314,8 @@
         false,
         false
       ],
-      "graphicId": 12043
+      "graphicId": 12043,
+      "flipVertical": true
     },
     {
       "id": 3154,
@@ -140785,7 +141326,9 @@
         false,
         false
       ],
-      "graphicId": 12106
+      "graphicId": 12106,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3155,
@@ -140796,7 +141339,9 @@
         false,
         false
       ],
-      "graphicId": 12043
+      "graphicId": 12043,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3156,
@@ -140983,7 +141528,8 @@
         false,
         false
       ],
-      "graphicId": 11963
+      "graphicId": 11963,
+      "flipHorizontal": true
     },
     {
       "id": 3173,
@@ -140994,7 +141540,8 @@
         false,
         false
       ],
-      "graphicId": 11962
+      "graphicId": 11962,
+      "flipHorizontal": true
     },
     {
       "id": 3174,
@@ -141005,7 +141552,8 @@
         false,
         false
       ],
-      "graphicId": 11961
+      "graphicId": 11961,
+      "flipHorizontal": true
     },
     {
       "id": 3175,
@@ -141016,7 +141564,8 @@
         false,
         false
       ],
-      "graphicId": 11960
+      "graphicId": 11960,
+      "flipHorizontal": true
     },
     {
       "id": 3176,
@@ -141027,7 +141576,8 @@
         false,
         false
       ],
-      "graphicId": 11983
+      "graphicId": 11983,
+      "flipHorizontal": true
     },
     {
       "id": 3177,
@@ -141038,7 +141588,8 @@
         false,
         false
       ],
-      "graphicId": 11982
+      "graphicId": 11982,
+      "flipHorizontal": true
     },
     {
       "id": 3178,
@@ -141049,7 +141600,8 @@
         false,
         false
       ],
-      "graphicId": 11981
+      "graphicId": 11981,
+      "flipHorizontal": true
     },
     {
       "id": 3179,
@@ -141060,7 +141612,8 @@
         false,
         false
       ],
-      "graphicId": 11980
+      "graphicId": 11980,
+      "flipHorizontal": true
     },
     {
       "id": 3180,
@@ -141071,7 +141624,8 @@
         false,
         false
       ],
-      "graphicId": 11967
+      "graphicId": 11967,
+      "flipHorizontal": true
     },
     {
       "id": 3181,
@@ -141082,7 +141636,8 @@
         false,
         false
       ],
-      "graphicId": 11966
+      "graphicId": 11966,
+      "flipHorizontal": true
     },
     {
       "id": 3182,
@@ -141093,7 +141648,8 @@
         false,
         false
       ],
-      "graphicId": 11965
+      "graphicId": 11965,
+      "flipHorizontal": true
     },
     {
       "id": 3183,
@@ -141104,7 +141660,8 @@
         false,
         false
       ],
-      "graphicId": 11964
+      "graphicId": 11964,
+      "flipHorizontal": true
     },
     {
       "id": 3184,
@@ -141115,7 +141672,8 @@
         false,
         false
       ],
-      "graphicId": 11987
+      "graphicId": 11987,
+      "flipHorizontal": true
     },
     {
       "id": 3185,
@@ -141126,7 +141684,8 @@
         false,
         false
       ],
-      "graphicId": 11986
+      "graphicId": 11986,
+      "flipHorizontal": true
     },
     {
       "id": 3186,
@@ -141137,7 +141696,8 @@
         false,
         false
       ],
-      "graphicId": 11985
+      "graphicId": 11985,
+      "flipHorizontal": true
     },
     {
       "id": 3187,
@@ -141148,7 +141708,8 @@
         false,
         false
       ],
-      "graphicId": 11984
+      "graphicId": 11984,
+      "flipHorizontal": true
     },
     {
       "id": 3188,
@@ -141181,7 +141742,8 @@
         false,
         false
       ],
-      "graphicId": 12001
+      "graphicId": 12001,
+      "flipHorizontal": true
     },
     {
       "id": 3191,
@@ -141192,7 +141754,8 @@
         false,
         false
       ],
-      "graphicId": 12000
+      "graphicId": 12000,
+      "flipHorizontal": true
     },
     {
       "id": 3192,
@@ -141225,7 +141788,8 @@
         false,
         false
       ],
-      "graphicId": 12021
+      "graphicId": 12021,
+      "flipHorizontal": true
     },
     {
       "id": 3195,
@@ -141236,7 +141800,8 @@
         false,
         false
       ],
-      "graphicId": 12020
+      "graphicId": 12020,
+      "flipHorizontal": true
     },
     {
       "id": 3196,
@@ -141269,7 +141834,8 @@
         false,
         false
       ],
-      "graphicId": 12041
+      "graphicId": 12041,
+      "flipHorizontal": true
     },
     {
       "id": 3199,
@@ -141280,7 +141846,8 @@
         false,
         false
       ],
-      "graphicId": 12040
+      "graphicId": 12040,
+      "flipHorizontal": true
     },
     {
       "id": 3200,
@@ -141313,7 +141880,8 @@
         false,
         false
       ],
-      "graphicId": 12061
+      "graphicId": 12061,
+      "flipHorizontal": true
     },
     {
       "id": 3203,
@@ -141324,7 +141892,8 @@
         false,
         false
       ],
-      "graphicId": 12060
+      "graphicId": 12060,
+      "flipHorizontal": true
     },
     {
       "id": 3204,
@@ -141335,7 +141904,8 @@
         false,
         false
       ],
-      "graphicId": 12040
+      "graphicId": 12040,
+      "flipVertical": true
     },
     {
       "id": 3205,
@@ -141346,7 +141916,8 @@
         false,
         false
       ],
-      "graphicId": 12041
+      "graphicId": 12041,
+      "flipVertical": true
     },
     {
       "id": 3206,
@@ -141357,7 +141928,9 @@
         false,
         false
       ],
-      "graphicId": 12041
+      "graphicId": 12041,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3207,
@@ -141368,7 +141941,9 @@
         false,
         false
       ],
-      "graphicId": 12040
+      "graphicId": 12040,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3208,
@@ -141379,7 +141954,8 @@
         false,
         false
       ],
-      "graphicId": 12020
+      "graphicId": 12020,
+      "flipVertical": true
     },
     {
       "id": 3209,
@@ -141390,7 +141966,8 @@
         false,
         false
       ],
-      "graphicId": 12021
+      "graphicId": 12021,
+      "flipVertical": true
     },
     {
       "id": 3210,
@@ -141401,7 +141978,9 @@
         false,
         false
       ],
-      "graphicId": 12021
+      "graphicId": 12021,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3211,
@@ -141412,7 +141991,9 @@
         false,
         false
       ],
-      "graphicId": 12020
+      "graphicId": 12020,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3212,
@@ -141423,7 +142004,8 @@
         false,
         false
       ],
-      "graphicId": 12000
+      "graphicId": 12000,
+      "flipVertical": true
     },
     {
       "id": 3213,
@@ -141434,7 +142016,8 @@
         false,
         false
       ],
-      "graphicId": 12001
+      "graphicId": 12001,
+      "flipVertical": true
     },
     {
       "id": 3214,
@@ -141445,7 +142028,9 @@
         false,
         false
       ],
-      "graphicId": 12001
+      "graphicId": 12001,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3215,
@@ -141456,7 +142041,9 @@
         false,
         false
       ],
-      "graphicId": 12000
+      "graphicId": 12000,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3216,
@@ -141467,7 +142054,8 @@
         false,
         false
       ],
-      "graphicId": 11980
+      "graphicId": 11980,
+      "flipVertical": true
     },
     {
       "id": 3217,
@@ -141478,7 +142066,8 @@
         false,
         false
       ],
-      "graphicId": 11981
+      "graphicId": 11981,
+      "flipVertical": true
     },
     {
       "id": 3218,
@@ -141489,7 +142078,8 @@
         false,
         false
       ],
-      "graphicId": 11982
+      "graphicId": 11982,
+      "flipVertical": true
     },
     {
       "id": 3219,
@@ -141500,7 +142090,8 @@
         false,
         false
       ],
-      "graphicId": 11983
+      "graphicId": 11983,
+      "flipVertical": true
     },
     {
       "id": 3220,
@@ -141511,7 +142102,8 @@
         false,
         false
       ],
-      "graphicId": 11960
+      "graphicId": 11960,
+      "flipVertical": true
     },
     {
       "id": 3221,
@@ -141522,7 +142114,8 @@
         false,
         false
       ],
-      "graphicId": 11961
+      "graphicId": 11961,
+      "flipVertical": true
     },
     {
       "id": 3222,
@@ -141533,7 +142126,8 @@
         false,
         false
       ],
-      "graphicId": 11962
+      "graphicId": 11962,
+      "flipVertical": true
     },
     {
       "id": 3223,
@@ -141544,7 +142138,8 @@
         false,
         false
       ],
-      "graphicId": 11963
+      "graphicId": 11963,
+      "flipVertical": true
     },
     {
       "id": 3224,
@@ -141555,7 +142150,8 @@
         false,
         false
       ],
-      "graphicId": 11984
+      "graphicId": 11984,
+      "flipVertical": true
     },
     {
       "id": 3225,
@@ -141566,7 +142162,8 @@
         false,
         false
       ],
-      "graphicId": 11985
+      "graphicId": 11985,
+      "flipVertical": true
     },
     {
       "id": 3226,
@@ -141577,7 +142174,8 @@
         false,
         false
       ],
-      "graphicId": 11986
+      "graphicId": 11986,
+      "flipVertical": true
     },
     {
       "id": 3227,
@@ -141588,7 +142186,8 @@
         false,
         false
       ],
-      "graphicId": 11987
+      "graphicId": 11987,
+      "flipVertical": true
     },
     {
       "id": 3228,
@@ -141599,7 +142198,8 @@
         false,
         false
       ],
-      "graphicId": 11964
+      "graphicId": 11964,
+      "flipVertical": true
     },
     {
       "id": 3229,
@@ -141610,7 +142210,8 @@
         false,
         false
       ],
-      "graphicId": 11965
+      "graphicId": 11965,
+      "flipVertical": true
     },
     {
       "id": 3230,
@@ -141621,7 +142222,8 @@
         false,
         false
       ],
-      "graphicId": 11966
+      "graphicId": 11966,
+      "flipVertical": true
     },
     {
       "id": 3231,
@@ -141632,7 +142234,8 @@
         false,
         false
       ],
-      "graphicId": 11967
+      "graphicId": 11967,
+      "flipVertical": true
     },
     {
       "id": 3232,
@@ -141643,7 +142246,9 @@
         false,
         false
       ],
-      "graphicId": 11983
+      "graphicId": 11983,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3233,
@@ -141654,7 +142259,9 @@
         false,
         false
       ],
-      "graphicId": 11982
+      "graphicId": 11982,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3234,
@@ -141665,7 +142272,9 @@
         false,
         false
       ],
-      "graphicId": 11981
+      "graphicId": 11981,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3235,
@@ -141676,7 +142285,9 @@
         false,
         false
       ],
-      "graphicId": 11980
+      "graphicId": 11980,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3236,
@@ -141687,7 +142298,9 @@
         false,
         false
       ],
-      "graphicId": 11963
+      "graphicId": 11963,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3237,
@@ -141698,7 +142311,9 @@
         false,
         false
       ],
-      "graphicId": 11962
+      "graphicId": 11962,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3238,
@@ -141709,7 +142324,9 @@
         false,
         false
       ],
-      "graphicId": 11961
+      "graphicId": 11961,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3239,
@@ -141720,7 +142337,9 @@
         false,
         false
       ],
-      "graphicId": 11960
+      "graphicId": 11960,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3240,
@@ -141731,7 +142350,9 @@
         false,
         false
       ],
-      "graphicId": 11987
+      "graphicId": 11987,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3241,
@@ -141742,7 +142363,9 @@
         false,
         false
       ],
-      "graphicId": 11986
+      "graphicId": 11986,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3242,
@@ -141753,7 +142376,9 @@
         false,
         false
       ],
-      "graphicId": 11985
+      "graphicId": 11985,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3243,
@@ -141764,7 +142389,9 @@
         false,
         false
       ],
-      "graphicId": 11984
+      "graphicId": 11984,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3244,
@@ -141775,7 +142402,9 @@
         false,
         false
       ],
-      "graphicId": 11967
+      "graphicId": 11967,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3245,
@@ -141786,7 +142415,9 @@
         false,
         false
       ],
-      "graphicId": 11966
+      "graphicId": 11966,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3246,
@@ -141797,7 +142428,9 @@
         false,
         false
       ],
-      "graphicId": 11965
+      "graphicId": 11965,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3247,
@@ -141808,7 +142441,9 @@
         false,
         false
       ],
-      "graphicId": 11964
+      "graphicId": 11964,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3248,
@@ -141841,7 +142476,8 @@
         false,
         false
       ],
-      "graphicId": 12112
+      "graphicId": 12112,
+      "flipHorizontal": true
     },
     {
       "id": 3251,
@@ -141852,7 +142488,8 @@
         false,
         false
       ],
-      "graphicId": 12111
+      "graphicId": 12111,
+      "flipHorizontal": true
     },
     {
       "id": 3252,
@@ -141885,7 +142522,8 @@
         false,
         false
       ],
-      "graphicId": 12132
+      "graphicId": 12132,
+      "flipHorizontal": true
     },
     {
       "id": 3255,
@@ -141896,7 +142534,8 @@
         false,
         false
       ],
-      "graphicId": 12131
+      "graphicId": 12131,
+      "flipHorizontal": true
     },
     {
       "id": 3256,
@@ -141907,7 +142546,8 @@
         false,
         false
       ],
-      "graphicId": 12131
+      "graphicId": 12131,
+      "flipVertical": true
     },
     {
       "id": 3257,
@@ -141918,7 +142558,8 @@
         false,
         false
       ],
-      "graphicId": 12132
+      "graphicId": 12132,
+      "flipVertical": true
     },
     {
       "id": 3258,
@@ -141929,7 +142570,9 @@
         false,
         false
       ],
-      "graphicId": 12132
+      "graphicId": 12132,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3259,
@@ -141940,7 +142583,9 @@
         false,
         false
       ],
-      "graphicId": 12131
+      "graphicId": 12131,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3260,
@@ -141951,7 +142596,8 @@
         false,
         false
       ],
-      "graphicId": 12111
+      "graphicId": 12111,
+      "flipVertical": true
     },
     {
       "id": 3261,
@@ -141962,7 +142608,8 @@
         false,
         false
       ],
-      "graphicId": 12112
+      "graphicId": 12112,
+      "flipVertical": true
     },
     {
       "id": 3262,
@@ -141973,7 +142620,9 @@
         false,
         false
       ],
-      "graphicId": 12112
+      "graphicId": 12112,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3263,
@@ -141984,7 +142633,9 @@
         false,
         false
       ],
-      "graphicId": 12111
+      "graphicId": 12111,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3264,
@@ -142083,7 +142734,8 @@
         false,
         false
       ],
-      "graphicId": 12022
+      "graphicId": 12022,
+      "flipVertical": true
     },
     {
       "id": 3273,
@@ -142094,7 +142746,8 @@
         false,
         false
       ],
-      "graphicId": 12023
+      "graphicId": 12023,
+      "flipVertical": true
     },
     {
       "id": 3274,
@@ -142105,7 +142758,8 @@
         false,
         false
       ],
-      "graphicId": 12071
+      "graphicId": 12071,
+      "flipVertical": true
     },
     {
       "id": 3275,
@@ -142116,7 +142770,8 @@
         false,
         false
       ],
-      "graphicId": 12072
+      "graphicId": 12072,
+      "flipVertical": true
     },
     {
       "id": 3276,
@@ -142127,7 +142782,8 @@
         false,
         false
       ],
-      "graphicId": 12002
+      "graphicId": 12002,
+      "flipVertical": true
     },
     {
       "id": 3277,
@@ -142138,7 +142794,8 @@
         false,
         false
       ],
-      "graphicId": 12003
+      "graphicId": 12003,
+      "flipVertical": true
     },
     {
       "id": 3278,
@@ -142149,7 +142806,8 @@
         false,
         false
       ],
-      "graphicId": 12072
+      "graphicId": 12072,
+      "flipHorizontal": true
     },
     {
       "id": 3279,
@@ -142160,7 +142818,8 @@
         false,
         false
       ],
-      "graphicId": 12071
+      "graphicId": 12071,
+      "flipHorizontal": true
     },
     {
       "id": 3280,
@@ -142193,7 +142852,8 @@
         false,
         false
       ],
-      "graphicId": 12092
+      "graphicId": 12092,
+      "flipHorizontal": true
     },
     {
       "id": 3283,
@@ -142204,7 +142864,8 @@
         false,
         false
       ],
-      "graphicId": 12091
+      "graphicId": 12091,
+      "flipHorizontal": true
     },
     {
       "id": 3284,
@@ -142237,7 +142898,9 @@
         false,
         false
       ],
-      "graphicId": 12072
+      "graphicId": 12072,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3287,
@@ -142248,7 +142911,9 @@
         false,
         false
       ],
-      "graphicId": 12071
+      "graphicId": 12071,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3288,
@@ -142259,7 +142924,8 @@
         false,
         false
       ],
-      "graphicId": 12122
+      "graphicId": 12122,
+      "flipVertical": true
     },
     {
       "id": 3289,
@@ -142270,7 +142936,8 @@
         false,
         false
       ],
-      "graphicId": 12123
+      "graphicId": 12123,
+      "flipVertical": true
     },
     {
       "id": 3290,
@@ -142281,7 +142948,9 @@
         false,
         false
       ],
-      "graphicId": 12123
+      "graphicId": 12123,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3291,
@@ -142292,7 +142961,9 @@
         false,
         false
       ],
-      "graphicId": 12122
+      "graphicId": 12122,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3292,
@@ -142303,7 +142974,8 @@
         false,
         false
       ],
-      "graphicId": 12102
+      "graphicId": 12102,
+      "flipVertical": true
     },
     {
       "id": 3293,
@@ -142314,7 +142986,8 @@
         false,
         false
       ],
-      "graphicId": 12103
+      "graphicId": 12103,
+      "flipVertical": true
     },
     {
       "id": 3294,
@@ -142325,7 +142998,9 @@
         false,
         false
       ],
-      "graphicId": 12103
+      "graphicId": 12103,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3295,
@@ -142336,7 +143011,9 @@
         false,
         false
       ],
-      "graphicId": 12102
+      "graphicId": 12102,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3296,
@@ -142369,7 +143046,8 @@
         false,
         false
       ],
-      "graphicId": 12103
+      "graphicId": 12103,
+      "flipHorizontal": true
     },
     {
       "id": 3299,
@@ -142380,7 +143058,8 @@
         false,
         false
       ],
-      "graphicId": 12102
+      "graphicId": 12102,
+      "flipHorizontal": true
     },
     {
       "id": 3300,
@@ -142413,7 +143092,8 @@
         false,
         false
       ],
-      "graphicId": 12123
+      "graphicId": 12123,
+      "flipHorizontal": true
     },
     {
       "id": 3303,
@@ -142424,7 +143104,8 @@
         false,
         false
       ],
-      "graphicId": 12122
+      "graphicId": 12122,
+      "flipHorizontal": true
     },
     {
       "id": 3304,
@@ -142435,7 +143116,8 @@
         false,
         false
       ],
-      "graphicId": 12010
+      "graphicId": 12010,
+      "flipHorizontal": true
     },
     {
       "id": 3305,
@@ -142446,7 +143128,8 @@
         false,
         false
       ],
-      "graphicId": 12009
+      "graphicId": 12009,
+      "flipHorizontal": true
     },
     {
       "id": 3306,
@@ -142479,7 +143162,8 @@
         false,
         false
       ],
-      "graphicId": 12030
+      "graphicId": 12030,
+      "flipHorizontal": true
     },
     {
       "id": 3309,
@@ -142490,7 +143174,8 @@
         false,
         false
       ],
-      "graphicId": 12029
+      "graphicId": 12029,
+      "flipHorizontal": true
     },
     {
       "id": 3310,
@@ -142523,7 +143208,9 @@
         false,
         false
       ],
-      "graphicId": 12030
+      "graphicId": 12030,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3313,
@@ -142534,7 +143221,9 @@
         false,
         false
       ],
-      "graphicId": 12029
+      "graphicId": 12029,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3314,
@@ -142545,7 +143234,8 @@
         false,
         false
       ],
-      "graphicId": 12029
+      "graphicId": 12029,
+      "flipVertical": true
     },
     {
       "id": 3315,
@@ -142556,7 +143246,8 @@
         false,
         false
       ],
-      "graphicId": 12030
+      "graphicId": 12030,
+      "flipVertical": true
     },
     {
       "id": 3316,
@@ -142567,7 +143258,9 @@
         false,
         false
       ],
-      "graphicId": 12010
+      "graphicId": 12010,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3317,
@@ -142578,7 +143271,9 @@
         false,
         false
       ],
-      "graphicId": 12009
+      "graphicId": 12009,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3318,
@@ -142589,7 +143284,8 @@
         false,
         false
       ],
-      "graphicId": 12009
+      "graphicId": 12009,
+      "flipVertical": true
     },
     {
       "id": 3319,
@@ -142600,7 +143296,8 @@
         false,
         false
       ],
-      "graphicId": 12010
+      "graphicId": 12010,
+      "flipVertical": true
     },
     {
       "id": 3320,
@@ -142633,7 +143330,8 @@
         false,
         false
       ],
-      "graphicId": 12109
+      "graphicId": 12109,
+      "flipHorizontal": true
     },
     {
       "id": 3323,
@@ -142677,7 +143375,8 @@
         false,
         false
       ],
-      "graphicId": 12129
+      "graphicId": 12129,
+      "flipHorizontal": true
     },
     {
       "id": 3327,
@@ -142699,7 +143398,8 @@
         false,
         false
       ],
-      "graphicId": 12109
+      "graphicId": 12109,
+      "flipVertical": true
     },
     {
       "id": 3329,
@@ -142710,7 +143410,8 @@
         false,
         false
       ],
-      "graphicId": 12110
+      "graphicId": 12110,
+      "flipVertical": true
     },
     {
       "id": 3330,
@@ -142721,7 +143422,9 @@
         false,
         false
       ],
-      "graphicId": 12109
+      "graphicId": 12109,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3331,
@@ -142831,7 +143534,8 @@
         false,
         false
       ],
-      "graphicId": 12047
+      "graphicId": 12047,
+      "flipVertical": true
     },
     {
       "id": 3341,
@@ -142842,7 +143546,8 @@
         false,
         false
       ],
-      "graphicId": 12048
+      "graphicId": 12048,
+      "flipVertical": true
     },
     {
       "id": 3342,
@@ -142853,7 +143558,8 @@
         false,
         false
       ],
-      "graphicId": 12107
+      "graphicId": 12107,
+      "flipVertical": true
     },
     {
       "id": 3343,
@@ -142864,7 +143570,8 @@
         false,
         false
       ],
-      "graphicId": 12108
+      "graphicId": 12108,
+      "flipVertical": true
     },
     {
       "id": 3344,
@@ -142886,7 +143593,8 @@
         false,
         false
       ],
-      "graphicId": 12004
+      "graphicId": 12004,
+      "flipHorizontal": true
     },
     {
       "id": 3346,
@@ -142908,7 +143616,8 @@
         false,
         false
       ],
-      "graphicId": 12106
+      "graphicId": 12106,
+      "flipHorizontal": true
     },
     {
       "id": 3348,
@@ -142930,7 +143639,8 @@
         false,
         false
       ],
-      "graphicId": 12024
+      "graphicId": 12024,
+      "flipHorizontal": true
     },
     {
       "id": 3350,
@@ -142952,7 +143662,8 @@
         false,
         false
       ],
-      "graphicId": 12126
+      "graphicId": 12126,
+      "flipHorizontal": true
     },
     {
       "id": 3352,
@@ -142963,7 +143674,8 @@
         false,
         false
       ],
-      "graphicId": 12004
+      "graphicId": 12004,
+      "flipVertical": true
     },
     {
       "id": 3353,
@@ -142974,7 +143686,9 @@
         false,
         false
       ],
-      "graphicId": 12004
+      "graphicId": 12004,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3354,
@@ -142985,7 +143699,8 @@
         false,
         false
       ],
-      "graphicId": 12106
+      "graphicId": 12106,
+      "flipVertical": true
     },
     {
       "id": 3355,
@@ -142996,7 +143711,9 @@
         false,
         false
       ],
-      "graphicId": 12106
+      "graphicId": 12106,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3356,
@@ -145482,7 +146199,8 @@
         false,
         false
       ],
-      "graphicId": 12330
+      "graphicId": 12330,
+      "flipHorizontal": true
     },
     {
       "id": 3582,
@@ -145504,7 +146222,8 @@
         true,
         false
       ],
-      "graphicId": 12268
+      "graphicId": 12268,
+      "flipHorizontal": true
     },
     {
       "id": 3584,
@@ -145570,7 +146289,8 @@
         false,
         false
       ],
-      "graphicId": 12345
+      "graphicId": 12345,
+      "flipHorizontal": true
     },
     {
       "id": 3590,
@@ -145614,7 +146334,8 @@
         false,
         false
       ],
-      "graphicId": 12365
+      "graphicId": 12365,
+      "flipHorizontal": true
     },
     {
       "id": 3594,
@@ -145647,7 +146368,8 @@
         false,
         false
       ],
-      "graphicId": 12345
+      "graphicId": 12345,
+      "flipVertical": true
     },
     {
       "id": 3597,
@@ -145658,7 +146380,9 @@
         false,
         false
       ],
-      "graphicId": 12345
+      "graphicId": 12345,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3598,
@@ -145669,7 +146393,8 @@
         false,
         true
       ],
-      "graphicId": 12328
+      "graphicId": 12328,
+      "flipVertical": true
     },
     {
       "id": 3599,
@@ -145680,7 +146405,8 @@
         true,
         false
       ],
-      "graphicId": 12329
+      "graphicId": 12329,
+      "flipVertical": true
     },
     {
       "id": 3600,
@@ -145691,7 +146417,8 @@
         false,
         false
       ],
-      "graphicId": 12350
+      "graphicId": 12350,
+      "flipVertical": true
     },
     {
       "id": 3601,
@@ -145702,7 +146429,8 @@
         false,
         false
       ],
-      "graphicId": 12351
+      "graphicId": 12351,
+      "flipVertical": true
     },
     {
       "id": 3602,
@@ -145713,7 +146441,8 @@
         true,
         true
       ],
-      "graphicId": 12332
+      "graphicId": 12332,
+      "flipVertical": true
     },
     {
       "id": 3603,
@@ -145724,7 +146453,8 @@
         true,
         true
       ],
-      "graphicId": 12333
+      "graphicId": 12333,
+      "flipVertical": true
     },
     {
       "id": 3604,
@@ -145735,7 +146465,8 @@
         false,
         true
       ],
-      "graphicId": 12268
+      "graphicId": 12268,
+      "flipVertical": true
     },
     {
       "id": 3605,
@@ -145746,7 +146477,9 @@
         true,
         false
       ],
-      "graphicId": 12268
+      "graphicId": 12268,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3606,
@@ -145757,7 +146490,8 @@
         false,
         true
       ],
-      "graphicId": 12312
+      "graphicId": 12312,
+      "flipVertical": true
     },
     {
       "id": 3607,
@@ -145768,7 +146502,8 @@
         true,
         false
       ],
-      "graphicId": 12313
+      "graphicId": 12313,
+      "flipVertical": true
     },
     {
       "id": 3608,
@@ -145801,7 +146536,8 @@
         false,
         false
       ],
-      "graphicId": 12344
+      "graphicId": 12344,
+      "flipHorizontal": true
     },
     {
       "id": 3611,
@@ -145812,7 +146548,8 @@
         false,
         false
       ],
-      "graphicId": 12343
+      "graphicId": 12343,
+      "flipHorizontal": true
     },
     {
       "id": 3612,
@@ -145845,7 +146582,8 @@
         true,
         true
       ],
-      "graphicId": 12364
+      "graphicId": 12364,
+      "flipHorizontal": true
     },
     {
       "id": 3615,
@@ -145856,7 +146594,8 @@
         true,
         true
       ],
-      "graphicId": 12363
+      "graphicId": 12363,
+      "flipHorizontal": true
     },
     {
       "id": 3616,
@@ -145867,7 +146606,8 @@
         false,
         false
       ],
-      "graphicId": 12343
+      "graphicId": 12343,
+      "flipVertical": true
     },
     {
       "id": 3617,
@@ -145878,7 +146618,8 @@
         false,
         false
       ],
-      "graphicId": 12344
+      "graphicId": 12344,
+      "flipVertical": true
     },
     {
       "id": 3618,
@@ -145889,7 +146630,9 @@
         false,
         false
       ],
-      "graphicId": 12344
+      "graphicId": 12344,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3619,
@@ -145900,7 +146643,9 @@
         false,
         false
       ],
-      "graphicId": 12343
+      "graphicId": 12343,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3620,
@@ -145933,7 +146678,8 @@
         true,
         true
       ],
-      "graphicId": 12385
+      "graphicId": 12385,
+      "flipHorizontal": true
     },
     {
       "id": 3623,
@@ -145977,7 +146723,8 @@
         true,
         true
       ],
-      "graphicId": 12386
+      "graphicId": 12386,
+      "flipHorizontal": true
     },
     {
       "id": 3627,
@@ -146043,7 +146790,8 @@
         false,
         false
       ],
-      "graphicId": 12348
+      "graphicId": 12348,
+      "flipVertical": true
     },
     {
       "id": 3633,
@@ -146054,7 +146802,8 @@
         false,
         true
       ],
-      "graphicId": 12328
+      "graphicId": 12328,
+      "flipVertical": true
     },
     {
       "id": 3634,
@@ -146065,7 +146814,8 @@
         false,
         false
       ],
-      "graphicId": 12349
+      "graphicId": 12349,
+      "flipVertical": true
     },
     {
       "id": 3635,
@@ -146076,7 +146826,8 @@
         true,
         false
       ],
-      "graphicId": 12329
+      "graphicId": 12329,
+      "flipVertical": true
     },
     {
       "id": 3636,
@@ -146109,7 +146860,8 @@
         false,
         false
       ],
-      "graphicId": 12305
+      "graphicId": 12305,
+      "flipHorizontal": true
     },
     {
       "id": 3639,
@@ -146120,7 +146872,8 @@
         false,
         false
       ],
-      "graphicId": 12344
+      "graphicId": 12344,
+      "flipHorizontal": true
     },
     {
       "id": 3640,
@@ -146153,7 +146906,8 @@
         false,
         false
       ],
-      "graphicId": 12325
+      "graphicId": 12325,
+      "flipHorizontal": true
     },
     {
       "id": 3643,
@@ -146164,7 +146918,8 @@
         true,
         true
       ],
-      "graphicId": 12364
+      "graphicId": 12364,
+      "flipHorizontal": true
     },
     {
       "id": 3644,
@@ -146175,7 +146930,8 @@
         false,
         false
       ],
-      "graphicId": 12305
+      "graphicId": 12305,
+      "flipVertical": true
     },
     {
       "id": 3645,
@@ -146186,7 +146942,8 @@
         false,
         false
       ],
-      "graphicId": 12344
+      "graphicId": 12344,
+      "flipVertical": true
     },
     {
       "id": 3646,
@@ -146197,7 +146954,9 @@
         false,
         false
       ],
-      "graphicId": 12305
+      "graphicId": 12305,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3647,
@@ -146208,7 +146967,9 @@
         false,
         false
       ],
-      "graphicId": 12344
+      "graphicId": 12344,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3648,
@@ -146263,7 +147024,8 @@
         false,
         false
       ],
-      "graphicId": 12408
+      "graphicId": 12408,
+      "flipVertical": true
     },
     {
       "id": 3653,
@@ -146274,7 +147036,8 @@
         false,
         true
       ],
-      "graphicId": 12328
+      "graphicId": 12328,
+      "flipVertical": true
     },
     {
       "id": 3654,
@@ -146285,7 +147048,8 @@
         false,
         false
       ],
-      "graphicId": 12409
+      "graphicId": 12409,
+      "flipVertical": true
     },
     {
       "id": 3655,
@@ -146296,7 +147060,8 @@
         true,
         false
       ],
-      "graphicId": 12329
+      "graphicId": 12329,
+      "flipVertical": true
     },
     {
       "id": 3656,
@@ -146329,7 +147094,8 @@
         false,
         false
       ],
-      "graphicId": 12304
+      "graphicId": 12304,
+      "flipHorizontal": true
     },
     {
       "id": 3659,
@@ -146340,7 +147106,8 @@
         false,
         false
       ],
-      "graphicId": 12344
+      "graphicId": 12344,
+      "flipHorizontal": true
     },
     {
       "id": 3660,
@@ -146373,7 +147140,8 @@
         false,
         false
       ],
-      "graphicId": 12324
+      "graphicId": 12324,
+      "flipHorizontal": true
     },
     {
       "id": 3663,
@@ -146384,7 +147152,8 @@
         true,
         true
       ],
-      "graphicId": 12364
+      "graphicId": 12364,
+      "flipHorizontal": true
     },
     {
       "id": 3664,
@@ -146395,7 +147164,8 @@
         false,
         false
       ],
-      "graphicId": 12304
+      "graphicId": 12304,
+      "flipVertical": true
     },
     {
       "id": 3665,
@@ -146406,7 +147176,8 @@
         false,
         false
       ],
-      "graphicId": 12344
+      "graphicId": 12344,
+      "flipVertical": true
     },
     {
       "id": 3666,
@@ -146417,7 +147188,9 @@
         false,
         false
       ],
-      "graphicId": 12304
+      "graphicId": 12304,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3667,
@@ -146428,7 +147201,9 @@
         false,
         false
       ],
-      "graphicId": 12344
+      "graphicId": 12344,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3668,
@@ -146615,7 +147390,8 @@
         false,
         false
       ],
-      "graphicId": 12264
+      "graphicId": 12264,
+      "flipHorizontal": true
     },
     {
       "id": 3685,
@@ -146626,7 +147402,8 @@
         false,
         false
       ],
-      "graphicId": 12263
+      "graphicId": 12263,
+      "flipHorizontal": true
     },
     {
       "id": 3686,
@@ -146637,7 +147414,8 @@
         false,
         false
       ],
-      "graphicId": 12262
+      "graphicId": 12262,
+      "flipHorizontal": true
     },
     {
       "id": 3687,
@@ -146648,7 +147426,8 @@
         false,
         false
       ],
-      "graphicId": 12261
+      "graphicId": 12261,
+      "flipHorizontal": true
     },
     {
       "id": 3688,
@@ -146659,7 +147438,8 @@
         false,
         false
       ],
-      "graphicId": 12284
+      "graphicId": 12284,
+      "flipHorizontal": true
     },
     {
       "id": 3689,
@@ -146670,7 +147450,8 @@
         false,
         false
       ],
-      "graphicId": 12283
+      "graphicId": 12283,
+      "flipHorizontal": true
     },
     {
       "id": 3690,
@@ -146681,7 +147462,8 @@
         false,
         false
       ],
-      "graphicId": 12282
+      "graphicId": 12282,
+      "flipHorizontal": true
     },
     {
       "id": 3691,
@@ -146692,7 +147474,8 @@
         false,
         false
       ],
-      "graphicId": 12281
+      "graphicId": 12281,
+      "flipHorizontal": true
     },
     {
       "id": 3692,
@@ -146703,7 +147486,8 @@
         false,
         false
       ],
-      "graphicId": 12268
+      "graphicId": 12268,
+      "flipHorizontal": true
     },
     {
       "id": 3693,
@@ -146714,7 +147498,8 @@
         false,
         false
       ],
-      "graphicId": 12267
+      "graphicId": 12267,
+      "flipHorizontal": true
     },
     {
       "id": 3694,
@@ -146725,7 +147510,8 @@
         false,
         false
       ],
-      "graphicId": 12266
+      "graphicId": 12266,
+      "flipHorizontal": true
     },
     {
       "id": 3695,
@@ -146736,7 +147522,8 @@
         false,
         false
       ],
-      "graphicId": 12265
+      "graphicId": 12265,
+      "flipHorizontal": true
     },
     {
       "id": 3696,
@@ -146747,7 +147534,8 @@
         false,
         false
       ],
-      "graphicId": 12288
+      "graphicId": 12288,
+      "flipHorizontal": true
     },
     {
       "id": 3697,
@@ -146758,7 +147546,8 @@
         false,
         false
       ],
-      "graphicId": 12287
+      "graphicId": 12287,
+      "flipHorizontal": true
     },
     {
       "id": 3698,
@@ -146769,7 +147558,8 @@
         false,
         false
       ],
-      "graphicId": 12286
+      "graphicId": 12286,
+      "flipHorizontal": true
     },
     {
       "id": 3699,
@@ -146780,7 +147570,8 @@
         false,
         false
       ],
-      "graphicId": 12285
+      "graphicId": 12285,
+      "flipHorizontal": true
     },
     {
       "id": 3700,
@@ -146813,7 +147604,8 @@
         false,
         false
       ],
-      "graphicId": 12302
+      "graphicId": 12302,
+      "flipHorizontal": true
     },
     {
       "id": 3703,
@@ -146824,7 +147616,8 @@
         false,
         false
       ],
-      "graphicId": 12301
+      "graphicId": 12301,
+      "flipHorizontal": true
     },
     {
       "id": 3704,
@@ -146857,7 +147650,8 @@
         false,
         false
       ],
-      "graphicId": 12322
+      "graphicId": 12322,
+      "flipHorizontal": true
     },
     {
       "id": 3707,
@@ -146868,7 +147662,8 @@
         false,
         false
       ],
-      "graphicId": 12321
+      "graphicId": 12321,
+      "flipHorizontal": true
     },
     {
       "id": 3708,
@@ -146901,7 +147696,8 @@
         false,
         false
       ],
-      "graphicId": 12342
+      "graphicId": 12342,
+      "flipHorizontal": true
     },
     {
       "id": 3711,
@@ -146912,7 +147708,8 @@
         false,
         false
       ],
-      "graphicId": 12341
+      "graphicId": 12341,
+      "flipHorizontal": true
     },
     {
       "id": 3712,
@@ -146945,7 +147742,8 @@
         false,
         false
       ],
-      "graphicId": 12362
+      "graphicId": 12362,
+      "flipHorizontal": true
     },
     {
       "id": 3715,
@@ -146956,7 +147754,8 @@
         false,
         false
       ],
-      "graphicId": 12361
+      "graphicId": 12361,
+      "flipHorizontal": true
     },
     {
       "id": 3716,
@@ -146967,7 +147766,8 @@
         false,
         false
       ],
-      "graphicId": 12341
+      "graphicId": 12341,
+      "flipVertical": true
     },
     {
       "id": 3717,
@@ -146978,7 +147778,8 @@
         false,
         false
       ],
-      "graphicId": 12342
+      "graphicId": 12342,
+      "flipVertical": true
     },
     {
       "id": 3718,
@@ -146989,7 +147790,9 @@
         false,
         false
       ],
-      "graphicId": 12342
+      "graphicId": 12342,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3719,
@@ -147000,7 +147803,9 @@
         false,
         false
       ],
-      "graphicId": 12341
+      "graphicId": 12341,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3720,
@@ -147011,7 +147816,8 @@
         false,
         false
       ],
-      "graphicId": 12321
+      "graphicId": 12321,
+      "flipVertical": true
     },
     {
       "id": 3721,
@@ -147022,7 +147828,8 @@
         false,
         false
       ],
-      "graphicId": 12322
+      "graphicId": 12322,
+      "flipVertical": true
     },
     {
       "id": 3722,
@@ -147033,7 +147840,9 @@
         false,
         false
       ],
-      "graphicId": 12322
+      "graphicId": 12322,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3723,
@@ -147044,7 +147853,9 @@
         false,
         false
       ],
-      "graphicId": 12321
+      "graphicId": 12321,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3724,
@@ -147055,7 +147866,8 @@
         false,
         false
       ],
-      "graphicId": 12301
+      "graphicId": 12301,
+      "flipVertical": true
     },
     {
       "id": 3725,
@@ -147066,7 +147878,8 @@
         false,
         false
       ],
-      "graphicId": 12302
+      "graphicId": 12302,
+      "flipVertical": true
     },
     {
       "id": 3726,
@@ -147077,7 +147890,9 @@
         false,
         false
       ],
-      "graphicId": 12302
+      "graphicId": 12302,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3727,
@@ -147088,7 +147903,9 @@
         false,
         false
       ],
-      "graphicId": 12301
+      "graphicId": 12301,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3728,
@@ -147099,7 +147916,8 @@
         false,
         false
       ],
-      "graphicId": 12281
+      "graphicId": 12281,
+      "flipVertical": true
     },
     {
       "id": 3729,
@@ -147110,7 +147928,8 @@
         false,
         false
       ],
-      "graphicId": 12282
+      "graphicId": 12282,
+      "flipVertical": true
     },
     {
       "id": 3730,
@@ -147121,7 +147940,8 @@
         false,
         false
       ],
-      "graphicId": 12283
+      "graphicId": 12283,
+      "flipVertical": true
     },
     {
       "id": 3731,
@@ -147132,7 +147952,8 @@
         false,
         false
       ],
-      "graphicId": 12284
+      "graphicId": 12284,
+      "flipVertical": true
     },
     {
       "id": 3732,
@@ -147143,7 +147964,8 @@
         false,
         false
       ],
-      "graphicId": 12261
+      "graphicId": 12261,
+      "flipVertical": true
     },
     {
       "id": 3733,
@@ -147154,7 +147976,8 @@
         false,
         false
       ],
-      "graphicId": 12262
+      "graphicId": 12262,
+      "flipVertical": true
     },
     {
       "id": 3734,
@@ -147165,7 +147988,8 @@
         false,
         false
       ],
-      "graphicId": 12263
+      "graphicId": 12263,
+      "flipVertical": true
     },
     {
       "id": 3735,
@@ -147176,7 +148000,8 @@
         false,
         false
       ],
-      "graphicId": 12264
+      "graphicId": 12264,
+      "flipVertical": true
     },
     {
       "id": 3736,
@@ -147187,7 +148012,8 @@
         false,
         false
       ],
-      "graphicId": 12285
+      "graphicId": 12285,
+      "flipVertical": true
     },
     {
       "id": 3737,
@@ -147198,7 +148024,8 @@
         false,
         false
       ],
-      "graphicId": 12286
+      "graphicId": 12286,
+      "flipVertical": true
     },
     {
       "id": 3738,
@@ -147209,7 +148036,8 @@
         false,
         false
       ],
-      "graphicId": 12287
+      "graphicId": 12287,
+      "flipVertical": true
     },
     {
       "id": 3739,
@@ -147220,7 +148048,8 @@
         false,
         false
       ],
-      "graphicId": 12288
+      "graphicId": 12288,
+      "flipVertical": true
     },
     {
       "id": 3740,
@@ -147231,7 +148060,8 @@
         false,
         false
       ],
-      "graphicId": 12265
+      "graphicId": 12265,
+      "flipVertical": true
     },
     {
       "id": 3741,
@@ -147242,7 +148072,8 @@
         false,
         false
       ],
-      "graphicId": 12266
+      "graphicId": 12266,
+      "flipVertical": true
     },
     {
       "id": 3742,
@@ -147253,7 +148084,8 @@
         false,
         false
       ],
-      "graphicId": 12267
+      "graphicId": 12267,
+      "flipVertical": true
     },
     {
       "id": 3743,
@@ -147264,7 +148096,8 @@
         false,
         false
       ],
-      "graphicId": 12268
+      "graphicId": 12268,
+      "flipVertical": true
     },
     {
       "id": 3744,
@@ -147275,7 +148108,9 @@
         false,
         false
       ],
-      "graphicId": 12284
+      "graphicId": 12284,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3745,
@@ -147286,7 +148121,9 @@
         false,
         false
       ],
-      "graphicId": 12283
+      "graphicId": 12283,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3746,
@@ -147297,7 +148134,9 @@
         false,
         false
       ],
-      "graphicId": 12282
+      "graphicId": 12282,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3747,
@@ -147308,7 +148147,9 @@
         false,
         false
       ],
-      "graphicId": 12281
+      "graphicId": 12281,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3748,
@@ -147319,7 +148160,9 @@
         false,
         false
       ],
-      "graphicId": 12264
+      "graphicId": 12264,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3749,
@@ -147330,7 +148173,9 @@
         false,
         false
       ],
-      "graphicId": 12263
+      "graphicId": 12263,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3750,
@@ -147341,7 +148186,9 @@
         false,
         false
       ],
-      "graphicId": 12262
+      "graphicId": 12262,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3751,
@@ -147352,7 +148199,9 @@
         false,
         false
       ],
-      "graphicId": 12261
+      "graphicId": 12261,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3752,
@@ -147363,7 +148212,9 @@
         false,
         false
       ],
-      "graphicId": 12288
+      "graphicId": 12288,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3753,
@@ -147374,7 +148225,9 @@
         false,
         false
       ],
-      "graphicId": 12287
+      "graphicId": 12287,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3754,
@@ -147385,7 +148238,9 @@
         false,
         false
       ],
-      "graphicId": 12286
+      "graphicId": 12286,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3755,
@@ -147396,7 +148251,9 @@
         false,
         false
       ],
-      "graphicId": 12285
+      "graphicId": 12285,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3756,
@@ -147407,7 +148264,9 @@
         false,
         false
       ],
-      "graphicId": 12268
+      "graphicId": 12268,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3757,
@@ -147418,7 +148277,9 @@
         false,
         false
       ],
-      "graphicId": 12267
+      "graphicId": 12267,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3758,
@@ -147429,7 +148290,9 @@
         false,
         false
       ],
-      "graphicId": 12266
+      "graphicId": 12266,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3759,
@@ -147440,7 +148303,9 @@
         false,
         false
       ],
-      "graphicId": 12265
+      "graphicId": 12265,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3760,
@@ -147484,7 +148349,8 @@
         true,
         true
       ],
-      "graphicId": 11601
+      "graphicId": 11601,
+      "flipHorizontal": true
     },
     {
       "id": 3764,
@@ -147517,7 +148383,8 @@
         true,
         true
       ],
-      "graphicId": 11622
+      "graphicId": 11622,
+      "flipHorizontal": true
     },
     {
       "id": 3767,
@@ -147528,7 +148395,8 @@
         true,
         true
       ],
-      "graphicId": 11621
+      "graphicId": 11621,
+      "flipHorizontal": true
     },
     {
       "id": 3768,
@@ -147561,7 +148429,8 @@
         true,
         true
       ],
-      "graphicId": 11642
+      "graphicId": 11642,
+      "flipHorizontal": true
     },
     {
       "id": 3771,
@@ -147572,7 +148441,8 @@
         true,
         true
       ],
-      "graphicId": 11641
+      "graphicId": 11641,
+      "flipHorizontal": true
     },
     {
       "id": 3772,
@@ -147605,7 +148475,8 @@
         true,
         true
       ],
-      "graphicId": 11662
+      "graphicId": 11662,
+      "flipHorizontal": true
     },
     {
       "id": 3775,
@@ -147616,7 +148487,8 @@
         true,
         true
       ],
-      "graphicId": 11661
+      "graphicId": 11661,
+      "flipHorizontal": true
     },
     {
       "id": 3776,
@@ -147649,7 +148521,8 @@
         true,
         true
       ],
-      "graphicId": 11682
+      "graphicId": 11682,
+      "flipHorizontal": true
     },
     {
       "id": 3779,
@@ -147660,7 +148533,8 @@
         true,
         true
       ],
-      "graphicId": 11600
+      "graphicId": 11600,
+      "flipHorizontal": true
     },
     {
       "id": 3780,
@@ -147759,7 +148633,8 @@
         false,
         false
       ],
-      "graphicId": 12242
+      "graphicId": 12242,
+      "flipVertical": true
     },
     {
       "id": 3789,
@@ -147770,7 +148645,8 @@
         false,
         false
       ],
-      "graphicId": 12243
+      "graphicId": 12243,
+      "flipVertical": true
     },
     {
       "id": 3790,
@@ -147781,7 +148657,8 @@
         false,
         false
       ],
-      "graphicId": 12244
+      "graphicId": 12244,
+      "flipVertical": true
     },
     {
       "id": 3791,
@@ -147792,7 +148669,8 @@
         false,
         false
       ],
-      "graphicId": 12246
+      "graphicId": 12246,
+      "flipVertical": true
     },
     {
       "id": 3792,
@@ -147803,7 +148681,8 @@
         false,
         false
       ],
-      "graphicId": 12222
+      "graphicId": 12222,
+      "flipVertical": true
     },
     {
       "id": 3793,
@@ -147814,7 +148693,8 @@
         false,
         false
       ],
-      "graphicId": 12223
+      "graphicId": 12223,
+      "flipVertical": true
     },
     {
       "id": 3794,
@@ -147825,7 +148705,8 @@
         false,
         false
       ],
-      "graphicId": 12224
+      "graphicId": 12224,
+      "flipVertical": true
     },
     {
       "id": 3795,
@@ -147836,7 +148717,8 @@
         false,
         false
       ],
-      "graphicId": 12225
+      "graphicId": 12225,
+      "flipVertical": true
     },
     {
       "id": 3796,
@@ -147847,7 +148729,8 @@
         false,
         false
       ],
-      "graphicId": 12225
+      "graphicId": 12225,
+      "flipHorizontal": true
     },
     {
       "id": 3797,
@@ -147858,7 +148741,8 @@
         false,
         false
       ],
-      "graphicId": 12224
+      "graphicId": 12224,
+      "flipHorizontal": true
     },
     {
       "id": 3798,
@@ -147869,7 +148753,8 @@
         false,
         false
       ],
-      "graphicId": 12223
+      "graphicId": 12223,
+      "flipHorizontal": true
     },
     {
       "id": 3799,
@@ -147880,7 +148765,8 @@
         false,
         false
       ],
-      "graphicId": 12222
+      "graphicId": 12222,
+      "flipHorizontal": true
     },
     {
       "id": 3800,
@@ -147891,7 +148777,8 @@
         false,
         false
       ],
-      "graphicId": 12246
+      "graphicId": 12246,
+      "flipHorizontal": true
     },
     {
       "id": 3801,
@@ -147902,7 +148789,8 @@
         false,
         false
       ],
-      "graphicId": 12244
+      "graphicId": 12244,
+      "flipHorizontal": true
     },
     {
       "id": 3802,
@@ -147913,7 +148801,8 @@
         false,
         false
       ],
-      "graphicId": 12243
+      "graphicId": 12243,
+      "flipHorizontal": true
     },
     {
       "id": 3803,
@@ -147924,7 +148813,8 @@
         false,
         false
       ],
-      "graphicId": 12242
+      "graphicId": 12242,
+      "flipHorizontal": true
     },
     {
       "id": 3804,
@@ -147935,7 +148825,9 @@
         false,
         false
       ],
-      "graphicId": 12246
+      "graphicId": 12246,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3805,
@@ -147946,7 +148838,9 @@
         false,
         false
       ],
-      "graphicId": 12244
+      "graphicId": 12244,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3806,
@@ -147957,7 +148851,9 @@
         false,
         false
       ],
-      "graphicId": 12243
+      "graphicId": 12243,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3807,
@@ -147968,7 +148864,9 @@
         false,
         false
       ],
-      "graphicId": 12242
+      "graphicId": 12242,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3808,
@@ -147979,7 +148877,9 @@
         false,
         false
       ],
-      "graphicId": 12225
+      "graphicId": 12225,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3809,
@@ -147990,7 +148890,9 @@
         false,
         false
       ],
-      "graphicId": 12224
+      "graphicId": 12224,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3810,
@@ -148001,7 +148903,9 @@
         false,
         false
       ],
-      "graphicId": 12223
+      "graphicId": 12223,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3811,
@@ -148012,7 +148916,9 @@
         false,
         false
       ],
-      "graphicId": 12222
+      "graphicId": 12222,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3812,
@@ -148034,7 +148940,8 @@
         false,
         false
       ],
-      "graphicId": 12246
+      "graphicId": 12246,
+      "flipHorizontal": true
     },
     {
       "id": 3814,
@@ -148067,7 +148974,8 @@
         false,
         false
       ],
-      "graphicId": 12246
+      "graphicId": 12246,
+      "flipVertical": true
     },
     {
       "id": 3817,
@@ -148078,7 +148986,9 @@
         false,
         false
       ],
-      "graphicId": 12246
+      "graphicId": 12246,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3818,
@@ -148419,7 +149329,8 @@
         false,
         false
       ],
-      "graphicId": 12348
+      "graphicId": 12348,
+      "flipVertical": true
     },
     {
       "id": 3849,
@@ -148430,7 +149341,8 @@
         false,
         false
       ],
-      "graphicId": 12349
+      "graphicId": 12349,
+      "flipVertical": true
     },
     {
       "id": 3850,
@@ -148441,7 +149353,8 @@
         false,
         false
       ],
-      "graphicId": 12408
+      "graphicId": 12408,
+      "flipVertical": true
     },
     {
       "id": 3851,
@@ -148452,7 +149365,8 @@
         false,
         false
       ],
-      "graphicId": 12409
+      "graphicId": 12409,
+      "flipVertical": true
     },
     {
       "id": 3852,
@@ -148474,7 +149388,8 @@
         false,
         false
       ],
-      "graphicId": 12305
+      "graphicId": 12305,
+      "flipHorizontal": true
     },
     {
       "id": 3854,
@@ -148496,7 +149411,8 @@
         false,
         false
       ],
-      "graphicId": 12304
+      "graphicId": 12304,
+      "flipHorizontal": true
     },
     {
       "id": 3856,
@@ -148518,7 +149434,8 @@
         false,
         false
       ],
-      "graphicId": 12325
+      "graphicId": 12325,
+      "flipHorizontal": true
     },
     {
       "id": 3858,
@@ -148540,7 +149457,8 @@
         false,
         false
       ],
-      "graphicId": 12324
+      "graphicId": 12324,
+      "flipHorizontal": true
     },
     {
       "id": 3860,
@@ -148551,7 +149469,8 @@
         false,
         false
       ],
-      "graphicId": 12305
+      "graphicId": 12305,
+      "flipVertical": true
     },
     {
       "id": 3861,
@@ -148562,7 +149481,9 @@
         false,
         false
       ],
-      "graphicId": 12305
+      "graphicId": 12305,
+      "flipHorizontal": true,
+      "flipVertical": true
     },
     {
       "id": 3862,
@@ -148573,7 +149494,8 @@
         false,
         false
       ],
-      "graphicId": 12304
+      "graphicId": 12304,
+      "flipVertical": true
     },
     {
       "id": 3863,
@@ -148584,7 +149506,9 @@
         false,
         false
       ],
-      "graphicId": 12304
+      "graphicId": 12304,
+      "flipHorizontal": true,
+      "flipVertical": true
     }
   ],
   "enemies": [],

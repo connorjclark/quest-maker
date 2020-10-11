@@ -34,10 +34,16 @@ for (const imgPath of glob.sync('*.png', { cwd: dataDir })) {
 }
 
 for (const combo of zcData.combos) {
-  makeTile({
+  const tile = makeTile({
     graphicId: combo.tile,
     walkable: [!(combo.walk & 1), !(combo.walk & 4), !(combo.walk & 2), !(combo.walk & 8)],
   });
+  if (combo.flip & 1) {
+    tile.flipHorizontal = true;
+  }
+  if (combo.flip & 2) {
+    tile.flipVertical = true;
+  }
 }
 
 for (const map of zcData.maps) {
