@@ -11,11 +11,12 @@ export class QuestMakerApp extends App<QuestMaker.State> {
     const graphic = this.state.quest.graphics[tile.graphicId];
     const sprite = this.createGraphicSprite(graphic.id);
 
-    if (tile.flipHorizontal) {
-      sprite.texture.rotate |= PIXI.groupD8.MIRROR_HORIZONTAL;
-    }
-    if (tile.flipVertical) {
-      sprite.texture.rotate |= PIXI.groupD8.MIRROR_VERTICAL;
+    if (tile.flipHorizontal && tile.flipVertical) {
+      sprite.texture.rotate = PIXI.groupD8.W;
+    } else if (tile.flipHorizontal) {
+      sprite.texture.rotate = PIXI.groupD8.MIRROR_HORIZONTAL;
+    } else if (tile.flipVertical) {
+      sprite.texture.rotate = PIXI.groupD8.MIRROR_VERTICAL;
     }
 
     return sprite;
