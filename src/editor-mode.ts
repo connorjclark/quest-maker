@@ -362,8 +362,8 @@ export class EditorMode extends QuestMakerMode {
 
     function render() {
       gfx.clear();
-      for (let x = 0; x < 15; x++) {
-        for (let y = 0; y < 15; y++) {
+      for (let x = 0; x < 16; x++) {
+        for (let y = 0; y < 9; y++) {
           const screen = x < state.quest.screens.length && state.quest.screens[x][y];
           let color = 0;
           if (screen) color = 0x0000ff;

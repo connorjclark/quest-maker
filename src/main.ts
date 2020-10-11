@@ -1,8 +1,11 @@
+import 'regenerator-runtime/runtime' // ??? why is this needed now?
+
 import * as constants from './constants';
 import { EditorMode } from './editor-mode';
 import { PlayGameMode } from './play-game-mode';
 import { QuestMakerApp } from './quest-maker-app';
 import { TileType, EnemyType } from './types';
+import makeQuest from './make-quest';
 
 const { screenWidth, screenHeight, tileSize } = constants;
 
@@ -39,113 +42,11 @@ class Screen {
 }
 
 function createQuest(): QuestMaker.Quest {
-  const graphics: QuestMaker.Graphic[] = [];
-  const tiles: QuestMaker.Tile[] = [];
-
-  function makeGraphic(opts: Omit<QuestMaker.Graphic, 'id'>) {
-    const graphic = {
-      id: graphics.length,
-      file: opts.file,
-      x: opts.x,
-      y: opts.y,
-      width: opts.width,
-      height: opts.height,
-    };
-    graphics.push(graphic);
-    return graphic;
-  }
-
-  function makeTile(opts: Omit<QuestMaker.Tile, 'id' | 'type' | 'walkable'>): QuestMaker.Tile {
-    const tile = {
-      id: tiles.length,
-      type: 'default' as QuestMaker.TileType,
-      walkable: [true, true, true, true] as QuestMaker.Tile['walkable'],
-      ...opts,
-    };
-    tiles.push(tile);
-
-    return tile;
-  }
-
-  function make(opts: { tile: boolean, file: string, n: number, tilesInRow?: number, startX?: number, startY?: number, spacing?: number, width?: number, height?: number }) {
-    const graphics: QuestMaker.Graphic[] = [];
-    const tiles: QuestMaker.Tile[] = [];
-
-    if (!opts.width) opts.width = tileSize;
-    if (!opts.height) opts.height = tileSize;
-    if (!opts.startX) opts.startX = 0;
-    if (!opts.startY) opts.startY = 0;
-    if (!opts.spacing) opts.spacing = 0;
-    if (!opts.tilesInRow) opts.tilesInRow = opts.n;
-
-    for (let i = 0; i < opts.n; i++) {
-      const x = (i % opts.tilesInRow) * (opts.width + opts.spacing) + opts.startX;
-      const y = Math.floor(i / opts.tilesInRow) * (opts.height + opts.spacing) + opts.startY;
-
-      const graphic = makeGraphic({
-        file: opts.file,
-        x,
-        y,
-        width: opts.width,
-        height: opts.height,
-      });
-      graphics.push(graphic);
-
-      if (opts.tile) {
-        const tile = makeTile({
-          graphicId: graphic.id,
-        });
-        tiles.push(tile);
-      }
-    }
-
-    return { graphics, tiles };
-  }
-
-  function makeAdvanced(opts: { tile: boolean, file: string, n: number, startX?: number, startY?: number, spacing?: number, width?: number[], height?: number[] }) {
-    const graphics: QuestMaker.Graphic[] = [];
-    const tiles: QuestMaker.Tile[] = [];
-
-    if (!opts.startX) opts.startX = 0;
-    if (!opts.startY) opts.startY = 0;
-    if (!opts.spacing) opts.spacing = 0;
-
-    let x = opts.startX;
-    let y = opts.startY;
-    for (let i = 0; i < opts.n; i++) {
-      const width = opts.width ? opts.width[i % opts.width.length] : tileSize;
-      const height = opts.height ? opts.height[i % opts.height.length] : tileSize;
-      const graphic = makeGraphic({
-        file: opts.file,
-        x,
-        y,
-        width,
-        height,
-      });
-      graphics.push(graphic);
-
-      if (opts.tile) {
-        const tile = makeTile({
-          graphicId: graphic.id,
-        });
-        tiles.push(tile);
-      }
-
-      x += width + opts.spacing;
-    }
-
-    return { graphics, tiles };
-  }
-
-  const weapons: QuestMaker.Weapon[] = [];
-  function makeWeapon(weapon: Omit<QuestMaker.Weapon, 'id'>) {
-    weapons.push({ id: weapons.length + 1, ...weapon });
-    return weapons[weapons.length - 1];
-  }
+  const { make, makeAdvanced, makeEnemy, makeGraphic, makeTile, makeWeapon, quest } = makeQuest();
 
   const basicTiles = make({
     tile: true,
-    file: 'tiles',
+    file: 'tiles.png',
     n: 48,
     tilesInRow: 6,
     startX: 1,
@@ -162,7 +63,7 @@ function createQuest(): QuestMaker.Quest {
 
   const HERO_BASIC_GFX = make({
     tile: false,
-    file: 'link',
+    file: 'link.png',
     n: 6,
     startX: 1,
     startY: 11,
@@ -170,7 +71,7 @@ function createQuest(): QuestMaker.Quest {
   }).graphics;
   const HERO_USE_ITEM_GFX = make({
     tile: false,
-    file: 'link',
+    file: 'link.png',
     n: 3,
     startX: 107,
     startY: 11,
@@ -179,7 +80,7 @@ function createQuest(): QuestMaker.Quest {
 
   const swordGraphics = makeAdvanced({
     tile: false,
-    file: 'link',
+    file: 'link.png',
     n: 3 * 4,
     width: [tileSize / 2, tileSize, tileSize / 2],
     height: [tileSize],
@@ -190,7 +91,7 @@ function createQuest(): QuestMaker.Quest {
 
   const spawnGraphics = make({
     tile: false,
-    file: 'link',
+    file: 'link.png',
     n: 3,
     startX: 138,
     startY: 185,
@@ -199,7 +100,7 @@ function createQuest(): QuestMaker.Quest {
 
   const enemyGraphics = make({
     tile: false,
-    file: 'enemies',
+    file: 'enemies.png',
     n: 19 * 13,
     tilesInRow: 19,
   }).graphics;
@@ -216,23 +117,9 @@ function createQuest(): QuestMaker.Quest {
     rotate: true,
   });
 
-  const enemies: QuestMaker.Enemy[] = [];
-  let gfx;
-  function makeEnemy(opts: Pick<QuestMaker.Enemy, 'name' | 'frames' | 'attributes'> & { type?: EnemyType }) {
-    const enemy = {
-      type: EnemyType.NORMAL,
-      speed: 50 / 100,
-      homingFactor: 64 / 255,
-      directionChangeFactor: 4 / 16,
-      haltFactor: 3 / 16,
-      ...opts,
-    };
-    enemies.push(enemy);
-  }
-
   const subarray = <T>(arr: T[], start: number, num: number) => arr.slice(start, start + num);
 
-  gfx = subarray(enemyGraphics, 0, 4);
+  let gfx = subarray(enemyGraphics, 0, 4);
   makeEnemy({
     name: 'Octorok (Red)',
     attributes: {
@@ -288,7 +175,7 @@ function createQuest(): QuestMaker.Quest {
   });
 
   gfx = subarray(enemyGraphics, 4 * 19, 5);
-  const prevEmerging = enemies[enemies.length - 1].frames.emerging;
+  const prevEmerging = quest.enemies[quest.enemies.length - 1].frames.emerging;
   makeEnemy({
     name: 'Blue Leever',
     type: EnemyType.LEEVER,
@@ -303,43 +190,44 @@ function createQuest(): QuestMaker.Quest {
     },
   });
 
-  const screens: Screen[][] = [];
-  for (let x = 0; x < 5; x++) {
-    screens[x] = [];
-    for (let y = 0; y < 5; y++) {
-      screens[x].push(new Screen());
+  for (let x = 0; x < 16; x++) {
+    quest.screens[x] = [];
+    for (let y = 0; y < 9; y++) {
+      quest.screens[x].push(new Screen());
     }
   }
 
   // Make ground tile first.
-  let temp = tiles[0];
-  tiles[0] = tiles[2];
-  tiles[2] = temp;
+  let temp = quest.tiles[0];
+  quest.tiles[0] = quest.tiles[2];
+  quest.tiles[2] = temp;
 
   // Set ids manually (fixes manually swapped tile ids)
-  for (let i = 0; i < tiles.length; i++) tiles[i].id = i;
+  for (let i = 0; i < quest.tiles.length; i++) quest.tiles[i].id = i;
 
   // Stairs.
-  tiles[2].type = TileType.WARP;
+  quest.tiles[2].type = TileType.WARP;
 
-  screens[0][0].tiles[9][7].tile = 2;
+  quest.screens[0][0].tiles[9][7].tile = 2;
 
-  return {
-    graphics,
-    tiles: [...tiles, ...tiles, ...tiles, ...tiles],
-    enemies,
-    weapons,
-    screens,
-    misc: {
-      SPAWN_GFX_START: spawnGraphics[0].id,
-      HERO_GFX_START: HERO_BASIC_GFX[0].id,
-      SWORD_GFX_START: swordGraphics[0].id,
-    }
-  }
+  quest.tiles = [...quest.tiles, ...quest.tiles, ...quest.tiles, ...quest.tiles];
+
+  quest.misc.SPAWN_GFX_START = spawnGraphics[0].id;
+  quest.misc.HERO_GFX_START = HERO_BASIC_GFX[0].id;
+  quest.misc.SWORD_GFX_START = swordGraphics[0].id;
+
+  return quest;
 }
 
 // TODO: real quest loading/saving.
-function loadQuest(): QuestMaker.Quest {
+async function loadQuest(): Promise<QuestMaker.Quest> {
+  if (window.location.search.includes('1st')) {
+    const questResp = await fetch('quests/1st/quest.json');
+    const quest = await questResp.json();
+    graphicsBase = 'quests/1st';
+    return quest;
+  }
+
   if (window.location.search.includes('fresh')) return createQuest();
 
   const json = localStorage.getItem('quest');
@@ -370,8 +258,21 @@ window.addEventListener('unload', window.save);
 // @ts-ignore
 setInterval(window.save, 1000 * 60);
 
-function load() {
-  const quest = loadQuest();
+let graphicsBase = 'quests/debug';
+async function load() {
+  const quest = await loadQuest();
+
+  // Find images to load.
+  const images = new Set<string>();
+  for (const graphic of quest.graphics) {
+    images.add(graphic.file);
+  }
+
+  for (const image of images) {
+    pixi.loader.add(image, `${graphicsBase}/${image}`);
+  }
+  await new Promise(resolve => pixi.loader.load(resolve));
+
   const state = {
     quest,
     editor: {
@@ -421,8 +322,9 @@ function tick(app: QuestMaker.App, dt: number) {
   app.tick(dt);
 }
 
-pixi.loader
-  .add('tiles', 'gfx/tiles-overworld.png')
-  .add('link', 'gfx/link.png')
-  .add('enemies', 'gfx/enemies.png')
-  .load(load);
+load();
+// pixi.loader
+  // .add('tiles', 'gfx/tiles-overworld.png')
+  // .add('link', 'gfx/link.png')
+  // .add('enemies', 'gfx/enemies.png')
+  // .load(load);

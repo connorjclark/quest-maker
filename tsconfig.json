@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "module": "esnext",
     "moduleResolution": "node",
     "target": "ES2018",
     "strict": true,
@@ -8,10 +7,12 @@
     "sourceMap": true,
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "resolveJsonModule": true
   },
   "include": [
-    "src"
+    "src",
+    "scripts"
   ],
   "exclude": [
     "node_modules"
