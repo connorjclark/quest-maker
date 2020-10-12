@@ -149755,7 +149755,7 @@
         "enemy.halt": 0.1875,
         "enemy.homing": 0.25098039215686274,
         "enemy.speed": 0.5,
-        "enemy.weapon": 1
+        "enemy.weapon": 18
       }
     },
     {
@@ -149781,7 +149781,7 @@
         "enemy.halt": 0.3125,
         "enemy.homing": 0.25098039215686274,
         "enemy.speed": 0.5,
-        "enemy.weapon": 1
+        "enemy.weapon": 18
       }
     },
     {
@@ -149807,7 +149807,7 @@
         "enemy.halt": 0.1875,
         "enemy.homing": 0.5019607843137255,
         "enemy.speed": 1,
-        "enemy.weapon": 1
+        "enemy.weapon": 18
       }
     },
     {
@@ -149833,7 +149833,7 @@
         "enemy.halt": 0.3125,
         "enemy.homing": 0.5019607843137255,
         "enemy.speed": 1,
-        "enemy.weapon": 1
+        "enemy.weapon": 18
       }
     },
     {
@@ -149881,7 +149881,8 @@
         "enemy.directionChange": 0,
         "enemy.halt": 0,
         "enemy.homing": 0,
-        "enemy.speed": 0.5
+        "enemy.speed": 0.5,
+        "enemy.weapon": 0
       }
     },
     {
@@ -149907,7 +149908,8 @@
         "enemy.directionChange": 0.5,
         "enemy.halt": 0,
         "enemy.homing": 0,
-        "enemy.speed": 0.5
+        "enemy.speed": 0.5,
+        "enemy.weapon": 0
       }
     },
     {
@@ -149935,7 +149937,7 @@
         "enemy.halt": 0.25,
         "enemy.homing": 0.5019607843137255,
         "enemy.speed": 0.5,
-        "enemy.weapon": 2
+        "enemy.weapon": 19
       }
     },
     {
@@ -149963,7 +149965,7 @@
         "enemy.halt": 0.375,
         "enemy.homing": 0.5019607843137255,
         "enemy.speed": 0.5,
-        "enemy.weapon": 2
+        "enemy.weapon": 19
       }
     },
     {
@@ -149991,7 +149993,7 @@
         "enemy.halt": 0.25,
         "enemy.homing": 0.5019607843137255,
         "enemy.speed": 0.5,
-        "enemy.weapon": 3
+        "enemy.weapon": 20
       }
     },
     {
@@ -150019,7 +150021,7 @@
         "enemy.halt": 0.25,
         "enemy.homing": 0.5019607843137255,
         "enemy.speed": 0.5,
-        "enemy.weapon": 3
+        "enemy.weapon": 20
       }
     },
     {
@@ -150099,7 +150101,8 @@
         "enemy.directionChange": 0.375,
         "enemy.halt": 0,
         "enemy.homing": 0.5019607843137255,
-        "enemy.speed": 0.5
+        "enemy.speed": 0.5,
+        "enemy.weapon": 0
       }
     },
     {
@@ -150687,7 +150690,7 @@
         "enemy.halt": 0.0625,
         "enemy.homing": 1,
         "enemy.speed": 2,
-        "enemy.weapon": 5
+        "enemy.weapon": 21
       }
     },
     {
@@ -151280,7 +151283,8 @@
         "enemy.directionChange": 0.5,
         "enemy.halt": 0,
         "enemy.homing": 0,
-        "enemy.speed": 3
+        "enemy.speed": 3,
+        "enemy.weapon": 0
       }
     },
     {
@@ -151306,7 +151310,7 @@
         "enemy.halt": 0.1875,
         "enemy.homing": 0.25098039215686274,
         "enemy.speed": 1,
-        "enemy.weapon": 6
+        "enemy.weapon": 35
       }
     },
     {
@@ -151332,7 +151336,7 @@
         "enemy.halt": 0.3125,
         "enemy.homing": 0.25098039215686274,
         "enemy.speed": 2,
-        "enemy.weapon": 6
+        "enemy.weapon": 35
       }
     },
     {
@@ -151358,7 +151362,7 @@
         "enemy.halt": 0.1875,
         "enemy.homing": 0.25098039215686274,
         "enemy.speed": 1,
-        "enemy.weapon": 7
+        "enemy.weapon": 76
       }
     },
     {
@@ -151384,7 +151388,7 @@
         "enemy.halt": 0.3125,
         "enemy.homing": 0.25098039215686274,
         "enemy.speed": 2,
-        "enemy.weapon": 7
+        "enemy.weapon": 76
       }
     },
     {
@@ -151698,7 +151702,7 @@
         "enemy.halt": 0.25,
         "enemy.homing": 0.5019607843137255,
         "enemy.speed": 0.5,
-        "enemy.weapon": 3
+        "enemy.weapon": 20
       }
     },
     {
@@ -155478,38 +155482,443 @@
   "weapons": [
     {
       "id": 1,
-      "name": "weapon",
-      "graphic": 18
+      "name": "Sword 1 (Wooden)",
+      "graphic": 342
     },
     {
       "id": 2,
-      "name": "weapon",
-      "graphic": 19
+      "name": "Sword 2 (White)",
+      "graphic": 362
     },
     {
       "id": 3,
-      "name": "weapon",
-      "graphic": 20
+      "name": "Sword 3 (Magic)",
+      "graphic": 382
     },
     {
       "id": 4,
-      "name": "weapon",
-      "graphic": 4
+      "name": "Sword 4 (Master)",
+      "graphic": 402
     },
     {
       "id": 5,
-      "name": "weapon",
-      "graphic": 21
+      "name": "Boomerang 1 (Wooden)\u0000en Boomerang",
+      "graphic": 601
     },
     {
       "id": 6,
-      "name": "weapon",
-      "graphic": 35
+      "name": "Boomerang 2 (Magic)\u0000ic Boomerang",
+      "graphic": 601
     },
     {
       "id": 7,
-      "name": "weapon",
-      "graphic": 76
+      "name": "Boomerang 3 (Fire)\u0000re Boomerang",
+      "graphic": 605
+    },
+    {
+      "id": 8,
+      "name": "Bomb (Normal)",
+      "graphic": 1122
+    },
+    {
+      "id": 9,
+      "name": "Bomb (Super)",
+      "graphic": 1142
+    },
+    {
+      "id": 10,
+      "name": "Explosion (Normal)",
+      "graphic": 73
+    },
+    {
+      "id": 11,
+      "name": "Arrow 1 (Wooden)",
+      "graphic": 549
+    },
+    {
+      "id": 12,
+      "name": "Arrow 2 (Silver)\u0000ion",
+      "graphic": 543
+    },
+    {
+      "id": 13,
+      "name": "Flame\u0000 Boomerang",
+      "graphic": 662
+    },
+    {
+      "id": 14,
+      "name": "Whirlwind\u0000erang",
+      "graphic": 460
+    },
+    {
+      "id": 15,
+      "name": "Bait\u0000Boomerang",
+      "graphic": 597
+    },
+    {
+      "id": 16,
+      "name": "Wand\u0000andle Stab",
+      "graphic": 640
+    },
+    {
+      "id": 17,
+      "name": "Magic (Normal)\u0000g",
+      "graphic": 642
+    },
+    {
+      "id": 18,
+      "name": "Fireball\u0000Enemy) Fireball",
+      "graphic": 57
+    },
+    {
+      "id": 19,
+      "name": "Rock\u0000EM: Enemy) Rock",
+      "graphic": 475
+    },
+    {
+      "id": 20,
+      "name": "Arrow (Enemy)\u0000) Arrow",
+      "graphic": 77
+    },
+    {
+      "id": 21,
+      "name": "Sword (Enemy)\u0000) Sword",
+      "graphic": 495
+    },
+    {
+      "id": 22,
+      "name": "Magic (Enemy)\u0000) Magic",
+      "graphic": 642
+    },
+    {
+      "id": 23,
+      "name": "MISC: Spawn\u0000mation) Spawn",
+      "graphic": 72
+    },
+    {
+      "id": 24,
+      "name": "MISC: Death\u0000mation) Death",
+      "graphic": 71
+    },
+    {
+      "id": 25,
+      "name": "MISC: <unused>\u0000e",
+      "graphic": 440
+    },
+    {
+      "id": 26,
+      "name": "Hammer\u0000ndle Stab",
+      "graphic": 708
+    },
+    {
+      "id": 27,
+      "name": "Hookshot 1 (Short) Head",
+      "graphic": 701
+    },
+    {
+      "id": 28,
+      "name": "Hookshot 1 (Short) Chain (Horizontal)",
+      "graphic": 703
+    },
+    {
+      "id": 29,
+      "name": "Hookshot 1 (Short) Handle",
+      "graphic": 705
+    },
+    {
+      "id": 30,
+      "name": "MISC: Arrow 2 (Silver) Sparkle",
+      "graphic": 614
+    },
+    {
+      "id": 31,
+      "name": "MISC: Arrow 3 (Golden) Sparkle",
+      "graphic": 590
+    },
+    {
+      "id": 32,
+      "name": "MISC: Boomerang 2 (Magic) Sparkle",
+      "graphic": 614
+    },
+    {
+      "id": 33,
+      "name": "MISC: Boomerang 3 (Fire) Sparkle",
+      "graphic": 630
+    },
+    {
+      "id": 34,
+      "name": "MISC: Hammer Impact\u0000(L2)",
+      "graphic": 717
+    },
+    {
+      "id": 35,
+      "name": "Arrow 3 (Golden)",
+      "graphic": 545
+    },
+    {
+      "id": 36,
+      "name": "Fire (Enemy)\u0000y) Flame",
+      "graphic": 662
+    },
+    {
+      "id": 37,
+      "name": "Whirlwind (Enemy)\u0000irlwind",
+      "graphic": 4760
+    },
+    {
+      "id": 38,
+      "name": "MISC: Magic Meter\u0000) Magic Meter",
+      "graphic": 290
+    },
+    {
+      "id": 39,
+      "name": "Din's Fire (Rising)",
+      "graphic": 630
+    },
+    {
+      "id": 40,
+      "name": "Din's Fire (Falling)",
+      "graphic": 630
+    },
+    {
+      "id": 41,
+      "name": "Din's Fire Trail (Rising)",
+      "graphic": 630
+    },
+    {
+      "id": 42,
+      "name": "Din's Fire Trail (Falling)",
+      "graphic": 630
+    },
+    {
+      "id": 43,
+      "name": "Hookshot 1 (Short) Chain (Vertical)",
+      "graphic": 703
+    },
+    {
+      "id": 44,
+      "name": "MISC: More...\u0000gs) More...",
+      "graphic": 1021
+    },
+    {
+      "id": 45,
+      "name": "MISC: <unused>",
+      "graphic": 0
+    },
+    {
+      "id": 46,
+      "name": "MISC: <unused>\u0000(H)",
+      "graphic": 322
+    },
+    {
+      "id": 47,
+      "name": "Sword 1 (Wooden) Slash",
+      "graphic": 346
+    },
+    {
+      "id": 48,
+      "name": "Sword 2 (White) Slash",
+      "graphic": 366
+    },
+    {
+      "id": 49,
+      "name": "Sword 3 (Magic) Slash",
+      "graphic": 386
+    },
+    {
+      "id": 50,
+      "name": "Sword 4 (Master) Slash",
+      "graphic": 406
+    },
+    {
+      "id": 51,
+      "name": "MISC: Shadow (Small)\u0000hadow (Small)",
+      "graphic": 456
+    },
+    {
+      "id": 52,
+      "name": "MISC: Shadow (Large)\u0000hadow (Large)",
+      "graphic": 454
+    },
+    {
+      "id": 53,
+      "name": "MISC: Bush Leaves\u0000ves",
+      "graphic": 481
+    },
+    {
+      "id": 54,
+      "name": "MISC: Flower Clippings",
+      "graphic": 502
+    },
+    {
+      "id": 55,
+      "name": "MISC: Grass Clippings\u0000lippings",
+      "graphic": 482
+    },
+    {
+      "id": 56,
+      "name": "MISC: Tall Grass\u0000ss) Grass",
+      "graphic": 467
+    },
+    {
+      "id": 57,
+      "name": "MISC: Ripples\u0000ow Water) Ripples",
+      "graphic": 469
+    },
+    {
+      "id": 58,
+      "name": "MISC: <unused>\u0000es",
+      "graphic": 0
+    },
+    {
+      "id": 59,
+      "name": "Nayru's Love (Left)\u0000eft)",
+      "graphic": 0
+    },
+    {
+      "id": 60,
+      "name": "Nayru's Love (Left, Returning)",
+      "graphic": 0
+    },
+    {
+      "id": 61,
+      "name": "Nayru's Love Trail (Left)",
+      "graphic": 0
+    },
+    {
+      "id": 62,
+      "name": "Nayru's Love Trail (Left, Returning)",
+      "graphic": 0
+    },
+    {
+      "id": 63,
+      "name": "Nayru's Love (Right)\u0000Right)",
+      "graphic": 0
+    },
+    {
+      "id": 64,
+      "name": "Nayru's Love (Right, Returning)",
+      "graphic": 0
+    },
+    {
+      "id": 65,
+      "name": "Nayru's Love Trail (Right)",
+      "graphic": 0
+    },
+    {
+      "id": 66,
+      "name": "Nayru's Love Trail (Right, Returning)",
+      "graphic": 0
+    },
+    {
+      "id": 67,
+      "name": "Nayru's Love Shield (Front)",
+      "graphic": 0
+    },
+    {
+      "id": 68,
+      "name": "Nayru's Love Shield (Back)",
+      "graphic": 0
+    },
+    {
+      "id": 69,
+      "name": "MISC: Subscreen Vine\u0000ine",
+      "graphic": 0
+    },
+    {
+      "id": 70,
+      "name": "Cane of Byrna\u0000)",
+      "graphic": 0
+    },
+    {
+      "id": 71,
+      "name": "Cane of Byrna (Slash)",
+      "graphic": 0
+    },
+    {
+      "id": 72,
+      "name": "Hookshot 2 (Long) Head",
+      "graphic": 701
+    },
+    {
+      "id": 73,
+      "name": "Hookshot 2 (Long) Chain (Horizontal)",
+      "graphic": 703
+    },
+    {
+      "id": 74,
+      "name": "Hookshot 2 (Long) Handle",
+      "graphic": 705
+    },
+    {
+      "id": 75,
+      "name": "Hookshot 2 (Long) Chain (Vertical)",
+      "graphic": 703
+    },
+    {
+      "id": 76,
+      "name": "Explosion (Super)",
+      "graphic": 73
+    },
+    {
+      "id": 77,
+      "name": "Bomb (Enemy, Normal)",
+      "graphic": 0
+    },
+    {
+      "id": 78,
+      "name": "Bomb (Enemy, Super)",
+      "graphic": 0
+    },
+    {
+      "id": 79,
+      "name": "Explosion (Enemy, Normal)",
+      "graphic": 0
+    },
+    {
+      "id": 80,
+      "name": "Explosion (Enemy, Super)",
+      "graphic": 0
+    },
+    {
+      "id": 81,
+      "name": "Fire Trail (Enemy)",
+      "graphic": 0
+    },
+    {
+      "id": 82,
+      "name": "Fire 2 (Enemy)",
+      "graphic": 0
+    },
+    {
+      "id": 83,
+      "name": "Fire 2 Trail (Enemy) <Unused>",
+      "graphic": 0
+    },
+    {
+      "id": 84,
+      "name": "Ice Magic (Enemy) <Unused>",
+      "graphic": 0
+    },
+    {
+      "id": 85,
+      "name": "MISC: Hover Boots Glow",
+      "graphic": 0
+    },
+    {
+      "id": 86,
+      "name": "Magic (Fire)\u0000ire)",
+      "graphic": 0
+    },
+    {
+      "id": 87,
+      "name": "MISC: Quarter Hearts\u0000uarter Hearts",
+      "graphic": 1
+    },
+    {
+      "id": 88,
+      "name": "Cane of Byrna (Beam)",
+      "graphic": 0
     }
   ],
   "screens": [

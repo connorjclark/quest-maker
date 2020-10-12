@@ -180,15 +180,14 @@ for (const combo of zcData.combos) {
   }
 }
 
-// TODO: I think these are just hero weapons?
-// for (const zcWeapon of zcData.weapons) {
-//   if (zcWeapon.name.startsWith('zz')) break;
+for (const zcWeapon of zcData.weapons) {
+  if (zcWeapon.name.startsWith('zz')) break;
 
-//   makeWeapon({
-//     name: zcWeapon.name,
-//     graphic: zcWeapon.tile,
-//   })
-// }
+  makeWeapon({
+    name: zcWeapon.name,
+    graphic: zcWeapon.tile,
+  })
+}
 
 for (const guy of zcData.guys) {
   const tiles = Array.from(Array(guy.width)).map((_, i) => guy.tile + i);
@@ -344,17 +343,18 @@ for (const guy of zcData.guys) {
   }
 
   // TODO: figure out weapons.
-  if (guy.weapon) {
-    const weaponGraphic = getDefaultWeaponSprite(guy);
-    let weapon = quest.weapons.find(w => w.graphic === weaponGraphic);
-    if (!weapon) {
-      weapon = makeWeapon({
-        name: 'weapon',
-        graphic: weaponGraphic,
-      });
-    }
-    attributes['enemy.weapon'] = weapon.id;
-  }
+  attributes['enemy.weapon'] = getDefaultWeaponSprite(guy);
+  // if (guy.weapon) {
+  //   const weaponGraphic = getDefaultWeaponSprite(guy);
+  //   let weapon = quest.weapons.find(w => w.graphic === weaponGraphic);
+  //   if (!weapon) {
+  //     weapon = makeWeapon({
+  //       name: 'weapon',
+  //       graphic: weaponGraphic,
+  //     });
+  //   }
+  //   attributes['enemy.weapon'] = weapon.id;
+  // }
 
   makeEnemy({
     name: guy.name,
