@@ -64,6 +64,7 @@ declare global {
       'enemy.leever.emergedStateTimeChanged': number;
       'enemy.leever.emergeStyle': 'hero-path' | 'in-place';
       'enemy.weapon': number;
+      'enemy.weapon.sprite': number;
     }
 
     interface ScreenAttributes {

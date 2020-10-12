@@ -276,7 +276,8 @@ class QuestEntity extends QuestEntityBase {
         if (Math.random() < haltFactor) {
           this.haltTimer = 30;
           if (weaponId) {
-            mode.createProjectile(weaponId, { x: Math.sign(this.direction.x), y: Math.sign(this.direction.y) }, currentTile.x, currentTile.y, 2);
+            const weaponSpriteOverride = this.misc.get('enemy.weapon.sprite');
+            mode.createProjectile(weaponId, weaponSpriteOverride, { x: Math.sign(this.direction.x), y: Math.sign(this.direction.y) }, currentTile.x, currentTile.y, 2);
           }
           return;
         }
@@ -896,10 +897,10 @@ export class PlayGameMode extends QuestMakerMode {
     return entity;
   }
 
-  createProjectile(weaponId: number, delta: { x: number, y: number }, x: number, y: number, speed: number) {
+  createProjectile(weaponId: number, weaponSpriteOverride: number, delta: { x: number, y: number }, x: number, y: number, speed: number) {
     const weapon = this.app.state.quest.weapons[weaponId - 1];
     const entity = new QuestProjectileEntity();
-    const graphic = this.app.state.quest.graphics[weapon.graphic];
+    const graphic = this.app.state.quest.graphics[weaponSpriteOverride || weapon.graphic];
     entity.x = x * tileSize + (tileSize - graphic.width) / 2;
     entity.y = y * tileSize + (tileSize - graphic.height) / 2;
     entity.delta = delta;

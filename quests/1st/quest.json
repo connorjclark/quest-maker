@@ -149751,7 +149751,11 @@
         ]
       },
       "attributes": {
-        "enemy.speed": 0.5
+        "enemy.directionChange": 0.25,
+        "enemy.halt": 0.1875,
+        "enemy.homing": 0.25098039215686274,
+        "enemy.speed": 0.5,
+        "enemy.weapon": 1
       }
     },
     {
@@ -149773,7 +149777,11 @@
         ]
       },
       "attributes": {
-        "enemy.speed": 0.5
+        "enemy.directionChange": 0.25,
+        "enemy.halt": 0.3125,
+        "enemy.homing": 0.25098039215686274,
+        "enemy.speed": 0.5,
+        "enemy.weapon": 1
       }
     },
     {
@@ -149795,7 +149803,11 @@
         ]
       },
       "attributes": {
-        "enemy.speed": 1
+        "enemy.directionChange": 0.375,
+        "enemy.halt": 0.1875,
+        "enemy.homing": 0.5019607843137255,
+        "enemy.speed": 1,
+        "enemy.weapon": 1
       }
     },
     {
@@ -149817,7 +149829,11 @@
         ]
       },
       "attributes": {
-        "enemy.speed": 1
+        "enemy.directionChange": 0.375,
+        "enemy.halt": 0.3125,
+        "enemy.homing": 0.5019607843137255,
+        "enemy.speed": 1,
+        "enemy.weapon": 1
       }
     },
     {
@@ -149862,6 +149878,9 @@
         ]
       },
       "attributes": {
+        "enemy.directionChange": 0,
+        "enemy.halt": 0,
+        "enemy.homing": 0,
         "enemy.speed": 0.5
       }
     },
@@ -149885,6 +149904,9 @@
         ]
       },
       "attributes": {
+        "enemy.directionChange": 0.5,
+        "enemy.halt": 0,
+        "enemy.homing": 0,
         "enemy.speed": 0.5
       }
     },
@@ -149909,7 +149931,11 @@
         ]
       },
       "attributes": {
-        "enemy.speed": 0.5
+        "enemy.directionChange": 0.3125,
+        "enemy.halt": 0.25,
+        "enemy.homing": 0.5019607843137255,
+        "enemy.speed": 0.5,
+        "enemy.weapon": 2
       }
     },
     {
@@ -149933,7 +149959,11 @@
         ]
       },
       "attributes": {
-        "enemy.speed": 0.5
+        "enemy.directionChange": 0.5,
+        "enemy.halt": 0.375,
+        "enemy.homing": 0.5019607843137255,
+        "enemy.speed": 0.5,
+        "enemy.weapon": 2
       }
     },
     {
@@ -149957,7 +149987,11 @@
         ]
       },
       "attributes": {
-        "enemy.speed": 0.5
+        "enemy.directionChange": 0.375,
+        "enemy.halt": 0.25,
+        "enemy.homing": 0.5019607843137255,
+        "enemy.speed": 0.5,
+        "enemy.weapon": 3
       }
     },
     {
@@ -149981,7 +150015,11 @@
         ]
       },
       "attributes": {
-        "enemy.speed": 0.5
+        "enemy.directionChange": 0.375,
+        "enemy.halt": 0.25,
+        "enemy.homing": 0.5019607843137255,
+        "enemy.speed": 0.5,
+        "enemy.weapon": 3
       }
     },
     {
@@ -150058,6 +150096,9 @@
         ]
       },
       "attributes": {
+        "enemy.directionChange": 0.375,
+        "enemy.halt": 0,
+        "enemy.homing": 0.5019607843137255,
         "enemy.speed": 0.5
       }
     },
@@ -150159,7 +150200,11 @@
         ]
       },
       "attributes": {
-        "enemy.speed": 0.5
+        "enemy.directionChange": 0.375,
+        "enemy.halt": 0.3125,
+        "enemy.homing": 0.5019607843137255,
+        "enemy.speed": 0.5,
+        "enemy.weapon": 4
       }
     },
     {
@@ -150183,7 +150228,11 @@
         ]
       },
       "attributes": {
-        "enemy.speed": 0.5
+        "enemy.directionChange": 0.375,
+        "enemy.halt": 0.375,
+        "enemy.homing": 0.5019607843137255,
+        "enemy.speed": 0.5,
+        "enemy.weapon": 4
       }
     },
     {
@@ -150634,7 +150683,11 @@
         ]
       },
       "attributes": {
-        "enemy.speed": 2
+        "enemy.directionChange": 1,
+        "enemy.halt": 0.0625,
+        "enemy.homing": 1,
+        "enemy.speed": 2,
+        "enemy.weapon": 5
       }
     },
     {
@@ -151197,7 +151250,11 @@
         ]
       },
       "attributes": {
-        "enemy.speed": 0.5
+        "enemy.directionChange": 0.5625,
+        "enemy.halt": 0.5625,
+        "enemy.homing": 0.5019607843137255,
+        "enemy.speed": 0.5,
+        "enemy.weapon": 4
       }
     },
     {
@@ -151220,6 +151277,9 @@
         ]
       },
       "attributes": {
+        "enemy.directionChange": 0.5,
+        "enemy.halt": 0,
+        "enemy.homing": 0,
         "enemy.speed": 3
       }
     },
@@ -151242,7 +151302,11 @@
         ]
       },
       "attributes": {
-        "enemy.speed": 1
+        "enemy.directionChange": 0.25,
+        "enemy.halt": 0.1875,
+        "enemy.homing": 0.25098039215686274,
+        "enemy.speed": 1,
+        "enemy.weapon": 6
       }
     },
     {
@@ -151264,7 +151328,11 @@
         ]
       },
       "attributes": {
-        "enemy.speed": 2
+        "enemy.directionChange": 0.25,
+        "enemy.halt": 0.3125,
+        "enemy.homing": 0.25098039215686274,
+        "enemy.speed": 2,
+        "enemy.weapon": 6
       }
     },
     {
@@ -151286,7 +151354,11 @@
         ]
       },
       "attributes": {
-        "enemy.speed": 1
+        "enemy.directionChange": 0.25,
+        "enemy.halt": 0.1875,
+        "enemy.homing": 0.25098039215686274,
+        "enemy.speed": 1,
+        "enemy.weapon": 7
       }
     },
     {
@@ -151308,7 +151380,11 @@
         ]
       },
       "attributes": {
-        "enemy.speed": 2
+        "enemy.directionChange": 0.25,
+        "enemy.halt": 0.3125,
+        "enemy.homing": 0.25098039215686274,
+        "enemy.speed": 2,
+        "enemy.weapon": 7
       }
     },
     {
@@ -151618,7 +151694,11 @@
         ]
       },
       "attributes": {
-        "enemy.speed": 0.5
+        "enemy.directionChange": 0.375,
+        "enemy.halt": 0.25,
+        "enemy.homing": 0.5019607843137255,
+        "enemy.speed": 0.5,
+        "enemy.weapon": 3
       }
     },
     {
@@ -155395,7 +155475,43 @@
       "attributes": {}
     }
   ],
-  "weapons": [],
+  "weapons": [
+    {
+      "id": 1,
+      "name": "weapon",
+      "graphic": 18
+    },
+    {
+      "id": 2,
+      "name": "weapon",
+      "graphic": 19
+    },
+    {
+      "id": 3,
+      "name": "weapon",
+      "graphic": 20
+    },
+    {
+      "id": 4,
+      "name": "weapon",
+      "graphic": 4
+    },
+    {
+      "id": 5,
+      "name": "weapon",
+      "graphic": 21
+    },
+    {
+      "id": 6,
+      "name": "weapon",
+      "graphic": 35
+    },
+    {
+      "id": 7,
+      "name": "weapon",
+      "graphic": 76
+    }
+  ],
   "screens": [
     [
       {

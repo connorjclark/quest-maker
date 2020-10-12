@@ -180,6 +180,16 @@ for (const combo of zcData.combos) {
   }
 }
 
+// TODO: I think these are just hero weapons?
+// for (const zcWeapon of zcData.weapons) {
+//   if (zcWeapon.name.startsWith('zz')) break;
+
+//   makeWeapon({
+//     name: zcWeapon.name,
+//     graphic: zcWeapon.tile,
+//   })
+// }
+
 for (const guy of zcData.guys) {
   const tiles = Array.from(Array(guy.width)).map((_, i) => guy.tile + i);
   const frames: QuestMaker.Enemy['frames'] = {};
@@ -187,6 +197,9 @@ for (const guy of zcData.guys) {
   let type = EnemyType.NORMAL;
 
   // attributes['enemy.life'] = guy.life;
+  attributes['enemy.directionChange'] = guy.rate / 16;
+  attributes['enemy.halt'] = guy.hrate / 16;
+  attributes['enemy.homing'] = guy.homing / 255;
   attributes['enemy.speed'] = guy.step / 100;
 
   let ignoreFrames = false;
@@ -330,12 +343,99 @@ for (const guy of zcData.guys) {
     // TODO ...
   }
 
+  // TODO: figure out weapons.
+  if (guy.weapon) {
+    const weaponGraphic = getDefaultWeaponSprite(guy);
+    let weapon = quest.weapons.find(w => w.graphic === weaponGraphic);
+    if (!weapon) {
+      weapon = makeWeapon({
+        name: 'weapon',
+        graphic: weaponGraphic,
+      });
+    }
+    attributes['enemy.weapon'] = weapon.id;
+  }
+
   makeEnemy({
     name: guy.name,
     type,
     frames,
     attributes,
   });
+}
+
+function getDefaultWeaponSprite(guy: any) {
+  let wpnsprite = 0
+
+  switch (guy.weapon as WeaponTypeGameEngine) {
+    case WeaponTypeGameEngine.wSword:
+    case WeaponTypeGameEngine.wBeam:
+    case WeaponTypeGameEngine.wBrang:
+    case WeaponTypeGameEngine.wBomb:
+    case WeaponTypeGameEngine.wSBomb:
+    case WeaponTypeGameEngine.wLitBomb:
+    case WeaponTypeGameEngine.wLitSBomb:
+    case WeaponTypeGameEngine.wArrow:
+    case WeaponTypeGameEngine.wFire:
+    case WeaponTypeGameEngine.wWhistle:
+    case WeaponTypeGameEngine.wBait:
+    case WeaponTypeGameEngine.wWand:
+    case WeaponTypeGameEngine.wMagic:
+    case WeaponTypeGameEngine.wCatching:
+    case WeaponTypeGameEngine.wWind:
+    case WeaponTypeGameEngine.wRefMagic:
+    case WeaponTypeGameEngine.wRefFireball:
+    case WeaponTypeGameEngine.wRefRock:
+    case WeaponTypeGameEngine.wHammer:
+    case WeaponTypeGameEngine.wHookshot:
+    case WeaponTypeGameEngine.wHSHandle:
+    case WeaponTypeGameEngine.wHSChain:
+    case WeaponTypeGameEngine.wSSparkle:
+    case WeaponTypeGameEngine.wFSparkle:
+    case WeaponTypeGameEngine.wSmack:
+    case WeaponTypeGameEngine.wPhantom:
+    case WeaponTypeGameEngine.wCByrna:
+    case WeaponTypeGameEngine.wRefBeam:
+    case WeaponTypeGameEngine.wStomp:
+    case WeaponTypeGameEngine.lwMax:
+    case WeaponTypeGameEngine.wScript1:
+    case WeaponTypeGameEngine.wScript2:
+    case WeaponTypeGameEngine.wScript3:
+    case WeaponTypeGameEngine.wScript4:
+    case WeaponTypeGameEngine.wScript5:
+    case WeaponTypeGameEngine.wScript6:
+    case WeaponTypeGameEngine.wScript7:
+    case WeaponTypeGameEngine.wScript8:
+    case WeaponTypeGameEngine.wScript9:
+    case WeaponTypeGameEngine.wScript10:
+    case WeaponTypeGameEngine.wIce:
+      wpnsprite = -1;
+      break;
+
+    case WeaponTypeGameEngine.wEnemyWeapons:
+    case WeaponTypeGameEngine.ewFireball: wpnsprite = 17; break;
+
+    case WeaponTypeGameEngine.ewArrow: wpnsprite = 19; break;
+    case WeaponTypeGameEngine.ewBrang: wpnsprite = 4; break;
+    case WeaponTypeGameEngine.ewSword: wpnsprite = 20; break;
+    case WeaponTypeGameEngine.ewRock: wpnsprite = 18; break;
+    case WeaponTypeGameEngine.ewMagic: wpnsprite = 21; break;
+    case WeaponTypeGameEngine.ewBomb: wpnsprite = 78; break;
+    case WeaponTypeGameEngine.ewSBomb: wpnsprite = 79; break;
+    case WeaponTypeGameEngine.ewLitBomb: wpnsprite = 76; break;
+    case WeaponTypeGameEngine.ewLitSBomb: wpnsprite = 77; break;
+    case WeaponTypeGameEngine.ewFireTrail: wpnsprite = 80; break;
+    case WeaponTypeGameEngine.ewFlame: wpnsprite = 35; break;
+    case WeaponTypeGameEngine.ewWind: wpnsprite = 36; break;
+    case WeaponTypeGameEngine.ewFlame2: wpnsprite = 81; break;
+    case WeaponTypeGameEngine.ewFlame2Trail: wpnsprite = 82; break;
+    case WeaponTypeGameEngine.ewIce: wpnsprite = 83; break;
+    case WeaponTypeGameEngine.ewFireball2: wpnsprite = 17; break; //fireball (rising)
+
+    default: break; //No assign.
+  }
+
+  return wpnsprite;
 }
 
 for (const map of zcData.maps) {
