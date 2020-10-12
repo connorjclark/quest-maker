@@ -217,10 +217,10 @@ export class EditorMode extends QuestMakerMode {
 
           sprite.interactive = true;
           sprite.addListener('click', () => {
-            this.app.state.currentScreen.enemies.push({ enemyId: i });
+            this.app.state.currentScreen.enemies.push({ enemyId: enemy.id });
           });
         }
-      }, () => ({ enemies: this.app.state.quest.enemies }));
+      }, () => ({ enemies: this.app.state.quest.enemies.filter(e => e.name) }));
       contents.addChild(enemyPickerContainer);
 
       const enemySelectionContainer = new ReactiveContainer((container, props) => {

@@ -282,9 +282,9 @@ async function load() {
     game: {
       screenStates: new Map(),
     },
-    screenX: 0,
-    screenY: 0,
-    currentScreen: quest.screens[0][0],
+    screenX: quest.misc.START_X,
+    screenY: quest.misc.START_Y,
+    currentScreen: quest.screens[quest.misc.START_X][quest.misc.START_Y],
   };
 
   const app = new QuestMakerApp(pixi, state);

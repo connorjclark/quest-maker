@@ -881,6 +881,10 @@ export class PlayGameMode extends QuestMakerMode {
       const textures = enemy.frames.down.map(f => this.app.createGraphicSprite(f).texture);
       entity.addTextureFrame('up', textures, PIXI.groupD8.MIRROR_VERTICAL);
     }
+    if (!enemy.frames.down && enemy.frames.up) {
+      const textures = enemy.frames.up.map(f => this.app.createGraphicSprite(f).texture);
+      entity.addTextureFrame('down', textures, PIXI.groupD8.MIRROR_VERTICAL);
+    }
     if (enemy.frames.emerging && !enemy.frames.submerging) {
       const textures = enemy.frames.emerging.map(f => this.app.createGraphicSprite(f).texture);
       entity.addTextureFrame('submerging', textures.reverse());

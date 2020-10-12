@@ -111,6 +111,7 @@ export default function () {
   const enemies: QuestMaker.Enemy[] = [];
   function makeEnemy(opts: Pick<QuestMaker.Enemy, 'name' | 'frames' | 'attributes'> & { type?: EnemyType }) {
     const enemy = {
+      id: enemies.length,
       type: EnemyType.NORMAL,
       speed: 50 / 100,
       homingFactor: 64 / 255,
@@ -131,6 +132,8 @@ export default function () {
       SPAWN_GFX_START: 0,
       HERO_GFX_START: 0,
       SWORD_GFX_START: 0,
+      START_X: 0,
+      START_Y: 0,
     }
   };
 

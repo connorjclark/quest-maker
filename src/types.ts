@@ -71,6 +71,7 @@ declare global {
     }
 
     interface Enemy {
+      id: number;
       name: string;
       type: EnemyType_;
       frames: Record<string, number[]>;
@@ -94,6 +95,8 @@ declare global {
         SPAWN_GFX_START: number;
         HERO_GFX_START: number;
         SWORD_GFX_START: number;
+        START_X: number;
+        START_Y: number;
       };
     }
 
