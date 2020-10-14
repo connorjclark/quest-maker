@@ -89,6 +89,11 @@ function createQuest(): QuestMaker.Quest {
     spacing: 1,
   }).graphics;
 
+  makeWeapon({
+    name: 'Sword',
+    graphic: swordGraphics[0].id,
+  });
+
   const spawnGraphics = make({
     tile: false,
     file: 'link.png',
@@ -123,6 +128,7 @@ function createQuest(): QuestMaker.Quest {
   makeEnemy({
     name: 'Octorok (Red)',
     attributes: {
+      'enemy.halt': 3 / 16,
       'enemy.weapon': rockWeapon.id,
     },
     frames: {
@@ -135,6 +141,7 @@ function createQuest(): QuestMaker.Quest {
   makeEnemy({
     name: 'Octorok (Blue)',
     attributes: {
+      'enemy.halt': 5 / 16,
       'enemy.directionChange': 6 / 16,
       'enemy.homing': 128 / 255,
       'enemy.speed': 1,
@@ -150,6 +157,7 @@ function createQuest(): QuestMaker.Quest {
   makeEnemy({
     name: 'Moblin',
     attributes: {
+      'enemy.halt': 3 / 16,
       'enemy.weapon': arrowWeapon.id,
     },
     frames: {
@@ -226,7 +234,6 @@ function createQuest(): QuestMaker.Quest {
     'useItem-left': { graphicIds: [heroGraphicId + 7], flip: true },
     'useItem-up': { graphicIds: [heroGraphicId + 8], flip: true },
   };
-  quest.misc.SWORD_GFX_START = swordGraphics[0].id;
 
   return quest;
 }

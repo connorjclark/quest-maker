@@ -460,7 +460,7 @@ export class PlayGameMode extends QuestMakerMode {
     new PIXI.Container(),
   ];
 
-  private swordSprite = this.app.createGraphicSprite(this.app.state.quest.misc.SWORD_GFX_START);
+  private swordSprite = this.app.createGraphicSprite(this.app.state.quest.weapons[0].graphic);
   private hitTest = new HitTest();
 
   init() {
