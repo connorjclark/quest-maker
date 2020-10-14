@@ -471,6 +471,20 @@ for (const map of zcData.maps) {
   break;
 }
 
+const walkFrames = zcData.link_sprites.walk.map((d: any) => ({ graphicIds: [d.tile, d.tile + 1, d.tile + 2], flip: d.flip }));
+const stabFrames = zcData.link_sprites.stab.map((d: any) => ({ graphicIds: [d.tile, d.tile + 1, d.tile + 2], flip: d.flip }));
+quest.misc.HERO_FRAMES = {
+  up: walkFrames[0],
+  down: walkFrames[1],
+  left: walkFrames[2],
+  right: walkFrames[3],
+
+  'useItem-up': stabFrames[0],
+  'useItem-down': stabFrames[1],
+  'useItem-left': stabFrames[2],
+  'useItem-right': stabFrames[3],
+};
+
 quest.misc.SPAWN_GFX_START = 72;
 
 // TODO

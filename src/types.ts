@@ -94,7 +94,7 @@ declare global {
       tiles: Tile[];
       misc: {
         SPAWN_GFX_START: number;
-        HERO_GFX_START: number;
+        HERO_FRAMES: Record<string, {graphicIds: number[], flip?: boolean}>;
         SWORD_GFX_START: number;
         START_X: number;
         START_Y: number;

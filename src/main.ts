@@ -213,7 +213,19 @@ function createQuest(): QuestMaker.Quest {
   quest.tiles = [...quest.tiles, ...quest.tiles, ...quest.tiles, ...quest.tiles];
 
   quest.misc.SPAWN_GFX_START = spawnGraphics[0].id;
-  quest.misc.HERO_GFX_START = HERO_BASIC_GFX[0].id;
+  const heroGraphicId = HERO_BASIC_GFX[0].id;
+
+  // TODO: handle directions better?
+  quest.misc.HERO_FRAMES = {
+    down: { graphicIds: [heroGraphicId, heroGraphicId + 1] },
+    up: { graphicIds: [heroGraphicId + 4, heroGraphicId + 5] },
+    right: { graphicIds: [heroGraphicId + 2, heroGraphicId + 3] },
+    left: { graphicIds: [heroGraphicId + 2, heroGraphicId + 3], flip: true },
+    'useItem-down': { graphicIds: [heroGraphicId + 6] },
+    'useItem-right': { graphicIds: [heroGraphicId + 7] },
+    'useItem-left': { graphicIds: [heroGraphicId + 7], flip: true },
+    'useItem-up': { graphicIds: [heroGraphicId + 8], flip: true },
+  };
   quest.misc.SWORD_GFX_START = swordGraphics[0].id;
 
   return quest;

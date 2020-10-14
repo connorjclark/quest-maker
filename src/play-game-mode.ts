@@ -485,34 +485,16 @@ export class PlayGameMode extends QuestMakerMode {
 
     this.heroEntity.speed = DEFAULT_HERO_SPEED;
 
-    this.heroEntity.addTextureFrame('down', [
-      this.app.createGraphicSprite(state.quest.misc.HERO_GFX_START).texture,
-      this.app.createGraphicSprite(state.quest.misc.HERO_GFX_START + 1).texture,
-    ]);
-    this.heroEntity.addTextureFrame('up', [
-      this.app.createGraphicSprite(state.quest.misc.HERO_GFX_START + 4).texture,
-      this.app.createGraphicSprite(state.quest.misc.HERO_GFX_START + 5).texture,
-    ]);
-    this.heroEntity.addTextureFrame('right', [
-      this.app.createGraphicSprite(state.quest.misc.HERO_GFX_START + 2).texture,
-      this.app.createGraphicSprite(state.quest.misc.HERO_GFX_START + 3).texture,
-    ]);
-    this.heroEntity.addTextureFrame('left', [
-      this.app.createGraphicSprite(state.quest.misc.HERO_GFX_START + 2).texture,
-      this.app.createGraphicSprite(state.quest.misc.HERO_GFX_START + 3).texture,
-    ], PIXI.groupD8.MIRROR_HORIZONTAL);
-    this.heroEntity.addTextureFrame('useItem-down', [
-      this.app.createGraphicSprite(state.quest.misc.HERO_GFX_START + 6).texture,
-    ]);
-    this.heroEntity.addTextureFrame('useItem-right', [
-      this.app.createGraphicSprite(state.quest.misc.HERO_GFX_START + 7).texture,
-    ]);
-    this.heroEntity.addTextureFrame('useItem-left', [
-      this.app.createGraphicSprite(state.quest.misc.HERO_GFX_START + 7).texture,
-    ], PIXI.groupD8.MIRROR_HORIZONTAL);
-    this.heroEntity.addTextureFrame('useItem-up', [
-      this.app.createGraphicSprite(state.quest.misc.HERO_GFX_START + 8).texture,
-    ], PIXI.groupD8.MIRROR_HORIZONTAL);
+    for (const [name, frames] of Object.entries(state.quest.misc.HERO_FRAMES)) {
+      let rotate;
+      if (frames.flip) {
+        rotate = PIXI.groupD8.MIRROR_HORIZONTAL;
+      }
+      this.heroEntity.addTextureFrame(name,
+        frames.graphicIds.map(graphicId => this.app.createGraphicSprite(graphicId).texture),
+        rotate
+      );
+    }
 
     this.heroEntity.setTextureFrame('down');
   }

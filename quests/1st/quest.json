@@ -234001,7 +234001,72 @@
   ],
   "misc": {
     "SPAWN_GFX_START": 72,
-    "HERO_GFX_START": 0,
+    "HERO_FRAMES": {
+      "up": {
+        "graphicIds": [
+          28,
+          29,
+          30
+        ],
+        "flip": 0
+      },
+      "down": {
+        "graphicIds": [
+          23,
+          24,
+          25
+        ],
+        "flip": 0
+      },
+      "left": {
+        "graphicIds": [
+          20,
+          21,
+          22
+        ],
+        "flip": 1
+      },
+      "right": {
+        "graphicIds": [
+          20,
+          21,
+          22
+        ],
+        "flip": 0
+      },
+      "useItem-up": {
+        "graphicIds": [
+          31,
+          32,
+          33
+        ],
+        "flip": 0
+      },
+      "useItem-down": {
+        "graphicIds": [
+          27,
+          28,
+          29
+        ],
+        "flip": 0
+      },
+      "useItem-left": {
+        "graphicIds": [
+          26,
+          27,
+          28
+        ],
+        "flip": 1
+      },
+      "useItem-right": {
+        "graphicIds": [
+          26,
+          27,
+          28
+        ],
+        "flip": 0
+      }
+    },
     "SWORD_GFX_START": 0,
     "START_X": 7,
     "START_Y": 7
