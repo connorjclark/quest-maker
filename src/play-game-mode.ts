@@ -765,6 +765,12 @@ export class PlayGameMode extends QuestMakerMode {
     const state = this.app.state;
     const screen = state.quest.screens[sx][sy];
 
+    const bg = new PIXI.Graphics();
+    bg.beginFill(0);
+    bg.drawRect(0, 0, screenWidth * tileSize, screenHeight * tileSize);
+    bg.endFill();
+    container.addChild(bg);
+
     for (let x = 0; x < screenWidth; x++) {
       for (let y = 0; y < screenHeight; y++) {
         const { tile } = screen.tiles[x][y];

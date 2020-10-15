@@ -384,6 +384,12 @@ export class EditorMode extends QuestMakerMode {
     const container = new PIXI.Container();
     container.interactive = true;
 
+    const bg = new PIXI.Graphics();
+    bg.beginFill(0);
+    bg.drawRect(0, 0, screenWidth * tileSize, screenHeight * tileSize);
+    bg.endFill();
+    container.addChild(bg);
+
     const tilesContainer = new PIXI.Container();
     tilesContainer.interactive = true;
     container.addChild(tilesContainer);

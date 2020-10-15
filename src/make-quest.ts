@@ -131,7 +131,6 @@ export default function () {
     misc: {
       SPAWN_GFX_START: 0,
       HERO_FRAMES: {},
-      SWORD_GFX_START: 0,
       START_X: 0,
       START_Y: 0,
     }
