@@ -88,15 +88,19 @@ declare global {
       rotate?: boolean;
     }
 
-    interface Quest {
+    interface Map_ {
       screens: Screen[][];
+    }
+
+    interface Quest {
+      maps: Map_[];
       enemies: Enemy[];
       weapons: Weapon[];
       graphics: Graphic[];
       tiles: Tile[];
       misc: {
         SPAWN_GFX_START: number;
-        HERO_FRAMES: Record<string, {graphicIds: number[], flip?: boolean}>;
+        HERO_FRAMES: Record<string, { graphicIds: number[], flip?: boolean }>;
         START_X: number;
         START_Y: number;
       };
@@ -104,6 +108,7 @@ declare global {
 
     interface State {
       quest: Quest;
+      currentMap: Map_;
       currentScreen: Screen;
       editor: {
         isPlayTesting: boolean;
@@ -122,6 +127,7 @@ declare global {
           enemiesKilled: number
         }>;
       };
+      mapIndex: number;
       screenX: number;
       screenY: number;
     }

@@ -33,9 +33,9 @@ class Screen {
     }
 
     // Hardcode enemies.
-    const num = Math.floor(Math.random() * 4);
+    const num = 1 + Math.floor(Math.random() * 4);
     for (let i = 0; i < num; i++) {
-      const enemyId = Math.floor(Math.random() * 4);
+      const enemyId = Math.floor(Math.random() * 5);
       this.enemies.push({ enemyId });
     }
   }
@@ -198,10 +198,11 @@ function createQuest(): QuestMaker.Quest {
     },
   });
 
+  quest.maps.push({ screens: [] });
   for (let x = 0; x < 16; x++) {
-    quest.screens[x] = [];
+    quest.maps[0].screens[x] = [];
     for (let y = 0; y < 9; y++) {
-      quest.screens[x].push(new Screen());
+      quest.maps[0].screens[x].push(new Screen());
     }
   }
 
@@ -216,7 +217,7 @@ function createQuest(): QuestMaker.Quest {
   // Stairs.
   quest.tiles[2].type = TileType.WARP;
 
-  quest.screens[0][0].tiles[9][7].tile = 2;
+  quest.maps[0].screens[0][0].tiles[9][7].tile = 2;
 
   quest.tiles = [...quest.tiles, ...quest.tiles, ...quest.tiles, ...quest.tiles];
 
@@ -292,7 +293,7 @@ async function load() {
   }
   await new Promise(resolve => pixi.loader.load(resolve));
 
-  const state = {
+  const state: QuestMaker.State = {
     quest,
     editor: {
       isPlayTesting: false,
@@ -301,9 +302,11 @@ async function load() {
     game: {
       screenStates: new Map(),
     },
+    mapIndex: 0,
     screenX: quest.misc.START_X,
     screenY: quest.misc.START_Y,
-    currentScreen: quest.screens[quest.misc.START_X][quest.misc.START_Y],
+    currentMap: quest.maps[0],
+    currentScreen: quest.maps[0].screens[quest.misc.START_X][quest.misc.START_Y],
   };
 
   const app = new QuestMakerApp(pixi, state);

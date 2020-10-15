@@ -748,7 +748,7 @@ export class PlayGameMode extends QuestMakerMode {
     }
 
     if (transitionX !== 0 || transitionY !== 0) {
-      if (inBounds(state.screenX + transitionX, state.screenY + transitionY, state.quest.screens.length, state.quest.screens[0].length)) {
+      if (inBounds(state.screenX + transitionX, state.screenY + transitionY, state.currentMap.screens.length, state.currentMap.screens[0].length)) {
         state.game.screenTransition = {
           type: 'scroll',
           frames: 0,
@@ -763,7 +763,7 @@ export class PlayGameMode extends QuestMakerMode {
   createScreenContainer(sx: number, sy: number) {
     const container = new PIXI.Container();
     const state = this.app.state;
-    const screen = state.quest.screens[sx][sy];
+    const screen = state.currentMap.screens[sx][sy];
 
     const bg = new PIXI.Graphics();
     bg.beginFill(0);
@@ -1032,7 +1032,7 @@ export class PlayGameMode extends QuestMakerMode {
       delete state.game.screenTransition;
       state.screenX = transition.screen.x;
       state.screenY = transition.screen.y;
-      state.currentScreen = state.quest.screens[state.screenX][state.screenY];
+      state.currentScreen = state.currentMap.screens[state.screenX][state.screenY];
       this.container.x = 0;
       this.container.y = 0;
 

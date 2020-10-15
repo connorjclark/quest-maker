@@ -442,11 +442,14 @@ function getDefaultWeaponSprite(guy: any) {
   return wpnsprite;
 }
 
-for (const map of zcData.maps) {
+for (const zcMap of zcData.maps) {
+  const map: QuestMaker.Map_ = {screens: []};
+  quest.maps.push(map);
+
   for (let screenx = 0; screenx < 16; screenx++) {
-    quest.screens.push([]);
+    map.screens.push([]);
     for (let screeny = 0; screeny < 9; screeny++) {
-      const zcScreen = map.screens[screenx + screeny * 16];
+      const zcScreen = zcMap.screens[screenx + screeny * 16];
       if (!zcScreen) continue;
 
       const screen: QuestMaker.Screen = {
@@ -454,7 +457,7 @@ for (const map of zcData.maps) {
         enemies: [],
         warps: {},
       };
-      quest.screens[screenx].push(screen);
+      map.screens[screenx].push(screen);
 
       for (let x = 0; x < screenWidth; x++) {
         screen.tiles.push([]);
@@ -470,9 +473,6 @@ for (const map of zcData.maps) {
         .map(i => ({ enemyId: i }));
     }
   }
-
-  // Just one for now.
-  break;
 }
 
 const walkFrames = zcData.link_sprites.walk.map((d: any) => ({ graphicIds: [d.tile, d.tile + 1, d.tile + 2], flip: d.flip }));

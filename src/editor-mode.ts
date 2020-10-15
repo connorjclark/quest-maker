@@ -126,12 +126,30 @@ export class EditorMode extends QuestMakerMode {
     else if (this.app.keys.down['ArrowDown']) dy += 1;
 
     if (dx !== 0 || dy !== 0) {
-      this.app.state.screenX = Utils.clamp(0, this.app.state.screenX + dx, this.app.state.quest.screens.length - 1);
-      this.app.state.screenY = Utils.clamp(0, this.app.state.screenY + dy, this.app.state.quest.screens[0].length - 1);
-      this.app.state.currentScreen = this.app.state.quest.screens[this.app.state.screenX][this.app.state.screenY];
-      containers.screenArea.render();
-      containers.screenPicker.render();
+      this.setScreen(this.app.state.mapIndex, this.app.state.screenX + dx, this.app.state.screenY + dy);
     }
+  }
+
+  private setScreen(mapIndex: number, x: number, y: number) {
+    const state = this.app.state;
+
+    mapIndex = Utils.clamp(0, mapIndex, state.quest.maps.length - 1);
+    const screens = state.quest.maps[mapIndex].screens;
+    x = Utils.clamp(0, x, screens.length - 1);
+    y = Utils.clamp(0, y, screens[0].length - 1);
+
+    if (mapIndex === state.mapIndex && x === state.screenX && y === state.screenY) {
+      return;
+    }
+
+    state.mapIndex = mapIndex
+    state.currentMap = state.quest.maps[mapIndex];
+    state.screenX = x;
+    state.screenY = y;
+    state.currentScreen = screens[x][y];
+
+    containers.screenArea.render();
+    containers.screenPicker.render();
   }
 
   private createRightPanel() {
@@ -349,6 +367,7 @@ export class EditorMode extends QuestMakerMode {
 
   private createScreenPicker() {
     const state = this.app.state;
+    const screens = state.currentMap.screens;
 
     const container = new PIXI.Container();
     const gfx = new PIXI.Graphics();
@@ -364,7 +383,7 @@ export class EditorMode extends QuestMakerMode {
       gfx.clear();
       for (let x = 0; x < 16; x++) {
         for (let y = 0; y < 9; y++) {
-          const screen = x < state.quest.screens.length && state.quest.screens[x][y];
+          const screen = x < screens.length && screens[x][y];
           let color = 0;
           if (screen) color = 0x0000ff;
           if (x === state.screenX && y === state.screenY) color = 0x00ff00;
@@ -374,6 +393,22 @@ export class EditorMode extends QuestMakerMode {
         }
       }
     }
+
+    container.interactive = true;
+
+    function throttle(cb: Function, timeout: number) {
+      let lastCall = 0;
+      return function (...args: any) {
+        if (Date.now() - lastCall > timeout) {
+          lastCall = Date.now();
+          cb(...args);
+        }
+      }
+    }
+    const onScroll = throttle((e: WheelEvent) => {
+      this.setScreen(state.mapIndex + Math.sign(e.deltaY), state.screenX, state.screenY)
+    }, 1000);
+    container.addListener('scroll', onScroll);
 
     return { container, render };
   }
@@ -399,6 +434,7 @@ export class EditorMode extends QuestMakerMode {
 
     const render = () => {
       tilesContainer.removeChildren();
+      const screens = state.currentMap.screens;
 
       // First/last row/column is from neighboring screen.
       for (let x = -1; x <= screenWidth; x++) {
@@ -426,7 +462,7 @@ export class EditorMode extends QuestMakerMode {
 
           let screen: QuestMaker.Screen | null = state.currentScreen;
           if (sx !== state.screenX || sy !== state.screenY) {
-            screen = inBounds(sx, sy, state.quest.screens.length, state.quest.screens[0].length) ? state.quest.screens[sx][sy] : null;
+            screen = inBounds(sx, sy, screens.length, screens[0].length) ? screens[sx][sy] : null;
           }
 
           let sprite;

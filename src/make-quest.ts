@@ -127,7 +127,7 @@ export default function () {
     tiles,
     enemies,
     weapons,
-    screens: [],
+    maps: [],
     misc: {
       SPAWN_GFX_START: 0,
       HERO_FRAMES: {},
