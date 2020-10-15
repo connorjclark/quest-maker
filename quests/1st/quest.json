@@ -106300,7 +106300,9 @@
         true,
         true
       ],
-      "graphicId": 8856
+      "graphicId": 8856,
+      "numFrames": 4,
+      "speed": 12
     },
     {
       "id": 20,
@@ -106344,7 +106346,9 @@
         true,
         true
       ],
-      "graphicId": 8856
+      "graphicId": 8856,
+      "numFrames": 4,
+      "speed": 12
     },
     {
       "id": 24,
@@ -106388,7 +106392,9 @@
         true,
         true
       ],
-      "graphicId": 8896
+      "graphicId": 8896,
+      "numFrames": 4,
+      "speed": 12
     },
     {
       "id": 28,
@@ -106520,7 +106526,9 @@
         true,
         true
       ],
-      "graphicId": 8876
+      "graphicId": 8876,
+      "numFrames": 4,
+      "speed": 12
     },
     {
       "id": 40,
@@ -106564,7 +106572,9 @@
         true,
         true
       ],
-      "graphicId": 8876
+      "graphicId": 8876,
+      "numFrames": 4,
+      "speed": 12
     },
     {
       "id": 44,
@@ -109281,7 +109291,9 @@
         true,
         true
       ],
-      "graphicId": 8937
+      "graphicId": 8937,
+      "numFrames": 3,
+      "speed": 10
     },
     {
       "id": 291,
@@ -109292,7 +109304,9 @@
         true,
         true
       ],
-      "graphicId": 8957
+      "graphicId": 8957,
+      "numFrames": 3,
+      "speed": 10
     },
     {
       "id": 292,
@@ -109325,7 +109339,9 @@
         true,
         true
       ],
-      "graphicId": 8937
+      "graphicId": 8937,
+      "numFrames": 3,
+      "speed": 10
     },
     {
       "id": 295,
@@ -109336,7 +109352,9 @@
         true,
         true
       ],
-      "graphicId": 8957
+      "graphicId": 8957,
+      "numFrames": 3,
+      "speed": 10
     },
     {
       "id": 296,
@@ -118580,7 +118598,9 @@
         false,
         false
       ],
-      "graphicId": 9627
+      "graphicId": 9627,
+      "numFrames": 4,
+      "speed": 16
     },
     {
       "id": 1129,
@@ -118591,7 +118611,9 @@
         false,
         false
       ],
-      "graphicId": 9631
+      "graphicId": 9631,
+      "numFrames": 4,
+      "speed": 16
     },
     {
       "id": 1130,
@@ -118602,7 +118624,9 @@
         false,
         false
       ],
-      "graphicId": 9635
+      "graphicId": 9635,
+      "numFrames": 4,
+      "speed": 16
     },
     {
       "id": 1131,
@@ -118624,7 +118648,9 @@
         false,
         false
       ],
-      "graphicId": 9647
+      "graphicId": 9647,
+      "numFrames": 4,
+      "speed": 16
     },
     {
       "id": 1133,
@@ -118646,7 +118672,9 @@
         false,
         false
       ],
-      "graphicId": 9655
+      "graphicId": 9655,
+      "numFrames": 4,
+      "speed": 16
     },
     {
       "id": 1135,
@@ -118657,7 +118685,9 @@
         false,
         false
       ],
-      "graphicId": 9651
+      "graphicId": 9651,
+      "numFrames": 2,
+      "speed": 32
     },
     {
       "id": 1136,
@@ -118668,7 +118698,9 @@
         false,
         false
       ],
-      "graphicId": 9667
+      "graphicId": 9667,
+      "numFrames": 4,
+      "speed": 16
     },
     {
       "id": 1137,
@@ -118679,7 +118711,9 @@
         false,
         false
       ],
-      "graphicId": 9671
+      "graphicId": 9671,
+      "numFrames": 4,
+      "speed": 16
     },
     {
       "id": 1138,
@@ -118690,7 +118724,9 @@
         false,
         false
       ],
-      "graphicId": 9675
+      "graphicId": 9675,
+      "numFrames": 4,
+      "speed": 16
     },
     {
       "id": 1139,
@@ -118712,7 +118748,9 @@
         false,
         false
       ],
-      "graphicId": 9687
+      "graphicId": 9687,
+      "numFrames": 4,
+      "speed": 16
     },
     {
       "id": 1141,
@@ -118723,7 +118761,9 @@
         false,
         false
       ],
-      "graphicId": 9691
+      "graphicId": 9691,
+      "numFrames": 4,
+      "speed": 16
     },
     {
       "id": 1142,
@@ -118734,7 +118774,9 @@
         false,
         false
       ],
-      "graphicId": 9727
+      "graphicId": 9727,
+      "numFrames": 4,
+      "speed": 16
     },
     {
       "id": 1143,
@@ -118745,7 +118787,9 @@
         false,
         false
       ],
-      "graphicId": 9731
+      "graphicId": 9731,
+      "numFrames": 4,
+      "speed": 16
     },
     {
       "id": 1144,
@@ -118756,7 +118800,9 @@
         false,
         false
       ],
-      "graphicId": 9707
+      "graphicId": 9707,
+      "numFrames": 4,
+      "speed": 16
     },
     {
       "id": 1145,
@@ -118767,7 +118813,9 @@
         false,
         false
       ],
-      "graphicId": 9711
+      "graphicId": 9711,
+      "numFrames": 4,
+      "speed": 16
     },
     {
       "id": 1146,
@@ -118778,7 +118826,9 @@
         false,
         false
       ],
-      "graphicId": 9747
+      "graphicId": 9747,
+      "numFrames": 4,
+      "speed": 16
     },
     {
       "id": 1147,
@@ -118789,7 +118839,9 @@
         false,
         false
       ],
-      "graphicId": 9751
+      "graphicId": 9751,
+      "numFrames": 4,
+      "speed": 16
     },
     {
       "id": 1148,
@@ -118800,7 +118852,9 @@
         false,
         false
       ],
-      "graphicId": 9787
+      "graphicId": 9787,
+      "numFrames": 4,
+      "speed": 16
     },
     {
       "id": 1149,
@@ -118811,7 +118865,9 @@
         false,
         false
       ],
-      "graphicId": 9791
+      "graphicId": 9791,
+      "numFrames": 4,
+      "speed": 16
     },
     {
       "id": 1150,
@@ -118822,7 +118878,9 @@
         false,
         false
       ],
-      "graphicId": 9795
+      "graphicId": 9795,
+      "numFrames": 4,
+      "speed": 16
     },
     {
       "id": 1151,
@@ -118844,7 +118902,9 @@
         false,
         false
       ],
-      "graphicId": 9807
+      "graphicId": 9807,
+      "numFrames": 4,
+      "speed": 16
     },
     {
       "id": 1153,
@@ -118866,7 +118926,9 @@
         false,
         false
       ],
-      "graphicId": 9815
+      "graphicId": 9815,
+      "numFrames": 4,
+      "speed": 16
     },
     {
       "id": 1155,
@@ -118877,7 +118939,9 @@
         false,
         false
       ],
-      "graphicId": 9811
+      "graphicId": 9811,
+      "numFrames": 2,
+      "speed": 32
     },
     {
       "id": 1156,
@@ -118888,7 +118952,9 @@
         false,
         false
       ],
-      "graphicId": 9827
+      "graphicId": 9827,
+      "numFrames": 4,
+      "speed": 16
     },
     {
       "id": 1157,
@@ -118899,7 +118965,9 @@
         false,
         false
       ],
-      "graphicId": 9831
+      "graphicId": 9831,
+      "numFrames": 4,
+      "speed": 16
     },
     {
       "id": 1158,
@@ -118910,7 +118978,9 @@
         false,
         false
       ],
-      "graphicId": 9835
+      "graphicId": 9835,
+      "numFrames": 4,
+      "speed": 16
     },
     {
       "id": 1159,
@@ -118932,7 +119002,9 @@
         false,
         false
       ],
-      "graphicId": 9844
+      "graphicId": 9844,
+      "numFrames": 4,
+      "speed": 16
     },
     {
       "id": 1161,
@@ -118943,7 +119015,9 @@
         false,
         false
       ],
-      "graphicId": 9848
+      "graphicId": 9848,
+      "numFrames": 4,
+      "speed": 16
     },
     {
       "id": 1162,
@@ -118954,7 +119028,9 @@
         false,
         false
       ],
-      "graphicId": 9852
+      "graphicId": 9852,
+      "numFrames": 4,
+      "speed": 16
     },
     {
       "id": 1163,
@@ -118965,7 +119041,9 @@
         false,
         false
       ],
-      "graphicId": 9856
+      "graphicId": 9856,
+      "numFrames": 4,
+      "speed": 16
     },
     {
       "id": 1164,
@@ -118976,7 +119054,9 @@
         false,
         false
       ],
-      "graphicId": 9864
+      "graphicId": 9864,
+      "numFrames": 4,
+      "speed": 16
     },
     {
       "id": 1165,
@@ -118987,7 +119067,9 @@
         false,
         false
       ],
-      "graphicId": 9868
+      "graphicId": 9868,
+      "numFrames": 4,
+      "speed": 16
     },
     {
       "id": 1166,
@@ -118998,7 +119080,9 @@
         false,
         false
       ],
-      "graphicId": 9872
+      "graphicId": 9872,
+      "numFrames": 4,
+      "speed": 16
     },
     {
       "id": 1167,
@@ -119009,7 +119093,9 @@
         false,
         false
       ],
-      "graphicId": 9876
+      "graphicId": 9876,
+      "numFrames": 4,
+      "speed": 16
     },
     {
       "id": 1168,
@@ -119196,7 +119282,9 @@
         false,
         false
       ],
-      "graphicId": 9880
+      "graphicId": 9880,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1185,
@@ -119207,7 +119295,9 @@
         false,
         false
       ],
-      "graphicId": 9884
+      "graphicId": 9884,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1186,
@@ -119218,7 +119308,9 @@
         false,
         false
       ],
-      "graphicId": 9888
+      "graphicId": 9888,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1187,
@@ -119229,7 +119321,9 @@
         false,
         false
       ],
-      "graphicId": 9892
+      "graphicId": 9892,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1188,
@@ -119240,7 +119334,9 @@
         false,
         false
       ],
-      "graphicId": 9900
+      "graphicId": 9900,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1189,
@@ -119262,7 +119358,9 @@
         false,
         false
       ],
-      "graphicId": 9908
+      "graphicId": 9908,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1191,
@@ -119273,7 +119371,9 @@
         false,
         false
       ],
-      "graphicId": 9912
+      "graphicId": 9912,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1192,
@@ -119284,7 +119384,9 @@
         false,
         false
       ],
-      "graphicId": 9920
+      "graphicId": 9920,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1193,
@@ -119295,7 +119397,9 @@
         false,
         false
       ],
-      "graphicId": 9924
+      "graphicId": 9924,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1194,
@@ -119306,7 +119410,9 @@
         false,
         false
       ],
-      "graphicId": 9928
+      "graphicId": 9928,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1195,
@@ -119317,7 +119423,9 @@
         false,
         false
       ],
-      "graphicId": 9932
+      "graphicId": 9932,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1196,
@@ -119328,7 +119436,9 @@
         false,
         false
       ],
-      "graphicId": 9952
+      "graphicId": 9952,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1197,
@@ -119339,7 +119449,9 @@
         false,
         false
       ],
-      "graphicId": 9968
+      "graphicId": 9968,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1198,
@@ -119350,7 +119462,9 @@
         false,
         false
       ],
-      "graphicId": 9944
+      "graphicId": 9944,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1199,
@@ -119361,7 +119475,9 @@
         false,
         false
       ],
-      "graphicId": 9916
+      "graphicId": 9916,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1200,
@@ -119373,6 +119489,8 @@
         false
       ],
       "graphicId": 9972,
+      "numFrames": 4,
+      "speed": 13,
       "flipHorizontal": true
     },
     {
@@ -119385,6 +119503,8 @@
         false
       ],
       "graphicId": 9968,
+      "numFrames": 4,
+      "speed": 13,
       "flipHorizontal": true
     },
     {
@@ -119397,6 +119517,8 @@
         false
       ],
       "graphicId": 9964,
+      "numFrames": 4,
+      "speed": 13,
       "flipHorizontal": true
     },
     {
@@ -119408,7 +119530,9 @@
         false,
         false
       ],
-      "graphicId": 9936
+      "graphicId": 9936,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1204,
@@ -119420,6 +119544,8 @@
         false
       ],
       "graphicId": 9944,
+      "numFrames": 4,
+      "speed": 13,
       "flipHorizontal": true
     },
     {
@@ -119432,6 +119558,8 @@
         false
       ],
       "graphicId": 9952,
+      "numFrames": 4,
+      "speed": 13,
       "flipHorizontal": true
     },
     {
@@ -119444,6 +119572,8 @@
         false
       ],
       "graphicId": 10072,
+      "numFrames": 4,
+      "speed": 13,
       "flipHorizontal": true
     },
     {
@@ -119455,7 +119585,9 @@
         false,
         false
       ],
-      "graphicId": 10072
+      "graphicId": 10072,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1208,
@@ -119467,6 +119599,8 @@
         false
       ],
       "graphicId": 9948,
+      "numFrames": 4,
+      "speed": 13,
       "flipHorizontal": true
     },
     {
@@ -119479,6 +119613,8 @@
         false
       ],
       "graphicId": 9956,
+      "numFrames": 4,
+      "speed": 13,
       "flipHorizontal": true
     },
     {
@@ -119490,7 +119626,9 @@
         false,
         false
       ],
-      "graphicId": 10060
+      "graphicId": 10060,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1211,
@@ -119501,7 +119639,9 @@
         false,
         false
       ],
-      "graphicId": 10064
+      "graphicId": 10064,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1212,
@@ -119512,7 +119652,9 @@
         false,
         false
       ],
-      "graphicId": 9964
+      "graphicId": 9964,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1213,
@@ -119523,7 +119665,9 @@
         false,
         false
       ],
-      "graphicId": 9972
+      "graphicId": 9972,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1214,
@@ -119534,7 +119678,9 @@
         false,
         false
       ],
-      "graphicId": 10080
+      "graphicId": 10080,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1215,
@@ -119545,7 +119691,9 @@
         false,
         false
       ],
-      "graphicId": 10084
+      "graphicId": 10084,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1216,
@@ -119556,7 +119704,9 @@
         true,
         true
       ],
-      "graphicId": 9916
+      "graphicId": 9916,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1217,
@@ -119567,7 +119717,9 @@
         false,
         false
       ],
-      "graphicId": 9896
+      "graphicId": 9896,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1218,
@@ -119578,7 +119730,9 @@
         false,
         false
       ],
-      "graphicId": 10100
+      "graphicId": 10100,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1219,
@@ -119589,7 +119743,9 @@
         false,
         false
       ],
-      "graphicId": 10104
+      "graphicId": 10104,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1220,
@@ -119600,7 +119756,9 @@
         false,
         false
       ],
-      "graphicId": 9992
+      "graphicId": 9992,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1221,
@@ -119611,7 +119769,9 @@
         false,
         false
       ],
-      "graphicId": 9984
+      "graphicId": 9984,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1222,
@@ -119623,6 +119783,8 @@
         false
       ],
       "graphicId": 9984,
+      "numFrames": 4,
+      "speed": 13,
       "flipHorizontal": true
     },
     {
@@ -119635,6 +119797,8 @@
         false
       ],
       "graphicId": 9992,
+      "numFrames": 4,
+      "speed": 13,
       "flipHorizontal": true
     },
     {
@@ -119647,6 +119811,8 @@
         false
       ],
       "graphicId": 10012,
+      "numFrames": 4,
+      "speed": 13,
       "flipHorizontal": true
     },
     {
@@ -119659,6 +119825,8 @@
         false
       ],
       "graphicId": 10004,
+      "numFrames": 4,
+      "speed": 13,
       "flipHorizontal": true
     },
     {
@@ -119670,7 +119838,9 @@
         false,
         false
       ],
-      "graphicId": 10004
+      "graphicId": 10004,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1227,
@@ -119681,7 +119851,9 @@
         false,
         false
       ],
-      "graphicId": 10012
+      "graphicId": 10012,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1228,
@@ -119692,7 +119864,9 @@
         false,
         false
       ],
-      "graphicId": 9980
+      "graphicId": 9980,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1229,
@@ -119703,7 +119877,9 @@
         false,
         false
       ],
-      "graphicId": 10000
+      "graphicId": 10000,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1230,
@@ -119714,7 +119890,9 @@
         false,
         false
       ],
-      "graphicId": 9988
+      "graphicId": 9988,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1231,
@@ -119725,7 +119903,9 @@
         false,
         false
       ],
-      "graphicId": 9988
+      "graphicId": 9988,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1232,
@@ -119736,7 +119916,9 @@
         false,
         false
       ],
-      "graphicId": 9980
+      "graphicId": 9980,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1233,
@@ -119747,7 +119929,9 @@
         false,
         false
       ],
-      "graphicId": 10000
+      "graphicId": 10000,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1234,
@@ -119758,7 +119942,9 @@
         false,
         false
       ],
-      "graphicId": 10008
+      "graphicId": 10008,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1235,
@@ -119769,7 +119955,9 @@
         false,
         false
       ],
-      "graphicId": 10008
+      "graphicId": 10008,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1236,
@@ -119781,6 +119969,8 @@
         false
       ],
       "graphicId": 9988,
+      "numFrames": 4,
+      "speed": 13,
       "flipHorizontal": true
     },
     {
@@ -119793,6 +119983,8 @@
         false
       ],
       "graphicId": 9988,
+      "numFrames": 4,
+      "speed": 13,
       "flipHorizontal": true
     },
     {
@@ -119804,7 +119996,9 @@
         false,
         false
       ],
-      "graphicId": 9996
+      "graphicId": 9996,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1239,
@@ -119815,7 +120009,9 @@
         false,
         false
       ],
-      "graphicId": 10016
+      "graphicId": 10016,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1240,
@@ -119827,6 +120023,8 @@
         false
       ],
       "graphicId": 10008,
+      "numFrames": 4,
+      "speed": 13,
       "flipHorizontal": true
     },
     {
@@ -119839,6 +120037,8 @@
         false
       ],
       "graphicId": 10008,
+      "numFrames": 4,
+      "speed": 13,
       "flipHorizontal": true
     },
     {
@@ -119850,7 +120050,9 @@
         false,
         false
       ],
-      "graphicId": 9996
+      "graphicId": 9996,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1243,
@@ -119861,7 +120063,9 @@
         false,
         false
       ],
-      "graphicId": 10016
+      "graphicId": 10016,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1244,
@@ -119872,7 +120076,9 @@
         false,
         false
       ],
-      "graphicId": 10068
+      "graphicId": 10068,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1245,
@@ -119883,7 +120089,9 @@
         false,
         false
       ],
-      "graphicId": 10088
+      "graphicId": 10088,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1246,
@@ -119894,7 +120102,9 @@
         false,
         false
       ],
-      "graphicId": 10092
+      "graphicId": 10092,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1247,
@@ -119906,6 +120116,8 @@
         false
       ],
       "graphicId": 10068,
+      "numFrames": 4,
+      "speed": 13,
       "flipHorizontal": true
     },
     {
@@ -119963,6 +120175,8 @@
         false
       ],
       "graphicId": 9960,
+      "numFrames": 4,
+      "speed": 13,
       "flipHorizontal": true
     },
     {
@@ -119974,7 +120188,9 @@
         false,
         false
       ],
-      "graphicId": 9960
+      "graphicId": 9960,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1254,
@@ -119985,7 +120201,9 @@
         false,
         false
       ],
-      "graphicId": 9940
+      "graphicId": 9940,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1255,
@@ -120008,6 +120226,8 @@
         true
       ],
       "graphicId": 10208,
+      "numFrames": 4,
+      "speed": 13,
       "flipHorizontal": true
     },
     {
@@ -120019,7 +120239,9 @@
         true,
         true
       ],
-      "graphicId": 10208
+      "graphicId": 10208,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1258,
@@ -120030,7 +120252,9 @@
         true,
         true
       ],
-      "graphicId": 10204
+      "graphicId": 10204,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1259,
@@ -120052,7 +120276,9 @@
         true,
         true
       ],
-      "graphicId": 10140
+      "graphicId": 10140,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1261,
@@ -120063,7 +120289,9 @@
         true,
         true
       ],
-      "graphicId": 10144
+      "graphicId": 10144,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1262,
@@ -120074,7 +120302,9 @@
         true,
         true
       ],
-      "graphicId": 10148
+      "graphicId": 10148,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1263,
@@ -120085,7 +120315,9 @@
         true,
         true
       ],
-      "graphicId": 10224
+      "graphicId": 10224,
+      "numFrames": 3,
+      "speed": 13
     },
     {
       "id": 1264,
@@ -120096,7 +120328,9 @@
         true,
         true
       ],
-      "graphicId": 10160
+      "graphicId": 10160,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1265,
@@ -120118,7 +120352,9 @@
         true,
         true
       ],
-      "graphicId": 10168
+      "graphicId": 10168,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1267,
@@ -120129,7 +120365,9 @@
         true,
         true
       ],
-      "graphicId": 10228
+      "graphicId": 10228,
+      "numFrames": 3,
+      "speed": 13
     },
     {
       "id": 1268,
@@ -120140,7 +120378,9 @@
         true,
         true
       ],
-      "graphicId": 10180
+      "graphicId": 10180,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1269,
@@ -120151,7 +120391,9 @@
         true,
         true
       ],
-      "graphicId": 10184
+      "graphicId": 10184,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1270,
@@ -120162,7 +120404,9 @@
         true,
         true
       ],
-      "graphicId": 10188
+      "graphicId": 10188,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1271,
@@ -120173,7 +120417,9 @@
         true,
         true
       ],
-      "graphicId": 10220
+      "graphicId": 10220,
+      "numFrames": 3,
+      "speed": 13
     },
     {
       "id": 1272,
@@ -120184,7 +120430,9 @@
         false,
         false
       ],
-      "graphicId": 10240
+      "graphicId": 10240,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1273,
@@ -120195,7 +120443,9 @@
         false,
         false
       ],
-      "graphicId": 10272
+      "graphicId": 10272,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1274,
@@ -120206,7 +120456,9 @@
         false,
         false
       ],
-      "graphicId": 10244
+      "graphicId": 10244,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1275,
@@ -120217,7 +120469,9 @@
         true,
         true
       ],
-      "graphicId": 10200
+      "graphicId": 10200,
+      "numFrames": 3,
+      "speed": 13
     },
     {
       "id": 1276,
@@ -120228,7 +120482,9 @@
         false,
         false
       ],
-      "graphicId": 10248
+      "graphicId": 10248,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1277,
@@ -120250,7 +120506,9 @@
         false,
         false
       ],
-      "graphicId": 10252
+      "graphicId": 10252,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1279,
@@ -120261,7 +120519,9 @@
         false,
         false
       ],
-      "graphicId": 10256
+      "graphicId": 10256,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1280,
@@ -120272,7 +120532,9 @@
         false,
         false
       ],
-      "graphicId": 10260
+      "graphicId": 10260,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1281,
@@ -120283,7 +120545,9 @@
         false,
         false
       ],
-      "graphicId": 10268
+      "graphicId": 10268,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1282,
@@ -120294,7 +120558,9 @@
         false,
         false
       ],
-      "graphicId": 10264
+      "graphicId": 10264,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1283,
@@ -120305,7 +120571,9 @@
         false,
         false
       ],
-      "graphicId": 10276
+      "graphicId": 10276,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1284,
@@ -120317,6 +120585,8 @@
         false
       ],
       "graphicId": 10216,
+      "numFrames": 4,
+      "speed": 13,
       "flipHorizontal": true
     },
     {
@@ -120328,7 +120598,9 @@
         false,
         true
       ],
-      "graphicId": 10216
+      "graphicId": 10216,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1286,
@@ -120339,7 +120611,9 @@
         true,
         true
       ],
-      "graphicId": 10296
+      "graphicId": 10296,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1287,
@@ -120351,6 +120625,8 @@
         true
       ],
       "graphicId": 10296,
+      "numFrames": 4,
+      "speed": 13,
       "flipHorizontal": true
     },
     {
@@ -120362,7 +120638,9 @@
         true,
         false
       ],
-      "graphicId": 10152
+      "graphicId": 10152,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1289,
@@ -120373,7 +120651,9 @@
         false,
         true
       ],
-      "graphicId": 10156
+      "graphicId": 10156,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1290,
@@ -120385,6 +120665,8 @@
         true
       ],
       "graphicId": 10296,
+      "numFrames": 4,
+      "speed": 13,
       "flipVertical": true
     },
     {
@@ -120397,6 +120679,8 @@
         true
       ],
       "graphicId": 10296,
+      "numFrames": 4,
+      "speed": 13,
       "flipHorizontal": true,
       "flipVertical": true
     },
@@ -120409,7 +120693,9 @@
         true,
         false
       ],
-      "graphicId": 10172
+      "graphicId": 10172,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1293,
@@ -120420,7 +120706,9 @@
         false,
         true
       ],
-      "graphicId": 10176
+      "graphicId": 10176,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1294,
@@ -120431,7 +120719,9 @@
         true,
         true
       ],
-      "graphicId": 10284
+      "graphicId": 10284,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1295,
@@ -120443,6 +120733,8 @@
         true
       ],
       "graphicId": 10280,
+      "numFrames": 4,
+      "speed": 13,
       "flipHorizontal": true
     },
     {
@@ -120454,7 +120746,9 @@
         true,
         false
       ],
-      "graphicId": 10192
+      "graphicId": 10192,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1297,
@@ -120465,7 +120759,9 @@
         false,
         true
       ],
-      "graphicId": 10196
+      "graphicId": 10196,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1298,
@@ -120476,7 +120772,9 @@
         true,
         true
       ],
-      "graphicId": 10280
+      "graphicId": 10280,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1299,
@@ -120487,7 +120785,9 @@
         true,
         true
       ],
-      "graphicId": 10288
+      "graphicId": 10288,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1300,
@@ -120498,7 +120798,9 @@
         false,
         false
       ],
-      "graphicId": 10212
+      "graphicId": 10212,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1301,
@@ -120509,7 +120811,9 @@
         false,
         false
       ],
-      "graphicId": 10232
+      "graphicId": 10232,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1302,
@@ -120520,7 +120824,9 @@
         false,
         false
       ],
-      "graphicId": 10236
+      "graphicId": 10236,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1303,
@@ -120532,6 +120838,8 @@
         false
       ],
       "graphicId": 10212,
+      "numFrames": 4,
+      "speed": 13,
       "flipHorizontal": true
     },
     {
@@ -120543,7 +120851,9 @@
         true,
         true
       ],
-      "graphicId": 10028
+      "graphicId": 10028,
+      "numFrames": 8,
+      "speed": 13
     },
     {
       "id": 1305,
@@ -120554,7 +120864,9 @@
         true,
         true
       ],
-      "graphicId": 10020
+      "graphicId": 10020,
+      "numFrames": 8,
+      "speed": 13
     },
     {
       "id": 1306,
@@ -120566,6 +120878,8 @@
         true
       ],
       "graphicId": 10028,
+      "numFrames": 8,
+      "speed": 13,
       "flipHorizontal": true
     },
     {
@@ -120577,7 +120891,9 @@
         false,
         false
       ],
-      "graphicId": 10292
+      "graphicId": 10292,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1308,
@@ -120588,7 +120904,9 @@
         true,
         true
       ],
-      "graphicId": 10048
+      "graphicId": 10048,
+      "numFrames": 8,
+      "speed": 13
     },
     {
       "id": 1309,
@@ -120611,6 +120929,8 @@
         true
       ],
       "graphicId": 10048,
+      "numFrames": 8,
+      "speed": 13,
       "flipHorizontal": true
     },
     {
@@ -120634,6 +120954,8 @@
         true
       ],
       "graphicId": 10028,
+      "numFrames": 8,
+      "speed": 13,
       "flipVertical": true
     },
     {
@@ -120646,6 +120968,8 @@
         true
       ],
       "graphicId": 10020,
+      "numFrames": 8,
+      "speed": 13,
       "flipVertical": true
     },
     {
@@ -120658,6 +120982,8 @@
         true
       ],
       "graphicId": 10028,
+      "numFrames": 8,
+      "speed": 13,
       "flipHorizontal": true,
       "flipVertical": true
     },
@@ -120682,6 +121008,8 @@
         true
       ],
       "graphicId": 10040,
+      "numFrames": 8,
+      "speed": 13,
       "flipHorizontal": true
     },
     {
@@ -120693,7 +121021,9 @@
         true,
         true
       ],
-      "graphicId": 10040
+      "graphicId": 10040,
+      "numFrames": 8,
+      "speed": 13
     },
     {
       "id": 1318,
@@ -120727,6 +121057,8 @@
         true
       ],
       "graphicId": 10040,
+      "numFrames": 8,
+      "speed": 13,
       "flipHorizontal": true,
       "flipVertical": true
     },
@@ -120740,6 +121072,8 @@
         true
       ],
       "graphicId": 10040,
+      "numFrames": 8,
+      "speed": 13,
       "flipVertical": true
     },
     {
@@ -120818,7 +121152,9 @@
         false,
         false
       ],
-      "graphicId": 10421
+      "graphicId": 10421,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1329,
@@ -120841,6 +121177,8 @@
         false
       ],
       "graphicId": 10421,
+      "numFrames": 4,
+      "speed": 13,
       "flipHorizontal": true
     },
     {
@@ -120863,7 +121201,9 @@
         false,
         false
       ],
-      "graphicId": 10441
+      "graphicId": 10441,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1333,
@@ -120874,7 +121214,9 @@
         true,
         true
       ],
-      "graphicId": 10447
+      "graphicId": 10447,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1334,
@@ -120886,6 +121228,8 @@
         false
       ],
       "graphicId": 10441,
+      "numFrames": 4,
+      "speed": 13,
       "flipHorizontal": true
     },
     {
@@ -120919,7 +121263,9 @@
         true,
         true
       ],
-      "graphicId": 10467
+      "graphicId": 10467,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1338,
@@ -120930,7 +121276,9 @@
         true,
         true
       ],
-      "graphicId": 10487
+      "graphicId": 10487,
+      "numFrames": 4,
+      "speed": 13
     },
     {
       "id": 1339,
@@ -120963,7 +121311,9 @@
         true,
         true
       ],
-      "graphicId": 10503
+      "graphicId": 10503,
+      "numFrames": 8,
+      "speed": 13
     },
     {
       "id": 1342,
@@ -129328,7 +129678,9 @@
         false,
         false
       ],
-      "graphicId": 11280
+      "graphicId": 11280,
+      "numFrames": 4,
+      "speed": 10
     },
     {
       "id": 2098,
@@ -132821,7 +133173,9 @@
         true,
         true
       ],
-      "graphicId": 11580
+      "graphicId": 11580,
+      "numFrames": 6,
+      "speed": 4
     },
     {
       "id": 2407,
@@ -132832,7 +133186,9 @@
         true,
         true
       ],
-      "graphicId": 11560
+      "graphicId": 11560,
+      "numFrames": 6,
+      "speed": 4
     },
     {
       "id": 2408,
@@ -132854,7 +133210,9 @@
         true,
         true
       ],
-      "graphicId": 662
+      "graphicId": 662,
+      "numFrames": 6,
+      "speed": 5
     },
     {
       "id": 2410,
@@ -132865,7 +133223,9 @@
         true,
         true
       ],
-      "graphicId": 11580
+      "graphicId": 11580,
+      "numFrames": 6,
+      "speed": 2
     },
     {
       "id": 2411,
@@ -132876,7 +133236,9 @@
         true,
         true
       ],
-      "graphicId": 11560
+      "graphicId": 11560,
+      "numFrames": 6,
+      "speed": 2
     },
     {
       "id": 2412,
@@ -133327,7 +133689,9 @@
         false,
         false
       ],
-      "graphicId": 11626
+      "graphicId": 11626,
+      "numFrames": 8,
+      "speed": 8
     },
     {
       "id": 2453,
@@ -133338,7 +133702,9 @@
         false,
         false
       ],
-      "graphicId": 11666
+      "graphicId": 11666,
+      "numFrames": 8,
+      "speed": 8
     },
     {
       "id": 2454,
@@ -133349,7 +133715,9 @@
         false,
         false
       ],
-      "graphicId": 11590
+      "graphicId": 11590,
+      "numFrames": 4,
+      "speed": 21
     },
     {
       "id": 2455,
@@ -133360,7 +133728,9 @@
         true,
         true
       ],
-      "graphicId": 11586
+      "graphicId": 11586,
+      "numFrames": 4,
+      "speed": 21
     },
     {
       "id": 2456,
@@ -133371,7 +133741,9 @@
         false,
         false
       ],
-      "graphicId": 11646
+      "graphicId": 11646,
+      "numFrames": 8,
+      "speed": 8
     },
     {
       "id": 2457,
@@ -133382,7 +133754,9 @@
         false,
         false
       ],
-      "graphicId": 11686
+      "graphicId": 11686,
+      "numFrames": 8,
+      "speed": 8
     },
     {
       "id": 2458,
@@ -133393,7 +133767,9 @@
         false,
         false
       ],
-      "graphicId": 11610
+      "graphicId": 11610,
+      "numFrames": 4,
+      "speed": 21
     },
     {
       "id": 2459,
@@ -133404,7 +133780,9 @@
         true,
         true
       ],
-      "graphicId": 11606
+      "graphicId": 11606,
+      "numFrames": 4,
+      "speed": 21
     },
     {
       "id": 2460,
@@ -234067,7 +234445,6 @@
         "flip": 0
       }
     },
-    "SWORD_GFX_START": 0,
     "START_X": 7,
     "START_Y": 7
   }

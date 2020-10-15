@@ -172,6 +172,10 @@ for (const combo of zcData.combos) {
     graphicId: combo.tile,
     walkable: [!(combo.walk & 1), !(combo.walk & 4), !(combo.walk & 2), !(combo.walk & 8)],
   });
+  if (combo.frames >= 2) {
+    tile.numFrames = combo.frames;
+    tile.speed = combo.speed;
+  }
   if (combo.flip & 1) {
     tile.flipHorizontal = true;
   }

@@ -8,8 +8,22 @@ export class QuestMakerApp extends App<QuestMaker.State> {
       return this.createGraphicSprite(0);
     }
 
-    const graphic = this.state.quest.graphics[tile.graphicId];
-    const sprite = this.createGraphicSprite(graphic.id);
+    if (tile.numFrames && tile.numFrames > 1) {
+      // TODO: improve API so we don't just ignore a newly created Sprite.
+      const textures = Array.from(Array(tile.numFrames))
+        .map((_, i) => this._createSpriteForTileFrame(tile, i).texture);
+      const sprite = new PIXI.AnimatedSprite(textures);
+      sprite.play();
+      // TODO: 128 is just a guess.
+      sprite.animationSpeed = (tile.speed || 0) / 128;
+      return sprite;
+    } else {
+      return this._createSpriteForTileFrame(tile, 0);
+    }
+  }
+
+  _createSpriteForTileFrame(tile: QuestMaker.Tile, frame: number) {
+    const sprite = this.createGraphicSprite(tile.graphicId + frame);
 
     if (tile.flipHorizontal && tile.flipVertical) {
       sprite.texture.rotate = PIXI.groupD8.W;
