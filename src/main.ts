@@ -239,23 +239,32 @@ function createQuest(): QuestMaker.Quest {
   return quest;
 }
 
+async function load1stQuest() {
+  const questResp = await fetch('quests/1st/quest.json');
+  const quest = await questResp.json();
+  graphicsBase = 'quests/1st';
+  return quest;
+}
+
 // TODO: real quest loading/saving.
 async function loadQuest(): Promise<QuestMaker.Quest> {
   if (window.location.search.includes('1st')) {
-    const questResp = await fetch('quests/1st/quest.json');
-    const quest = await questResp.json();
-    graphicsBase = 'quests/1st';
-    return quest;
+    return load1stQuest();
   }
 
   if (window.location.search.includes('fresh')) return createQuest();
+  if (window.location.search.includes('basic')) return createQuest();
 
-  const json = localStorage.getItem('quest');
-  if (json) {
-    return JSON.parse(json);
-  } else {
-    return createQuest();
-  }
+  return load1stQuest();
+
+  // Disabled until there is UI.
+  // const json = localStorage.getItem('quest');
+  // if (json) {
+  //   // return JSON.parse(json);
+  //   return createQuest();
+  // } else {
+  //   return createQuest();
+  // }
 }
 
 function deleteQuest() {
@@ -266,6 +275,8 @@ function deleteQuest() {
 }
 
 function saveQuest(quest: QuestMaker.Quest) {
+  return; // Disabled until there is UI.
+
   if (window.location.search.includes('fresh')) return;
   localStorage.setItem('quest', JSON.stringify(quest));
 }
