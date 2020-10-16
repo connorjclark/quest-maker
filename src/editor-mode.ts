@@ -377,10 +377,8 @@ export class EditorMode extends QuestMakerMode {
     const gfx = new PIXI.Graphics();
     const size = 10;
     container.addChild(gfx);
-    render();
 
-    const text = new PIXI.Text('Press Shift to toggle play test');
-    text.x = container.width;
+    const text = new PIXI.Text('');
     container.addChild(text);
 
     function render() {
@@ -396,6 +394,9 @@ export class EditorMode extends QuestMakerMode {
           gfx.endFill();
         }
       }
+
+      text.text = `Press Shift to toggle play test\nMap ${state.mapIndex}: ${state.screenX}, ${state.screenY}`;
+      text.x = gfx.width;
     }
 
     container.interactive = true;
@@ -414,6 +415,7 @@ export class EditorMode extends QuestMakerMode {
     }, 1000);
     container.addListener('scroll', onScroll);
 
+    render();
     return { container, render };
   }
 
@@ -615,6 +617,7 @@ export class EditorMode extends QuestMakerMode {
     this.createPopupWindow(contents);
   }
 
+  // big TODO.
   openWarpEditor() {
     const state = this.app.state;
 
@@ -627,12 +630,14 @@ export class EditorMode extends QuestMakerMode {
 
       const onChange = () => {
         // TODO: remove, put in deserializing code when start caring about data size.
-        state.currentScreen.warps.a = state.currentScreen.warps.a || { x: 0, y: 0, screenX: 0, screenY: 0 };
+        state.currentScreen.warps.data = state.currentScreen.warps.data || [{ type: 'screen', x: 0, y: 0, screenX: 0, screenY: 0 }];
 
-        state.currentScreen.warps.a.screenX = Utils.clamp(0, inputs.screenX.valueAsNumber, 100);
-        state.currentScreen.warps.a.screenY = Utils.clamp(0, inputs.screenY.valueAsNumber, 100);
-        state.currentScreen.warps.a.x = Utils.clamp(0, inputs.x.valueAsNumber, screenWidth);
-        state.currentScreen.warps.a.y = Utils.clamp(0, inputs.y.valueAsNumber, screenHeight);
+        if (state.currentScreen.warps.data[0].type === 'special-room') return; // TODO
+
+        state.currentScreen.warps.data[0].screenX = Utils.clamp(0, inputs.screenX.valueAsNumber, 100);
+        state.currentScreen.warps.data[0].screenY = Utils.clamp(0, inputs.screenY.valueAsNumber, 100);
+        state.currentScreen.warps.data[0].x = Utils.clamp(0, inputs.x.valueAsNumber, screenWidth);
+        state.currentScreen.warps.data[0].y = Utils.clamp(0, inputs.y.valueAsNumber, screenHeight);
       };
 
       const inputs: Record<string, HTMLInputElement> = {};
@@ -646,10 +651,14 @@ export class EditorMode extends QuestMakerMode {
         inputEl.addEventListener('change', onChange);
       }
 
-      makeInput('screenX', props.screen.warps.a?.screenX || 0, 'Screen X');
-      makeInput('screenY', props.screen.warps.a?.screenY || 0, 'Screen Y');
-      makeInput('x', props.screen.warps.a?.x, 'X');
-      makeInput('y', props.screen.warps.a?.y, 'Y');
+      // @ts-ignore
+      makeInput('screenX', props.screen.warps?.data[0].screenX || 0, 'Screen X');
+      // @ts-ignore
+      makeInput('screenY', props.screen.warps?.data[0].screenY || 0, 'Screen Y');
+      // @ts-ignore
+      makeInput('x', props.screen.warps?.data[0].x, 'X');
+      // @ts-ignore
+      makeInput('y', props.screen.warps?.data[0].y, 'Y');
     }, () => ({ screen: state.currentScreen }));
 
     makeDomContainer(this.createPopupWindow(contents));

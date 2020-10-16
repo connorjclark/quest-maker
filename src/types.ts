@@ -27,14 +27,31 @@ declare global {
         enemyId: number;
       }>;
       warps: {
-        a?: {
-          screenX: number;
-          screenY: number;
-          x?: number;
-          y?: number;
+        /** Position hero goes to for warps to this screen. */
+        arrival?: {
+          x: number;
+          y: number;
         };
+        data?: Warp[];
       };
     }
+
+    type Warp = {
+      type: 'special-room';
+      guy: number;
+      string: number;
+      /** Position hero goes to when returning from a special room warp. */
+      return: {
+        x: number;
+        y: number;
+      };
+    } | {
+      type: 'screen',
+      screenX: number;
+      screenY: number;
+      x?: number;
+      y?: number;
+    };
 
     interface Graphic {
       id: number;
@@ -129,6 +146,17 @@ declare global {
       };
     }
 
+    type ScreenTransitionType = 'direct' | 'scroll';
+
+    interface ScreenTransition {
+      type: ScreenTransitionType;
+      frames: number;
+      screen: { x: number, y: number };
+      position?: {x: number, y: number};
+      screenDelta: { x: number, y: number };
+      newScreenContainer: PIXI.Container;
+    }
+
     interface State {
       quest: Quest;
       currentMap: Map_;
@@ -138,13 +166,9 @@ declare global {
         currentTile: number;
       };
       game: {
-        screenTransition?: {
-          type: 'direct' | 'scroll';
-          frames: number;
-          screen: { x: number, y: number };
-          screenDelta: { x: number, y: number };
-          newScreenContainer: PIXI.Container;
-        };
+        screenTransition?: ScreenTransition;
+        /** Pending transition for when hero leaves a special room. */
+        warpReturnTransition?: ScreenTransition;
         moveFreeze?: number;
         screenStates: Map<Screen, {
           enemiesKilled: number

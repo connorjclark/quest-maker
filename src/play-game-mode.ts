@@ -478,8 +478,13 @@ export class PlayGameMode extends QuestMakerMode {
     this.layers[2].addChild(this.swordSprite);
     this.swordSprite.alpha = 0;
 
-    this.heroEntity.x = screenWidth * tileSize / 2;
-    this.heroEntity.y = screenHeight * tileSize / 2;
+    const startPosition = state.currentScreen.warps.arrival ?? {
+      x: screenWidth * tileSize / 2,
+      y: screenHeight * tileSize / 2,
+    };
+
+    this.heroEntity.x = startPosition.x;
+    this.heroEntity.y = startPosition.y;
     this.heroEntity.isHero = true;
     this.heroEntity.life = Number.MAX_SAFE_INTEGER;
 
@@ -734,32 +739,44 @@ export class PlayGameMode extends QuestMakerMode {
     }
 
     // Transition screen when hero enters edge.
+    this._checkForTransition();
+  }
+
+  _checkForTransition() {
+    const state = this.app.state;
+
     let transitionX = 0;
     let transitionY = 0;
 
-    if (heroEntity.x + heroEntity.width / 2 > tileSize * screenWidth) {
+    if (this.heroEntity.x + this.heroEntity.width / 2 > tileSize * screenWidth) {
       transitionX = 1;
-    } else if (heroEntity.x + heroEntity.width / 2 < 0) {
+    } else if (this.heroEntity.x + this.heroEntity.width / 2 < 0) {
       transitionX = -1;
-    } else if (heroEntity.y + heroEntity.height / 2 < 0) {
+    } else if (this.heroEntity.y + this.heroEntity.height / 2 < 0) {
       transitionY = -1;
-    } else if (heroEntity.y + heroEntity.height / 2 > tileSize * screenHeight) {
+    } else if (this.heroEntity.y + this.heroEntity.height / 2 > tileSize * screenHeight) {
       transitionY = 1;
     }
 
-    const shouldTransition =
-      (transitionX !== 0 || transitionY !== 0) &&
-      inBounds(state.screenX + transitionX, state.screenY + transitionY, state.currentMap.screens.length, state.currentMap.screens[0].length) &&
-      state.quest.maps[state.mapIndex].screens[state.screenX + transitionX] && state.quest.maps[state.mapIndex].screens[state.screenX + transitionX][state.screenY + transitionY];
-    if (shouldTransition) {
-      state.game.screenTransition = {
-        type: 'scroll',
-        frames: 0,
-        screen: { x: state.screenX + transitionX, y: state.screenY + transitionY },
-        screenDelta: { x: transitionX, y: transitionY },
-        newScreenContainer: this.createScreenContainer(state.screenX + transitionX, state.screenY + transitionY),
-      };
+    if (transitionX === 0 && transitionY === 0) return;
+
+    if (state.game.warpReturnTransition) {
+      state.game.screenTransition = state.game.warpReturnTransition;
+      delete state.game.warpReturnTransition;
+      return;
     }
+
+    let targetScreen = { x: state.screenX + transitionX, y: state.screenY + transitionY };
+    if (!inBounds(targetScreen.x, targetScreen.y, state.currentMap.screens.length, state.currentMap.screens[0].length)) return;
+    if (!state.quest.maps[state.mapIndex].screens[targetScreen.x] || !state.quest.maps[state.mapIndex].screens[targetScreen.x][targetScreen.y]) return;
+
+    state.game.screenTransition = {
+      type: 'scroll',
+      frames: 0,
+      screen: targetScreen,
+      screenDelta: { x: transitionX, y: transitionY },
+      newScreenContainer: this.createScreenContainer(targetScreen.x, targetScreen.y),
+    };
   }
 
   createScreenContainer(sx: number, sy: number) {
@@ -983,7 +1000,7 @@ export class PlayGameMode extends QuestMakerMode {
     this.swordSprite.alpha = 1;
   }
 
-  performScreenTransition(transition: Exclude<QuestMaker.State['game']['screenTransition'], undefined>) {
+  performScreenTransition(transition: QuestMaker.ScreenTransition) {
     const state = this.app.state;
 
     let duration;
@@ -1008,16 +1025,32 @@ export class PlayGameMode extends QuestMakerMode {
       }
 
       if (step === 0) {
+        // Fading out.
         this.container.alpha = 1 - (stepFrames / durations[step]);
       } else if (step === 1) {
+        // Black.
         if (stepFrames === 1) {
           this.tileLayer.removeChildren();
           for (const { sprite: entity } of [...this.entities]) {
             if (entity !== this.heroEntity) this.removeEntity(entity);
           }
           this.tileLayer.addChild(transition.newScreenContainer);
+
+          if (transition.type === 'direct') {
+            if (transition.position) {
+              this.heroEntity.x = transition.position.x;
+              this.heroEntity.y = transition.position.y;
+            } else {
+              const targetScreen = state.currentMap.screens[transition.screen.x][transition.screen.y];
+              if (targetScreen.warps.arrival) {
+                this.heroEntity.x = targetScreen.warps.arrival.x;
+                this.heroEntity.y = targetScreen.warps.arrival.y;
+              }
+            }
+          }
         }
       } else if (step === 2) {
+        // Fading in.
         this.container.alpha = stepFrames / durations[step];
       }
     } else {
@@ -1044,22 +1077,63 @@ export class PlayGameMode extends QuestMakerMode {
     }
   }
 
+  /**
+   * Creates transition object, but doesn't apply it.
+   */
+  _createScreenTransitionFromWarp(warp: QuestMaker.Warp): { transition: QuestMaker.ScreenTransition, returnTransition?: QuestMaker.ScreenTransition } {
+    const state = this.app.state;
+
+    let newScreenLocation = { x: state.screenX, y: state.screenY + 1 };
+    let newPosition = undefined;
+    let returnTransition = undefined;
+
+    if (warp && warp.type === 'screen') {
+      newScreenLocation = { x: warp.screenX, y: warp.screenY };
+      if (warp.x && warp.y) {
+        newPosition = { x: warp.x, y: warp.y };
+      }
+    }
+
+    if (warp && warp.type === 'special-room') {
+      newScreenLocation = { x: 0, y: 8 };
+      returnTransition = this._createScreenTransitionFromWarp({
+        type: 'screen',
+        screenX: state.screenX,
+        screenY: state.screenY,
+        x: warp.return.x,
+        y: warp.return.y,
+      }).transition;
+      // Hardcode spawn at bottom of screen.
+      newPosition = {
+        x: screenWidth * tileSize / 2 - this.heroEntity.width / 2,
+        y: screenHeight * (tileSize - 2),
+      };
+    }
+
+    return {
+      transition: {
+        type: 'direct',
+        frames: 0,
+        screen: newScreenLocation,
+        position: newPosition,
+        screenDelta: { x: 0, y: 0 },
+        newScreenContainer: this.createScreenContainer(newScreenLocation.x, newScreenLocation.y),
+      },
+      returnTransition,
+    };
+  }
+
   performTileAction(type: QuestMaker.TileType, names: string[]) {
     const state = this.app.state;
 
     if (type === TileType.WARP) {
       if (names.includes('bottomLeft') && names.includes('bottomRight')) {
-        let newScreenLocation = { x: state.screenX, y: state.screenY + 1 };
-        if (state.currentScreen.warps.a) {
-          newScreenLocation = { x: state.currentScreen.warps.a.screenX, y: state.currentScreen.warps.a.screenY };
+        const warp = state.currentScreen.warps.data && state.currentScreen.warps.data[0];
+        if (warp) {
+          const { transition, returnTransition } = this._createScreenTransitionFromWarp(warp);
+          state.game.screenTransition = transition;
+          state.game.warpReturnTransition = returnTransition;
         }
-        state.game.screenTransition = {
-          type: 'direct',
-          frames: 0,
-          screen: newScreenLocation,
-          screenDelta: { x: 0, y: 0 },
-          newScreenContainer: this.createScreenContainer(newScreenLocation.x, newScreenLocation.y),
-        };
       }
     } else if (type === TileType.SLOW_WALK) {
       this.heroEntity.speed = DEFAULT_HERO_SPEED * 0.5;

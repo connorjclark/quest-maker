@@ -370,7 +370,7 @@ for (const combo of zcData.combos) {
   if (type === 'Slow Walk') {
     tile.type = TileType.SLOW_WALK;
   } else if (type.includes('Cave')) {
-    // tile.type = TileType.WARP;
+    tile.type = TileType.WARP;
   }
 }
 
@@ -648,12 +648,39 @@ for (const zcMap of zcData.maps) {
       const zcScreen = zcMap.screens[screenx + screeny * 16];
       if (!zcScreen) continue;
 
+      if (zcData.maps.indexOf(zcMap) === 0 && screenx === 7 && screeny === 7) {
+        // console.log(zcScreen);
+      }
+
       const screen: QuestMaker.Screen = {
         tiles: [],
         enemies: [],
         warps: {},
       };
       map.screens[screenx].push(screen);
+
+      if (zcScreen.warparrivalx || zcScreen.warparrivaly) {
+        screen.warps.arrival = {
+          x: zcScreen.warparrivalx,
+          y: zcScreen.warparrivaly,
+        };
+      }
+
+      for (let i = 0; i < zcScreen.warpreturnx.length; i++) {
+        const returnx = zcScreen.warpreturnx[i];
+        const returny = zcScreen.warpreturny[i];
+        const type = zcScreen.tilewarptype[i];
+        if (!returnx && !returny && !type) break;
+
+        screen.warps.data = screen.warps.data || [];
+        screen.warps.data.push({
+          // type, // TODO
+          type: 'special-room',
+          guy: zcData.guy,
+          string: zcData.str,
+          return: { x: returnx, y: returny },
+        });
+      }
 
       for (let x = 0; x < screenWidth; x++) {
         screen.tiles.push([]);
