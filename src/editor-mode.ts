@@ -3,6 +3,7 @@ import { QuestMakerMode } from "./quest-maker-mode";
 import { ReactiveContainer } from './engine/reactive-container';
 import { TileType } from './types';
 import * as Utils from './utils';
+import { MultiColorReplaceFilter } from '@pixi/filter-multi-color-replace';
 
 const { screenWidth, screenHeight, tileSize } = constants;
 
@@ -109,6 +110,14 @@ export class EditorMode extends QuestMakerMode {
     screenPicker.container.scale.y = screenPicker.container.scale.x;
     this.container.addChild(screenPicker.container);
     containers.screenPicker = screenPicker;
+
+    // screenArea.container.filters = [
+    //   new MultiColorReplaceFilter(
+    //     [
+    //       [0, 0x00FF00],
+    //       // [0x010101, 0xFFFFFF],
+    //     ], 0.1)
+    //   ];
   }
 
   show() {
@@ -337,6 +346,7 @@ export class EditorMode extends QuestMakerMode {
     container.addChild(mask);
 
     const tilesContainer = new PIXI.Container();
+    this.app.applyPaletteFilter(tilesContainer);
     tilesContainer.mask = mask;
     container.addChild(tilesContainer);
 
@@ -426,11 +436,13 @@ export class EditorMode extends QuestMakerMode {
     container.addChild(bg);
 
     const tilesContainer = new PIXI.Container();
+    this.app.applyPaletteFilter(tilesContainer);
     tilesContainer.interactive = true;
     container.addChild(tilesContainer);
 
     const tilePreviewContainer = new PIXI.Container();
-    tilePreviewContainer.alpha = 0.6;
+    // this.app.applyPaletteFilter(tilePreviewContainer);
+    // tilePreviewContainer.alpha = 0.6;
 
     const render = () => {
       tilesContainer.removeChildren();

@@ -472,6 +472,7 @@ export class PlayGameMode extends QuestMakerMode {
 
     this.container.scale.x = this.container.scale.y = 2;
     for (const layer of this.layers) {
+      this.app.applyPaletteFilter(layer);
       this.container.addChild(layer);
     }
 

@@ -92,11 +92,18 @@ declare global {
       screens: Screen[][];
     }
 
+    interface Color {
+      r: number;
+      g: number;
+      b: number;
+    }
+
     interface Quest {
       maps: Map_[];
       enemies: Enemy[];
       weapons: Weapon[];
       graphics: Graphic[];
+      colors: Color[];
       tiles: Tile[];
       misc: {
         SPAWN_GFX_START: number;

@@ -653,6 +653,11 @@ for (const zcMap of zcData.maps) {
   }
 }
 
+quest.colors = [];
+for (const [r, g, b] of zcData.csets.cset_colors[3]) {
+  quest.colors.push({r, g, b});
+}
+
 const walkFrames = zcData.link_sprites.walk.map((d: any) => ({ graphicIds: [d.tile, d.tile + 1, d.tile + 2], flip: d.flip }));
 const stabFrames = zcData.link_sprites.stab.map((d: any) => ({ graphicIds: [d.tile, d.tile + 1, d.tile + 2], flip: d.flip }));
 quest.misc.HERO_FRAMES = {

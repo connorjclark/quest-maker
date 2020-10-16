@@ -1010,6 +1010,11 @@
   dependencies:
     "@pixi/core" "5.3.3"
 
+"@pixi/filter-color-replace@^3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-color-replace/-/filter-color-replace-3.1.1.tgz#66c0ddff9fc548e24ef71a3a52baaa207434695c"
+  integrity sha512-grpbKuEv6iQYo8TUpx8Uf6jY2CP0/i6f6WubDe8CiNFWnNIxHTwgrkEdLUzTddoR7H/IIUAjNn75yPZfW/pThg==
+
 "@pixi/filter-displacement@5.3.3":
   version "5.3.3"
   resolved "https://registry.yarnpkg.com/@pixi/filter-displacement/-/filter-displacement-5.3.3.tgz#f25193f738b90cc75cd04bbbcd0aefe9ea037af1"
@@ -1024,6 +1029,11 @@
   integrity sha512-p4vKdBwaoGRNZcoHz2ET8hBF1SoWvy9xU2B3Ci32+c0dg89ZUdGTEW0zimUHi2gMdU+2v/T0lqZ9NC9B6WVYAg==
   dependencies:
     "@pixi/core" "5.3.3"
+
+"@pixi/filter-multi-color-replace@^3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@pixi/filter-multi-color-replace/-/filter-multi-color-replace-3.1.1.tgz#c8136bb8665850a12bc40cb7aa4dec15d10d9cc1"
+  integrity sha512-ocP9UPn2cU9w7/zyN/uUJg3JDM9nPzRAkc8y7NgkoenUHV4zV0pGaXNx8kREl/GIggnZNySd7hLstJPvzg40tg==
 
 "@pixi/filter-noise@5.3.3":
   version "5.3.3"
@@ -4014,6 +4024,11 @@ physical-cpu-count@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/physical-cpu-count/-/physical-cpu-count-2.0.0.tgz#18de2f97e4bf7a9551ad7511942b5496f7aba660"
   integrity sha1-GN4vl+S/epVRrXURlCtUlverpmA=
+
+pixi-batch-renderer@^2.3.6:
+  version "2.3.6"
+  resolved "https://registry.yarnpkg.com/pixi-batch-renderer/-/pixi-batch-renderer-2.3.6.tgz#10d6156799b7e7b0a953b652348c748b87a4e45f"
+  integrity sha512-MLvLxpfjA7zP4x6VS15Zon0PgcomALE+rSgqiXrq9H0zzLOBSeXThUUv0zWyyK/Sb9pBCobfBgaynmsU+e9OZg==
 
 pixi-plugin-bump@^1.1.8:
   version "1.1.8"
