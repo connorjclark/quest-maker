@@ -378,7 +378,8 @@ for (const zcWeapon of zcData.weapons) {
   makeWeapon({
     name: zcWeapon.name,
     graphic: zcWeapon.tile,
-  })
+    cset: zcWeapon.csets,
+  });
 }
 
 for (const guy of zcData.guys) {
@@ -539,7 +540,8 @@ for (const guy of zcData.guys) {
   }
 
   // TODO: figure out weapons.
-  attributes['enemy.weapon'] = getDefaultWeaponSprite(guy);
+  const wpnsprite = getDefaultWeaponSprite(guy);
+  attributes['enemy.weapon'] = wpnsprite + 1;
   // if (guy.weapon) {
   //   const weaponGraphic = getDefaultWeaponSprite(guy);
   //   let weapon = quest.weapons.find(w => w.graphic === weaponGraphic);

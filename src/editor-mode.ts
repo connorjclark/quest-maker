@@ -228,7 +228,7 @@ export class EditorMode extends QuestMakerMode {
         for (let i = 0; i < props.enemies.length; i++) {
           const enemy = props.enemies[i];
           const frame = Object.values(enemy.frames)[0][0];
-          const sprite = this.app.createGraphicSprite(frame);
+          const sprite = this.app.createGraphicSprite(frame, enemy.attributes['enemy.cset']);
           sprite.x = (i % tilesAcross) * tileSize;
           sprite.y = Math.floor(i / tilesAcross) * tileSize;
           container.addChild(sprite);
@@ -248,7 +248,7 @@ export class EditorMode extends QuestMakerMode {
         for (let i = 0; i < props.enemies.length; i++) {
           const enemy = this.app.state.quest.enemies[props.enemies[i].enemyId];
           const frame = Object.values(enemy.frames)[0][0];
-          const sprite = this.app.createGraphicSprite(frame);
+          const sprite = this.app.createGraphicSprite(frame, enemy.attributes['enemy.cset']);
           sprite.x = (i % tilesAcross) * tileSize;
           sprite.y = Math.floor(i / tilesAcross) * tileSize;
           container.addChild(sprite);

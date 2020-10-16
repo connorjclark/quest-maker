@@ -95,6 +95,7 @@ declare global {
       id: number;
       name: string;
       graphic: number;
+      cset?: number;
       rotate?: boolean;
     }
 

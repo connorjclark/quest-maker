@@ -895,7 +895,7 @@ export class PlayGameMode extends QuestMakerMode {
     entity.delta = delta;
     entity.speed = speed;
 
-    const makeTextures = () => [weapon.graphic].map(f => this.app.createGraphicSprite(f).texture);
+    const makeTextures = () => [weapon.graphic].map(f => this.app.createGraphicSprite(f, weapon.cset).texture);
 
     if (weapon.rotate) {
       entity.addTextureFrame('up', makeTextures());
