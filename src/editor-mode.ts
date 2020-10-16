@@ -190,7 +190,7 @@ export class EditorMode extends QuestMakerMode {
 
       const currentTileContainer = new ReactiveContainer((container, { currentTile }) => {
         container.removeChildren();
-        container.addChild(this.app.createTileSprite(currentTile));
+        container.addChild(this.app.createTileSprite({ tile: currentTile }));
       }, () => ({ currentTile: this.app.state.editor.currentTile }));
       currentTileContainer.scale.set(2);
       contents.addChild(currentTileContainer);
@@ -342,7 +342,7 @@ export class EditorMode extends QuestMakerMode {
 
     const spriteToTileNumber = new Map();
     for (let i = 0; i < state.quest.tiles.length; i++) {
-      const sprite = this.app.createTileSprite(i);
+      const sprite = this.app.createTileSprite({ tile: i });
       sprite.scale.set(opts.scale);
       sprite.interactive = true;
       sprite.x = (i % tilesAcross) * scaledTileSize;
@@ -467,8 +467,8 @@ export class EditorMode extends QuestMakerMode {
 
           let sprite;
           if (screen) {
-            const tile = screen ? screen.tiles[x0][y0].tile : 0;
-            sprite = this.app.createTileSprite(tile);
+            const screenTile = screen ? screen.tiles[x0][y0] : { tile: 0 };
+            sprite = this.app.createTileSprite(screenTile);
             if (state.currentScreen !== screen) sprite.tint = 0xaaaaaa;
           } else {
             sprite = new PIXI.Graphics();
@@ -501,7 +501,7 @@ export class EditorMode extends QuestMakerMode {
     const setPreviewTile = (e: PIXI.InteractionEvent) => {
       tilePreviewContainer.removeChildren();
 
-      const tilePreviewSprite = this.app.createTileSprite(state.editor.currentTile);
+      const tilePreviewSprite = this.app.createTileSprite({ tile: state.editor.currentTile });
       const pos = e.data.getLocalPosition(e.currentTarget);
       const x = Math.floor(pos.x / tileSize);
       const y = Math.floor(pos.y / tileSize);
@@ -542,11 +542,11 @@ export class EditorMode extends QuestMakerMode {
     const contents = new ReactiveContainer((container, props) => {
       container.removeChildren();
 
-      const selectedTile = this.app.createTileSprite(props.tile.id);
+      const selectedTile = this.app.createTileSprite({ tile: props.tile.id });
       selectedTile.scale.set(4);
       container.addChild(selectedTile);
 
-      const walkableTile = this.app.createTileSprite(props.tile.id);
+      const walkableTile = this.app.createTileSprite({ tile: props.tile.id });
       walkableTile.x = selectedTile.width + 20;
       walkableTile.scale.set(4);
       container.addChild(walkableTile);

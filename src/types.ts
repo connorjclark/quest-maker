@@ -16,8 +16,13 @@ type EnemyType_ = EnemyType;
 
 declare global {
   namespace QuestMaker {
+    interface ScreenTile {
+      tile: number;
+      cset?: number;
+    }
+
     interface Screen {
-      tiles: { tile: number }[][];
+      tiles: ScreenTile[][];
       enemies: Array<{
         enemyId: number;
       }>;
@@ -46,6 +51,10 @@ declare global {
       id: number;
       type: TileType;
       graphicId: number;
+      extraCset?: {
+        quadrants: boolean[];
+        offset: number;
+      };
       numFrames?: number;
       speed?: number;
       flipHorizontal?: boolean;

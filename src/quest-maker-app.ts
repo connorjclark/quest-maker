@@ -1,12 +1,18 @@
 import { App } from "./engine/app";
 import { MultiColorReplaceFilter } from "@pixi/filter-multi-color-replace";
+import { clamp } from "./utils";
 
 export class QuestMakerApp extends App<QuestMaker.State> {
-  createTileSprite(tileId: number, cset = 3) {
-    const tile = this.state.quest.tiles[tileId];
+  createTileSprite(screenTile: QuestMaker.ScreenTile) {
+    const tile = this.state.quest.tiles[screenTile.tile];
     if (!tile) {
-      console.warn('unknown tile', tileId);
+      console.warn('unknown tile', screenTile.tile);
       return this.createGraphicSprite(0, 0);
+    }
+
+    let cset = screenTile.cset ?? 3;
+    if (screenTile.cset !== undefined && screenTile.cset > 0) {
+      cset = screenTile.cset;
     }
 
     if (tile.numFrames && tile.numFrames > 1) {
@@ -24,7 +30,7 @@ export class QuestMakerApp extends App<QuestMaker.State> {
   }
 
   _createSpriteForTileFrame(tile: QuestMaker.Tile, frame: number, cset: number) {
-    const sprite = this.createGraphicSprite(tile.graphicId + frame, cset);
+    const sprite = this.createGraphicSprite(tile.graphicId + frame, cset, tile.extraCset);
 
     if (tile.flipHorizontal && tile.flipVertical) {
       sprite.texture.rotate = PIXI.groupD8.W;
@@ -37,7 +43,7 @@ export class QuestMakerApp extends App<QuestMaker.State> {
     return sprite;
   }
 
-  createGraphicSprite(graphicId: number, cset = 0) {
+  createGraphicSprite(graphicId: number, cset = 0, extraCset?: QuestMaker.Tile['extraCset']) {
     const graphic = this.state.quest.graphics[graphicId];
     const sprite = this.createSprite(graphic.file, graphic.x, graphic.y, graphic.width, graphic.height);
 
@@ -46,6 +52,13 @@ export class QuestMakerApp extends App<QuestMaker.State> {
     }
 
     // TODO: Probably not very performant?
+
+    if (extraCset) {
+      const replacements1 = this._getColorReplacementsForCset(cset);
+      const replacements2 = this._getColorReplacementsForCset(cset + extraCset.offset);
+      return this._multiColorReplaceTwoCsetsSpriteCopy(sprite, extraCset.quadrants, replacements1, replacements2, 0.0001);
+    }
+
     return this._multiColorReplaceSpriteCopy(sprite, this._getColorReplacementsForCset(cset), 0.0001);
   }
 
@@ -54,7 +67,45 @@ export class QuestMakerApp extends App<QuestMaker.State> {
     const filter = new MultiColorReplaceFilter(replacements, epsilon);
     container.addChild(sprite);
     container.filters = [filter];
-    const brt = new PIXI.BaseRenderTexture({width: sprite.width, height: sprite.height});
+    const brt = new PIXI.BaseRenderTexture({ width: sprite.width, height: sprite.height });
+    const rt = new PIXI.RenderTexture(brt);
+    const spriteCopy = new PIXI.Sprite(rt);
+    this.pixi.renderer.render(container, rt);
+    return spriteCopy;
+  }
+
+  _multiColorReplaceTwoCsetsSpriteCopy(sprite: PIXI.Sprite, quadrants: boolean[], replacements1: number[][], replacements2: number[][], epsilon: number) {
+    const container = new PIXI.Container();
+
+    const sprite1 = new PIXI.Sprite(sprite.texture);
+    container.addChild(sprite1);
+    sprite1.filters = [
+      new MultiColorReplaceFilter(replacements1, epsilon),
+    ];
+    const mask1 = new PIXI.Graphics();
+    sprite1.mask = mask1;
+    mask1.beginFill(0);
+    for (let i = 0; i < 4; i++) {
+      if (quadrants[i]) continue;
+      mask1.drawRect(i % 2 ? 0 : 8, i >= 2 ? 8 : 0, 8, 8);
+    }
+    mask1.endFill();
+
+    const sprite2 = new PIXI.Sprite(sprite.texture);
+    container.addChild(sprite2);
+    sprite2.filters = [
+      new MultiColorReplaceFilter(replacements2, epsilon),
+    ];
+    const mask2 = new PIXI.Graphics();
+    sprite2.mask = mask2;
+    mask2.beginFill(0);
+    for (let i = 0; i < 4; i++) {
+      if (!quadrants[i]) continue;
+      mask2.drawRect(i % 2 ? 0 : 8, i >= 2 ? 8 : 0, 8, 8);
+    }
+    mask2.endFill();
+
+    const brt = new PIXI.BaseRenderTexture({ width: sprite.width, height: sprite.height });
     const rt = new PIXI.RenderTexture(brt);
     const spriteCopy = new PIXI.Sprite(rt);
     this.pixi.renderer.render(container, rt);

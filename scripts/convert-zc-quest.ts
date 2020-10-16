@@ -354,6 +354,16 @@ for (const combo of zcData.combos) {
     tile.flipVertical = true;
   }
 
+  const extraCsetQuadrants = combo.csets >> 4;
+  let extraCsetOffset = combo.csets & 0xf;
+  if (extraCsetOffset > 8) extraCsetOffset = extraCsetOffset - 16;
+  if (extraCsetQuadrants > 0) {
+    tile.extraCset = {
+      quadrants: [!(extraCsetQuadrants & 1), !(extraCsetQuadrants & 4), !(extraCsetQuadrants & 2), !(extraCsetQuadrants & 8)],
+      offset: extraCsetOffset,
+    };
+  }
+
   const type = getComboTypeName(combo.type);
   if (type === 'Slow Walk') {
     tile.type = TileType.SLOW_WALK;
@@ -644,7 +654,13 @@ for (const zcMap of zcData.maps) {
       for (let x = 0; x < screenWidth; x++) {
         screen.tiles.push([]);
         for (let y = 0; y < screenHeight; y++) {
-          screen.tiles[x].push({ tile: zcScreen.data[x + y * screenWidth] });
+          // TODO: why minus one?
+          let cset = zcScreen.cset[x + y * screenWidth];
+          // console.log(cset)
+          // if (cset === 0) cset = undefined;
+          // else cset -= 1;
+
+          screen.tiles[x].push({ tile: zcScreen.data[x + y * screenWidth], cset });
         }
       }
 
@@ -661,9 +677,9 @@ quest.csets = [];
 for (const zcColors of zcData.csets.cset_colors) {
   const colors = [];
   for (const [r, g, b] of zcColors) {
-    colors.push({r, g, b});
+    colors.push({ r, g, b });
   }
-  quest.csets.push({colors});
+  quest.csets.push({ colors });
 }
 
 const walkFrames = zcData.link_sprites.walk.map((d: any) => ({ graphicIds: [d.tile, d.tile + 1, d.tile + 2], flip: d.flip }));
