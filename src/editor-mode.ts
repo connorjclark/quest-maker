@@ -142,6 +142,10 @@ export class EditorMode extends QuestMakerMode {
       return;
     }
 
+    if (!(state.quest.maps[mapIndex] && state.quest.maps[mapIndex].screens[x] && state.quest.maps[mapIndex].screens[x][y])) {
+      return;
+    }
+
     state.mapIndex = mapIndex
     state.currentMap = state.quest.maps[mapIndex];
     state.screenX = x;
