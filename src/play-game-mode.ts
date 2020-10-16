@@ -491,7 +491,7 @@ export class PlayGameMode extends QuestMakerMode {
         rotate = PIXI.groupD8.MIRROR_HORIZONTAL;
       }
       this.heroEntity.addTextureFrame(name,
-        frames.graphicIds.map(graphicId => this.app.createGraphicSprite(graphicId).texture),
+        frames.graphicIds.map(graphicId => this.app.createGraphicSprite(graphicId, 6).texture),
         rotate
       );
     }
@@ -854,28 +854,30 @@ export class PlayGameMode extends QuestMakerMode {
     entity.type = enemy.type;
     entity.life = 2;
 
+    const cset = enemy.attributes['enemy.cset'] || 0;
+
     for (const [name, frames] of Object.entries(enemy.frames)) {
-      const textures = frames.map(f => this.app.createGraphicSprite(f).texture);
+      const textures = frames.map(f => this.app.createGraphicSprite(f, cset).texture);
       entity.addTextureFrame(name, textures);
     }
     if (enemy.frames.left && !enemy.frames.right) {
-      const textures = enemy.frames.left.map(f => this.app.createGraphicSprite(f).texture);
+      const textures = enemy.frames.left.map(f => this.app.createGraphicSprite(f, cset).texture);
       entity.addTextureFrame('right', textures, PIXI.groupD8.MIRROR_HORIZONTAL);
     }
     if (!enemy.frames.left && enemy.frames.right) {
-      const textures = enemy.frames.right.map(f => this.app.createGraphicSprite(f).texture);
+      const textures = enemy.frames.right.map(f => this.app.createGraphicSprite(f, cset).texture);
       entity.addTextureFrame('left', textures, PIXI.groupD8.MIRROR_HORIZONTAL);
     }
     if (enemy.frames.down && !enemy.frames.up) {
-      const textures = enemy.frames.down.map(f => this.app.createGraphicSprite(f).texture);
+      const textures = enemy.frames.down.map(f => this.app.createGraphicSprite(f, cset).texture);
       entity.addTextureFrame('up', textures, PIXI.groupD8.MIRROR_VERTICAL);
     }
     if (!enemy.frames.down && enemy.frames.up) {
-      const textures = enemy.frames.up.map(f => this.app.createGraphicSprite(f).texture);
+      const textures = enemy.frames.up.map(f => this.app.createGraphicSprite(f, cset).texture);
       entity.addTextureFrame('down', textures, PIXI.groupD8.MIRROR_VERTICAL);
     }
     if (enemy.frames.emerging && !enemy.frames.submerging) {
-      const textures = enemy.frames.emerging.map(f => this.app.createGraphicSprite(f).texture);
+      const textures = enemy.frames.emerging.map(f => this.app.createGraphicSprite(f, cset).texture);
       entity.addTextureFrame('submerging', textures.reverse());
     }
     entity.setTextureFrame(Object.keys(enemy.frames)[0]);

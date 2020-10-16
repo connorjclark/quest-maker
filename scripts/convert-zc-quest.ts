@@ -383,6 +383,10 @@ for (const guy of zcData.guys) {
   attributes['enemy.homing'] = guy.homing / 255;
   attributes['enemy.speed'] = guy.step / 100;
 
+  if (guy.cset) {
+    attributes['enemy.cset'] = guy.cset;
+  }
+
   let ignoreFrames = false;
   switch (guy.anim as EnemyAnimationType) {
     case EnemyAnimationType.aNONE:
@@ -651,6 +655,15 @@ for (const zcMap of zcData.maps) {
         .map(i => ({ enemyId: i }));
     }
   }
+}
+
+quest.csets = [];
+for (const zcColors of zcData.csets.cset_colors) {
+  const colors = [];
+  for (const [r, g, b] of zcColors) {
+    colors.push({r, g, b});
+  }
+  quest.csets.push({colors});
 }
 
 const walkFrames = zcData.link_sprites.walk.map((d: any) => ({ graphicIds: [d.tile, d.tile + 1, d.tile + 2], flip: d.flip }));

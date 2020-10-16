@@ -57,6 +57,7 @@ declare global {
     type Attributes = EnemyAttributes & ScreenAttributes;
 
     interface EnemyAttributes {
+      'enemy.cset': number;
       'enemy.directionChange': number;
       'enemy.halt': number;
       'enemy.homing': number;
@@ -92,11 +93,22 @@ declare global {
       screens: Screen[][];
     }
 
+    interface Color {
+      r: number;
+      g: number;
+      b: number;
+    }
+
+    interface Cset {
+      colors: Color[];
+    }
+
     interface Quest {
       maps: Map_[];
       enemies: Enemy[];
       weapons: Weapon[];
       graphics: Graphic[];
+      csets: Cset[];
       tiles: Tile[];
       misc: {
         SPAWN_GFX_START: number;
