@@ -971,19 +971,13 @@ export class PlayGameMode extends QuestMakerMode {
   }
 
   performSwordAttack() {
-    this.swordSprite.anchor.x = 0.5;
-    this.swordSprite.anchor.y = 0.5;
+    // TODO: attach weapon sprite to hero.
+    this.swordSprite.pivot.set(this.swordSprite.width / 2, this.swordSprite.height / 2);
     this.swordSprite.texture.rotate = PIXI.groupD8.byDirection(-this.heroEntity.direction.y, -this.heroEntity.direction.x);
-    if (this.heroEntity.direction.x === 0) {
-      this.swordSprite.width = 8;
-      this.swordSprite.height = 16;
-    } else {
-      this.swordSprite.width = 16;
-      this.swordSprite.height = 8;
-    }
-
-    this.swordSprite.x = this.heroEntity.x + this.heroEntity.width / 2 + this.heroEntity.direction.x * tileSize / 2;
-    this.swordSprite.y = this.heroEntity.y + this.heroEntity.height / 2 + this.heroEntity.direction.y * tileSize / 2;
+    const heroCenterX = this.heroEntity.x + this.heroEntity.width / 2;
+    const heroCenterY = this.heroEntity.y + this.heroEntity.height / 2 + 3;
+    this.swordSprite.x = heroCenterX + this.heroEntity.direction.x * this.swordSprite.width * 0.8;
+    this.swordSprite.y = heroCenterY + this.heroEntity.direction.y * this.swordSprite.height * 0.8;
     this.swordSprite.alpha = 1;
   }
 
