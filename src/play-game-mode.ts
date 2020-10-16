@@ -747,16 +747,18 @@ export class PlayGameMode extends QuestMakerMode {
       transitionY = 1;
     }
 
-    if (transitionX !== 0 || transitionY !== 0) {
-      if (inBounds(state.screenX + transitionX, state.screenY + transitionY, state.currentMap.screens.length, state.currentMap.screens[0].length)) {
-        state.game.screenTransition = {
-          type: 'scroll',
-          frames: 0,
-          screen: { x: state.screenX + transitionX, y: state.screenY + transitionY },
-          screenDelta: { x: transitionX, y: transitionY },
-          newScreenContainer: this.createScreenContainer(state.screenX + transitionX, state.screenY + transitionY),
-        };
-      }
+    const shouldTransition =
+      (transitionX !== 0 || transitionY !== 0) &&
+      inBounds(state.screenX + transitionX, state.screenY + transitionY, state.currentMap.screens.length, state.currentMap.screens[0].length) &&
+      state.quest.maps[state.mapIndex].screens[state.screenX + transitionX] && state.quest.maps[state.mapIndex].screens[state.screenX + transitionX][state.screenY + transitionY];
+    if (shouldTransition) {
+      state.game.screenTransition = {
+        type: 'scroll',
+        frames: 0,
+        screen: { x: state.screenX + transitionX, y: state.screenY + transitionY },
+        screenDelta: { x: transitionX, y: transitionY },
+        newScreenContainer: this.createScreenContainer(state.screenX + transitionX, state.screenY + transitionY),
+      };
     }
   }
 
