@@ -56,6 +56,7 @@ declare global {
         offset: number;
       };
       numFrames?: number;
+      /** Higher is faster, lower is slower. */
       speed?: number;
       flipHorizontal?: boolean;
       flipVertical?: boolean;

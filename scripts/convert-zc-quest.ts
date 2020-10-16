@@ -345,7 +345,9 @@ for (const combo of zcData.combos) {
   });
   if (combo.frames >= 2) {
     tile.numFrames = combo.frames;
-    tile.speed = combo.speed;
+    // https://www.zeldaclassic.com/wiki/index.php?title=Animation&q=%2Fwiki%2Findex.php%2FAnimation_Speed
+    const tics = combo.speed + 1;
+    tile.speed = 1 / tics;
   }
   if (combo.flip & 1) {
     tile.flipHorizontal = true;

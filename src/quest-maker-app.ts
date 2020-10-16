@@ -1,6 +1,5 @@
 import { App } from "./engine/app";
 import { MultiColorReplaceFilter } from "@pixi/filter-multi-color-replace";
-import { clamp } from "./utils";
 
 export class QuestMakerApp extends App<QuestMaker.State> {
   createTileSprite(screenTile: QuestMaker.ScreenTile) {
@@ -20,9 +19,8 @@ export class QuestMakerApp extends App<QuestMaker.State> {
       const textures = Array.from(Array(tile.numFrames))
         .map((_, i) => this._createSpriteForTileFrame(tile, i, cset).texture);
       const sprite = new PIXI.AnimatedSprite(textures);
+      sprite.animationSpeed = tile.speed || 1 / 60;
       sprite.play();
-      // TODO: 128 is just a guess.
-      sprite.animationSpeed = (tile.speed || 0) / 128;
       return sprite;
     } else {
       return this._createSpriteForTileFrame(tile, 0, cset);
