@@ -520,7 +520,7 @@ export class PlayGameMode extends QuestMakerMode {
     mask.endFill();
     this.container.mask = mask;
 
-    this.tileLayer.addChild(this.createScreenContainer(state.screenX, state.screenY));
+    this.tileLayer.addChild(this.createScreenContainer(state.mapIndex, state.screenX, state.screenY));
     this.entityLayer.addChild(this.heroEntity);
 
     this.hitTest.clear();
@@ -773,16 +773,17 @@ export class PlayGameMode extends QuestMakerMode {
     state.game.screenTransition = {
       type: 'scroll',
       frames: 0,
+      map: state.mapIndex,
       screen: targetScreen,
       screenDelta: { x: transitionX, y: transitionY },
-      newScreenContainer: this.createScreenContainer(targetScreen.x, targetScreen.y),
+      newScreenContainer: this.createScreenContainer(state.mapIndex, targetScreen.x, targetScreen.y),
     };
   }
 
-  createScreenContainer(sx: number, sy: number) {
+  createScreenContainer(map: number, sx: number, sy: number) {
     const container = new PIXI.Container();
     const state = this.app.state;
-    const screen = state.currentMap.screens[sx][sy];
+    const screen = state.quest.maps[map].screens[sx][sy];
 
     const bg = new PIXI.Graphics();
     bg.beginFill(0);
@@ -1002,6 +1003,7 @@ export class PlayGameMode extends QuestMakerMode {
 
   performScreenTransition(transition: QuestMaker.ScreenTransition) {
     const state = this.app.state;
+    const targetScreen = state.quest.maps[transition.map].screens[transition.screen.x][transition.screen.y];
 
     let duration;
     if (transition.type === 'scroll') {
@@ -1041,7 +1043,6 @@ export class PlayGameMode extends QuestMakerMode {
               this.heroEntity.x = transition.position.x;
               this.heroEntity.y = transition.position.y;
             } else {
-              const targetScreen = state.currentMap.screens[transition.screen.x][transition.screen.y];
               if (targetScreen.warps.arrival) {
                 this.heroEntity.x = targetScreen.warps.arrival.x;
                 this.heroEntity.y = targetScreen.warps.arrival.y;
@@ -1060,9 +1061,11 @@ export class PlayGameMode extends QuestMakerMode {
     transition.frames += 1;
     if (transition.frames >= duration) {
       delete state.game.screenTransition;
+      state.mapIndex = transition.map;
+      state.currentMap = state.quest.maps[transition.map];
       state.screenX = transition.screen.x;
       state.screenY = transition.screen.y;
-      state.currentScreen = state.currentMap.screens[state.screenX][state.screenY];
+      state.currentScreen = targetScreen;
       this.container.x = 0;
       this.container.y = 0;
 
@@ -1083,6 +1086,7 @@ export class PlayGameMode extends QuestMakerMode {
   _createScreenTransitionFromWarp(warp: QuestMaker.Warp): { transition: QuestMaker.ScreenTransition, returnTransition?: QuestMaker.ScreenTransition } {
     const state = this.app.state;
 
+    let map = state.mapIndex;
     let newScreenLocation = { x: state.screenX, y: state.screenY + 1 };
     let newPosition = undefined;
     let returnTransition = undefined;
@@ -1091,6 +1095,9 @@ export class PlayGameMode extends QuestMakerMode {
       newScreenLocation = { x: warp.screenX, y: warp.screenY };
       if (warp.x && warp.y) {
         newPosition = { x: warp.x, y: warp.y };
+      }
+      if (warp.map !== undefined) {
+        map = warp.map;
       }
     }
 
@@ -1114,10 +1121,11 @@ export class PlayGameMode extends QuestMakerMode {
       transition: {
         type: 'direct',
         frames: 0,
+        map,
         screen: newScreenLocation,
         position: newPosition,
         screenDelta: { x: 0, y: 0 },
-        newScreenContainer: this.createScreenContainer(newScreenLocation.x, newScreenLocation.y),
+        newScreenContainer: this.createScreenContainer(map, newScreenLocation.x, newScreenLocation.y),
       },
       returnTransition,
     };

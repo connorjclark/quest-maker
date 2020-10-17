@@ -47,6 +47,7 @@ declare global {
       };
     } | {
       type: 'screen',
+      map?: number;
       screenX: number;
       screenY: number;
       x?: number;
@@ -146,11 +147,14 @@ declare global {
       };
     }
 
+    // TODO: make a ScreenLocation type that have all of: map, screen, and hero x/y?
+
     type ScreenTransitionType = 'direct' | 'scroll';
 
     interface ScreenTransition {
       type: ScreenTransitionType;
       frames: number;
+      map: number;
       screen: { x: number, y: number };
       position?: {x: number, y: number};
       screenDelta: { x: number, y: number };

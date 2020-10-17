@@ -669,17 +669,30 @@ for (const zcMap of zcData.maps) {
       for (let i = 0; i < zcScreen.warpreturnx.length; i++) {
         const returnx = zcScreen.warpreturnx[i];
         const returny = zcScreen.warpreturny[i];
+        const warpMap = zcScreen.tilewarpdmap[i];
+        const warpScreen = zcScreen.tilewarpscr[i];
         const type = zcScreen.tilewarptype[i];
-        if (!returnx && !returny && !type) break;
+        if (!returnx && !returny && !type && !warpScreen && !warpMap) break;
 
         screen.warps.data = screen.warps.data || [];
-        screen.warps.data.push({
-          // type, // TODO
-          type: 'special-room',
-          guy: zcData.guy,
-          string: zcData.str,
-          return: { x: returnx, y: returny },
-        });
+
+        if (type === 0) {
+          screen.warps.data.push({
+            type: 'special-room',
+            guy: zcData.guy,
+            string: zcData.str,
+            return: { x: returnx, y: returny },
+          });
+        } else if (type === 2) {
+          screen.warps.data.push({
+            type: 'screen',
+            map: warpMap,
+            screenX: warpScreen % 16,
+            screenY: Math.floor(warpScreen / 16),
+          });
+        } else {
+          // console.log(type); // ?
+        }
       }
 
       for (let x = 0; x < screenWidth; x++) {
