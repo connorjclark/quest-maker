@@ -309,7 +309,8 @@ async function load() {
   }
   await new Promise(resolve => pixi.loader.load(resolve));
 
-  const initialMap = quest.dmaps[0].map;
+  const initialDmap = 0;
+  const initialMap = quest.dmaps[initialDmap].map;
   const state: QuestMaker.State = {
     quest,
     editor: {
@@ -319,7 +320,7 @@ async function load() {
     game: {
       screenStates: new Map(),
     },
-    dmapIndex: 0,
+    dmapIndex: initialDmap,
     mapIndex: initialMap,
     screenX: quest.misc.START_X,
     screenY: quest.misc.START_Y,

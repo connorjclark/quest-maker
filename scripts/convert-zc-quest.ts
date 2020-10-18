@@ -741,13 +741,38 @@ for (const zcMap of zcData.maps) {
   }
 }
 
-quest.csets = [];
+quest.color = { csets: [], palettes: [] };
 for (const zcColors of zcData.csets.cset_colors) {
   const colors = [];
   for (const [r, g, b] of zcColors) {
     colors.push({ r, g, b });
   }
-  quest.csets.push({ colors });
+  quest.color.csets.push({ colors });
+}
+
+// Main palette, numbers 0-15.
+const mainPalette = {
+  name: 'Main',
+  csets: Array.from(new Array(15)).map((_, i) => i),
+};
+quest.color.palettes.push(mainPalette);
+
+// Each level palette is the same as the main palette, except for csets 2, 3, 4, 9.
+for (let i = 0; i < zcData.csets.palnames.length; i++) {
+  // See 'loadlvlpal'.
+  const csetOffset = i * 13 + 15;
+
+  quest.color.palettes.push({
+    name: zcData.csets.palnames[i],
+    csets: Array.from(new Array(15)).map((_, i) => {
+      const index = [2, 3, 4, 9].indexOf(i);
+      if (index !== -1) {
+        return csetOffset + index;
+      }
+
+      return i;
+    }),
+  });
 }
 
 const walkFrames = zcData.link_sprites.walk.map((d: any) => ({ graphicIds: [d.tile, d.tile + 1, d.tile + 2], flip: d.flip }));

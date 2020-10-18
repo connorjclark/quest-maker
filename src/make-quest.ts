@@ -124,7 +124,6 @@ export default function () {
 
   const quest: QuestMaker.Quest = {
     graphics,
-    csets: [],
     tiles,
     enemies,
     weapons,

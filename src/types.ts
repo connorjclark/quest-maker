@@ -146,7 +146,10 @@ declare global {
       enemies: Enemy[];
       weapons: Weapon[];
       graphics: Graphic[];
-      csets: Cset[];
+      color?: {
+        csets: Cset[];
+        palettes: Array<{name: string, csets: number[]}>;
+      };
       tiles: Tile[];
       misc: {
         SPAWN_GFX_START: number;

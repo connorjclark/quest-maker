@@ -79,11 +79,11 @@ export class QuestMakerApp extends App<QuestMaker.State> {
     const graphic = this.state.quest.graphics[graphicId];
     const sprite = this.createSprite(graphic.file, graphic.x, graphic.y, graphic.width, graphic.height);
 
-    if (this.state.quest.csets.length === 0 || !this.state.quest.csets[cset]) {
+    if (!this.state.quest.color || !this.state.quest.color.csets[cset]) {
       return sprite;
     }
 
-    if (extraCset && !this.state.quest.csets[cset + extraCset.offset]) {
+    if (extraCset && !this.state.quest.color.csets[cset + extraCset.offset]) {
       return sprite;
     }
 
@@ -151,10 +151,19 @@ export class QuestMakerApp extends App<QuestMaker.State> {
 
   private replacementsCache = new Map<number, number[][]>();
   _getColorReplacementsForCset(cset: number) {
+    if (!this.state.quest.color) {
+      throw new Error('quest has no color data');
+    }
+
+    // TODO dont like +1 here
+    const paletteIndex = this.state.quest.dmaps[this.state.dmapIndex].color + 1;
+    const palette = this.state.quest.color.palettes[paletteIndex];
+    cset = palette.csets[cset];
+
     let replacements = this.replacementsCache.get(cset);
     if (replacements) return replacements;
 
-    const { colors } = this.state.quest.csets[cset];
+    const { colors } = this.state.quest.color.csets[cset];
     replacements = colors.map(({ r, g, b }, i) => {
       return [i, 65536 * r + 256 * g + b];
     });
