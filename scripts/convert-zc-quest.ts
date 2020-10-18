@@ -759,7 +759,14 @@ quest.color.palettes.push(mainPalette);
 
 // Each level palette is the same as the main palette, except for csets 2, 3, 4, 9.
 for (let i = 0; i < zcData.csets.palnames.length; i++) {
-  // See 'loadlvlpal'.
+  if (!zcData.csets.palnames[i]) {
+    // Alot of wasted space here for palettes that may not even be used. potential for savings here, but may break things.
+    // @ts-ignore
+    // quest.color.palettes.push(null);
+    // continue;
+  }
+
+  // See 'loadlvlpal', 'onColors_Main'.
   const csetOffset = i * 13 + 15;
 
   quest.color.palettes.push({
