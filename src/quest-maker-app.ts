@@ -1,7 +1,37 @@
 import { App } from "./engine/app";
 import { MultiColorReplaceFilter } from "@pixi/filter-multi-color-replace";
+// @ts-ignore
+import Timidity from 'timidity';
+
+class SoundManager {
+  private midiPlayer = new Timidity('/midi');
+  private currentSongId = -1;
+
+  constructor(private app: QuestMakerApp) {
+  }
+
+  playSong(id: number) {
+    if (id === this.currentSongId) return;
+
+    this.currentSongId = id;
+    this.midiPlayer.load(`${this.app.questBasePath}/midi${id}.mid`);
+    this.midiPlayer.play();
+  }
+
+  pauseSong() {
+    this.currentSongId = -1;
+    this.midiPlayer.pause();
+  }
+}
 
 export class QuestMakerApp extends App<QuestMaker.State> {
+  public questBasePath = '';
+  public soundManager = new SoundManager(this);
+
+  // constructor(pixi: PIXI.Application, state: QuestMaker.State) {
+  //   super(pixi, state);
+  // }
+
   createTileSprite(screenTile: QuestMaker.ScreenTile) {
     const tile = this.state.quest.tiles[screenTile.tile];
     if (!tile) {

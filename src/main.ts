@@ -6,8 +6,7 @@ import { PlayGameMode } from './play-game-mode';
 import { QuestMakerApp } from './quest-maker-app';
 import { TileType, EnemyType } from './types';
 import makeQuest from './make-quest';
-// @ts-ignore
-import Timidity from 'timidity';
+import { State } from 'pixi.js';
 
 const { screenWidth, screenHeight, tileSize } = constants;
 
@@ -238,13 +237,17 @@ function createQuest(): QuestMaker.Quest {
     'useItem-up': { graphicIds: [heroGraphicId + 8], flip: true },
   };
 
+  quest.dmaps = [
+    { name: 'Overworld', map: 0, color: 0, song: 0 },
+  ];
+
   return quest;
 }
 
 async function load1stQuest() {
-  const questResp = await fetch('quests/1st/quest.json');
+  const questResp = await fetch('/quests/1st/quest.json');
   const quest = await questResp.json();
-  graphicsBase = 'quests/1st';
+  questBasePath = '/quests/1st';
   return quest;
 }
 
@@ -291,7 +294,7 @@ window.deleteQuest = deleteQuest;
 // @ts-ignore
 // setInterval(window.save, 1000 * 60);
 
-let graphicsBase = 'quests/debug';
+let questBasePath = '/quests/debug';
 async function load() {
   const quest = await loadQuest();
 
@@ -302,10 +305,11 @@ async function load() {
   }
 
   for (const image of images) {
-    pixi.loader.add(image, `${graphicsBase}/${image}`);
+    pixi.loader.add(image, `${questBasePath}/${image}`);
   }
   await new Promise(resolve => pixi.loader.load(resolve));
 
+  const initialMap = quest.dmaps[0].map;
   const state: QuestMaker.State = {
     quest,
     editor: {
@@ -315,15 +319,17 @@ async function load() {
     game: {
       screenStates: new Map(),
     },
-    mapIndex: 0,
+    dmapIndex: 0,
+    mapIndex: initialMap,
     screenX: quest.misc.START_X,
     screenY: quest.misc.START_Y,
-    currentMap: quest.maps[0],
-    currentScreen: quest.maps[0].screens[quest.misc.START_X][quest.misc.START_Y],
+    currentMap: quest.maps[initialMap],
+    currentScreen: quest.maps[initialMap].screens[quest.misc.START_X][quest.misc.START_Y],
   };
 
   const app = new QuestMakerApp(pixi, state);
   editorMode = new EditorMode(app);
+  app.questBasePath = questBasePath;
 
   // TODO: move to engine.
   document.body.onkeydown = (e) => {
@@ -348,18 +354,17 @@ function tick(app: QuestMaker.App, dt: number) {
   if (app.keys.down['ShiftLeft'] || app.keys.down['ShiftRight']) {
     if (app.state.editor.isPlayTesting) {
       app.setMode(editorMode);
-      midiPlayer.pause();
     } else {
+      // Bit of a hack.
+      const matchingDmapIndex = app.state.quest.dmaps.findIndex(dmap => dmap.map === app.state.mapIndex);
+      if (matchingDmapIndex !== -1) app.state.dmapIndex = matchingDmapIndex;
+
       app.setMode(new PlayGameMode(app));
-      midiPlayer.play();
     }
     app.state.editor.isPlayTesting = !app.state.editor.isPlayTesting;
   }
-  
+
   app.tick(dt);
 }
-
-const midiPlayer = new Timidity('/midi');
-midiPlayer.load('/quests/1st/midi1.mid');
 
 load();

@@ -642,6 +642,26 @@ function getDefaultWeaponSprite(guy: any) {
   return wpnsprite;
 }
 
+for (const zcDmap of zcData.dmaps) {
+  const dmap = {
+    name: zcDmap.name,
+    map: zcDmap.map,
+    color: zcDmap.color,
+    song: zcDmap.midi,
+  };
+
+  if (dmap.name === '') break;
+
+  quest.dmaps.push(dmap);
+
+  // First 3 options are builtin to ZC, havent exported those midis yet.
+  // id >= 4 is for custom midis so shift ids down for now.
+  dmap.song = Math.max(0, dmap.song - 4);
+
+  // TODO: midi2 won't play in browser.
+  if (dmap.song === 2) dmap.song += 1;
+}
+
 for (const zcMap of zcData.maps) {
   const map: QuestMaker.Map_ = { screens: [] };
   quest.maps.push(map);
@@ -673,10 +693,10 @@ for (const zcMap of zcData.maps) {
       for (let i = 0; i < zcScreen.warpreturnx.length; i++) {
         const returnx = zcScreen.warpreturnx[i];
         const returny = zcScreen.warpreturny[i];
-        const warpMap = zcScreen.tilewarpdmap[i];
+        const warpDMap = zcScreen.tilewarpdmap[i];
         const warpScreen = zcScreen.tilewarpscr[i];
         const type = zcScreen.tilewarptype[i];
-        if (!returnx && !returny && !type && !warpScreen && !warpMap) break;
+        if (!returnx && !returny && !type && !warpScreen && !warpDMap) break;
 
         screen.warps.data = screen.warps.data || [];
 
@@ -690,7 +710,7 @@ for (const zcMap of zcData.maps) {
         } else if (type === 2) {
           screen.warps.data.push({
             type: 'screen',
-            map: warpMap,
+            dmap: warpDMap,
             screenX: warpScreen % 16,
             screenY: Math.floor(warpScreen / 16),
           });

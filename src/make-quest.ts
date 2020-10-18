@@ -128,6 +128,7 @@ export default function () {
     tiles,
     enemies,
     weapons,
+    dmaps: [],
     maps: [],
     misc: {
       SPAWN_GFX_START: 0,

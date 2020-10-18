@@ -47,7 +47,7 @@ declare global {
       };
     } | {
       type: 'screen',
-      map?: number;
+      dmap?: number;
       screenX: number;
       screenY: number;
       x?: number;
@@ -118,6 +118,14 @@ declare global {
       rotate?: boolean;
     }
 
+    // TODO: Better name for Map / DMap ?
+    interface DMap {
+      name: string;
+      map: number;
+      color: number;
+      song: number;
+    }
+
     interface Map_ {
       screens: Screen[][];
     }
@@ -133,6 +141,7 @@ declare global {
     }
 
     interface Quest {
+      dmaps: DMap[];
       maps: Map_[];
       enemies: Enemy[];
       weapons: Weapon[];
@@ -154,9 +163,9 @@ declare global {
     interface ScreenTransition {
       type: ScreenTransitionType;
       frames: number;
-      map: number;
+      dmap?: number;
       screen: { x: number, y: number };
-      position?: {x: number, y: number};
+      position?: { x: number, y: number };
       screenDelta: { x: number, y: number };
       newScreenContainer: PIXI.Container;
     }
@@ -178,6 +187,7 @@ declare global {
           enemiesKilled: number
         }>;
       };
+      dmapIndex: number;
       mapIndex: number;
       screenX: number;
       screenY: number;
