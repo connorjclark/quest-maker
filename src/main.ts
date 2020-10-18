@@ -6,6 +6,8 @@ import { PlayGameMode } from './play-game-mode';
 import { QuestMakerApp } from './quest-maker-app';
 import { TileType, EnemyType } from './types';
 import makeQuest from './make-quest';
+// @ts-ignore
+import Timidity from 'timidity';
 
 const { screenWidth, screenHeight, tileSize } = constants;
 
@@ -285,9 +287,9 @@ window.save = () => saveQuest(window.app.state.quest);
 // @ts-ignore
 window.deleteQuest = deleteQuest;
 // @ts-ignore
-window.addEventListener('unload', window.save);
+// window.addEventListener('unload', window.save);
 // @ts-ignore
-setInterval(window.save, 1000 * 60);
+// setInterval(window.save, 1000 * 60);
 
 let graphicsBase = 'quests/debug';
 async function load() {
@@ -346,18 +348,18 @@ function tick(app: QuestMaker.App, dt: number) {
   if (app.keys.down['ShiftLeft'] || app.keys.down['ShiftRight']) {
     if (app.state.editor.isPlayTesting) {
       app.setMode(editorMode);
+      midiPlayer.pause();
     } else {
       app.setMode(new PlayGameMode(app));
+      midiPlayer.play();
     }
     app.state.editor.isPlayTesting = !app.state.editor.isPlayTesting;
   }
-
+  
   app.tick(dt);
 }
 
+const midiPlayer = new Timidity('/midi');
+midiPlayer.load('/quests/1st/midi1.mid');
+
 load();
-// pixi.loader
-  // .add('tiles', 'gfx/tiles-overworld.png')
-  // .add('link', 'gfx/link.png')
-  // .add('enemies', 'gfx/enemies.png')
-  // .load(load);

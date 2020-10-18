@@ -338,6 +338,10 @@ for (const imgPath of glob.sync('*.png', { cwd: dataDir })) {
   }
 }
 
+for (const midiPath of glob.sync('*.mid', { cwd: dataDir })) {
+  fs.copyFileSync(`${dataDir}/${midiPath}`, `${outputDir}/${midiPath}`);
+}
+
 for (const combo of zcData.combos) {
   const tile = makeTile({
     graphicId: combo.tile,

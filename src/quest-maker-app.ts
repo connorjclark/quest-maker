@@ -45,11 +45,16 @@ export class QuestMakerApp extends App<QuestMaker.State> {
     const graphic = this.state.quest.graphics[graphicId];
     const sprite = this.createSprite(graphic.file, graphic.x, graphic.y, graphic.width, graphic.height);
 
-    if (this.state.quest.csets.length === 0) {
+    if (this.state.quest.csets.length === 0 || !this.state.quest.csets[cset]) {
+      return sprite;
+    }
+
+    if (extraCset && !this.state.quest.csets[cset + extraCset.offset]) {
       return sprite;
     }
 
     // TODO: Probably not very performant?
+    // Might be cause of lag on screen transition.
 
     if (extraCset) {
       const replacements1 = this._getColorReplacementsForCset(cset);
