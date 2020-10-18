@@ -6,11 +6,13 @@ import Timidity from 'timidity';
 class SoundManager {
   private midiPlayer = new Timidity('/midi');
   private currentSongId = -1;
+  private enabled = !new URLSearchParams(window.location.search).has('dev');
 
   constructor(private app: QuestMakerApp) {
   }
 
   playSong(id: number) {
+    if (!this.enabled) return;
     if (id === this.currentSongId) return;
 
     this.currentSongId = id;
@@ -19,6 +21,8 @@ class SoundManager {
   }
 
   pauseSong() {
+    if (!this.enabled) return;
+
     this.currentSongId = -1;
     this.midiPlayer.pause();
   }
