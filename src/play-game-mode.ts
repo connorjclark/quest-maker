@@ -366,6 +366,7 @@ class QuestEntity extends QuestEntityBase {
           this.setTextureFrame('moving');
           this.haltTimer = 0;
           this.loop = true;
+          // @ts-ignore
           delete this.onComplete;
         };
       }
@@ -381,6 +382,7 @@ class QuestEntity extends QuestEntityBase {
         this.onComplete = () => {
           this.misc.set('enemy.leever.emergedState', 'submerged');
           this.misc.set('enemy.leever.emergedStateTimeChanged', Date.now());
+          // @ts-ignore
           delete this.onComplete;
         };
       }
@@ -448,6 +450,7 @@ class HitTest {
 export class PlayGameMode extends QuestMakerMode {
   public heroEntity = new QuestEntity({});
   public entities: Array<{ sprite: QuestEntityBase }> = [];
+  public items: QuestEntityBase[] = [];
   public screenAttributes = new MiscBag<QuestMaker.ScreenAttributes>();
 
   private entityLayer = new PIXI.Container();
@@ -513,6 +516,8 @@ export class PlayGameMode extends QuestMakerMode {
 
     this.entities = [];
     this.entities.push({ sprite: this.heroEntity });
+
+    this.items = [];
 
     const mask = new PIXI.Graphics();
     mask.beginFill(0);
@@ -610,6 +615,7 @@ export class PlayGameMode extends QuestMakerMode {
     this.heroEntity.x = heroHitSprite.x;
     this.heroEntity.y = heroHitSprite.y - tileSize / 2;
 
+    // TODO: refactor how different entities interact.
     for (let data of this.entities.values()) {
       data.sprite.tick(this, dt);
       if (data.sprite === this.heroEntity) continue;
@@ -638,6 +644,14 @@ export class PlayGameMode extends QuestMakerMode {
     }
 
     heroEntity.speed = DEFAULT_HERO_SPEED;
+
+    for (const item of this.items) {
+      if (!isIntersecting(heroEntity.getBounds(), item.getBounds())) continue;
+
+      this.items.splice(1, -1);
+      item.parent.removeChild(item);
+      break; // being lazy.
+    }
 
     const delta = 3;
     const center = {
@@ -1090,6 +1104,16 @@ export class PlayGameMode extends QuestMakerMode {
       }
 
       this.show();
+
+      // TODO do this somewhere else ...
+      if (transition.item) {
+        const item = new QuestEntity({});
+        item.texture = this.app.createItemSprite(transition.item).texture;
+        this.items.push(item);
+        item.x = tileSize * screenWidth / 2;
+        item.y = tileSize * screenHeight / 2;
+        this.layers[1].addChild(item);
+      }
     }
   }
 
@@ -1103,6 +1127,7 @@ export class PlayGameMode extends QuestMakerMode {
     let newScreenLocation = { x: state.screenX, y: state.screenY + 1 };
     let newPosition = undefined;
     let returnTransition = undefined;
+    let item = undefined;
 
     if (warp && warp.type === 'screen') {
       newScreenLocation = { x: warp.screenX, y: warp.screenY };
@@ -1128,6 +1153,10 @@ export class PlayGameMode extends QuestMakerMode {
         x: screenWidth * tileSize / 2 - this.heroEntity.width / 2,
         y: screenHeight * (tileSize - 2),
       };
+
+      if (warp.item !== undefined) {
+        item = warp.item;
+      }
     }
 
     const mapIndex = dmap === undefined ? state.mapIndex : state.quest.dmaps[dmap].map;
@@ -1136,6 +1165,7 @@ export class PlayGameMode extends QuestMakerMode {
         type: 'direct',
         frames: 0,
         dmap,
+        item, // TODO: model room/warp behavior better.
         screen: newScreenLocation,
         position: newPosition,
         screenDelta: { x: 0, y: 0 },

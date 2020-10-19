@@ -32,9 +32,10 @@ export class QuestMakerApp extends App<QuestMaker.State> {
   public questBasePath = '';
   public soundManager = new SoundManager(this);
 
-  // constructor(pixi: PIXI.Application, state: QuestMaker.State) {
-  //   super(pixi, state);
-  // }
+  createItemSprite(id: number) {
+    const tile = this.state.quest.items[id].tile;
+    return this.createGraphicSprite(tile);
+  }
 
   createTileSprite(screenTile: QuestMaker.ScreenTile) {
     const tile = this.state.quest.tiles[screenTile.tile];
@@ -79,11 +80,7 @@ export class QuestMakerApp extends App<QuestMaker.State> {
     const graphic = this.state.quest.graphics[graphicId];
     const sprite = this.createSprite(graphic.file, graphic.x, graphic.y, graphic.width, graphic.height);
 
-    if (!this.state.quest.color || !this.state.quest.color.csets[cset]) {
-      return sprite;
-    }
-
-    if (extraCset && !this.state.quest.color.csets[cset + extraCset.offset]) {
+    if (!this.state.quest.color) {
       return sprite;
     }
 

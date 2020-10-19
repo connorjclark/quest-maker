@@ -45,6 +45,8 @@ declare global {
         x: number;
         y: number;
       };
+      // guy?: number;
+      item?: number;
     } | {
       type: 'screen',
       dmap?: number;
@@ -110,6 +112,11 @@ declare global {
       attributes: Partial<EnemyAttributes>;
     }
 
+    interface Item {
+      name: string;
+      tile: number;
+    }
+
     interface Weapon {
       id: number;
       name: string;
@@ -144,6 +151,7 @@ declare global {
       dmaps: DMap[];
       maps: Map_[];
       enemies: Enemy[];
+      items: Item[];
       weapons: Weapon[];
       graphics: Graphic[];
       color?: {
@@ -167,6 +175,7 @@ declare global {
       type: ScreenTransitionType;
       frames: number;
       dmap?: number;
+      item?: number;
       screen: { x: number, y: number };
       position?: { x: number, y: number };
       screenDelta: { x: number, y: number };

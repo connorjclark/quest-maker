@@ -126,6 +126,7 @@ export default function () {
     graphics,
     tiles,
     enemies,
+    items: [],
     weapons,
     dmaps: [],
     maps: [],

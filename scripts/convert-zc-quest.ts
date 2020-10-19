@@ -378,6 +378,15 @@ for (const combo of zcData.combos) {
   }
 }
 
+for (const zcItem of zcData.items) {
+  if (zcItem.name.startsWith('zz')) break;
+
+  quest.items.push({
+    name: zcItem.name,
+    tile: zcItem.tile,
+  });
+}
+
 for (const zcWeapon of zcData.weapons) {
   if (zcWeapon.name.startsWith('zz')) break;
 
@@ -703,8 +712,9 @@ for (const zcMap of zcData.maps) {
         if (type === 0) {
           screen.warps.data.push({
             type: 'special-room',
-            guy: zcData.guy,
-            string: zcData.str,
+            guy: zcScreen.guy,
+            string: zcScreen.str,
+            item: zcScreen.catchall,
             return: { x: returnx, y: returny },
           });
         } else if (type === 2) {
