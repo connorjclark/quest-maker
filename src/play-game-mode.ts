@@ -78,17 +78,135 @@ class EntityBase extends PIXI.AnimatedSprite {
   }
 }
 
-abstract class QuestEntityBase extends EntityBase {
-  public life = 3;
+type QuestEntityType = 'normal' | 'projectile' | 'enemy' | 'item';
+
+class QuestEntity extends EntityBase {
   public speed = 1;
+  public life = 3;
   public vx = 0;
   public vy = 0;
+  // TODO remove this and some other properties? move to misc?
+  public delta = { x: 0, y: 0 };
 
+  private haltTimer: number | null = null;
   public impulseDirection?: { x: number, y: number };
   public impulseTimer = 0;
   public invulnerableTimer = 0;
 
-  abstract tick(mode: PlayGameMode, dt: number): any;
+  public enemyType = EnemyType.NORMAL;
+  public direction = { ...directions[Math.floor(Math.random() * directions.length)] };
+  public moving = true;
+  public isHero = false;
+  public misc = new MiscBag<QuestMaker.EnemyAttributes>();
+
+  constructor(public readonly type: QuestEntityType, attributes?: Partial<QuestMaker.EnemyAttributes>) {
+    super();
+
+    for (const [id, value] of Object.entries(attributes || {})) {
+      // @ts-ignore
+      this.misc.set(id, value);
+    }
+
+    this.speed = this.misc.get('enemy.speed') || 0.5;
+  }
+
+  tick(mode: PlayGameMode, dt: number) {
+    // TODO: common code for basic vx/vy movement?
+
+    if (this.type === 'projectile') {
+      const speed = this.speed * dt;
+
+      this.vx = this.delta.x * speed;
+      this.vy = this.delta.y * speed;
+
+      this.x += this.vx;
+      this.y += this.vy;
+
+      const shouldRemove = !inBounds(this.x + this.width / 2, this.y + this.height / 2, (screenWidth + 1) * tileSize, (screenHeight + 1) * tileSize);
+      if (shouldRemove) mode.removeEntity(this);
+    } else if (this.type === 'enemy') {
+      const speed = this.speed * dt;
+
+      if (!this.isHero && this.life) {
+        if (this.enemyType === EnemyType.NORMAL) {
+          this._normalMovement(mode, speed);
+        } else if (this.enemyType === EnemyType.LEEVER) {
+          this._leeverMovement(mode, speed);
+        }
+      }
+
+      if (this.invulnerableTimer) {
+        this.alpha = Math.floor(this.invulnerableTimer * 1.5) % 2;
+
+        if (--this.invulnerableTimer <= 0) {
+          this.alpha = 1;
+          if (this.life <= 0) {
+            mode.removeEntity(this);
+            console.log('die');
+            mode.getScreenState().enemiesKilled += 1;
+            return;
+          }
+        }
+      }
+
+      let dx = 0;
+      let dy = 0;
+
+      if (this.impulseDirection) {
+        dx += this.impulseDirection.x * 4;
+        dy += this.impulseDirection.y * 4;
+
+        if (--this.impulseTimer <= 0) {
+          delete this.impulseDirection;
+          this.impulseTimer = 0;
+        }
+      } else if (this.moving) {
+        let canMove = true;
+        if (!this.isHero && this.haltTimer !== null) {
+          this.haltTimer -= dt;
+          if (this.haltTimer <= 0) this.haltTimer = null;
+          canMove = false;
+        }
+
+        if (canMove) {
+          dx += this.direction.x * speed;
+          dy += this.direction.y * speed;
+        }
+      }
+
+      this.vx = dx;
+      this.vy = dy;
+
+      if (dx !== 0 || dy !== 0) {
+        this.x += dx;
+        this.y += dy;
+
+        // Align with half-axis if moving in other direction.
+        const halfSize = tileSize / 2;
+        const quarterSize = tileSize / 4;
+        if (dx === 0) {
+          let diff = this.x % halfSize;
+          if (diff !== 0) {
+            this.x += this.speed * Math.sign(diff - quarterSize);
+            this.x = Math.round(this.x); // TODO: lil choppy.
+          }
+        } else if (dy === 0) {
+          let diff = this.y % halfSize;
+          if (diff !== 0) {
+            this.y += this.speed * Math.sign(diff - quarterSize);
+            this.y = Math.round(this.y);
+          }
+        }
+      }
+
+      if (this.moving) {
+        this.setTextureFrame(this.getDirectionName());
+        this.play();
+      } else {
+        this.stop();
+      }
+    }
+  }
 
   hit(direction: { x: number, y: number }) {
     if (this.invulnerableTimer > 0) return;
@@ -99,143 +217,21 @@ abstract class QuestEntityBase extends EntityBase {
     this.impulseTimer = 10;
     this.invulnerableTimer = 25;
   }
-}
 
-class QuestProjectileEntity extends QuestEntityBase {
-  public delta = { x: 0, y: 0 };
+  getDirectionName() {
+    const dx = this.direction.x;
+    const dy = this.direction.y;
 
-  tick(mode: PlayGameMode, dt: number) {
-    const speed = this.speed * dt;
+    let direction = 'down';
+    if (dx === 1) direction = 'right';
+    else if (dx === -1) direction = 'left';
+    else if (dy === -1) direction = 'up';
+    else if (dy === 1) direction = 'down';
 
-    this.vx = this.delta.x * speed;
-    this.vy = this.delta.y * speed;
-
-    this.x += this.vx;
-    this.y += this.vy;
-
-    const shouldRemove = !inBounds(this.x + this.width / 2, this.y + this.height / 2, (screenWidth + 1) * tileSize, (screenHeight + 1) * tileSize);
-    if (shouldRemove) mode.removeEntity(this);
-  }
-}
-
-class MiscBag<A extends Record<string, any>> {
-  private data: Partial<A> = {};
-
-  get<T extends keyof A>(id: T): A[T] {
-    // @ts-ignore
-    return this.data[id];
+    return direction;
   }
 
-  set<T extends keyof A>(id: T, value: A[T]) {
-    this.data[id] = value;
-  }
-
-  clear() {
-    this.data = {};
-  }
-}
-
-class QuestEntity extends QuestEntityBase {
-  public type = EnemyType.NORMAL;
-  public direction = { ...directions[Math.floor(Math.random() * directions.length)] };
-  public moving = true;
-  public isHero = false;
-  public misc = new MiscBag<QuestMaker.EnemyAttributes>();
-
-  private haltTimer: number | null = null;
-
-  constructor(attributes: Partial<QuestMaker.EnemyAttributes>) {
-    super();
-    for (const [id, value] of Object.entries(attributes)) {
-      // @ts-ignore
-      this.misc.set(id, value);
-    }
-
-    this.speed = this.misc.get('enemy.speed') || 0.5;
-  }
-
-  tick(mode: PlayGameMode, dt: number) {
-    const speed = this.speed * dt;
-
-    if (!this.isHero && this.life) {
-      if (this.type === EnemyType.NORMAL) {
-        this._normalMovement(mode, speed);
-      } else if (this.type === EnemyType.LEEVER) {
-        this._leeverMovement(mode, speed);
-      }
-    }
-
-    if (this.invulnerableTimer) {
-      this.alpha = Math.floor(this.invulnerableTimer * 1.5) % 2;
-
-      if (--this.invulnerableTimer <= 0) {
-        this.alpha = 1;
-        if (this.life <= 0) {
-          mode.removeEntity(this);
-          console.log('die');
-          mode.getScreenState().enemiesKilled += 1;
-          return;
-        }
-      }
-    }
-
-    let dx = 0;
-    let dy = 0;
-
-    if (this.impulseDirection) {
-      dx += this.impulseDirection.x * 4;
-      dy += this.impulseDirection.y * 4;
-
-      if (--this.impulseTimer <= 0) {
-        delete this.impulseDirection;
-        this.impulseTimer = 0;
-      }
-    } else if (this.moving) {
-      let canMove = true;
-      if (!this.isHero && this.haltTimer !== null) {
-        this.haltTimer -= dt;
-        if (this.haltTimer <= 0) this.haltTimer = null;
-        canMove = false;
-      }
-
-      if (canMove) {
-        dx += this.direction.x * speed;
-        dy += this.direction.y * speed;
-      }
-    }
-
-    this.vx = dx;
-    this.vy = dy;
-
-    if (dx !== 0 || dy !== 0) {
-      this.x += dx;
-      this.y += dy;
-
-      // Align with half-axis if moving in other direction.
-      const halfSize = tileSize / 2;
-      const quarterSize = tileSize / 4;
-      if (dx === 0) {
-        let diff = this.x % halfSize;
-        if (diff !== 0) {
-          this.x += this.speed * Math.sign(diff - quarterSize);
-          this.x = Math.round(this.x); // TODO: lil choppy.
-        }
-      } else if (dy === 0) {
-        let diff = this.y % halfSize;
-        if (diff !== 0) {
-          this.y += this.speed * Math.sign(diff - quarterSize);
-          this.y = Math.round(this.y);
-        }
-      }
-    }
-
-    if (this.moving) {
-      this.setTextureFrame(this.getDirectionName());
-      this.play();
-    } else {
-      this.stop();
-    }
-  }
+  // Enemy AI.
 
   _normalMovement(mode: PlayGameMode, speed: number) {
     const weaponId = this.misc.get('enemy.weapon');
@@ -254,7 +250,7 @@ class QuestEntity extends QuestEntityBase {
 
     // @ts-ignore
     if (window.debug) {
-      const debug = mode.app.debug(`nextTile ${mode.entities.findIndex(e => e.sprite === this)}`);
+      const debug = mode.app.debug(`nextTile ${mode.entities.findIndex(e => e === this)}`);
       debug.alpha = 0.5;
       debug.x = nextTile.x * tileSize;
       debug.y = nextTile.y * tileSize;
@@ -316,8 +312,7 @@ class QuestEntity extends QuestEntityBase {
       this.haltTimer = 100;
       this.visible = false;
 
-      const numberEmergedLeevers = mode.entities.reduce((acc, cur) => {
-        const entity = cur.sprite as QuestEntity;
+      const numberEmergedLeevers = mode.entities.reduce((acc, entity) => {
         if (entity.misc) {
           const state = entity.misc.get('enemy.leever.emergedState');
           if (!state) return acc;
@@ -388,18 +383,22 @@ class QuestEntity extends QuestEntityBase {
       }
     }
   }
+}
 
-  getDirectionName() {
-    const dx = this.direction.x;
-    const dy = this.direction.y;
+class MiscBag<A extends Record<string, any>> {
+  private data: Partial<A> = {};
 
-    let direction = 'down';
-    if (dx === 1) direction = 'right';
-    else if (dx === -1) direction = 'left';
-    else if (dy === -1) direction = 'up';
-    else if (dy === 1) direction = 'down';
+  get<T extends keyof A>(id: T): A[T] {
+    // @ts-ignore
+    return this.data[id];
+  }
 
-    return direction;
+  set<T extends keyof A>(id: T, value: A[T]) {
+    this.data[id] = value;
+  }
+
+  clear() {
+    this.data = {};
   }
 }
 
@@ -448,9 +447,8 @@ class HitTest {
 }
 
 export class PlayGameMode extends QuestMakerMode {
-  public heroEntity = new QuestEntity({});
-  public entities: Array<{ sprite: QuestEntityBase }> = [];
-  public items: QuestEntityBase[] = [];
+  public heroEntity = new QuestEntity('enemy'); // TODO ?
+  public entities: QuestEntity[] = [];
   public screenAttributes = new MiscBag<QuestMaker.ScreenAttributes>();
 
   private entityLayer = new PIXI.Container();
@@ -515,9 +513,7 @@ export class PlayGameMode extends QuestMakerMode {
     this.entityLayer.removeChildren();
 
     this.entities = [];
-    this.entities.push({ sprite: this.heroEntity });
-
-    this.items = [];
+    this.entities.push(this.heroEntity);
 
     const mask = new PIXI.Graphics();
     mask.beginFill(0);
@@ -583,11 +579,10 @@ export class PlayGameMode extends QuestMakerMode {
       state.game.moveFreeze = 10;
 
       for (const entity of this.entities) {
-        if (entity.sprite === this.heroEntity) continue;
-        if (!isIntersecting(entity.sprite.getBounds(), this.swordSprite.getBounds())) continue;
+        if (entity === this.heroEntity) continue;
+        if (!isIntersecting(entity.getBounds(), this.swordSprite.getBounds())) continue;
 
-        // @ts-ignore
-        entity.sprite.hit && entity.sprite.hit(heroEntity.direction);
+        entity.hit && entity.hit(heroEntity.direction);
         // this.removeEntity(entity.sprite);
       }
     }
@@ -615,23 +610,27 @@ export class PlayGameMode extends QuestMakerMode {
     this.heroEntity.x = heroHitSprite.x;
     this.heroEntity.y = heroHitSprite.y - tileSize / 2;
 
-    // TODO: refactor how different entities interact.
-    for (let data of this.entities.values()) {
-      data.sprite.tick(this, dt);
-      if (data.sprite === this.heroEntity) continue;
+    for (let entity of this.entities.values()) {
+      entity.tick(this, dt);
+      if (entity === this.heroEntity) continue;
 
-      if (data.sprite instanceof QuestProjectileEntity) {
-        if (this.hitTest.test(data.sprite, this.hitTest.sections.screen.objects)) {
-          this.removeEntity(data.sprite);
+      if (entity.type === 'projectile') {
+        if (this.hitTest.test(entity, this.hitTest.sections.screen.objects)) {
+          this.removeEntity(entity);
         }
       } else {
-        this.hitTest.hit(data.sprite, this.hitTest.sections.screen.objects);
-        data.sprite.x = Utils.clamp(0, data.sprite.x, screenWidth * tileSize - data.sprite.width);
-        data.sprite.y = Utils.clamp(0, data.sprite.y, screenHeight * tileSize - data.sprite.height);
+        this.hitTest.hit(entity, this.hitTest.sections.screen.objects);
+        entity.x = Utils.clamp(0, entity.x, screenWidth * tileSize - entity.width);
+        entity.y = Utils.clamp(0, entity.y, screenHeight * tileSize - entity.height);
+      }
+
+      if (entity.type === 'item' && this.hitTest.hit(heroHitSprite, [entity])) {
+        // TODO
+        this.removeEntity(entity);
       }
 
       // TODO: need to fork Bump and make `.test` return a side.
-      const collision = !this.heroEntity.invulnerableTimer && this.hitTest.hit(heroHitSprite, [data.sprite]);
+      const collision = !this.heroEntity.invulnerableTimer && this.hitTest.hit(heroHitSprite, [entity]);
       if (collision) {
         const dir = { x: 0, y: 0 };
         if (collision === 'left') dir.x = 1;
@@ -639,19 +638,11 @@ export class PlayGameMode extends QuestMakerMode {
         if (collision === 'top') dir.y += 1;
         if (collision === 'bottom') dir.y -= 1;
         this.heroEntity.hit(dir);
-        if (data.sprite instanceof QuestProjectileEntity) this.removeEntity(data.sprite);
+        if (entity.type === 'projectile') this.removeEntity(entity);
       }
     }
 
     heroEntity.speed = DEFAULT_HERO_SPEED;
-
-    for (const item of this.items) {
-      if (!isIntersecting(heroEntity.getBounds(), item.getBounds())) continue;
-
-      this.items.splice(1, -1);
-      item.parent.removeChild(item);
-      break; // being lazy.
-    }
 
     const delta = 3;
     const center = {
@@ -860,7 +851,7 @@ export class PlayGameMode extends QuestMakerMode {
   spawnEnemy(enemy: QuestMaker.Enemy, x: number, y: number) {
     const shouldSpawnWithCloud = enemy.type !== EnemyType.LEEVER;
     if (shouldSpawnWithCloud) {
-      const spawnEntity = new QuestEntity({});
+      const spawnEntity = new QuestEntity('enemy');
       spawnEntity.x = x * tileSize;
       spawnEntity.y = y * tileSize;
 
@@ -886,10 +877,10 @@ export class PlayGameMode extends QuestMakerMode {
   }
 
   createEntityFromEnemy(enemy: QuestMaker.Enemy, x: number, y: number) {
-    const entity = new QuestEntity(enemy.attributes);
+    const entity = new QuestEntity('enemy', enemy.attributes);
     entity.x = x * tileSize;
     entity.y = y * tileSize;
-    entity.type = enemy.type;
+    entity.enemyType = enemy.type;
     entity.life = 2;
 
     const cset = enemy.attributes['enemy.cset'] || 0;
@@ -920,14 +911,14 @@ export class PlayGameMode extends QuestMakerMode {
     }
     entity.setTextureFrame(Object.keys(enemy.frames)[0]);
 
-    this.entities.push({ sprite: entity });
+    this.entities.push(entity);
     this.entityLayer.addChild(entity);
     return entity;
   }
 
   createProjectile(weaponId: number, weaponSpriteOverride: number, delta: { x: number, y: number }, x: number, y: number, speed: number) {
     const weapon = this.app.state.quest.weapons[weaponId - 1];
-    const entity = new QuestProjectileEntity();
+    const entity = new QuestEntity('projectile');
     const graphic = this.app.state.quest.graphics[weaponSpriteOverride || weapon.graphic];
     entity.x = x * tileSize + (tileSize - graphic.width) / 2;
     entity.y = y * tileSize + (tileSize - graphic.height) / 2;
@@ -961,14 +952,27 @@ export class PlayGameMode extends QuestMakerMode {
       entity.setTextureFrame('default');
     }
 
-    this.entities.push({ sprite: entity });
+    this.entities.push(entity);
     this.entityLayer.addChild(entity);
     return entity;
   }
 
-  removeEntity(entity: QuestEntityBase) {
+  createItem(itemId: number, x: number, y: number) {
+    const entity = new QuestEntity('item');
+    entity.texture = this.app.createItemSprite(itemId).texture;
+    entity.x = x * tileSize;
+    entity.y = y * tileSize;
+
+    this.layers[1].addChild(entity);
+    this.entities.push(entity);
+    this.entityLayer.addChild(entity);
+
+    return entity;
+  }
+
+  removeEntity(entity: QuestEntity) {
     this.entityLayer.removeChild(entity);
-    const index = this.entities.findIndex(e => e.sprite === entity);
+    const index = this.entities.findIndex(e => e === entity);
     if (index !== -1) this.entities.splice(index, 1);
   }
 
@@ -1055,7 +1059,7 @@ export class PlayGameMode extends QuestMakerMode {
         // Black.
         if (stepFrames === 1) {
           this.tileLayer.removeChildren();
-          for (const { sprite: entity } of [...this.entities]) {
+          for (const entity of [...this.entities]) {
             if (entity !== this.heroEntity) this.removeEntity(entity);
           }
           this.tileLayer.addChild(transition.newScreenContainer);
@@ -1107,12 +1111,7 @@ export class PlayGameMode extends QuestMakerMode {
 
       // TODO do this somewhere else ...
       if (transition.item) {
-        const item = new QuestEntity({});
-        item.texture = this.app.createItemSprite(transition.item).texture;
-        this.items.push(item);
-        item.x = tileSize * screenWidth / 2;
-        item.y = tileSize * screenHeight / 2;
-        this.layers[1].addChild(item);
+        this.createItem(transition.item, screenWidth / 2, screenHeight / 2);
       }
     }
   }
