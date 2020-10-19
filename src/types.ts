@@ -14,6 +14,11 @@ export enum EnemyType {
 }
 type EnemyType_ = EnemyType;
 
+// TODO strings.
+export enum ItemType {
+  SWORD = 0,
+}
+
 declare global {
   namespace QuestMaker {
     interface ScreenTile {
@@ -86,6 +91,10 @@ declare global {
 
     type Attributes = EnemyAttributes & ScreenAttributes;
 
+    type EntityAttributes = EnemyAttributes & {
+      'item.id': number;
+    };
+
     interface EnemyAttributes {
       'enemy.cset': number;
       'enemy.directionChange': number;
@@ -114,6 +123,7 @@ declare global {
 
     interface Item {
       name: string;
+      type: ItemType;
       tile: number;
     }
 
@@ -156,7 +166,7 @@ declare global {
       graphics: Graphic[];
       color?: {
         csets: Cset[];
-        palettes: Array<{name: string, csets: number[]}>;
+        palettes: Array<{ name: string, csets: number[] }>;
       };
       tiles: Tile[];
       misc: {
@@ -198,6 +208,8 @@ declare global {
         screenStates: Map<Screen, {
           enemiesKilled: number
         }>;
+        inventory: Array<{ item: number }>;
+        equipped: [number | null, number | null];
       };
       dmapIndex: number;
       mapIndex: number;

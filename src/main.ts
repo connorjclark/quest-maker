@@ -319,6 +319,8 @@ async function load() {
     },
     game: {
       screenStates: new Map(),
+      inventory: [],
+      equipped: [null, null],
     },
     dmapIndex: initialDmap,
     mapIndex: initialMap,

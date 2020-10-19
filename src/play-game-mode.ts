@@ -1,6 +1,6 @@
 import * as constants from './constants';
 import { QuestMakerMode } from "./quest-maker-mode";
-import { TileType, EnemyType } from './types';
+import { TileType, EnemyType, ItemType } from './types';
 import 'pixi-plugin-bump';
 import * as Utils from './utils';
 
@@ -97,9 +97,9 @@ class QuestEntity extends EntityBase {
   public direction = { ...directions[Math.floor(Math.random() * directions.length)] };
   public moving = true;
   public isHero = false;
-  public misc = new MiscBag<QuestMaker.EnemyAttributes>();
+  public misc = new MiscBag<QuestMaker.EntityAttributes>();
 
-  constructor(public readonly type: QuestEntityType, attributes?: Partial<QuestMaker.EnemyAttributes>) {
+  constructor(public readonly type: QuestEntityType, attributes?: Partial<QuestMaker.EntityAttributes>) {
     super();
 
     for (const [id, value] of Object.entries(attributes || {})) {
@@ -461,6 +461,7 @@ export class PlayGameMode extends QuestMakerMode {
     new PIXI.Container(),
   ];
 
+  // TODO: this shouldn't be a property.
   private swordSprite = this.app.createGraphicSprite(this.app.state.quest.weapons[0].graphic);
   private hitTest = new HitTest();
 
@@ -573,7 +574,8 @@ export class PlayGameMode extends QuestMakerMode {
       this.heroEntity.moving = false;
     }
 
-    if (this.app.keys.down['KeyX']) {
+    const equippedX = state.game.equipped[1] !== null && state.game.inventory[state.game.equipped[1]];
+    if (equippedX && state.quest.items[equippedX.item].type === ItemType.SWORD && this.app.keys.down['KeyX']) {
       heroEntity.setTextureFrame('useItem-' + heroEntity.getDirectionName());
       this.performSwordAttack();
       state.game.moveFreeze = 10;
@@ -583,7 +585,7 @@ export class PlayGameMode extends QuestMakerMode {
         if (!isIntersecting(entity.getBounds(), this.swordSprite.getBounds())) continue;
 
         entity.hit && entity.hit(heroEntity.direction);
-        // this.removeEntity(entity.sprite);
+        // this.removeEntity(entity);
       }
     }
 
@@ -625,7 +627,7 @@ export class PlayGameMode extends QuestMakerMode {
       }
 
       if (entity.type === 'item' && this.hitTest.hit(heroHitSprite, [entity])) {
-        // TODO
+        this.pickupItem(entity.misc.get('item.id'));
         this.removeEntity(entity);
       }
 
@@ -958,7 +960,7 @@ export class PlayGameMode extends QuestMakerMode {
   }
 
   createItem(itemId: number, x: number, y: number) {
-    const entity = new QuestEntity('item');
+    const entity = new QuestEntity('item', { 'item.id': itemId });
     entity.texture = this.app.createItemSprite(itemId).texture;
     entity.x = x * tileSize;
     entity.y = y * tileSize;
@@ -1188,6 +1190,18 @@ export class PlayGameMode extends QuestMakerMode {
       }
     } else if (type === TileType.SLOW_WALK) {
       this.heroEntity.speed = DEFAULT_HERO_SPEED * 0.5;
+    }
+  }
+
+  pickupItem(itemId: number) {
+    const state = this.app.state;
+
+    const item = state.quest.items[itemId];
+    const inventoryIndex = state.game.inventory.length;
+    state.game.inventory.push({ item: itemId });
+
+    if (item.type === ItemType.SWORD) {
+      state.game.equipped[1] = inventoryIndex;
     }
   }
 }
