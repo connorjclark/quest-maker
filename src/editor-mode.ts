@@ -344,26 +344,47 @@ export class EditorMode extends QuestMakerMode {
     tilesContainer.mask = mask;
     container.addChild(tilesContainer);
 
-    const spriteToTileNumber = new Map();
-    for (let i = 0; i < state.quest.tiles.length; i++) {
-      const sprite = this.app.createTileSprite({ tile: i });
-      sprite.scale.set(opts.scale);
-      sprite.interactive = true;
-      sprite.x = (i % tilesAcross) * scaledTileSize;
-      sprite.y = Math.floor(i / tilesAcross) * scaledTileSize;
-      sprite.addListener('scroll', onScroll);
-      tilesContainer.addChild(sprite);
-      spriteToTileNumber.set(sprite, i);
+    // Loading all the tile sprites is a lot of work,
+    // so only generate them if in view.
+    const lazyLoadTileSprites = () => {
+      const viewport = this.app.pixi.screen;
+      for (const [tileContainer, i] of spriteToTileNumber.entries()) {
+        if (tileContainer.children.length !== 0) continue;
+
+        const pos = tileContainer.getGlobalPosition();
+        if (pos.x >= viewport.x &&
+          pos.y >= viewport.y &&
+          pos.x <= viewport.width &&
+          pos.y <= viewport.height) {
+          tileContainer.addChild(this.app.createTileSprite({ tile: i }));
+        }
+      }
+    };
+
+    const onScroll = (e: WheelEvent) => {
+      tilesContainer.y = Utils.clamp(-tilesContainer.height, tilesContainer.y - e.deltaY * 0.5, 0);
+      lazyLoadTileSprites();
     }
+
+    const spriteToTileNumber = new Map<PIXI.Container, number>();
+    for (let i = 0; i < state.quest.tiles.length; i++) {
+      const tileContainer = new PIXI.Container();
+      tileContainer.scale.set(opts.scale);
+      tileContainer.interactive = true;
+      tileContainer.x = (i % tilesAcross) * scaledTileSize;
+      tileContainer.y = Math.floor(i / tilesAcross) * scaledTileSize;
+      tileContainer.addListener('scroll', onScroll);
+      tilesContainer.addChild(tileContainer);
+      spriteToTileNumber.set(tileContainer, i);
+    }
+    lazyLoadTileSprites();
 
     container.addListener('click', (e) => {
-      const tileNumber = spriteToTileNumber.get(e.target);
-      if (tileNumber !== undefined) state.editor.currentTile = spriteToTileNumber.get(e.target);
+      const sprite = e.target as PIXI.Sprite;
+      const tileNumber = spriteToTileNumber.get(sprite);
+      if (tileNumber !== undefined) state.editor.currentTile = tileNumber;
     });
 
-    function onScroll(e: WheelEvent) {
-      tilesContainer.y = Utils.clamp(-tilesContainer.height, tilesContainer.y - e.deltaY * 0.5, 0);
-    }
     container.addListener('scroll', onScroll);
 
     return container;
