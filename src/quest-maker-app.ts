@@ -6,7 +6,7 @@ import Timidity from 'timidity';
 class SoundManager {
   private midiPlayer = new Timidity('/midi');
   private currentSongId = -1;
-  private enabled = !new URLSearchParams(window.location.search).has('dev');
+  private enabled = !window.IS_DEV;
 
   constructor(private app: QuestMakerApp) {
   }

@@ -4,9 +4,8 @@ import * as constants from './constants';
 import { EditorMode } from './editor-mode';
 import { PlayGameMode } from './play-game-mode';
 import { QuestMakerApp } from './quest-maker-app';
-import { TileType, EnemyType } from './types';
+import { TileType, EnemyType, ItemType } from './types';
 import makeQuest from './make-quest';
-import { State } from 'pixi.js';
 
 const { screenWidth, screenHeight, tileSize } = constants;
 
@@ -309,8 +308,26 @@ async function load() {
   }
   await new Promise(resolve => pixi.loader.load(resolve));
 
-  const initialDmap = 0;
+  let initialDmap = 0;
+  let initialScreenX = quest.misc.START_X;
+  let initialScreenY = quest.misc.START_Y;
+
+  // Simple code to quickly persist last screen position.
+  if (localStorage.getItem('lastState')) {
+    const lastState = JSON.parse(localStorage.getItem('lastState') || '');
+    if ('dmapIndex' in lastState) {
+      initialDmap = lastState.dmapIndex;
+      initialScreenX = lastState.screenX;
+      initialScreenY = lastState.screenY;
+    }
+  }
+  window.addEventListener('unload', () => {
+    const {dmapIndex, screenX, screenY} = state;
+    localStorage.setItem('lastState', JSON.stringify({dmapIndex, screenX, screenY}));
+  });
+
   const initialMap = quest.dmaps[initialDmap].map;
+
   const state: QuestMaker.State = {
     quest,
     editor: {
@@ -324,10 +341,11 @@ async function load() {
     },
     dmapIndex: initialDmap,
     mapIndex: initialMap,
-    screenX: quest.misc.START_X,
-    screenY: quest.misc.START_Y,
+    screenX: initialScreenX,
+    screenY: initialScreenY,
+    // TODO: make these getters.
     currentMap: quest.maps[initialMap],
-    currentScreen: quest.maps[initialMap].screens[quest.misc.START_X][quest.misc.START_Y],
+    currentScreen: quest.maps[initialMap].screens[initialScreenX][initialScreenY],
   };
 
   const app = new QuestMakerApp(pixi, state);
@@ -362,7 +380,12 @@ function tick(app: QuestMaker.App, dt: number) {
       const matchingDmapIndex = app.state.quest.dmaps.findIndex(dmap => dmap.map === app.state.mapIndex);
       if (matchingDmapIndex !== -1) app.state.dmapIndex = matchingDmapIndex;
 
-      app.setMode(new PlayGameMode(app));
+      const mode = new PlayGameMode(app);
+      if (window.IS_DEV) {
+        const swordId = app.state.quest.items.findIndex(item => item.type === ItemType.SWORD);
+        if (swordId !== -1) mode.pickupItem(swordId);
+      }
+      app.setMode(mode);
     }
     app.state.editor.isPlayTesting = !app.state.editor.isPlayTesting;
   }
@@ -370,4 +393,5 @@ function tick(app: QuestMaker.App, dt: number) {
   app.tick(dt);
 }
 
+window.IS_DEV = new URLSearchParams(window.location.search).has('dev');
 load();

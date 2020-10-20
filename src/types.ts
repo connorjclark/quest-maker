@@ -20,6 +20,10 @@ export enum ItemType {
 }
 
 declare global {
+  interface Window {
+    IS_DEV: boolean;
+  }
+
   namespace QuestMaker {
     interface ScreenTile {
       tile: number;
