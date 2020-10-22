@@ -536,7 +536,7 @@ for (const guy of zcData.guys) {
     case 'newwallm':
       break;
     case 'dwalk':
-      // attributes['enemy.animation.type'] = 'dwalk';
+      attributes['enemy.animation.type'] = 'dwalk';
       break;
     case 'vire':
       break;

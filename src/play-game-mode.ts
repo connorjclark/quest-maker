@@ -915,17 +915,37 @@ export class PlayGameMode extends QuestMakerMode {
       const numGraphics = enemy.attributes['enemy.animation.numGraphics'] || 0;
       const graphicIds = Array.from(new Array(numGraphics)).map((_, i) => graphicIdStart + i);
 
-      if (animationType === 'normal') {
-        framesToTextures.default = graphicIds.map(id => this.app.createGraphicSprite(id, cset).texture);
-      } else if (animationType === 'flip') {
-        framesToTextures.default = graphicIds.map(id => {
-          const textures = [
-            this.app.createGraphicSprite(id, cset).texture,
-            this.app.createGraphicSprite(id, cset).texture,
+      switch (animationType) {
+        case 'normal':
+          framesToTextures.default = graphicIds.map(id => this.app.createGraphicSprite(id, cset).texture);
+          break;
+        case 'flip':
+          framesToTextures.default = graphicIds.map(id => {
+            const textures = [
+              this.app.createGraphicSprite(id, cset).texture,
+              this.app.createGraphicSprite(id, cset).texture,
+            ];
+            textures[1].rotate = PIXI.groupD8.MIRROR_HORIZONTAL;
+            return textures;
+          }).flat();
+          break;
+        case 'dwalk':
+          framesToTextures.down = [
+            this.app.createGraphicSprite(graphicIds[0], cset).texture,
+            this.app.createGraphicSprite(graphicIds[1], cset).texture,
           ];
-          textures[1].rotate = PIXI.groupD8.MIRROR_HORIZONTAL;
-          return textures;
-        }).flat();
+          
+          framesToTextures.up = [
+            this.app.createGraphicSprite(graphicIds[2], cset).texture,
+            this.app.createGraphicSprite(graphicIds[2], cset).texture,
+          ];
+          framesToTextures.up[1].rotate = PIXI.groupD8.MIRROR_HORIZONTAL;
+
+          framesToTextures.right = [
+            this.app.createGraphicSprite(graphicIds[3], cset).texture,
+            this.app.createGraphicSprite(graphicIds[4], cset).texture,
+          ];
+          break;
       }
     }
 
