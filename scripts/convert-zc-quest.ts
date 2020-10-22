@@ -460,7 +460,7 @@ for (const zcWeapon of zcData.weapons) {
 for (const guy of zcData.guys) {
   const animationType = EnemyAnimationType(guy.anim);
 
-  if (quest.enemies.length === 49) {
+  if (quest.enemies.length === 52) {
     // console.log(guy, {animationType});
   }
 
@@ -539,6 +539,10 @@ for (const guy of zcData.guys) {
       attributes['enemy.animation.type'] = 'dwalk';
       break;
     case 'vire':
+      assert.equal(4, tiles.length);
+      frames = {};
+      frames.down = frames.right = frames.left = [tiles[0], tiles[1]];
+      frames.up = [tiles[2], tiles[3]];
       break;
     case '3frm':
       break;
