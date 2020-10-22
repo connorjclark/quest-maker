@@ -3,12 +3,9 @@ import { QuestMakerMode } from "./quest-maker-mode";
 import { TileType, EnemyType, ItemType } from './types';
 import 'pixi-plugin-bump';
 import * as Utils from './utils';
+import { Texture } from 'pixi.js';
 
 const { screenWidth, screenHeight, tileSize } = constants;
-
-interface TextureFrame {
-  textures: PIXI.Texture[];
-}
 
 const DEFAULT_HERO_SPEED = 1.5;
 
@@ -50,29 +47,24 @@ function pointToQuadrant(x: number, y: number) {
 
 // TODO: move to engine/
 class EntityBase extends PIXI.AnimatedSprite {
-  private textureFrames: Record<string, TextureFrame> = {};
-  private currentTextureFrame?: TextureFrame;
+  private nameToTextures: Record<string, PIXI.Texture[]> = {};
+  private currentFrameName = '';
 
   constructor() {
     super([new PIXI.Texture(new PIXI.BaseTexture())]);
   }
 
-  addTextureFrame(name: string, textures: PIXI.Texture[], rotate?: PIXI.GD8Symmetry) {
-    this.textureFrames[name] = { textures };
-
-    if (rotate) {
-      for (const texture of textures) {
-        texture.rotate = rotate;
-      }
-    }
+  // TODO: better name. animation controller? Animation frame?
+  addFrame(name: string, frames: PIXI.Texture[]) {
+    this.nameToTextures[name] = frames;
   }
 
-  setTextureFrame(name: string) {
-    const frame = this.textureFrames[name];
-    if (!frame || frame === this.currentTextureFrame) return;
-    this.currentTextureFrame = frame;
+  setFrame(name: string) {
+    const textures = this.nameToTextures[name];
+    if (!textures || name === this.currentFrameName) return;
+    this.currentFrameName = name;
 
-    this.textures = frame.textures;
+    this.textures = textures;
     this.animationSpeed = 0.15;
     this.textures.length ? this.play() : this.stop();
   }
@@ -200,7 +192,7 @@ class QuestEntity extends EntityBase {
       }
 
       if (this.moving) {
-        this.setTextureFrame(this.getDirectionName());
+        this.setFrame(this.getDirectionName());
         this.play();
       } else {
         this.stop();
@@ -355,10 +347,10 @@ class QuestEntity extends EntityBase {
           this.direction = { ...availableDirections[Utils.random(0, availableDirections.length)] };
         }
 
-        this.setTextureFrame('emerging');
+        this.setFrame('emerging');
         this.loop = false;
         this.onComplete = () => {
-          this.setTextureFrame('moving');
+          this.setFrame('moving');
           this.haltTimer = 0;
           this.loop = true;
           // @ts-ignore
@@ -372,7 +364,7 @@ class QuestEntity extends EntityBase {
         this.misc.set('enemy.leever.emergedState', 'submerging');
         this.misc.set('enemy.leever.emergedStateTimeChanged', Date.now());
 
-        this.setTextureFrame('submerging');
+        this.setFrame('submerging');
         this.loop = false;
         this.onComplete = () => {
           this.misc.set('enemy.leever.emergedState', 'submerged');
@@ -493,17 +485,14 @@ export class PlayGameMode extends QuestMakerMode {
     this.heroEntity.speed = DEFAULT_HERO_SPEED;
 
     for (const [name, frames] of Object.entries(state.quest.misc.HERO_FRAMES)) {
-      let rotate;
+      const textures = frames.graphicIds.map(graphicId => this.app.createGraphicSprite(graphicId, 6).texture);
       if (frames.flip) {
-        rotate = PIXI.groupD8.MIRROR_HORIZONTAL;
+        textures.forEach(texture => texture.rotate = PIXI.groupD8.MIRROR_HORIZONTAL);
       }
-      this.heroEntity.addTextureFrame(name,
-        frames.graphicIds.map(graphicId => this.app.createGraphicSprite(graphicId, 6).texture),
-        rotate
-      );
+      this.heroEntity.addFrame(name, textures);
     }
 
-    this.heroEntity.setTextureFrame('down');
+    this.heroEntity.setFrame('down');
   }
 
   show() {
@@ -576,7 +565,7 @@ export class PlayGameMode extends QuestMakerMode {
 
     const equippedX = state.game.equipped[1] !== null && state.game.inventory[state.game.equipped[1]];
     if (equippedX && state.quest.items[equippedX.item].type === ItemType.SWORD && this.app.keys.down['KeyX']) {
-      heroEntity.setTextureFrame('useItem-' + heroEntity.getDirectionName());
+      heroEntity.setFrame('useItem-' + heroEntity.getDirectionName());
       this.performSwordAttack();
       state.game.moveFreeze = 10;
 
@@ -592,7 +581,7 @@ export class PlayGameMode extends QuestMakerMode {
     if (state.game.moveFreeze !== undefined) {
       if (state.game.moveFreeze <= 0) {
         delete state.game.moveFreeze;
-        heroEntity.setTextureFrame(heroEntity.getDirectionName());
+        heroEntity.setFrame(heroEntity.getDirectionName());
         this.swordSprite.alpha = 0;
       } else {
         state.game.moveFreeze -= 1;
@@ -862,8 +851,8 @@ export class PlayGameMode extends QuestMakerMode {
         this.app.state.quest.misc.SPAWN_GFX_START + 1,
         this.app.state.quest.misc.SPAWN_GFX_START + 2,
       ].map(f => this.app.createGraphicSprite(f).texture);
-      spawnEntity.addTextureFrame('default', textures);
-      spawnEntity.setTextureFrame('default');
+      spawnEntity.addFrame('default', textures);
+      spawnEntity.setFrame('default');
       spawnEntity.loop = false;
 
       spawnEntity.onComplete = () => {
@@ -887,31 +876,62 @@ export class PlayGameMode extends QuestMakerMode {
 
     const cset = enemy.attributes['enemy.cset'] || 0;
 
-    for (const [name, frames] of Object.entries(enemy.frames)) {
-      const textures = frames.map(f => this.app.createGraphicSprite(f, cset).texture);
-      entity.addTextureFrame(name, textures);
+    let framesToTextures: Record<string, PIXI.Texture[]> = {};
+    if (enemy.frames) {
+      // TODO: probably will remove all this.
+      for (const [name, graphicIds] of Object.entries(enemy.frames)) {
+        framesToTextures[name] = graphicIds.map(id => this.app.createGraphicSprite(id, cset).texture);
+      }
+    } else {
+      const animationType = enemy.attributes['enemy.animation.type'] || 'normal';
+      const graphicIdStart = enemy.attributes['enemy.animation.graphics'] || 0;
+      const numGraphics = enemy.attributes['enemy.animation.numGraphics'] || 0;
+      const graphicIds = Array.from(new Array(numGraphics)).map((_, i) => graphicIdStart + i);
+
+      if (animationType === 'normal') {
+        framesToTextures.default = graphicIds.map(id => this.app.createGraphicSprite(id, cset).texture);
+      } else if (animationType === 'flip') {
+        framesToTextures.default = graphicIds.map(id => {
+          const textures = [
+            this.app.createGraphicSprite(id, cset).texture,
+            this.app.createGraphicSprite(id, cset).texture,
+          ];
+          textures[1].rotate = PIXI.groupD8.MIRROR_HORIZONTAL;
+          return textures;
+        }).flat();
+      }
     }
-    if (enemy.frames.left && !enemy.frames.right) {
-      const textures = enemy.frames.left.map(f => this.app.createGraphicSprite(f, cset).texture);
-      entity.addTextureFrame('right', textures, PIXI.groupD8.MIRROR_HORIZONTAL);
+
+    if (framesToTextures.left && !framesToTextures.right) {
+      const textures = framesToTextures.left.map(texture => texture.clone());
+      textures.forEach(texture => texture.rotate = PIXI.groupD8.MIRROR_HORIZONTAL);
+      framesToTextures.right = textures;
     }
-    if (!enemy.frames.left && enemy.frames.right) {
-      const textures = enemy.frames.right.map(f => this.app.createGraphicSprite(f, cset).texture);
-      entity.addTextureFrame('left', textures, PIXI.groupD8.MIRROR_HORIZONTAL);
+    if (!framesToTextures.left && framesToTextures.right) {
+      const textures = framesToTextures.right.map(texture => texture.clone());
+      textures.forEach(texture => texture.rotate = PIXI.groupD8.MIRROR_HORIZONTAL);
+      framesToTextures.left = textures;
     }
-    if (enemy.frames.down && !enemy.frames.up) {
-      const textures = enemy.frames.down.map(f => this.app.createGraphicSprite(f, cset).texture);
-      entity.addTextureFrame('up', textures, PIXI.groupD8.MIRROR_VERTICAL);
+    if (framesToTextures.down && !framesToTextures.up) {
+      const textures = framesToTextures.down.map(texture => texture.clone());
+      textures.forEach(texture => texture.rotate = PIXI.groupD8.MIRROR_VERTICAL);
+      framesToTextures.up = textures;
     }
-    if (!enemy.frames.down && enemy.frames.up) {
-      const textures = enemy.frames.up.map(f => this.app.createGraphicSprite(f, cset).texture);
-      entity.addTextureFrame('down', textures, PIXI.groupD8.MIRROR_VERTICAL);
+    if (!framesToTextures.down && framesToTextures.up) {
+      const textures = framesToTextures.up.map(texture => texture.clone());
+      textures.forEach(texture => texture.rotate = PIXI.groupD8.MIRROR_VERTICAL);
+      framesToTextures.down = textures;
     }
-    if (enemy.frames.emerging && !enemy.frames.submerging) {
-      const textures = enemy.frames.emerging.map(f => this.app.createGraphicSprite(f, cset).texture);
-      entity.addTextureFrame('submerging', textures.reverse());
+    if (framesToTextures.emerging && !framesToTextures.submerging) {
+      const textures = framesToTextures.emerging.map(texture => texture.clone());
+      framesToTextures.submerging = textures.reverse();
     }
-    entity.setTextureFrame(Object.keys(enemy.frames)[0]);
+
+    for (const [name, frames] of Object.entries(framesToTextures)) {
+      entity.addFrame(name, frames);
+    }
+
+    entity.setFrame(Object.keys(framesToTextures)[0]);
 
     this.entities.push(entity);
     this.entityLayer.addChild(entity);
@@ -930,10 +950,14 @@ export class PlayGameMode extends QuestMakerMode {
     const makeTextures = () => [weapon.graphic].map(f => this.app.createGraphicSprite(f, weapon.cset).texture);
 
     if (weapon.rotate) {
-      entity.addTextureFrame('up', makeTextures());
-      entity.addTextureFrame('down', makeTextures(), PIXI.groupD8.MIRROR_VERTICAL);
-      entity.addTextureFrame('left', makeTextures(), PIXI.groupD8.S);
-      entity.addTextureFrame('right', makeTextures(), PIXI.groupD8.N);
+      const rotated = (textures: PIXI.Texture[], rotation: PIXI.GD8Symmetry) => {
+        textures.forEach(texture => texture.rotate = rotation);
+        return textures;
+      }
+      entity.addFrame('up', makeTextures());
+      entity.addFrame('down', rotated(makeTextures(), PIXI.groupD8.MIRROR_VERTICAL));
+      entity.addFrame('left', rotated(makeTextures(), PIXI.groupD8.S));
+      entity.addFrame('right', rotated(makeTextures(), PIXI.groupD8.N));
 
       // TODO: make projectile share same code as normal entity?
       function getDirectionName() {
@@ -948,10 +972,10 @@ export class PlayGameMode extends QuestMakerMode {
 
         return direction;
       }
-      entity.setTextureFrame(getDirectionName());
+      entity.setFrame(getDirectionName());
     } else {
-      entity.addTextureFrame('default', makeTextures());
-      entity.setTextureFrame('default');
+      entity.addFrame('default', makeTextures());
+      entity.setFrame('default');
     }
 
     this.entities.push(entity);
@@ -1014,7 +1038,9 @@ export class PlayGameMode extends QuestMakerMode {
       this.spawnEnemy(enemy, pos.x, pos.y);
     }
 
-    this.app.soundManager.playSong(state.quest.dmaps[state.dmapIndex].song);
+    if (state.quest.name !== 'debug') {
+      this.app.soundManager.playSong(state.quest.dmaps[state.dmapIndex].song);
+    }
   }
 
   performSwordAttack() {

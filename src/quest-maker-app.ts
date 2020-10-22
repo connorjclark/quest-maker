@@ -87,13 +87,19 @@ export class QuestMakerApp extends App<QuestMaker.State> {
     // TODO: Probably not very performant?
     // Might be cause of lag on screen transition.
 
-    if (extraCset) {
-      const replacements1 = this._getColorReplacementsForCset(cset);
-      const replacements2 = this._getColorReplacementsForCset(cset + extraCset.offset);
-      return this._multiColorReplaceTwoCsetsSpriteCopy(sprite, extraCset.quadrants, replacements1, replacements2, 0.0001);
-    }
+    try {
+      if (extraCset) {
+        const replacements1 = this._getColorReplacementsForCset(cset);
+        const replacements2 = this._getColorReplacementsForCset(cset + extraCset.offset);
+        return this._multiColorReplaceTwoCsetsSpriteCopy(sprite, extraCset.quadrants, replacements1, replacements2, 0.0001);
+      }
 
-    return this._multiColorReplaceSpriteCopy(sprite, this._getColorReplacementsForCset(cset), 0.0001);
+      return this._multiColorReplaceSpriteCopy(sprite, this._getColorReplacementsForCset(cset), 0.0001);
+    } catch (err) {
+      // TODO
+      console.error({ graphicId, cset }, err);
+      return sprite;
+    }
   }
 
   _multiColorReplaceSpriteCopy(sprite: PIXI.Sprite, replacements: number[][], epsilon: number) {

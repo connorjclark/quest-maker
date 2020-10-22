@@ -123,6 +123,7 @@ export default function () {
   }
 
   const quest: QuestMaker.Quest = {
+    name: 'debug',
     graphics,
     tiles,
     enemies,

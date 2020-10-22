@@ -26,6 +26,7 @@ enum EnemyAnimationType {
   aVIRE,
   a3FRM,
   aWIZZ,
+  // 20
   aAQUA,
   aDONGO,
   aMANHAN,
@@ -460,8 +461,12 @@ for (const zcWeapon of zcData.weapons) {
 }
 
 for (const guy of zcData.guys) {
+  if (quest.enemies.length === 41) {
+    // console.log(guy);
+  }
+
   const tiles = Array.from(Array(guy.width)).map((_, i) => guy.tile + i);
-  const frames: QuestMaker.Enemy['frames'] = {};
+  let frames: QuestMaker.Enemy['frames'] | undefined = undefined;
   const attributes: QuestMaker.Enemy['attributes'] = {};
   let type = EnemyType.NORMAL;
 
@@ -475,13 +480,16 @@ for (const guy of zcData.guys) {
     attributes['enemy.cset'] = guy.cset;
   }
 
-  let ignoreFrames = false;
+  attributes['enemy.animation.type'] = 'normal';
+  attributes['enemy.animation.graphics'] = guy.tile;
+  attributes['enemy.animation.numGraphics'] = guy.width;
+
   switch (guy.anim as EnemyAnimationType) {
     case EnemyAnimationType.aNONE:
       // assert.equal(0, tiles.length);
-      ignoreFrames = true;
       break;
     case EnemyAnimationType.aFLIP:
+      attributes['enemy.animation.type'] = 'flip';
       break;
     case EnemyAnimationType.aUNUSED1:
       break;
@@ -491,18 +499,21 @@ for (const guy of zcData.guys) {
       break;
     case EnemyAnimationType.aOCTO:
       assert.equal(4, tiles.length);
+      frames = {};
       frames.down = [tiles[0], tiles[1]];
       frames.left = [tiles[2], tiles[3]];
       break;
     case EnemyAnimationType.aTEK:
       break;
     case EnemyAnimationType.aLEV:
-      assert.equal(5, tiles.length);
+      assert.strictEqual(5, tiles.length);
+      frames = {};
       frames.emerging = [tiles[0], tiles[1], tiles[2]];
       frames.moving = [tiles[3], tiles[4]];
       break;
     case EnemyAnimationType.aWALK:
       assert.equal(4, tiles.length);
+      frames = {};
       frames.right = [tiles[0], tiles[1]];
       frames.down = [tiles[2]];
       frames.up = [tiles[3]];
@@ -515,6 +526,7 @@ for (const guy of zcData.guys) {
       break;
     case EnemyAnimationType.aARMOS:
       assert.equal(4, tiles.length);
+      frames = {};
       frames.down = [tiles[0], tiles[1]];
       frames.up = [tiles[2], tiles[3]];
       break;
@@ -602,13 +614,6 @@ for (const guy of zcData.guys) {
     case EnemyFamily.eeLEV:
       type = EnemyType.LEEVER;
       break;
-  }
-
-  if (!Object.keys(frames).length) {
-    // if (guy.anim) console.log('TODO anim', guy.anim);
-    // frames.default = [0];
-    makeEnemy({ name: '', frames: {}, attributes: {} });
-    continue;
   }
 
   if (guy.weapon === WeaponTypeGameEngine.ewRock) {
@@ -743,7 +748,7 @@ for (const zcMap of zcData.maps) {
       const zcScreen = zcMap.screens[screenx + screeny * 16];
       if (!zcScreen) continue;
 
-      if (zcData.maps.indexOf(zcMap) === 0 && screenx === 7 && screeny === 7) {
+      if (zcData.maps.indexOf(zcMap) === 1 && screenx === 3 && screeny === 6) {
         // console.log(zcScreen);
       }
 
@@ -873,5 +878,7 @@ quest.misc.SPAWN_GFX_START = 72;
 // TODO
 quest.misc.START_X = 7;
 quest.misc.START_Y = 7;
+
+quest.name = '1st';
 
 fs.writeFileSync(`${outputDir}/quest.json`, JSON.stringify(quest, null, 2));

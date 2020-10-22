@@ -99,7 +99,12 @@ declare global {
       'item.id': number;
     };
 
+    type EnemyAnimationType = 'normal' | 'flip';
+
     interface EnemyAttributes {
+      'enemy.animation.graphics': number;
+      'enemy.animation.numGraphics': number;
+      'enemy.animation.type': EnemyAnimationType;
       'enemy.cset': number;
       'enemy.directionChange': number;
       'enemy.halt': number;
@@ -121,7 +126,8 @@ declare global {
       id: number;
       name: string;
       type: EnemyType_;
-      frames: Record<string, number[]>;
+      /** enemy.animation.* preferred. Should probably remove this. */
+      frames?: Record<string, number[]>;
       attributes: Partial<EnemyAttributes>;
     }
 
@@ -162,6 +168,7 @@ declare global {
     }
 
     interface Quest {
+      name: string;
       dmaps: DMap[];
       maps: Map_[];
       enemies: Enemy[];

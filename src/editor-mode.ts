@@ -231,8 +231,8 @@ export class EditorMode extends QuestMakerMode {
         const tilesAcross = 3;
         for (let i = 0; i < props.enemies.length; i++) {
           const enemy = props.enemies[i];
-          const frame = Object.values(enemy.frames)[0][0];
-          const sprite = this.app.createGraphicSprite(frame, enemy.attributes['enemy.cset']);
+          const graphicId = Object.values(enemy.frames || [[]])[0][0] || enemy.attributes['enemy.animation.graphics'] || 0;
+          const sprite = this.app.createGraphicSprite(graphicId, enemy.attributes['enemy.cset']);
           sprite.x = (i % tilesAcross) * tileSize;
           sprite.y = Math.floor(i / tilesAcross) * tileSize;
           container.addChild(sprite);
@@ -251,8 +251,8 @@ export class EditorMode extends QuestMakerMode {
         const tilesAcross = 3;
         for (let i = 0; i < props.enemies.length; i++) {
           const enemy = this.app.state.quest.enemies[props.enemies[i].enemyId];
-          const frame = Object.values(enemy.frames)[0][0];
-          const sprite = this.app.createGraphicSprite(frame, enemy.attributes['enemy.cset']);
+          const graphicId = Object.values(enemy.frames || [[]])[0][0] || enemy.attributes['enemy.animation.graphics'] || 0;
+          const sprite = this.app.createGraphicSprite(graphicId, enemy.attributes['enemy.cset']);
           sprite.x = (i % tilesAcross) * tileSize;
           sprite.y = Math.floor(i / tilesAcross) * tileSize;
           container.addChild(sprite);
@@ -617,17 +617,20 @@ export class EditorMode extends QuestMakerMode {
     makeDomContainer(this.createPopupWindow(contents));
   }
 
-  openGfxViewer() {
+  openGfxViewer(graphicIdsFilter?: number[]) {
     const state = this.app.state;
 
     const contents = new ReactiveContainer((container, props) => {
       container.removeChildren();
 
-      for (let i = 0; i < props.graphics.length; i++) {
+      const graphics = graphicIdsFilter ?
+        props.graphics.filter(g => graphicIdsFilter.includes(g.id)) :
+        props.graphics;
+      for (let i = 0; i < graphics.length; i++) {
         const tilesInRow = 19;
         const x = (i % tilesInRow) * tileSize;
         const y = Math.floor(i / tilesInRow) * tileSize;
-        const sprite = this.app.createGraphicSprite(i);
+        const sprite = this.app.createGraphicSprite(graphics[i].id);
         sprite.x = x;
         sprite.y = y;
         container.addChild(sprite);
@@ -722,5 +725,10 @@ export class EditorMode extends QuestMakerMode {
     background.addListener('click', onClickOutside);
 
     return windowContainer;
+  }
+
+  _debugShowGraphics(startId: number, len: number) {
+    const ids = Array.from(new Array(len)).map((_, i) => startId + i);
+    this.openGfxViewer(ids);
   }
 }

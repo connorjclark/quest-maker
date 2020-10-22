@@ -183,7 +183,7 @@ function createQuest(): QuestMaker.Quest {
   });
 
   gfx = subarray(enemyGraphics, 4 * 19, 5);
-  const prevEmerging = quest.enemies[quest.enemies.length - 1].frames.emerging;
+  const prevEmerging = quest.enemies[quest.enemies.length - 1].frames?.emerging || [];
   makeEnemy({
     name: 'Blue Leever',
     type: EnemyType.LEEVER,
@@ -315,15 +315,15 @@ async function load() {
   // Simple code to quickly persist last screen position.
   if (localStorage.getItem('lastState')) {
     const lastState = JSON.parse(localStorage.getItem('lastState') || '');
-    if ('dmapIndex' in lastState) {
+    if ('dmapIndex' in lastState && quest.dmaps[lastState.dmapIndex]) {
       initialDmap = lastState.dmapIndex;
       initialScreenX = lastState.screenX;
       initialScreenY = lastState.screenY;
     }
   }
   window.addEventListener('unload', () => {
-    const {dmapIndex, screenX, screenY} = state;
-    localStorage.setItem('lastState', JSON.stringify({dmapIndex, screenX, screenY}));
+    const { dmapIndex, screenX, screenY } = state;
+    localStorage.setItem('lastState', JSON.stringify({ dmapIndex, screenX, screenY }));
   });
 
   const initialMap = quest.dmaps[initialDmap].map;
