@@ -543,6 +543,10 @@ for (const guy of zcData.guys) {
     case EnemyAnimationType.a3FRM:
       break;
     case EnemyAnimationType.aWIZZ:
+      frames = {};
+      frames.right = [tiles[1]];
+      frames.down = [tiles[1]];
+      frames.up = [tiles[3]];
       break;
     case EnemyAnimationType.aAQUA:
       break;
@@ -614,6 +618,9 @@ for (const guy of zcData.guys) {
   switch (guy.family as EnemyFamily) {
     case EnemyFamily.eeLEV:
       type = EnemyType.LEEVER;
+      break;
+    case EnemyFamily.eeWIZZ:
+      type = EnemyType.WIZARD;
       break;
     // case EnemyFamily.eeZOL:
     //   type = EnemyType.ZOL;

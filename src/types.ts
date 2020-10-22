@@ -11,6 +11,7 @@ type TileType_ = TileType;
 export enum EnemyType {
   NORMAL = 'normal',
   LEEVER = 'leever',
+  WIZARD = 'wizard',
 }
 type EnemyType_ = EnemyType;
 

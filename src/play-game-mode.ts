@@ -3,7 +3,6 @@ import { QuestMakerMode } from "./quest-maker-mode";
 import { TileType, EnemyType, ItemType } from './types';
 import 'pixi-plugin-bump';
 import * as Utils from './utils';
-import { Texture } from 'pixi.js';
 
 const { screenWidth, screenHeight, tileSize } = constants;
 
@@ -163,6 +162,8 @@ class QuestEntity extends EntityBase {
           this._normalMovement(mode, speed);
         } else if (this.enemyType === EnemyType.LEEVER) {
           this._leeverMovement(mode, speed);
+        } else if (this.enemyType === EnemyType.WIZARD) {
+          this._wizardMovement(mode, speed);
         }
       }
 
@@ -377,6 +378,11 @@ class QuestEntity extends EntityBase {
         };
       }
     }
+  }
+
+  _wizardMovement(mode: PlayGameMode, speed: number) {
+    // TODO refactor clocks before continuing. eWizzrobe::animate
+    this.speed = 0;
   }
 }
 
