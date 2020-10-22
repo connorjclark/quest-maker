@@ -90,6 +90,8 @@ class QuestEntity extends EntityBase {
   public isHero = false;
   public misc = new MiscBag<QuestMaker.EntityAttributes>();
 
+  private ticks = 0;
+
   constructor(public readonly type: QuestEntityType, attributes?: Partial<QuestMaker.EntityAttributes>) {
     super();
 
@@ -98,17 +100,14 @@ class QuestEntity extends EntityBase {
       this.misc.set(id, value);
     }
 
-    this.speed = this.misc.get('enemy.speed') || 0.5;
+    this.speed = this.misc.get('enemy.speed') || 1;
   }
 
-  tick(mode: PlayGameMode, dt: number) {
+  tick(mode: PlayGameMode) {
     // TODO: common code for basic vx/vy movement?
-
     if (this.type === 'projectile') {
-      const speed = this.speed * dt;
-
-      this.vx = this.delta.x * speed;
-      this.vy = this.delta.y * speed;
+      this.vx = this.delta.x * this.speed;
+      this.vy = this.delta.y * this.speed;
 
       this.x += this.vx;
       this.y += this.vy;
@@ -116,8 +115,6 @@ class QuestEntity extends EntityBase {
       const shouldRemove = !inBounds(this.x + this.width / 2, this.y + this.height / 2, (screenWidth + 1) * tileSize, (screenHeight + 1) * tileSize);
       if (shouldRemove) mode.removeEntity(this);
     } else if (this.type === 'enemy') {
-      const speed = this.speed * dt;
-
       if (this.invulnerableTimer) {
         this.alpha = Math.floor(this.invulnerableTimer * 1.5) % 2;
 
@@ -146,25 +143,19 @@ class QuestEntity extends EntityBase {
       } else if (this.moving) {
         let canMove = true;
         if (!this.isHero && this.haltTimer !== null) {
-          this.haltTimer -= dt;
+          this.haltTimer -= this.speed;
           if (this.haltTimer <= 0) this.haltTimer = null;
           canMove = false;
         }
 
         if (canMove) {
-          dx += this.direction.x * speed;
-          dy += this.direction.y * speed;
+          dx += this.direction.x * this.speed;
+          dy += this.direction.y * this.speed;
         }
       }
 
       if (!this.isHero && this.life) {
-        if (this.enemyType === EnemyType.NORMAL) {
-          this._normalMovement(mode, speed);
-        } else if (this.enemyType === EnemyType.LEEVER) {
-          this._leeverMovement(mode, speed);
-        } else if (this.enemyType === EnemyType.WIZARD) {
-          this._wizardMovement(mode, speed);
-        }
+        this._move(mode);
       }
 
       this.vx = dx;
@@ -199,6 +190,19 @@ class QuestEntity extends EntityBase {
         this.stop();
       }
     }
+
+    this.ticks += 1;
+    if (this.ticks >= 16) this.ticks = 0;
+  }
+
+  _move(mode: PlayGameMode) {
+    if (this.enemyType === EnemyType.NORMAL) {
+      this._normalMovement(mode);
+    } else if (this.enemyType === EnemyType.LEEVER) {
+      this._leeverMovement(mode);
+    } else if (this.enemyType === EnemyType.WIZARD) {
+      this._wizardMovement(mode);
+    }
   }
 
   hit(direction: { x: number, y: number }) {
@@ -226,7 +230,7 @@ class QuestEntity extends EntityBase {
 
   // Enemy AI.
 
-  _normalMovement(mode: PlayGameMode, speed: number) {
+  _normalMovement(mode: PlayGameMode) {
     const weaponId = this.misc.get('enemy.weapon');
     const homingFactor = this.misc.get('enemy.homing');
     const directionChangeFactor = this.misc.get('enemy.directionChange');
@@ -237,7 +241,7 @@ class QuestEntity extends EntityBase {
     if (this.direction.y === 1) hitPoint.y += this.height;
 
     const currentTile = { x: Math.floor(hitPoint.x / tileSize), y: Math.floor(hitPoint.y / tileSize) };
-    const nextTile = { x: Math.floor((hitPoint.x + this.direction.x * speed) / tileSize), y: Math.floor((hitPoint.y + this.direction.y * speed) / tileSize) };
+    const nextTile = { x: Math.floor((hitPoint.x + this.direction.x * this.speed) / tileSize), y: Math.floor((hitPoint.y + this.direction.y * this.speed) / tileSize) };
 
     // @ts-ignore
     if (window.debug) {
@@ -292,7 +296,7 @@ class QuestEntity extends EntityBase {
     }
   }
 
-  _leeverMovement(mode: PlayGameMode, speed: number) {
+  _leeverMovement(mode: PlayGameMode) {
     // TODO: have init step.
     // TODO: no hit if not emerged.
     if (!this.misc.get('enemy.leever.emergedState')) {
@@ -380,9 +384,11 @@ class QuestEntity extends EntityBase {
     }
   }
 
-  _wizardMovement(mode: PlayGameMode, speed: number) {
-    // TODO refactor clocks before continuing. eWizzrobe::animate
+  _wizardMovement(mode: PlayGameMode) {
+    // TODO eWizzrobe::animate
     this.speed = 0;
+    // this.alpha = this.ticks > 8 ? 1 : 0;
+    // this.alpha = 0;
   }
 }
 
@@ -465,6 +471,8 @@ export class PlayGameMode extends QuestMakerMode {
   // TODO: this shouldn't be a property.
   private swordSprite = this.app.createGraphicSprite(this.app.state.quest.weapons[0].graphic);
   private hitTest = new HitTest();
+
+  private secondsSinceLastTick = 0;
 
   init() {
     super.init();
@@ -610,35 +618,41 @@ export class PlayGameMode extends QuestMakerMode {
     this.heroEntity.x = heroHitSprite.x;
     this.heroEntity.y = heroHitSprite.y - tileSize / 2;
 
-    for (let entity of this.entities.values()) {
-      entity.tick(this, dt);
-      if (entity === this.heroEntity) continue;
+    const secondsPerFrame = 1 / 60;
+    this.secondsSinceLastTick += this.app.pixi.ticker.elapsedMS / 1000;
+    while (this.secondsSinceLastTick >= secondsPerFrame) {
+      this.secondsSinceLastTick -= secondsPerFrame;
 
-      if (entity.type === 'projectile') {
-        if (this.hitTest.test(entity, this.hitTest.sections.screen.objects)) {
+      for (let entity of this.entities.values()) {
+        entity.tick(this);
+        if (entity === this.heroEntity) continue;
+
+        if (entity.type === 'projectile') {
+          if (this.hitTest.test(entity, this.hitTest.sections.screen.objects)) {
+            this.removeEntity(entity);
+          }
+        } else {
+          this.hitTest.hit(entity, this.hitTest.sections.screen.objects);
+          entity.x = Utils.clamp(0, entity.x, screenWidth * tileSize - entity.width);
+          entity.y = Utils.clamp(0, entity.y, screenHeight * tileSize - entity.height);
+        }
+
+        if (entity.type === 'item' && this.hitTest.hit(heroHitSprite, [entity])) {
+          this.pickupItem(entity.misc.get('item.id'));
           this.removeEntity(entity);
         }
-      } else {
-        this.hitTest.hit(entity, this.hitTest.sections.screen.objects);
-        entity.x = Utils.clamp(0, entity.x, screenWidth * tileSize - entity.width);
-        entity.y = Utils.clamp(0, entity.y, screenHeight * tileSize - entity.height);
-      }
 
-      if (entity.type === 'item' && this.hitTest.hit(heroHitSprite, [entity])) {
-        this.pickupItem(entity.misc.get('item.id'));
-        this.removeEntity(entity);
-      }
-
-      // TODO: need to fork Bump and make `.test` return a side.
-      const collision = !this.heroEntity.invulnerableTimer && this.hitTest.hit(heroHitSprite, [entity]);
-      if (collision) {
-        const dir = { x: 0, y: 0 };
-        if (collision === 'left') dir.x = 1;
-        if (collision === 'right') dir.x -= 1;
-        if (collision === 'top') dir.y += 1;
-        if (collision === 'bottom') dir.y -= 1;
-        this.heroEntity.hit(dir);
-        if (entity.type === 'projectile') this.removeEntity(entity);
+        // TODO: need to fork Bump and make `.test` return a side.
+        const collision = !this.heroEntity.invulnerableTimer && this.hitTest.hit(heroHitSprite, [entity]);
+        if (collision) {
+          const dir = { x: 0, y: 0 };
+          if (collision === 'left') dir.x = 1;
+          if (collision === 'right') dir.x -= 1;
+          if (collision === 'top') dir.y += 1;
+          if (collision === 'bottom') dir.y -= 1;
+          this.heroEntity.hit(dir);
+          if (entity.type === 'projectile') this.removeEntity(entity);
+        }
       }
     }
 
