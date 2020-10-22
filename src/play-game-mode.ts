@@ -119,14 +119,6 @@ class QuestEntity extends EntityBase {
     } else if (this.type === 'enemy') {
       const speed = this.speed * dt;
 
-      if (!this.isHero && this.life) {
-        if (this.enemyType === EnemyType.NORMAL) {
-          this._normalMovement(mode, speed);
-        } else if (this.enemyType === EnemyType.LEEVER) {
-          this._leeverMovement(mode, speed);
-        }
-      }
-
       if (this.invulnerableTimer) {
         this.alpha = Math.floor(this.invulnerableTimer * 1.5) % 2;
 
@@ -163,6 +155,14 @@ class QuestEntity extends EntityBase {
         if (canMove) {
           dx += this.direction.x * speed;
           dy += this.direction.y * speed;
+        }
+      }
+
+      if (!this.isHero && this.life) {
+        if (this.enemyType === EnemyType.NORMAL) {
+          this._normalMovement(mode, speed);
+        } else if (this.enemyType === EnemyType.LEEVER) {
+          this._leeverMovement(mode, speed);
         }
       }
 
@@ -231,8 +231,6 @@ class QuestEntity extends EntityBase {
     const directionChangeFactor = this.misc.get('enemy.directionChange');
     const haltFactor = this.misc.get('enemy.halt');
 
-    let shouldChangeDirection = false;
-
     let hitPoint = { x: this.x, y: this.y };
     if (this.direction.x === 1) hitPoint.x += this.width;
     if (this.direction.y === 1) hitPoint.y += this.height;
@@ -255,36 +253,41 @@ class QuestEntity extends EntityBase {
       mode.container.addChild(debug);
     }
 
-    if (this.haltTimer === null) {
-      if (isSolid(mode.app.state, nextTile.x, nextTile.y)) {
-        shouldChangeDirection = true;
+    if (this.haltTimer) return;
+
+    let availableDirections = getAvailableDirections(mode.app.state, currentTile);
+    if (!availableDirections.length) availableDirections = directions;
+
+    if (isSolid(mode.app.state, nextTile.x, nextTile.y)) {
+      this.direction = availableDirections[Math.floor(Math.random() * availableDirections.length)];
+      return;
+    }
+
+    const hasChangedTile = currentTile.x !== nextTile.x || currentTile.y !== nextTile.y;
+    if (!hasChangedTile) {
+      return;
+    }
+
+    if (Math.random() < haltFactor) {
+      this.haltTimer = 30;
+      if (weaponId) {
+        const weaponSpriteOverride = this.misc.get('enemy.weapon.sprite');
+        mode.createProjectile(weaponId, weaponSpriteOverride, { x: Math.sign(this.direction.x), y: Math.sign(this.direction.y) }, currentTile.x, currentTile.y, 2);
       }
+      return;
+    }
 
-      if (shouldChangeDirection || currentTile.x !== nextTile.x || currentTile.y !== nextTile.y) {
-        if (Math.random() < haltFactor) {
-          this.haltTimer = 30;
-          if (weaponId) {
-            const weaponSpriteOverride = this.misc.get('enemy.weapon.sprite');
-            mode.createProjectile(weaponId, weaponSpriteOverride, { x: Math.sign(this.direction.x), y: Math.sign(this.direction.y) }, currentTile.x, currentTile.y, 2);
-          }
-          return;
-        }
+    let shouldChangeDirection = false;
+    if (Math.random() < homingFactor) {
+      // TODO
+      this.direction = availableDirections[Math.floor(Math.random() * availableDirections.length)];
+      shouldChangeDirection = false;
+    } else if (Math.random() < directionChangeFactor) {
+      shouldChangeDirection = true;
+    }
 
-        let availableDirections = getAvailableDirections(mode.app.state, currentTile);
-        if (!availableDirections.length) availableDirections = directions;
-
-        if (Math.random() < homingFactor) {
-          // TODO
-          this.direction = availableDirections[Math.floor(Math.random() * availableDirections.length)];
-          shouldChangeDirection = false;
-        } else if (Math.random() < directionChangeFactor) {
-          shouldChangeDirection = true;
-        }
-
-        if (shouldChangeDirection) {
-          this.direction = availableDirections[Math.floor(Math.random() * availableDirections.length)];
-        }
-      }
+    if (shouldChangeDirection) {
+      this.direction = availableDirections[Math.floor(Math.random() * availableDirections.length)];
     }
   }
 
