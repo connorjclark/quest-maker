@@ -559,6 +559,7 @@ for (const guy of zcData.guys) {
     case EnemyAnimationType.aLANM:
       break;
     case EnemyAnimationType.a2FRMPOS:
+      // OK
       break;
     case EnemyAnimationType.a4FRM4EYE:
       break;
@@ -614,6 +615,9 @@ for (const guy of zcData.guys) {
     case EnemyFamily.eeLEV:
       type = EnemyType.LEEVER;
       break;
+    // case EnemyFamily.eeZOL:
+    //   type = EnemyType.ZOL;
+    //   break;
   }
 
   if (guy.weapon === WeaponTypeGameEngine.ewRock) {
@@ -645,7 +649,7 @@ for (const guy of zcData.guys) {
 }
 
 function getDefaultWeaponSprite(guy: any) {
-  let wpnsprite = 0
+  let wpnsprite = -1;
 
   switch (guy.weapon as WeaponTypeGameEngine) {
     case WeaponTypeGameEngine.wSword:
