@@ -618,8 +618,12 @@ export class PlayGameMode extends QuestMakerMode {
     this.heroEntity.x = heroHitSprite.x;
     this.heroEntity.y = heroHitSprite.y - tileSize / 2;
 
+    // Lazy way to pause the game when window is minimized.
+    if (this.app.pixi.ticker.elapsedMS / 1000 > 0.1) return;
+
     const secondsPerFrame = 1 / 60;
     this.secondsSinceLastTick += this.app.pixi.ticker.elapsedMS / 1000;
+
     while (this.secondsSinceLastTick >= secondsPerFrame) {
       this.secondsSinceLastTick -= secondsPerFrame;
 

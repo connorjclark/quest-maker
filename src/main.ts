@@ -394,4 +394,16 @@ function tick(app: QuestMaker.App, dt: number) {
 }
 
 window.IS_DEV = new URLSearchParams(window.location.search).has('dev');
+// @ts-ignore
+window.debugScreen = () => {
+  // @ts-ignore
+  const app = window.app as QuestMakerApp;
+  const state = app.state;
+  console.log({map: state.mapIndex, x: state.screenX, y: state.screenY});
+  console.log({
+    ...state.currentScreen,
+    enemies: state.currentScreen.enemies.map(e => state.quest.enemies[e.enemyId]),
+  });
+};
+
 load();

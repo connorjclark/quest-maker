@@ -3,63 +3,63 @@
 
 import * as assert from 'assert';
 
-enum EnemyAnimationType {
-  aNONE,
-  aFLIP,
-  aUNUSED1,
-  a2FRM,
-  aUNUSED2,
-  // 5
-  aOCTO,
-  aTEK,
-  aLEV,
-  aWALK,
-  aZORA,
-  // 10
-  aNEWZORA,
-  aGHINI,
-  aARMOS,
-  aROPE,
-  aWALLM,
-  aNEWWALLM,
-  aDWALK,
-  aVIRE,
-  a3FRM,
-  aWIZZ,
-  // 20
-  aAQUA,
-  aDONGO,
-  aMANHAN,
-  aGLEEOK,
-  aDIG,
-  aGHOMA,
-  aLANM,
-  a2FRMPOS,
-  a4FRM4EYE,
-  a4FRM8EYE,
-  a4FRM4DIRF,
-  a4FRM4DIR,
-  a4FRM8DIRF,
-  aARMOS4,
-  a4FRMPOS4DIR,
-  a4FRMPOS8DIR,
-  aUNUSED3,
-  a4FRM8DIRB,
-  aNEWTEK,
-  a3FRM4DIR,
-  a2FRM4DIR,
-  aNEWLEV,
-  a2FRM4EYE,
-  aNEWWIZZ,
-  aNEWDONGO,
-  aDONGOBS,
-  a4FRMPOS8DIRF,
-  a4FRMPOS4DIRF,
-  a4FRMNODIR,
-  aGANON,
-  a2FRMB,
-  aMAX,
+function makeEnum<T>(vals: {[id: number]: T}) {
+  return (id: number) => vals[id];
 }
+
+const EnemyAnimationType = makeEnum([
+  'none',
+  'flip',
+  'unused1',
+  '2frm',
+  'unused2',
+  'octo',
+  'tek',
+  'lev',
+  'walk',
+  'zora',
+  'newzora',
+  'ghini',
+  'armos',
+  'rope',
+  'wallm',
+  'newwallm',
+  'dwalk',
+  'vire',
+  '3frm',
+  'wizz',
+  'aqua',
+  'dongo',
+  'manhan',
+  'gleeok',
+  'dig',
+  'ghoma',
+  'lanm',
+  '2frmpos',
+  '4frm4eye',
+  '4frm8eye',
+  '4frm4dirf',
+  '4frm4dir',
+  '4frm8dirf',
+  'armos4',
+  '4frmpos4dir',
+  '4frmpos8dir',
+  'unused3',
+  '4frm8dirb',
+  'newtek',
+  '3frm4dir',
+  '2frm4dir',
+  'newlev',
+  '2frm4eye',
+  'newwizz',
+  'newdongo',
+  'dongobs',
+  '4frmpos8dirf',
+  '4frmpos4dirf',
+  '4frmnodir',
+  'ganon',
+  '2frmb',
+] as const);
 
 enum EnemyFamily {
   eeGUY = 0, eeWALK,
@@ -196,7 +196,7 @@ export enum ItemFamily {
   itype_max = 512
 };
 
-const ComboTypes = [
+const ComboNameType = makeEnum([
   '(None)',
   'Stairs [A]',
   'Cave (Walk Down) [A]',
@@ -362,10 +362,7 @@ const ComboTypes = [
   'Generic',
   'Pitfall',
   'Step->Effects',
-] as const;
-function getComboTypeName(id: number) {
-  return ComboTypes[id];
-}
+] as const);
 
 import * as fs from 'fs';
 import * as path from 'path';
@@ -432,7 +429,7 @@ for (const combo of zcData.combos) {
     };
   }
 
-  const type = getComboTypeName(combo.type);
+  const type = ComboNameType(combo.type);
   if (type === 'Slow Walk') {
     tile.type = TileType.SLOW_WALK;
   } else if (type.includes('Cave')) {
@@ -461,8 +458,10 @@ for (const zcWeapon of zcData.weapons) {
 }
 
 for (const guy of zcData.guys) {
-  if (quest.enemies.length === 41) {
-    // console.log(guy);
+  const animationType = EnemyAnimationType(guy.anim);
+
+  if (quest.enemies.length === 49) {
+    // console.log(guy, {animationType});
   }
 
   const tiles = Array.from(Array(guy.width)).map((_, i) => guy.tile + i);
@@ -484,135 +483,136 @@ for (const guy of zcData.guys) {
   attributes['enemy.animation.graphics'] = guy.tile;
   attributes['enemy.animation.numGraphics'] = guy.width;
 
-  switch (guy.anim as EnemyAnimationType) {
-    case EnemyAnimationType.aNONE:
+  switch (animationType) {
+    case 'none':
       // assert.equal(0, tiles.length);
       break;
-    case EnemyAnimationType.aFLIP:
+    case 'flip':
       attributes['enemy.animation.type'] = 'flip';
       break;
-    case EnemyAnimationType.aUNUSED1:
+    case 'unused1':
       break;
-    case EnemyAnimationType.a2FRM:
+    case '2frm':
       break;
-    case EnemyAnimationType.aUNUSED2:
+    case 'unused2':
       break;
-    case EnemyAnimationType.aOCTO:
+    case 'octo':
       assert.equal(4, tiles.length);
       frames = {};
       frames.down = [tiles[0], tiles[1]];
       frames.left = [tiles[2], tiles[3]];
       break;
-    case EnemyAnimationType.aTEK:
+    case 'tek':
       break;
-    case EnemyAnimationType.aLEV:
+    case 'lev':
       assert.strictEqual(5, tiles.length);
       frames = {};
       frames.emerging = [tiles[0], tiles[1], tiles[2]];
       frames.moving = [tiles[3], tiles[4]];
       break;
-    case EnemyAnimationType.aWALK:
+    case 'walk':
       assert.equal(4, tiles.length);
       frames = {};
       frames.right = [tiles[0], tiles[1]];
       frames.down = [tiles[2]];
       frames.up = [tiles[3]];
       break;
-    case EnemyAnimationType.aZORA:
+    case 'zora':
       break;
-    case EnemyAnimationType.aNEWZORA:
+    case 'newzora':
       break;
-    case EnemyAnimationType.aGHINI:
+    case 'ghini':
       break;
-    case EnemyAnimationType.aARMOS:
+    case 'armos':
       assert.equal(4, tiles.length);
       frames = {};
       frames.down = [tiles[0], tiles[1]];
       frames.up = [tiles[2], tiles[3]];
       break;
-    case EnemyAnimationType.aROPE:
+    case 'rope':
       break;
-    case EnemyAnimationType.aWALLM:
+    case 'wallm':
       break;
-    case EnemyAnimationType.aNEWWALLM:
+    case 'newwallm':
       break;
-    case EnemyAnimationType.aDWALK:
+    case 'dwalk':
+      // attributes['enemy.animation.type'] = 'dwalk';
       break;
-    case EnemyAnimationType.aVIRE:
+    case 'vire':
       break;
-    case EnemyAnimationType.a3FRM:
+    case '3frm':
       break;
-    case EnemyAnimationType.aWIZZ:
+    case 'wizz':
       frames = {};
       frames.right = [tiles[1]];
       frames.down = [tiles[1]];
       frames.up = [tiles[3]];
       break;
-    case EnemyAnimationType.aAQUA:
+    case 'aqua':
       break;
-    case EnemyAnimationType.aDONGO:
+    case 'dongo':
       break;
-    case EnemyAnimationType.aMANHAN:
+    case 'manhan':
       break;
-    case EnemyAnimationType.aGLEEOK:
+    case 'gleeok':
       break;
-    case EnemyAnimationType.aDIG:
+    case 'dig':
       break;
-    case EnemyAnimationType.aGHOMA:
+    case 'ghoma':
       break;
-    case EnemyAnimationType.aLANM:
+    case 'lanm':
       break;
-    case EnemyAnimationType.a2FRMPOS:
+    case '2frmpos':
       // OK
       break;
-    case EnemyAnimationType.a4FRM4EYE:
+    case '4frm4eye':
       break;
-    case EnemyAnimationType.a4FRM8EYE:
+    case '4frm8eye':
       break;
-    case EnemyAnimationType.a4FRM4DIRF:
+    case '4frm4dirf':
       break;
-    case EnemyAnimationType.a4FRM4DIR:
+    case '4frm4dir':
       break;
-    case EnemyAnimationType.a4FRM8DIRF:
+    case '4frm8dirf':
       break;
-    case EnemyAnimationType.aARMOS4:
+    case 'armos4':
       break;
-    case EnemyAnimationType.a4FRMPOS4DIR:
+    case '4frmpos4dir':
       break;
-    case EnemyAnimationType.a4FRMPOS8DIR:
+    case '4frmpos8dir':
       break;
-    case EnemyAnimationType.aUNUSED3:
+    case 'unused3':
       break;
-    case EnemyAnimationType.a4FRM8DIRB:
+    case '4frm8dirb':
       break;
-    case EnemyAnimationType.aNEWTEK:
+    case 'newtek':
       break;
-    case EnemyAnimationType.a3FRM4DIR:
+    case '3frm4dir':
       break;
-    case EnemyAnimationType.a2FRM4DIR:
+    case '2frm4dir':
       break;
-    case EnemyAnimationType.aNEWLEV:
+    case 'newlev':
       break;
-    case EnemyAnimationType.a2FRM4EYE:
+    case '2frm4eye':
       break;
-    case EnemyAnimationType.aNEWWIZZ:
+    case 'newwizz':
       break;
-    case EnemyAnimationType.aNEWDONGO:
+    case 'newdongo':
       break;
-    case EnemyAnimationType.aDONGOBS:
+    case 'dongobs':
       break;
-    case EnemyAnimationType.a4FRMPOS8DIRF:
+    case '4frmpos8dirf':
       break;
-    case EnemyAnimationType.a4FRMPOS4DIRF:
+    case '4frmpos4dirf':
       break;
-    case EnemyAnimationType.a4FRMNODIR:
+    case '4frmnodir':
       break;
-    case EnemyAnimationType.aGANON:
+    case 'ganon':
       break;
-    case EnemyAnimationType.a2FRMB:
+    case '2frmb':
       break;
-    case EnemyAnimationType.aMAX:
-      break;
+    default:
+      throw new Error('unknown ' + guy.anim);
   }
 
   switch (guy.family as EnemyFamily) {

@@ -100,7 +100,11 @@ declare global {
       'item.id': number;
     };
 
-    type EnemyAnimationType = 'normal' | 'flip';
+    type EnemyAnimationType = |
+      'normal' |
+      'flip' |
+      /** blah */
+      'dwalk';
 
     interface EnemyAttributes {
       'enemy.animation.graphics': number;
