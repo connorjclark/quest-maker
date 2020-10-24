@@ -100,11 +100,59 @@ declare global {
       'item.id': number;
     };
 
+    // TODO: write comments for each.
     type EnemyAnimationType = |
-      'normal' |
+      'none' |
       'flip' |
-      /** blah */
-      'dwalk';
+      'unused1' |
+      '2frm' |
+      'unused2' |
+      'octo' |
+      'tek' |
+      'lev' |
+      'walk' |
+      'zora' |
+      'newzora' |
+      'ghini' |
+      'armos' |
+      'rope' |
+      'wallm' |
+      'newwallm' |
+      'dwalk' |
+      'vire' |
+      '3frm' |
+      'wizz' |
+      'aqua' |
+      'dongo' |
+      'manhan' |
+      'gleeok' |
+      'dig' |
+      'ghoma' |
+      'lanm' |
+      '2frmpos' |
+      '4frm4eye' |
+      '4frm8eye' |
+      '4frm4dirf' |
+      '4frm4dir' |
+      '4frm8dirf' |
+      'armos4' |
+      '4frmpos4dir' |
+      '4frmpos8dir' |
+      'unused3' |
+      '4frm8dirb' |
+      'newtek' |
+      '3frm4dir' |
+      '2frm4dir' |
+      'newlev' |
+      '2frm4eye' |
+      'newwizz' |
+      'newdongo' |
+      'dongobs' |
+      '4frmpos8dirf' |
+      '4frmpos4dirf' |
+      '4frmnodir' |
+      'ganon' |
+      '2frmb';
 
     interface EnemyAttributes {
       'enemy.animation.graphics': number;

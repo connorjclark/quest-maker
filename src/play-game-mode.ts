@@ -1,23 +1,15 @@
 import * as constants from './constants';
 import { QuestMakerMode } from "./quest-maker-mode";
 import { TileType, EnemyType, ItemType } from './types';
-import 'pixi-plugin-bump';
 import * as Utils from './utils';
+import { QuestEntity, MiscBag } from './entity';
+import 'pixi-plugin-bump';
 
 const { screenWidth, screenHeight, tileSize } = constants;
 
 const DEFAULT_HERO_SPEED = 1.5;
 
 let paused = false;
-
-const directions = [{ x: 0, y: -1 }, { x: 0, y: 1 }, { x: 1, y: 0 }, { x: -1, y: 0 }];
-function getAvailableDirections(state: QuestMaker.State, pos: { x: number, y: number }) {
-  return directions.filter(d => {
-    return !isSolid(state, pos.x + d.x, pos.y + d.y);
-  });
-}
-
-const inBounds = (x: number, y: number, width: number, height: number) => x >= 0 && y >= 0 && x < width && y < height;
 
 const isIntersecting = (r1: PIXI.Rectangle, r2: PIXI.Rectangle) => {
   return !(r2.x > (r1.x + r1.width) ||
@@ -26,387 +18,11 @@ const isIntersecting = (r1: PIXI.Rectangle, r2: PIXI.Rectangle) => {
     (r2.y + r2.height) < r1.y);
 }
 
-const isSolid = (state: QuestMaker.State, x: number, y: number, quadrant?: number) => {
-  if (!inBounds(x, y, screenWidth, screenHeight)) return true;
-
-  const tileNumber = state.currentScreen.tiles[x][y].tile;
-  if (quadrant === undefined) {
-    return !state.quest.tiles[tileNumber].walkable.every(b => b);
-  } else {
-    return !state.quest.tiles[tileNumber].walkable[quadrant];
-  }
-};
-
 function pointToQuadrant(x: number, y: number) {
   let quadrant = 0;
   if (x % tileSize > tileSize / 2) quadrant += 1;
   if (y % tileSize > tileSize / 2) quadrant += 2;
   return quadrant;
-}
-
-// TODO: move to engine/
-class EntityBase extends PIXI.AnimatedSprite {
-  private nameToTextures: Record<string, PIXI.Texture[]> = {};
-  private currentFrameName = '';
-
-  constructor() {
-    super([new PIXI.Texture(new PIXI.BaseTexture())]);
-  }
-
-  // TODO: better name. animation controller? Animation frame?
-  addFrame(name: string, frames: PIXI.Texture[]) {
-    this.nameToTextures[name] = frames;
-  }
-
-  setFrame(name: string) {
-    const textures = this.nameToTextures[name];
-    if (!textures || name === this.currentFrameName) return;
-    this.currentFrameName = name;
-
-    this.textures = textures;
-    this.animationSpeed = 0.15;
-    this.textures.length ? this.play() : this.stop();
-  }
-}
-
-type QuestEntityType = 'normal' | 'projectile' | 'enemy' | 'item';
-
-class QuestEntity extends EntityBase {
-  public speed = 1;
-  public life = 3;
-  public vx = 0;
-  public vy = 0;
-  // TODO remove this and some other properties? move to misc?
-  public delta = { x: 0, y: 0 };
-
-  private haltTimer: number | null = null;
-  public impulseDirection?: { x: number, y: number };
-  public impulseTimer = 0;
-  public invulnerableTimer = 0;
-
-  public enemyType = EnemyType.NORMAL;
-  public direction = { ...directions[Math.floor(Math.random() * directions.length)] };
-  public moving = true;
-  public isHero = false;
-  public misc = new MiscBag<QuestMaker.EntityAttributes>();
-
-  private ticks = 0;
-
-  constructor(public readonly type: QuestEntityType, attributes?: Partial<QuestMaker.EntityAttributes>) {
-    super();
-
-    for (const [id, value] of Object.entries(attributes || {})) {
-      // @ts-ignore
-      this.misc.set(id, value);
-    }
-
-    this.speed = this.misc.get('enemy.speed') || 1;
-  }
-
-  tick(mode: PlayGameMode) {
-    // TODO: common code for basic vx/vy movement?
-    if (this.type === 'projectile') {
-      this.vx = this.delta.x * this.speed;
-      this.vy = this.delta.y * this.speed;
-
-      this.x += this.vx;
-      this.y += this.vy;
-
-      const shouldRemove = !inBounds(this.x + this.width / 2, this.y + this.height / 2, (screenWidth + 1) * tileSize, (screenHeight + 1) * tileSize);
-      if (shouldRemove) mode.removeEntity(this);
-    } else if (this.type === 'enemy') {
-      if (this.invulnerableTimer) {
-        this.alpha = Math.floor(this.invulnerableTimer * 1.5) % 2;
-
-        if (--this.invulnerableTimer <= 0) {
-          this.alpha = 1;
-          if (this.life <= 0) {
-            mode.removeEntity(this);
-            console.log('die');
-            mode.getScreenState().enemiesKilled += 1;
-            return;
-          }
-        }
-      }
-
-      let dx = 0;
-      let dy = 0;
-
-      if (this.impulseDirection) {
-        dx += this.impulseDirection.x * 4;
-        dy += this.impulseDirection.y * 4;
-
-        if (--this.impulseTimer <= 0) {
-          delete this.impulseDirection;
-          this.impulseTimer = 0;
-        }
-      } else if (this.moving) {
-        let canMove = true;
-        if (!this.isHero && this.haltTimer !== null) {
-          this.haltTimer -= this.speed;
-          if (this.haltTimer <= 0) this.haltTimer = null;
-          canMove = false;
-        }
-
-        if (canMove) {
-          dx += this.direction.x * this.speed;
-          dy += this.direction.y * this.speed;
-        }
-      }
-
-      if (!this.isHero && this.life) {
-        this._move(mode);
-      }
-
-      this.vx = dx;
-      this.vy = dy;
-
-      if (dx !== 0 || dy !== 0) {
-        this.x += dx;
-        this.y += dy;
-
-        // Align with half-axis if moving in other direction.
-        const halfSize = tileSize / 2;
-        const quarterSize = tileSize / 4;
-        if (dx === 0) {
-          let diff = this.x % halfSize;
-          if (diff !== 0) {
-            this.x += this.speed * Math.sign(diff - quarterSize);
-            this.x = Math.round(this.x); // TODO: lil choppy.
-          }
-        } else if (dy === 0) {
-          let diff = this.y % halfSize;
-          if (diff !== 0) {
-            this.y += this.speed * Math.sign(diff - quarterSize);
-            this.y = Math.round(this.y);
-          }
-        }
-      }
-
-      if (this.moving) {
-        this.setFrame(this.getDirectionName());
-        this.play();
-      } else {
-        this.stop();
-      }
-    }
-
-    this.ticks += 1;
-    if (this.ticks >= 16) this.ticks = 0;
-  }
-
-  _move(mode: PlayGameMode) {
-    if (this.enemyType === EnemyType.NORMAL) {
-      this._normalMovement(mode);
-    } else if (this.enemyType === EnemyType.LEEVER) {
-      this._leeverMovement(mode);
-    } else if (this.enemyType === EnemyType.WIZARD) {
-      this._wizardMovement(mode);
-    }
-  }
-
-  hit(direction: { x: number, y: number }) {
-    if (this.invulnerableTimer > 0) return;
-
-    this.life -= 1;
-
-    this.impulseDirection = direction;
-    this.impulseTimer = 10;
-    this.invulnerableTimer = 25;
-  }
-
-  getDirectionName() {
-    const dx = this.direction.x;
-    const dy = this.direction.y;
-
-    let direction = 'down';
-    if (dx === 1) direction = 'right';
-    else if (dx === -1) direction = 'left';
-    else if (dy === -1) direction = 'up';
-    else if (dy === 1) direction = 'down';
-
-    return direction;
-  }
-
-  // Enemy AI.
-
-  _normalMovement(mode: PlayGameMode) {
-    const weaponId = this.misc.get('enemy.weapon');
-    const homingFactor = this.misc.get('enemy.homing');
-    const directionChangeFactor = this.misc.get('enemy.directionChange');
-    const haltFactor = this.misc.get('enemy.halt');
-
-    let hitPoint = { x: this.x, y: this.y };
-    if (this.direction.x === 1) hitPoint.x += this.width;
-    if (this.direction.y === 1) hitPoint.y += this.height;
-
-    const currentTile = { x: Math.floor(hitPoint.x / tileSize), y: Math.floor(hitPoint.y / tileSize) };
-    const nextTile = { x: Math.floor((hitPoint.x + this.direction.x * this.speed) / tileSize), y: Math.floor((hitPoint.y + this.direction.y * this.speed) / tileSize) };
-
-    // @ts-ignore
-    if (window.debug) {
-      const debug = mode.app.debug(`nextTile ${mode.entities.findIndex(e => e === this)}`);
-      debug.alpha = 0.5;
-      debug.x = nextTile.x * tileSize;
-      debug.y = nextTile.y * tileSize;
-      debug.clear();
-      debug.lineStyle(1, 0x00ff00);
-      debug.beginFill();
-      debug.drawRect(0, 0, tileSize, tileSize);
-      debug.endFill();
-      // @ts-ignore
-      mode.container.addChild(debug);
-    }
-
-    if (this.haltTimer) return;
-
-    let availableDirections = getAvailableDirections(mode.app.state, currentTile);
-    if (!availableDirections.length) availableDirections = directions;
-
-    if (isSolid(mode.app.state, nextTile.x, nextTile.y)) {
-      this.direction = availableDirections[Math.floor(Math.random() * availableDirections.length)];
-      return;
-    }
-
-    const hasChangedTile = currentTile.x !== nextTile.x || currentTile.y !== nextTile.y;
-    if (!hasChangedTile) {
-      return;
-    }
-
-    if (Math.random() < haltFactor) {
-      this.haltTimer = 30;
-      if (weaponId) {
-        const weaponSpriteOverride = this.misc.get('enemy.weapon.sprite');
-        mode.createProjectile(weaponId, weaponSpriteOverride, { x: Math.sign(this.direction.x), y: Math.sign(this.direction.y) }, currentTile.x, currentTile.y, 2);
-      }
-      return;
-    }
-
-    let shouldChangeDirection = false;
-    if (Math.random() < homingFactor) {
-      // TODO
-      this.direction = availableDirections[Math.floor(Math.random() * availableDirections.length)];
-      shouldChangeDirection = false;
-    } else if (Math.random() < directionChangeFactor) {
-      shouldChangeDirection = true;
-    }
-
-    if (shouldChangeDirection) {
-      this.direction = availableDirections[Math.floor(Math.random() * availableDirections.length)];
-    }
-  }
-
-  _leeverMovement(mode: PlayGameMode) {
-    // TODO: have init step.
-    // TODO: no hit if not emerged.
-    if (!this.misc.get('enemy.leever.emergedState')) {
-      this.misc.set('enemy.leever.emergedState', 'submerged');
-    }
-
-    const emergedState = this.misc.get('enemy.leever.emergedState');
-    const emergedStyle = this.misc.get('enemy.leever.emergeStyle');
-    const timeSinceStateChange = Date.now() - (this.misc.get('enemy.leever.emergedStateTimeChanged') || 0);
-    const timeSinceLastEmerge = Date.now() - (mode.screenAttributes.get('screen.leever.lastEmergedTime') || 0);
-
-    if (emergedState === 'submerged') {
-      this.haltTimer = 100;
-      this.visible = false;
-
-      const numberEmergedLeevers = mode.entities.reduce((acc, entity) => {
-        if (entity.misc) {
-          const state = entity.misc.get('enemy.leever.emergedState');
-          if (!state) return acc;
-          return acc + (state === 'submerged' ? 0 : 1);
-        }
-        return acc;
-      }, 0);
-
-      if (numberEmergedLeevers < 2 && timeSinceLastEmerge > 500 && timeSinceStateChange > 1000) {
-        this.misc.set('enemy.leever.emergedState', 'emerged');
-        this.misc.set('enemy.leever.emergedStateTimeChanged', Date.now());
-        mode.screenAttributes.set('screen.leever.lastEmergedTime', Date.now());
-
-        if (emergedStyle === 'hero-path') {
-          const pos = {
-            x: Math.round(mode.heroEntity.x / tileSize),
-            y: Math.round(mode.heroEntity.y / tileSize),
-          };
-          if (mode.heroEntity.direction.x !== 0) {
-            pos.x += Math.sign(mode.heroEntity.direction.x) * 3;
-          } else {
-            pos.y += Math.sign(mode.heroEntity.direction.y) * 3;
-          }
-          this.x = pos.x * tileSize;
-          this.y = pos.y * tileSize;
-
-          this.direction = { ...mode.heroEntity.direction };
-          this.direction.x *= -1;
-          this.direction.y *= -1;
-        } else {
-          const pos = {
-            x: Math.round(this.x / tileSize),
-            y: Math.round(this.y / tileSize),
-          };
-          this.x = pos.x * tileSize;
-          this.y = pos.y * tileSize;
-
-          let availableDirections = getAvailableDirections(mode.app.state, pos);
-          if (!availableDirections.length) availableDirections = directions;
-          this.direction = { ...availableDirections[Utils.random(0, availableDirections.length)] };
-        }
-
-        this.setFrame('emerging');
-        this.loop = false;
-        this.onComplete = () => {
-          this.setFrame('moving');
-          this.haltTimer = 0;
-          this.loop = true;
-          // @ts-ignore
-          delete this.onComplete;
-        };
-      }
-    } else if (emergedState === 'emerged') {
-      this.visible = true;
-
-      if (timeSinceStateChange > 1000 * 2) {
-        this.misc.set('enemy.leever.emergedState', 'submerging');
-        this.misc.set('enemy.leever.emergedStateTimeChanged', Date.now());
-
-        this.setFrame('submerging');
-        this.loop = false;
-        this.onComplete = () => {
-          this.misc.set('enemy.leever.emergedState', 'submerged');
-          this.misc.set('enemy.leever.emergedStateTimeChanged', Date.now());
-          // @ts-ignore
-          delete this.onComplete;
-        };
-      }
-    }
-  }
-
-  _wizardMovement(mode: PlayGameMode) {
-    // TODO eWizzrobe::animate
-    this.speed = 0;
-    // this.alpha = this.ticks > 8 ? 1 : 0;
-    // this.alpha = 0;
-  }
-}
-
-class MiscBag<A extends Record<string, any>> {
-  private data: Partial<A> = {};
-
-  get<T extends keyof A>(id: T): A[T] {
-    // @ts-ignore
-    return this.data[id];
-  }
-
-  set<T extends keyof A>(id: T, value: A[T]) {
-    this.data[id] = value;
-  }
-
-  clear() {
-    this.data = {};
-  }
 }
 
 class HitTest {
@@ -509,6 +125,7 @@ export class PlayGameMode extends QuestMakerMode {
       this.heroEntity.addFrame(name, textures);
     }
 
+    this.heroEntity.misc.set('enemy.animation.type', '2frmpos');
     this.heroEntity.setFrame('down');
   }
 
@@ -758,7 +375,7 @@ export class PlayGameMode extends QuestMakerMode {
       grouped.names.push(name);
     }
     for (const { x, y, names } of sideTilesByPoints) {
-      if (!inBounds(x, y, screenWidth, screenHeight)) continue;
+      if (!Utils.inBounds(x, y, screenWidth, screenHeight)) continue;
 
       const { tile } = state.currentScreen.tiles[x][y];
       const tile_ = state.quest.tiles[tile]; // ... naming issue ....
@@ -796,7 +413,7 @@ export class PlayGameMode extends QuestMakerMode {
     }
 
     let targetScreen = { x: state.screenX + transitionX, y: state.screenY + transitionY };
-    if (!inBounds(targetScreen.x, targetScreen.y, state.currentMap.screens.length, state.currentMap.screens[0].length)) return;
+    if (!Utils.inBounds(targetScreen.x, targetScreen.y, state.currentMap.screens.length, state.currentMap.screens[0].length)) return;
     if (!state.quest.maps[state.mapIndex].screens[targetScreen.x] || !state.quest.maps[state.mapIndex].screens[targetScreen.x][targetScreen.y]) return;
 
     state.game.screenTransition = {
@@ -882,6 +499,9 @@ export class PlayGameMode extends QuestMakerMode {
       spawnEntity.setFrame('default');
       spawnEntity.loop = false;
 
+      // TODO ticks.
+      spawnEntity.animationSpeed = 0.15;
+      spawnEntity.play();
       spawnEntity.onComplete = () => {
         this.removeEntity(spawnEntity);
         this.createEntityFromEnemy(enemy, x, y);
@@ -903,82 +523,47 @@ export class PlayGameMode extends QuestMakerMode {
 
     const cset = enemy.attributes['enemy.cset'] || 0;
 
+    // TODO: working out the best way to handle animation. couple ways exist now.
+
     let framesToTextures: Record<string, PIXI.Texture[]> = {};
     if (enemy.frames) {
       // TODO: probably will remove all this.
       for (const [name, graphicIds] of Object.entries(enemy.frames)) {
         framesToTextures[name] = graphicIds.map(id => this.app.createGraphicSprite(id, cset).texture);
       }
-    } else {
-      const animationType = enemy.attributes['enemy.animation.type'] || 'normal';
-      const graphicIdStart = enemy.attributes['enemy.animation.graphics'] || 0;
-      const numGraphics = enemy.attributes['enemy.animation.numGraphics'] || 0;
-      const graphicIds = Array.from(new Array(numGraphics)).map((_, i) => graphicIdStart + i);
 
-      switch (animationType) {
-        case 'normal':
-          framesToTextures.default = graphicIds.map(id => this.app.createGraphicSprite(id, cset).texture);
-          break;
-        case 'flip':
-          framesToTextures.default = graphicIds.map(id => {
-            const textures = [
-              this.app.createGraphicSprite(id, cset).texture,
-              this.app.createGraphicSprite(id, cset).texture,
-            ];
-            textures[1].rotate = PIXI.groupD8.MIRROR_HORIZONTAL;
-            return textures;
-          }).flat();
-          break;
-        case 'dwalk':
-          framesToTextures.down = [
-            this.app.createGraphicSprite(graphicIds[0], cset).texture,
-            this.app.createGraphicSprite(graphicIds[1], cset).texture,
-          ];
-          
-          framesToTextures.up = [
-            this.app.createGraphicSprite(graphicIds[2], cset).texture,
-            this.app.createGraphicSprite(graphicIds[2], cset).texture,
-          ];
-          framesToTextures.up[1].rotate = PIXI.groupD8.MIRROR_HORIZONTAL;
-
-          framesToTextures.right = [
-            this.app.createGraphicSprite(graphicIds[3], cset).texture,
-            this.app.createGraphicSprite(graphicIds[4], cset).texture,
-          ];
-          break;
+      if (framesToTextures.left && !framesToTextures.right) {
+        const textures = framesToTextures.left.map(texture => texture.clone());
+        textures.forEach(texture => texture.rotate = PIXI.groupD8.MIRROR_HORIZONTAL);
+        framesToTextures.right = textures;
       }
-    }
+      if (!framesToTextures.left && framesToTextures.right) {
+        const textures = framesToTextures.right.map(texture => texture.clone());
+        textures.forEach(texture => texture.rotate = PIXI.groupD8.MIRROR_HORIZONTAL);
+        framesToTextures.left = textures;
+      }
+      if (framesToTextures.down && !framesToTextures.up) {
+        const textures = framesToTextures.down.map(texture => texture.clone());
+        textures.forEach(texture => texture.rotate = PIXI.groupD8.MIRROR_VERTICAL);
+        framesToTextures.up = textures;
+      }
+      if (!framesToTextures.down && framesToTextures.up) {
+        const textures = framesToTextures.up.map(texture => texture.clone());
+        textures.forEach(texture => texture.rotate = PIXI.groupD8.MIRROR_VERTICAL);
+        framesToTextures.down = textures;
+      }
+      if (framesToTextures.emerging && !framesToTextures.submerging) {
+        const textures = framesToTextures.emerging.map(texture => texture.clone());
+        framesToTextures.submerging = textures.reverse();
+      }
 
-    if (framesToTextures.left && !framesToTextures.right) {
-      const textures = framesToTextures.left.map(texture => texture.clone());
-      textures.forEach(texture => texture.rotate = PIXI.groupD8.MIRROR_HORIZONTAL);
-      framesToTextures.right = textures;
-    }
-    if (!framesToTextures.left && framesToTextures.right) {
-      const textures = framesToTextures.right.map(texture => texture.clone());
-      textures.forEach(texture => texture.rotate = PIXI.groupD8.MIRROR_HORIZONTAL);
-      framesToTextures.left = textures;
-    }
-    if (framesToTextures.down && !framesToTextures.up) {
-      const textures = framesToTextures.down.map(texture => texture.clone());
-      textures.forEach(texture => texture.rotate = PIXI.groupD8.MIRROR_VERTICAL);
-      framesToTextures.up = textures;
-    }
-    if (!framesToTextures.down && framesToTextures.up) {
-      const textures = framesToTextures.up.map(texture => texture.clone());
-      textures.forEach(texture => texture.rotate = PIXI.groupD8.MIRROR_VERTICAL);
-      framesToTextures.down = textures;
-    }
-    if (framesToTextures.emerging && !framesToTextures.submerging) {
-      const textures = framesToTextures.emerging.map(texture => texture.clone());
-      framesToTextures.submerging = textures.reverse();
-    }
+      for (const [name, frames] of Object.entries(framesToTextures)) {
+        entity.addFrame(name, frames);
+      }
 
-    for (const [name, frames] of Object.entries(framesToTextures)) {
-      entity.addFrame(name, frames);
+      if (Object.keys(framesToTextures).length === 0) throw new Error('missing textures');
+      entity.setFrame(Object.keys(framesToTextures)[0]);
     }
-
-    entity.setFrame(Object.keys(framesToTextures)[0]);
 
     this.entities.push(entity);
     this.entityLayer.addChild(entity);
@@ -1065,7 +650,7 @@ export class PlayGameMode extends QuestMakerMode {
     const walkableAreas = [];
     for (let x = 0; x < screenWidth; x++) {
       for (let y = 0; y < screenHeight; y++) {
-        if (isSolid(state, x, y)) continue;
+        if (Utils.isSolid(state, x, y)) continue;
         if (Math.abs(x - this.heroEntity.x / tileSize) <= 1 && Math.abs(y - this.heroEntity.y / tileSize) <= 1) continue;
 
         walkableAreas.push({ x, y });

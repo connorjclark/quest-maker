@@ -460,8 +460,8 @@ for (const zcWeapon of zcData.weapons) {
 for (const guy of zcData.guys) {
   const animationType = EnemyAnimationType(guy.anim);
 
-  if (quest.enemies.length === 52) {
-    // console.log(guy, {animationType});
+  if (quest.enemies.length === -1) {
+    console.log(guy, {animationType});
   }
 
   const tiles = Array.from(Array(guy.width)).map((_, i) => guy.tile + i);
@@ -479,7 +479,7 @@ for (const guy of zcData.guys) {
     attributes['enemy.cset'] = guy.cset;
   }
 
-  attributes['enemy.animation.type'] = 'normal';
+  attributes['enemy.animation.type'] = 'none';
   attributes['enemy.animation.graphics'] = guy.tile;
   attributes['enemy.animation.numGraphics'] = guy.width;
 
@@ -567,7 +567,7 @@ for (const guy of zcData.guys) {
     case 'lanm':
       break;
     case '2frmpos':
-      // OK
+      attributes['enemy.animation.type'] = animationType;
       break;
     case '4frm4eye':
       break;
