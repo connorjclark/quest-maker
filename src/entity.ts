@@ -55,8 +55,10 @@ export class QuestEntity extends EntityBase {
   public enemyType = EnemyType.NORMAL;
   public direction = { ...directions[Math.floor(Math.random() * directions.length)] };
   public moving = true;
-  public isHero = false;
   public misc = new MiscBag<QuestMaker.EntityAttributes>();
+
+  public isHero = false;
+  public attackTicks = 0;
 
   private ticksPerCycle = 16;
 
@@ -117,7 +119,7 @@ export class QuestEntity extends EntityBase {
           this.impulseTimer = 0;
         }
       } else if (this.moving) {
-        let canMove = true;
+        let canMove = this.attackTicks === 0;
         if (!this.isHero && this.haltTimer !== null) {
           this.haltTimer -= this.speed;
           if (this.haltTimer <= 0) this.haltTimer = null;
@@ -176,6 +178,10 @@ export class QuestEntity extends EntityBase {
 
     this.animationData.previousPositionInt.x = ix;
     this.animationData.previousPositionInt.y = iy;
+
+    if (this.attackTicks > 0) {
+      this.attackTicks -= 1;
+    }
 
     if (Object.keys(this.nameToTextures).length === 0) {
       this._animate(mode);
@@ -386,7 +392,7 @@ export class QuestEntity extends EntityBase {
 
   // Animation
 
-  private prevAnimation = { gfx: 0, flip: 0 };
+  protected prevAnimation = { gfx: 0, flip: 0 };
   _animate(mode: PlayGameMode) {
     const dir = this.getDirectionName();
     const animationType = this.misc.get('enemy.animation.type') || 'none';
@@ -394,11 +400,28 @@ export class QuestEntity extends EntityBase {
     const numGraphics = this.misc.get('enemy.animation.numGraphics') || 0;
 
     // First half of tick cycle maps to 0, second half maps to 1.
-    const f2 = Math.floor(this.animationData.ticks / (this.ticksPerCycle >> 1));
+    const f2 = Math.floor(this.animationData.ticks / (this.ticksPerCycle / 2));
+    // Maps to 0–2.
+    const f3 = Math.floor(this.animationData.ticks / (this.ticksPerCycle / 3));
+    // Maps to 0–3.
+    const f4 = Math.floor(this.animationData.ticks / (this.ticksPerCycle / 4));
     let gfx = graphicIdStart;
     let flip = 0;
 
-    switch (animationType) {
+    if (this.isHero) {
+      const data = mode.app.state.quest.misc.HERO_FRAMES;
+      const dirNum = ['up', 'down', 'left', 'right'].indexOf(dir); // :(
+      const state = this.attackTicks ? 'stab' : 'walk';
+      const frame = data[state][dirNum];
+      if (this.attackTicks) {
+        // const fx = data.stab[dirNum].gfxs.length === 3 ? f3 : f2;
+        // gfx = frame.gfxs[fx % frame.gfxs.length];
+        gfx = frame.gfxs[0];
+      } else {
+        gfx = frame.gfxs[this.animationData.positionTicks % frame.gfxs.length];
+      }
+      flip = frame.flip;
+    } else switch (animationType) {
       default:
       case 'none':
         gfx += this.animationData.ticks % numGraphics;

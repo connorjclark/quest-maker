@@ -158,7 +158,7 @@ declare global {
       'enemy.animation.graphics': number;
       'enemy.animation.numGraphics': number;
       'enemy.animation.type': EnemyAnimationType;
-      'enemy.cset': number;
+      'enemy.cset': number; // TODO: move to animation?
       'enemy.directionChange': number;
       'enemy.halt': number;
       'enemy.homing': number;
@@ -227,6 +227,7 @@ declare global {
       enemies: Enemy[];
       items: Item[];
       weapons: Weapon[];
+      // Rename to gfx?
       graphics: Graphic[];
       color?: {
         csets: Cset[];
@@ -235,7 +236,11 @@ declare global {
       tiles: Tile[];
       misc: {
         SPAWN_GFX_START: number;
-        HERO_FRAMES: Record<string, { graphicIds: number[], flip?: boolean }>;
+        // Type -> Array [up, down, left, right]
+        HERO_FRAMES: Record<string, Array<{
+          gfxs: number[],
+          flip: number,
+        }>>;
         START_X: number;
         START_Y: number;
       };
@@ -268,7 +273,6 @@ declare global {
         screenTransition?: ScreenTransition;
         /** Pending transition for when hero leaves a special room. */
         warpReturnTransition?: ScreenTransition;
-        moveFreeze?: number;
         screenStates: Map<Screen, {
           enemiesKilled: number
         }>;

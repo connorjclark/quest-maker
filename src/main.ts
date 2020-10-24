@@ -226,14 +226,50 @@ function createQuest(): QuestMaker.Quest {
 
   // TODO: handle directions better?
   quest.misc.HERO_FRAMES = {
-    down: { graphicIds: [heroGraphicId, heroGraphicId + 1] },
-    up: { graphicIds: [heroGraphicId + 4, heroGraphicId + 5] },
-    right: { graphicIds: [heroGraphicId + 2, heroGraphicId + 3] },
-    left: { graphicIds: [heroGraphicId + 2, heroGraphicId + 3], flip: true },
-    'useItem-down': { graphicIds: [heroGraphicId + 6] },
-    'useItem-right': { graphicIds: [heroGraphicId + 7] },
-    'useItem-left': { graphicIds: [heroGraphicId + 7], flip: true },
-    'useItem-up': { graphicIds: [heroGraphicId + 8], flip: true },
+    walk: [
+      {
+        gfxs: [heroGraphicId + 4, heroGraphicId + 5],
+        flip: 0,
+      },
+      {
+        gfxs: [heroGraphicId, heroGraphicId + 1],
+        flip: 0,
+      },
+      {
+        gfxs: [heroGraphicId + 2, heroGraphicId + 3],
+        flip: 1,
+      },
+      {
+        gfxs: [heroGraphicId + 2, heroGraphicId + 3],
+        flip: 0,
+      },
+    ],
+    stab: [
+      {
+        gfxs: [heroGraphicId + 8],
+        flip: 0,
+      },
+      {
+        gfxs: [heroGraphicId + 6],
+        flip: 0,
+      },
+      {
+        gfxs: [heroGraphicId + 7],
+        flip: 1,
+      },
+      {
+        gfxs: [heroGraphicId + 7],
+        flip: 0,
+      },
+    ],
+    // down: { graphicIds: [heroGraphicId, heroGraphicId + 1] },
+    // up: { graphicIds: [heroGraphicId + 4, heroGraphicId + 5] },
+    // right: { graphicIds: [heroGraphicId + 2, heroGraphicId + 3] },
+    // left: { graphicIds: [heroGraphicId + 2, heroGraphicId + 3], flip: true },
+    // 'useItem-down': { graphicIds: [heroGraphicId + 6] },
+    // 'useItem-right': { graphicIds: [heroGraphicId + 7] },
+    // 'useItem-left': { graphicIds: [heroGraphicId + 7], flip: true },
+    // 'useItem-up': { graphicIds: [heroGraphicId + 8], flip: true },
   };
 
   quest.dmaps = [
@@ -399,7 +435,7 @@ window.debugScreen = () => {
   // @ts-ignore
   const app = window.app as QuestMakerApp;
   const state = app.state;
-  console.log({map: state.mapIndex, x: state.screenX, y: state.screenY});
+  console.log({ map: state.mapIndex, x: state.screenX, y: state.screenY });
   console.log({
     ...state.currentScreen,
     enemies: state.currentScreen.enemies.map(e => state.quest.enemies[e.enemyId]),

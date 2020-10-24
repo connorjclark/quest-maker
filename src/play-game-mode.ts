@@ -114,19 +114,8 @@ export class PlayGameMode extends QuestMakerMode {
     this.heroEntity.y = startPosition.y;
     this.heroEntity.isHero = true;
     this.heroEntity.life = Number.MAX_SAFE_INTEGER;
-
     this.heroEntity.speed = DEFAULT_HERO_SPEED;
-
-    for (const [name, frames] of Object.entries(state.quest.misc.HERO_FRAMES)) {
-      const textures = frames.graphicIds.map(graphicId => this.app.createGraphicSprite(graphicId, 6).texture);
-      if (frames.flip) {
-        textures.forEach(texture => texture.rotate = PIXI.groupD8.MIRROR_HORIZONTAL);
-      }
-      this.heroEntity.addFrame(name, textures);
-    }
-
-    this.heroEntity.misc.set('enemy.animation.type', '2frmpos');
-    this.heroEntity.setFrame('down');
+    this.heroEntity.misc.set('enemy.cset', 6);
   }
 
   show() {
@@ -198,10 +187,12 @@ export class PlayGameMode extends QuestMakerMode {
     }
 
     const equippedX = state.game.equipped[1] !== null && state.game.inventory[state.game.equipped[1]];
-    if (equippedX && state.quest.items[equippedX.item].type === ItemType.SWORD && this.app.keys.down['KeyX']) {
-      heroEntity.setFrame('useItem-' + heroEntity.getDirectionName());
+    if (heroEntity.attackTicks === 0 && equippedX && state.quest.items[equippedX.item].type === ItemType.SWORD && this.app.keys.down['KeyX']) {
+      console.log('swing');
+      // @ts-ignore
+      this.heroEntity.animationData.ticks = 0;
       this.performSwordAttack();
-      state.game.moveFreeze = 10;
+      heroEntity.attackTicks = 10;
 
       for (const entity of this.entities) {
         if (entity === this.heroEntity) continue;
@@ -212,15 +203,8 @@ export class PlayGameMode extends QuestMakerMode {
       }
     }
 
-    if (state.game.moveFreeze !== undefined) {
-      if (state.game.moveFreeze <= 0) {
-        delete state.game.moveFreeze;
-        heroEntity.setFrame(heroEntity.getDirectionName());
-        this.swordSprite.alpha = 0;
-      } else {
-        state.game.moveFreeze -= 1;
-        heroEntity.moving = false;
-      }
+    if (heroEntity.attackTicks <= 0) {
+      this.swordSprite.alpha = 0;
     }
 
     // Hacky way to make only bottom half of hero solid.
