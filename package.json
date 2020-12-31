@@ -1,7 +1,8 @@
 {
   "name": "quest-maker",
   "scripts": {
-    "build": "sh build.sh && parcel build src/index.html",
+    "build": "sh build.sh && parcel build --public-url '.' src/index.html",
+    "deploy": "sh deploy/deploy.sh",
     "watch": "parcel src/index.html"
   },
   "dependencies": {

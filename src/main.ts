@@ -280,9 +280,9 @@ function createQuest(): QuestMaker.Quest {
 }
 
 async function load1stQuest() {
-  const questResp = await fetch('/quests/1st/quest.json');
+  const questResp = await fetch('quests/1st/quest.json');
   const quest = await questResp.json();
-  questBasePath = '/quests/1st';
+  questBasePath = 'quests/1st';
   return quest;
 }
 
@@ -317,8 +317,6 @@ function deleteQuest() {
 function saveQuest(quest: QuestMaker.Quest) {
   return; // Disabled until there is UI.
 
-  if (window.location.search.includes('fresh')) return;
-  localStorage.setItem('quest', JSON.stringify(quest));
 }
 // @ts-ignore
 window.save = () => saveQuest(window.app.state.quest);
@@ -329,7 +327,7 @@ window.deleteQuest = deleteQuest;
 // @ts-ignore
 // setInterval(window.save, 1000 * 60);
 
-let questBasePath = '/quests/debug';
+let questBasePath = 'quests/debug';
 async function load() {
   const quest = await loadQuest();
 

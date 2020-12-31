@@ -4,7 +4,7 @@ import { MultiColorReplaceFilter } from "@pixi/filter-multi-color-replace";
 import Timidity from 'timidity';
 
 class SoundManager {
-  private midiPlayer = new Timidity('/midi');
+  private midiPlayer = new Timidity(location.pathname);
   private currentSongId = -1;
   private enabled = !window.IS_DEV;
 
@@ -78,6 +78,7 @@ export class QuestMakerApp extends App<QuestMaker.State> {
 
   createGraphicSprite(graphicId: number, cset = 0, extraCset?: QuestMaker.Tile['extraCset']) {
     const graphic = this.state.quest.graphics[graphicId];
+    if (!graphic) debugger;
     const sprite = this.createSprite(graphic.file, graphic.x, graphic.y, graphic.width, graphic.height);
 
     if (!this.state.quest.color) {

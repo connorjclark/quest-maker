@@ -397,14 +397,16 @@ export class QuestEntity extends EntityBase {
     const dir = this.getDirectionName();
     const animationType = this.misc.get('enemy.animation.type') || 'none';
     const graphicIdStart = this.misc.get('enemy.animation.graphics') || 0;
-    const numGraphics = this.misc.get('enemy.animation.numGraphics') || 0;
+    const numGraphics = this.misc.get('enemy.animation.numGraphics') || 1;
+
+    const clk = this.animationData.ticks;
 
     // First half of tick cycle maps to 0, second half maps to 1.
-    const f2 = Math.floor(this.animationData.ticks / (this.ticksPerCycle / 2));
+    const f2 = Math.floor(clk / (this.ticksPerCycle / 2));
     // Maps to 0–2.
-    const f3 = Math.floor(this.animationData.ticks / (this.ticksPerCycle / 3));
+    const f3 = Math.floor(clk / (this.ticksPerCycle / 3));
     // Maps to 0–3.
-    const f4 = Math.floor(this.animationData.ticks / (this.ticksPerCycle / 4));
+    const f4 = Math.floor(clk / (this.ticksPerCycle / 4));
     let gfx = graphicIdStart;
     let flip = 0;
 
@@ -424,7 +426,7 @@ export class QuestEntity extends EntityBase {
     } else switch (animationType) {
       default:
       case 'none':
-        gfx += this.animationData.ticks % numGraphics;
+        gfx += clk % numGraphics;
         break;
       case '2frmpos':
         gfx += this.animationData.positionTicks % numGraphics;
@@ -455,6 +457,32 @@ export class QuestEntity extends EntityBase {
             break;
         }
         break;
+      // case 'lev':
+      //   {
+      //     let f4 = ((clk / 5) & 1);
+
+      //     switch (misc) {
+      //       case -1:
+      //       case 0:
+      //         return;
+
+      //       case 1:
+      //       case 5:
+      //         gfx += (f2) ? 1 : 0;
+      //         // cs = dmisc2;
+      //         break;
+
+      //       case 2:
+      //       case 4:
+      //         gfx += 2;
+      //         break;
+
+      //       case 3:
+      //         gfx += (f4) ? 4 : 3;
+      //         break;
+      //     }
+      //   }
+      //   break;
     }
 
     if (gfx !== this.prevAnimation.gfx || flip !== this.prevAnimation.flip) {
