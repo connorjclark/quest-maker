@@ -36,6 +36,18 @@ export class App<S> {
     return new PIXI.Sprite(texture);
   }
 
+  destroyChildren(displayObject: PIXI.Container) {
+    if (displayObject.children.length === 0) return;
+
+    for (const child of [...displayObject.children]) {
+      // if (child instanceof PIXI.Container) {
+      // child.destroy({children: true});
+      // } else {
+      child.destroy();
+      // }
+    }
+  }
+
   tick(dt: number) {
     if (this.currentMode) this.currentMode.tick(dt);
 

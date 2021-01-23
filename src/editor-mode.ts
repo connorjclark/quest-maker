@@ -468,9 +468,10 @@ export class EditorMode extends QuestMakerMode {
 
     const tilePreviewContainer = new PIXI.Container();
     tilePreviewContainer.alpha = 0.6;
+    container.addChild(tilePreviewContainer);
 
     const render = () => {
-      tilesContainer.removeChildren();
+      this.app.destroyChildren(tilesContainer);
       const screens = state.currentMap.screens;
 
       // First/last row/column is from neighboring screen.
@@ -519,8 +520,6 @@ export class EditorMode extends QuestMakerMode {
           tilesContainer.addChild(sprite);
         }
       }
-
-      tilesContainer.addChild(tilePreviewContainer);
     };
 
     const setTile = (e: PIXI.InteractionEvent) => {
@@ -536,7 +535,7 @@ export class EditorMode extends QuestMakerMode {
     };
 
     const setPreviewTile = (e: PIXI.InteractionEvent) => {
-      tilePreviewContainer.removeChildren();
+      this.app.destroyChildren(tilePreviewContainer);
 
       const tilePreviewSprite = this.app.createTileSprite({ tile: state.editor.currentTile });
       const pos = e.data.getLocalPosition(e.currentTarget);
@@ -549,20 +548,20 @@ export class EditorMode extends QuestMakerMode {
       tilePreviewContainer.addChild(tilePreviewSprite);
     };
 
-    tilesContainer.addListener('mousedown', (e) => {
-      tilesContainer.addListener('mousemove', setTile);
+    container.addListener('mousedown', (e) => {
+      container.addListener('mousemove', setTile);
       setTile(e);
     });
-    tilesContainer.addListener('mouseup', (e) => {
-      tilesContainer.removeListener('mousemove', setTile);
+    container.addListener('mouseup', (e) => {
+      container.removeListener('mousemove', setTile);
     });
 
-    tilesContainer.addListener('mouseover', (e) => {
-      tilesContainer.addListener('mousemove', setPreviewTile);
+    container.addListener('mouseover', (e) => {
+      container.addListener('mousemove', setPreviewTile);
     });
-    tilesContainer.addListener('mouseout', (e) => {
-      tilePreviewContainer.removeChildren();
-      tilesContainer.removeListener('mousemove', setPreviewTile);
+    container.addListener('mouseout', (e) => {
+      this.app.destroyChildren(tilePreviewContainer);
+      container.removeListener('mousemove', setPreviewTile);
     });
 
     render();
@@ -631,7 +630,7 @@ export class EditorMode extends QuestMakerMode {
     const state = this.app.state;
 
     const contents = new ReactiveContainer((container, props) => {
-      container.removeChildren();
+      this.app.destroyChildren(container);
 
       const graphics = graphicIdsFilter ?
         props.graphics.filter(g => graphicIdsFilter.includes(g.id)) :
@@ -657,7 +656,7 @@ export class EditorMode extends QuestMakerMode {
 
     const elDisplayObject = new DomElementDisplayObject(this.app, 300, 300);
     const contents = new ReactiveContainer((container, props) => {
-      container.removeChildren();
+      this.app.destroyChildren(container);
 
       elDisplayObject.el.innerHTML = '';
       container.addChild(elDisplayObject);
