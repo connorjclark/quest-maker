@@ -89,6 +89,11 @@ function createQuest(): QuestMaker.Quest {
     name: 'Sword',
     graphic: swordGraphics[0].id,
   });
+  quest.items.push({
+    type: ItemType.SWORD,
+    tile: swordGraphics[0].id,
+    name: 'Sword',
+  });
 
   const spawnGraphics = make({
     tile: false,
@@ -276,6 +281,7 @@ function createQuest(): QuestMaker.Quest {
 }
 
 // TODO: real quest loading/saving.
+let questBasePath = 'quests/debug';
 async function loadQuest(path: string): Promise<QuestMaker.Quest> {
   if (path === 'debug') return createQuest();
 
@@ -329,7 +335,6 @@ function saveLocalStorage(data: any) {
   localStorage.setItem('lastState', JSON.stringify(data));
 }
 
-let questBasePath = 'quests/debug';
 async function load(quest: QuestMaker.Quest) {
   const pixi = new PIXI.Application();
   pixi.renderer.backgroundColor = 0xaaaaaa;
@@ -388,6 +393,12 @@ async function load(quest: QuestMaker.Quest) {
     currentMap: quest.maps[initialMap],
     currentScreen: quest.maps[initialMap].screens[initialScreenX][initialScreenY],
   };
+
+  if (questBasePath === 'quests/debug') {
+    const swordIndex = quest.items.findIndex(item => item.name === 'Sword');
+    state.game.inventory[0] = {item: swordIndex};
+    state.game.equipped[1] = 0;
+  }
 
   const app = new QuestMakerApp(pixi, state);
   editorMode = new EditorMode(app);
