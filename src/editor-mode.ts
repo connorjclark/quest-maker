@@ -10,6 +10,16 @@ const containers: Record<string, { render(): void }> = {};
 
 const inBounds = (x: number, y: number, width: number, height: number) => x >= 0 && y >= 0 && x < width && y < height;
 
+function throttle(cb: Function, timeout: number) {
+  let lastCall = 0;
+  return function (...args: any) {
+    if (Date.now() - lastCall > timeout) {
+      lastCall = Date.now();
+      cb(...args);
+    }
+  }
+}
+
 // move to engine/
 function makeDomContainer(container: PIXI.Container) {
   function toggleDomElements(children: PIXI.DisplayObject[], show: boolean) {
@@ -94,6 +104,8 @@ export class EditorMode extends QuestMakerMode {
   init() {
     super.init();
 
+    this.onKeyDown = this.onKeyDown.bind(this);
+
     const screenArea = this.createScreenArea();
     screenArea.container.scale.set(2);
     this.container.addChild(screenArea.container);
@@ -116,14 +128,21 @@ export class EditorMode extends QuestMakerMode {
 
     containers.screenArea.render();
     containers.screenPicker.render();
+    window.addEventListener('keydown', this.onKeyDown);
   }
 
-  tick() {
+  hide() {
+    super.hide();
+
+    window.removeEventListener('keydown', this.onKeyDown);
+  }
+
+  private onKeyDown(e: KeyboardEvent) {
     let dx = 0, dy = 0;
-    if (this.app.keys.down['ArrowLeft']) dx -= 1;
-    else if (this.app.keys.down['ArrowRight']) dx += 1;
-    else if (this.app.keys.down['ArrowUp']) dy -= 1;
-    else if (this.app.keys.down['ArrowDown']) dy += 1;
+    if (e.key === 'ArrowLeft') dx -= 1;
+    else if (e.key === 'ArrowRight') dx += 1;
+    else if (e.key === 'ArrowUp') dy -= 1;
+    else if (e.key === 'ArrowDown') dy += 1;
 
     if (dx !== 0 || dy !== 0) {
       this.setScreen(this.app.state.mapIndex, this.app.state.screenX + dx, this.app.state.screenY + dy);
@@ -422,15 +441,6 @@ export class EditorMode extends QuestMakerMode {
 
     container.interactive = true;
 
-    function throttle(cb: Function, timeout: number) {
-      let lastCall = 0;
-      return function (...args: any) {
-        if (Date.now() - lastCall > timeout) {
-          lastCall = Date.now();
-          cb(...args);
-        }
-      }
-    }
     const onScroll = throttle((e: WheelEvent) => {
       this.setScreen(state.mapIndex + Math.sign(e.deltaY), state.screenX, state.screenY)
     }, 1000);
