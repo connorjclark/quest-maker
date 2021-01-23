@@ -281,13 +281,11 @@ function createQuest(): QuestMaker.Quest {
 }
 
 // TODO: real quest loading/saving.
-let questBasePath = 'quests/debug';
 async function loadQuest(path: string): Promise<QuestMaker.Quest> {
-  if (path === 'debug') return createQuest();
+  if (path === 'quests/debug') return createQuest();
 
   const questResp = await fetch(`${path}/quest.json`);
   const quest = await questResp.json();
-  questBasePath = path;
   return quest;
 
   // Disabled until there is UI.
@@ -335,7 +333,7 @@ function saveLocalStorage(data: any) {
   localStorage.setItem('lastState', JSON.stringify(data));
 }
 
-async function load(quest: QuestMaker.Quest) {
+async function load(quest: QuestMaker.Quest, questBasePath: string) {
   const pixi = new PIXI.Application();
   pixi.renderer.backgroundColor = 0xaaaaaa;
   document.body.appendChild(pixi.view);
@@ -467,7 +465,7 @@ async function selectQuest(questPath: string) {
   url.search = `quest=${questPath}`;
   history.replaceState({}, '', url.toString());
   selectQuestEl.value = questPath;
-  load(quest);
+  load(quest, questPath);
 }
 
 const searchParams = new URLSearchParams(location.search);
