@@ -11,10 +11,6 @@ const { screenWidth, screenHeight, tileSize } = constants;
 
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
-const pixi = new PIXI.Application();
-pixi.renderer.backgroundColor = 0xaaaaaa;
-document.body.appendChild(pixi.view);
-
 // TODO: why is this a class?
 class Screen {
   public tiles: { tile: number }[][] = [];
@@ -279,23 +275,14 @@ function createQuest(): QuestMaker.Quest {
   return quest;
 }
 
-async function load1stQuest() {
-  const questResp = await fetch('quests/1st/quest.json');
-  const quest = await questResp.json();
-  questBasePath = 'quests/1st';
-  return quest;
-}
-
 // TODO: real quest loading/saving.
-async function loadQuest(): Promise<QuestMaker.Quest> {
-  if (window.location.search.includes('1st')) {
-    return load1stQuest();
-  }
+async function loadQuest(path: string): Promise<QuestMaker.Quest> {
+  if (path === 'debug') return createQuest();
 
-  if (window.location.search.includes('fresh')) return createQuest();
-  if (window.location.search.includes('basic')) return createQuest();
-
-  return load1stQuest();
+  const questResp = await fetch(`${path}/quest.json`);
+  const quest = await questResp.json();
+  questBasePath = path;
+  return quest;
 
   // Disabled until there is UI.
   // const json = localStorage.getItem('quest');
@@ -327,9 +314,26 @@ window.deleteQuest = deleteQuest;
 // @ts-ignore
 // setInterval(window.save, 1000 * 60);
 
+function getLocalStorage() {
+  const json = localStorage.getItem('lastState');
+  if (!json) return {};
+
+  const lastStateByQuest = JSON.parse(json);
+  const isObject = (obj: any) => obj && obj.constructor && obj.constructor === Object;
+  if (!isObject(lastStateByQuest)) return {};
+
+  return lastStateByQuest;
+}
+
+function saveLocalStorage(data: any) {
+  localStorage.setItem('lastState', JSON.stringify(data));
+}
+
 let questBasePath = 'quests/debug';
-async function load() {
-  const quest = await loadQuest();
+async function load(quest: QuestMaker.Quest) {
+  const pixi = new PIXI.Application();
+  pixi.renderer.backgroundColor = 0xaaaaaa;
+  document.body.appendChild(pixi.view);
 
   // Find images to load.
   const images = new Set<string>();
@@ -348,8 +352,9 @@ async function load() {
 
   // Simple code to quickly persist last screen position.
   if (localStorage.getItem('lastState')) {
-    const lastState = JSON.parse(localStorage.getItem('lastState') || '');
-    if ('dmapIndex' in lastState && quest.dmaps[lastState.dmapIndex]) {
+    const lastStateByQuest = getLocalStorage();
+    const lastState = lastStateByQuest[questBasePath];
+    if (lastState && 'dmapIndex' in lastState && quest.dmaps[lastState.dmapIndex] && quest.dmaps[lastState.dmapIndex]) {
       initialDmap = lastState.dmapIndex;
       initialScreenX = lastState.screenX;
       initialScreenY = lastState.screenY;
@@ -357,7 +362,9 @@ async function load() {
   }
   window.addEventListener('unload', () => {
     const { dmapIndex, screenX, screenY } = state;
-    localStorage.setItem('lastState', JSON.stringify({ dmapIndex, screenX, screenY }));
+    const lastStateByQuest = getLocalStorage();
+    lastStateByQuest[questBasePath] = { dmapIndex, screenX, screenY };
+    saveLocalStorage(lastStateByQuest);
   });
 
   const initialMap = quest.dmaps[initialDmap].map;
@@ -440,4 +447,27 @@ window.debugScreen = () => {
   });
 };
 
-load();
+const selectQuestEl = document.querySelector('.select-quest') as HTMLSelectElement;
+const loadQuestBtnEl = document.querySelector('.load-quest-btn') as HTMLButtonElement;
+
+async function selectQuest(questPath: string) {
+  const quest = await loadQuest(questPath);
+  const url = new URL(location.href);
+  url.search = `quest=${questPath}`;
+  history.replaceState({}, '', url.toString());
+  selectQuestEl.value = questPath;
+  load(quest);
+}
+
+const searchParams = new URLSearchParams(location.search);
+const searchParamsObj = {
+  quest: searchParams.get('quest'),
+}
+selectQuest(searchParamsObj.quest || 'quests/1st');
+
+loadQuestBtnEl.addEventListener('click', async () => {
+  const questPath = selectQuestEl.value;
+  // Purposefully reload page.
+  // TODO: figure out how to replace the quest without a page reload.
+  location.search = `quest=${questPath}`;
+});
