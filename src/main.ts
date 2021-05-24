@@ -427,6 +427,7 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
     if (state.currentMap) app.state.currentMap = state.currentMap;
     app.state.screenX = state.screenX;
     app.state.screenY = state.screenY;
+    app.state.currentScreen = app.state.currentMap.screens[app.state.screenX][app.state.screenY];
     app.state.editor.currentTile = state.selectedTile?.id || 0;
   });
 
@@ -446,6 +447,7 @@ function tick(app: QuestMaker.App, dt: number) {
       ui.actions.setMode('edit');
     } else {
       app.destroyChildren(app.pixi.stage);
+      app.state.game.screenTransition = app.state.game.warpReturnTransition = undefined;
 
       // Bit of a hack.
       const matchingDmapIndex = app.state.quest.dmaps.findIndex(dmap => dmap.map === app.state.mapIndex);
