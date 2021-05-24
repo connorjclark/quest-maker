@@ -23,6 +23,7 @@ export enum ItemType {
 declare global {
   interface Window {
     IS_DEV: boolean;
+    app?: QuestMakerApp;
   }
 
   namespace QuestMaker {

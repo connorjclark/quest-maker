@@ -8,25 +8,126 @@
     body {
       overflow: hidden;
       margin: 0;
+      color: white;
+      background-color: rgb(44, 37, 37);
     }
 
-    canvas {
+    .editor-ui {
       height: 100vh;
+      display: grid;
+      grid-template-columns: 1.5fr 0.5fr;
+      grid-template-rows: 0.1fr 2.3fr 0.6fr;
+      gap: 0px 0px;
+      grid-template-areas:
+        "header header"
+        "canvas tiles"
+        "bottom tiles";
+    }
+    .header { grid-area: header; }
+    .canvas { grid-area: canvas; }
+    .tiles { grid-area: tiles; }
+    .bottom { grid-area: bottom; }
+
+    .canvas-wrapper {
+      display: flex;
+      justify-content: center;
+      height: 100%;
     }
 
-    .tab-panel {
-      padding: 10px;
+    .header {
+      display: flex;
+    }
+    
+    .bottom {
+      display: flex;
+    }
+
+    .window {
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100vw;
+      height: 100vh;
+      background-color: #00000055;
+    }
+    .window__content {
+      background-color: black;
+      padding: 20%;
+      border: 2px solid antiquewhite;
+    }
+
+    .tile-editor .tile {
+      width: 100%;
+      height: 100%;
+    }
+
+    .tabbed-pane__tabs {
+      display: flex;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #80753c;
+    }
+    .tabbed-pane__tab {
+      flex-grow: 1;
+      background-color: transparent;
+      margin: 0;
+      border: none;
+      color: white;
+      font-size: 16px;
+    }
+    .tabbed-pane__tab:focus-visible {
+      outline: 1px solid gold;
+    }
+    .tabbed-pane__tab:hover {
+      background-color: transparent;
+      border: none;
+      color: unset;
+      box-shadow: none;
+    }
+    .tabbed-pane__tab.selected {
+      color: gold;
+    }
+
+    .tile-pickers {
+      display: flex;
+      justify-content: space-around;
+      height: 1000px;
+    }
+    .tile-picker {
+      display: flex;
+      align-content: flex-start;
+      flex-wrap: wrap;
+      overflow-y: scroll;
+    }
+    .tile {
+      width: 24px;
+      height: 24px;
+      background-size: contain;
+    }
+
+    .walkable-mask-wrapper {
+      position: relative;
+    }
+    .walkable-mask {
+      display: flex;
+      flex-wrap: wrap;
+      position: absolute;
+      top: 0;
+      width: 64px;
+      height: 64px;
+    }
+    .walkable-mask div {
+      width: 50%;
+      height: 50%;
+      pointer-events: none;
+    }
+    .walkable-mask .red {
+      background-color: red;
+      opacity: 0.6;
     }
   </style>
 </head>
 <body>
-  <div class="menu">
-    <select class="select-quest">
-      <option value="quests/1st">1st</option>
-      <option value="quests/debug">Debug</option>
-    </select>
-    <button class="load-quest-btn">Load</button>
-  </div>
   <script src=pixi.ts></script>
   <script src=main.ts></script>
 </body>

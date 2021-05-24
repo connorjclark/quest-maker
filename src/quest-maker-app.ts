@@ -2,6 +2,7 @@ import { App } from "./engine/app";
 import { MultiColorReplaceFilter } from "@pixi/filter-multi-color-replace";
 // @ts-ignore
 import Timidity from 'timidity';
+import { makeUI } from "./ui/QuestMaker";
 
 class SoundManager {
   private midiPlayer = new Timidity(location.pathname);
@@ -31,6 +32,14 @@ class SoundManager {
 export class QuestMakerApp extends App<QuestMaker.State> {
   public questBasePath = '';
   public soundManager = new SoundManager(this);
+
+  constructor(pixi: PIXI.Application, state: QuestMaker.State, public ui: ReturnType<typeof makeUI>) {
+    super(pixi, state);
+  }
+
+  resize() {
+    this.pixi.stage.scale.set(this.pixi.renderer.width / this.pixi.stage.getLocalBounds().width);
+  }
 
   createItemSprite(id: number) {
     const tile = this.state.quest.items[id].tile;

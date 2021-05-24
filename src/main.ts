@@ -6,6 +6,7 @@ import { PlayGameMode } from './play-game-mode';
 import { QuestMakerApp } from './quest-maker-app';
 import { TileType, EnemyType, ItemType } from './types';
 import makeQuest from './make-quest';
+import { makeUI } from './ui/QuestMaker';
 
 const { screenWidth, screenHeight, tileSize } = constants;
 
@@ -334,9 +335,9 @@ function saveLocalStorage(data: any) {
 }
 
 async function load(quest: QuestMaker.Quest, questBasePath: string) {
-  const pixi = new PIXI.Application();
-  pixi.renderer.backgroundColor = 0xaaaaaa;
-  document.body.appendChild(pixi.view);
+  const pixi = new PIXI.Application({
+    transparent: true,
+  });
 
   // Find images to load.
   const images = new Set<string>();
@@ -398,7 +399,7 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
     state.game.equipped[1] = 0;
   }
 
-  const app = new QuestMakerApp(pixi, state);
+  const app = new QuestMakerApp(pixi, state, ui);
   editorMode = new EditorMode(app);
   app.questBasePath = questBasePath;
 
@@ -416,16 +417,36 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
   pixi.ticker.add(dt => tick(app, dt));
   app.setMode(editorMode);
 
-  // @ts-ignore
   window.app = app;
+
+  ui.actions.setQuest(quest);
+  ui.actions.setCurrentScreen(state.screenX, state.screenY);
+  ui.actions.setCurrentMap(state.currentMap);
+
+  ui.subscribe((state) => {
+    if (state.currentMap) app.state.currentMap = state.currentMap;
+    app.state.screenX = state.screenX;
+    app.state.screenY = state.screenY;
+    app.state.editor.currentTile = state.selectedTile?.id || 0;
+  });
+
+  window.addEventListener('resize', () => app.resize());
+  app.resize();
 }
 
 let editorMode: EditorMode;
 function tick(app: QuestMaker.App, dt: number) {
   if (app.keys.down['ShiftLeft'] || app.keys.down['ShiftRight']) {
+    app.destroyChildren(app.pixi.stage);
+
     if (app.state.editor.isPlayTesting) {
       app.setMode(editorMode);
+      ui.actions.setCurrentScreen(app.state.screenX, app.state.screenY);
+      ui.actions.setCurrentMap(app.state.currentMap);
+      ui.actions.setMode('edit');
     } else {
+      app.destroyChildren(app.pixi.stage);
+
       // Bit of a hack.
       const matchingDmapIndex = app.state.quest.dmaps.findIndex(dmap => dmap.map === app.state.mapIndex);
       if (matchingDmapIndex !== -1) app.state.dmapIndex = matchingDmapIndex;
@@ -436,7 +457,9 @@ function tick(app: QuestMaker.App, dt: number) {
         if (swordId !== -1) mode.pickupItem(swordId);
       }
       app.setMode(mode);
+      ui.actions.setMode('play');
     }
+
     app.state.editor.isPlayTesting = !app.state.editor.isPlayTesting;
   }
 
@@ -446,8 +469,9 @@ function tick(app: QuestMaker.App, dt: number) {
 window.IS_DEV = new URLSearchParams(window.location.search).has('dev');
 // @ts-ignore
 window.debugScreen = () => {
-  // @ts-ignore
-  const app = window.app as QuestMakerApp;
+  if (!window.app) return;
+
+  const app = window.app;
   const state = app.state;
   console.log({ map: state.mapIndex, x: state.screenX, y: state.screenY });
   console.log({
@@ -456,15 +480,12 @@ window.debugScreen = () => {
   });
 };
 
-const selectQuestEl = document.querySelector('.select-quest') as HTMLSelectElement;
-const loadQuestBtnEl = document.querySelector('.load-quest-btn') as HTMLButtonElement;
-
 async function selectQuest(questPath: string) {
   const quest = await loadQuest(questPath);
   const url = new URL(location.href);
   url.search = `quest=${questPath}`;
   history.replaceState({}, '', url.toString());
-  selectQuestEl.value = questPath;
+  // selectQuestEl.value = questPath;
   load(quest, questPath);
 }
 
@@ -474,9 +495,4 @@ const searchParamsObj = {
 }
 selectQuest(searchParamsObj.quest || 'quests/1st');
 
-loadQuestBtnEl.addEventListener('click', async () => {
-  const questPath = selectQuestEl.value;
-  // Purposefully reload page.
-  // TODO: figure out how to replace the quest without a page reload.
-  location.search = `quest=${questPath}`;
-});
+const ui = makeUI(document.body);

@@ -18,6 +18,10 @@ export class App<S> {
       up: {},
     };
 
+    this.addScrollHandling(pixi);
+  }
+
+  addScrollHandling(pixi: PIXI.Application) {
     // Listen for global events on the <canvas> element and convert those into scroll event.
     pixi.stage.interactive = true;
     pixi.view.addEventListener('mousewheel', (e: Event) => {

@@ -97,7 +97,6 @@ export class PlayGameMode extends QuestMakerMode {
     state.game.screenStates.clear();
     this.screenAttributes.clear();
 
-    this.container.scale.x = this.container.scale.y = 2;
     for (const layer of this.layers) {
       this.container.addChild(layer);
     }
@@ -130,7 +129,7 @@ export class PlayGameMode extends QuestMakerMode {
 
     const mask = new PIXI.Graphics();
     mask.beginFill(0);
-    mask.drawRect(0, 0, tileSize * screenWidth * this.container.scale.x, tileSize * screenHeight * this.container.scale.y);
+    mask.drawRect(0, 0, tileSize * screenWidth * this.app.pixi.stage.scale.x, tileSize * screenHeight * this.app.pixi.stage.scale.y);
     mask.endFill();
     this.container.mask = mask;
 
@@ -684,8 +683,8 @@ export class PlayGameMode extends QuestMakerMode {
       }
 
       duration = 50;
-      this.container.x = (transition.frames / duration) * screenWidth * tileSize * this.container.scale.x * Math.sign(-transition.screenDelta.x);
-      this.container.y = (transition.frames / duration) * screenHeight * tileSize * this.container.scale.y * Math.sign(-transition.screenDelta.y);
+      this.container.x = (transition.frames / duration) * screenWidth * tileSize * Math.sign(-transition.screenDelta.x);
+      this.container.y = (transition.frames / duration) * screenHeight * tileSize * Math.sign(-transition.screenDelta.y);
     } else if (transition.type === 'direct') {
       const durations = [50, 50, 50];
       duration = durations.reduce((cur, acc) => cur + acc);

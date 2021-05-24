@@ -2,6 +2,53 @@ import * as constants from './constants';
 
 const { screenWidth, screenHeight } = constants;
 
+export function find(query: string, node?: Element): HTMLElement {
+  if (!node) node = document.body;
+  const result = node.querySelector(query);
+  if (!result) throw new Error(`no elements matching ${query}`);
+  // ?
+  if (!(result instanceof HTMLElement)) throw new Error('expected HTMLElement');
+  return result;
+}
+
+export function maybeFind(query: string, node?: Element): HTMLElement | undefined {
+  if (!node) node = document.body;
+  const result = node.querySelector(query);
+  if (!result) return;
+  // ?
+  if (!(result instanceof HTMLElement)) throw new Error('expected HTMLElement');
+  return result;
+}
+
+export function findAll(query: string, node?: Element): Element[] {
+  if (!node) node = document.body;
+  const result = [...node.querySelectorAll(query)];
+  return result;
+}
+
+type HTMLElementByTagName = HTMLElementTagNameMap & { [id: string]: HTMLElement };
+
+export function createElement<T extends string>(name: T, className?: string, attrs: Record<string, string> = {}) {
+  const element = document.createElement(name);
+  if (className) {
+    element.className = className;
+  }
+  Object.keys(attrs).forEach((key) => {
+    const value = attrs[key];
+    if (typeof value !== 'undefined') {
+      element.setAttribute(key, value);
+    }
+  });
+  return element as HTMLElementByTagName[T];
+}
+
+export function createChildOf<T extends string>(
+  parentElem: Element, elementName: T, className?: string, attrs?: Record<string, string>) {
+  const element = createElement(elementName, className, attrs);
+  parentElem.appendChild(element);
+  return element;
+}
+
 export function random(min: number, max: number) {
   return Math.floor(Math.random() * (max - min)) + min;
 }

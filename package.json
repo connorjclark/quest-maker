@@ -10,7 +10,8 @@
     "glob": "^7.1.6",
     "pixi-plugin-bump": "^1.1.8",
     "pixi.js": "^5.3.3",
-    "src": "^1.1.2",
+    "preact": "^10.5.13",
+    "redux-zero": "^5.1.7",
     "timidity": "^1.2.1"
   },
   "devDependencies": {
