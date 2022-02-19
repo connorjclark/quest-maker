@@ -2,5 +2,5 @@
 dist
 node_modules
 .DS_Store
-third_party
+decode_zc/third_party/allegro
 tmp

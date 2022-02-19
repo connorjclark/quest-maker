@@ -377,6 +377,7 @@ const dataPath = process.argv[2];
 const dataDir = path.dirname(dataPath);
 const zcData = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
 
+// TODO: make CLI param.
 const outputDir = `${__dirname}/../quests/1st`;
 
 const { make, makeAdvanced, makeEnemy, makeGraphic, makeTile, makeWeapon, quest } = makeQuest();

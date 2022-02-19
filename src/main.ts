@@ -7,8 +7,16 @@ import { QuestMakerApp } from './quest-maker-app';
 import { TileType, EnemyType, ItemType } from './types';
 import makeQuest from './make-quest';
 import { makeUI } from './ui/QuestMaker';
+import { convertZCQst } from './convert-zc-qst';
 
 const { screenWidth, screenHeight, tileSize } = constants;
+
+const searchParams = new URLSearchParams(location.search);
+const searchParamsObj = {
+  quest: searchParams.get('quest'),
+  dev: searchParams.has('dev'),
+  zcdebug: searchParams.get('zcdebug'),
+}
 
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
@@ -395,7 +403,7 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
 
   if (questBasePath === 'quests/debug') {
     const swordIndex = quest.items.findIndex(item => item.name === 'Sword');
-    state.game.inventory[0] = {item: swordIndex};
+    state.game.inventory[0] = { item: swordIndex };
     state.game.equipped[1] = 0;
   }
 
@@ -468,7 +476,7 @@ function tick(app: QuestMaker.App, dt: number) {
   app.tick(dt);
 }
 
-window.IS_DEV = new URLSearchParams(window.location.search).has('dev');
+window.IS_DEV = searchParamsObj.dev;
 // @ts-ignore
 window.debugScreen = () => {
   if (!window.app) return;
@@ -491,10 +499,10 @@ async function selectQuest(questPath: string) {
   load(quest, questPath);
 }
 
-const searchParams = new URLSearchParams(location.search);
-const searchParamsObj = {
-  quest: searchParams.get('quest'),
+if (searchParamsObj.zcdebug) {
+  convertZCQst(searchParamsObj.zcdebug);
+} else {
+  selectQuest(searchParamsObj.quest || 'quests/1st');
 }
-selectQuest(searchParamsObj.quest || 'quests/1st');
 
 const ui = makeUI(document.body);
