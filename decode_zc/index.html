@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <script src="dist/zc.js"></script>
+    <script>
+      async function main() {
+        const zc = await Module();
+        window.zc = zc;
+
+        const questFilePath = new URLSearchParams(window.location.search).get('quest') || '/test_data/bs/2.5/NewBS 3.1 - 1st Quest.qst';
+        const resp = await fetch(questFilePath);
+        const buffer = await resp.arrayBuffer();
+        const data = new Int8Array(buffer);
+
+        // Actual path on virtual fs does not matter. Hardcoded to "/quests/input.quest"
+        zc.FS.mkdir('/quests');
+        zc.FS.writeFile('/quests/input.qst', data);
+
+        document.body.textContent = 'Reading quest file ...';
+        setTimeout(() => {
+          const read_qst_file = zc.cwrap('read_qst_file', 'number', []);
+          document.body.textContent = read_qst_file();
+
+          const el = document.createElement('pre');
+          document.body.append(el);
+          const bytes = zc.FS.readFile('/quests/input.qst.dat');
+          console.log(bytes);
+          el.textContent += (new TextDecoder().decode(
+            bytes.subarray(0, 1000000)
+          ));
+        });
+      }
+
+      main();
+    </script>
+  </head>
+  <body>
+    Loading WASM ...
+  </body>
+</html>
