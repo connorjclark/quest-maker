@@ -40,8 +40,10 @@ const structs = {
   byte: struct('B'),
   // 2 byte int
   int: struct('<H'),
+  intSignedBigEndian: struct('>h'),
   // 4 byte int
   long: struct('<I'),
+  longBigEndian: struct('>I'),
 };
 
 interface Field {
@@ -135,8 +137,16 @@ class Reader {
     return this.readStruct(structs.int)[0];
   }
 
+  readIntSignedBigEndian(): any {
+    return this.readStruct(structs.intSignedBigEndian)[0];
+  }
+
   readLong() {
     return this.readStruct(structs.long)[0];
+  }
+
+  readLongBigEndian() {
+    return this.readStruct(structs.longBigEndian)[0];
   }
 
   readStr(len: number) {
@@ -563,6 +573,46 @@ const sections = {
 
     return { weapons };
   },
+  'MIDI': (reader: Reader, version: Version, sversion: number, cversion: number) => {
+    const flags = reader.read(32);
+
+    function accessFlag(num: number) {
+      const base = Math.floor(num / 8);
+      const shift = Math.floor(num % 8);
+      return (flags[base] & (1 << shift)) >> shift;
+    }
+
+    const tunes = [];
+    for (let i = 0; i < 252; i++) {
+      if (accessFlag(i) === 0) {
+        tunes.push(null);
+        continue;
+      }
+
+      const tune = readFields(reader, [
+        { name: 'title', type: '36s' },
+        { name: 'start', type: 'I' },
+        { name: 'loopStart', type: 'I' },
+        { name: 'loopEnd', type: 'I' },
+        { name: 'loop', type: 'H' },
+        { name: 'volume', type: 'H' },
+        { name: 'flags', type: 'B', if: sversion >= 3 },
+        { name: 'format', type: 'B' },
+      ]);
+      tune.divisions = reader.readIntSignedBigEndian();
+
+      tune.tracks = [];
+      for (let j = 0; j < 32; j++) {
+        const length = reader.readLongBigEndian();
+        const data = reader.read(length);
+        tune.tracks.push(data);
+      }
+
+      tunes.push(tune);
+    }
+
+    return { tunes };
+  },
 };
 
 async function getQstBytes(questFilePath: string): Promise<Uint8Array> {
@@ -626,6 +676,7 @@ function parseQstBytes(qstBytes: Uint8Array) {
       if (remainingBytes !== 0) {
         const error = `did not read all data, ${remainingBytes} bytes remaining`;
         console.error(error);
+        zcData[id.trim()] = zcData[id.trim()] || {};
         zcData[id.trim()].errors = zcData[id.trim()].errors || [];
         zcData[id.trim()].errors.push(error);
       }

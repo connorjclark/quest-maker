@@ -5,6 +5,7 @@ import * as assert from 'assert';
 import * as constants from '../src/constants';
 import makeQuest from '../src/make-quest';
 import { EnemyType, TileType } from '../src/types';
+import struct from './third_party/struct.mjs';
 
 const { tileSize, screenWidth, screenHeight } = constants;
 
@@ -525,10 +526,38 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
     }
   }
 
-  // TODO
-  // for (const midiPath of glob.sync('*.mid', { cwd: dataDir })) {
-  //   fs.copyFileSync(`${dataDir}/${midiPath}`, `${outputDir}/${midiPath}`);
-  // }
+  function concatenate(resultConstructor: any, ...arrays: any[]) {
+    let totalLength = 0;
+    for (const arr of arrays) {
+      totalLength += arr.length;
+    }
+
+    const result = new resultConstructor(totalLength);
+    let offset = 0;
+    for (const arr of arrays) {
+      result.set(arr, offset);
+      offset += arr.length;
+    }
+    return result;
+  }
+  for (const tune of qstData.MIDI.tunes) {
+    if (!tune) continue;
+
+    const tracksWithData = tune.tracks.filter((t: Uint8Array) => t.length);
+    const format = tracksWithData.length === 1 ? 0 : 1;
+    const dataParts = [];
+
+    dataParts.push(new Uint8Array(
+      struct('>4sIhhh').pack('MThd', 6, format, tracksWithData.length, tune.divisions)
+    ));
+    for (const track of tracksWithData) {
+      dataParts.push(new Uint8Array(struct('>4sI').pack('MTrk', track.length)));
+      dataParts.push(track);
+    }
+
+    const data = concatenate(Uint8Array, ...dataParts);
+    // const blob = new Blob([data.buffer], { type: 'application/octet-stream' });
+  }
 
   for (const combo of qstData.CMBO.combos) {
     const tile = makeTile({
@@ -945,8 +974,6 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
   quest.misc.START_Y = 7;
 
   quest.name = '1st';
-
-  console.log({quest});
 
   return quest;
 }
