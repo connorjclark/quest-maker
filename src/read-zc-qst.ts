@@ -19,6 +19,10 @@ const Version = {
     return Version.compare(v1, v2) > 0;
   },
 
+  lte(v1: Version, v2: Version) {
+    return Version.compare(v1, v2) <= 0;
+  },
+
   lt(v1: Version, v2: Version) {
     return Version.compare(v1, v2) < 0;
   },
@@ -322,9 +326,8 @@ const sections = {
       csetColors,
     };
   },
+  // https://github.com/ArmageddonGames/ZeldaClassic/blob/bdac8e682ac1eda23d775dacc5e5e34b237b82c0/src/qst.cpp#L4127
   'DMAP': (reader: Reader, version: Version, sversion: number, cversion: number) => {
-    if (sversion < 9) throw new Error('TODO');
-
     const numDmaps = reader.readInt();
     const dmaps = [];
     for (let i = 0; i < numDmaps; i++) {
@@ -394,36 +397,41 @@ const sections = {
     return { dmaps };
   },
   'MAP ': (reader: Reader, version: Version, sversion: number, cversion: number) => {
-    if (sversion < 15) throw new Error('TODO');
-    if (sversion < 19 && version.zeldaVersion > 0x253) throw new Error('TODO');
-
     const extendedArrays = Version.gt(version, { zeldaVersion: 0x211, build: 7 });
 
     let numSecretCombos;
     if (Version.lt(version, { zeldaVersion: 0x192, build: 137 })) {
       numSecretCombos = 20;
-    } else if (Version.lt(version, { zeldaVersion: 0x192, build: 154 })) {
+    } else if (version.zeldaVersion === 0x192 && version.build < 154) {
       numSecretCombos = 256
     } else {
       numSecretCombos = 128;
     }
 
-    const numMaps = reader.readInt();
+    let numScreens;
+    if (Version.lt(version, { zeldaVersion: 0x192, build: 137 })) {
+      numScreens = 132;
+    } else {
+      numScreens = 136;
+    }
+
+    let numMaps = reader.readInt();
     const maps = [];
     for (let i = 0; i < numMaps; i++) {
       const map = { screens: [] as any[] };
       maps.push(map);
 
-      for (let i = 0; i < 136; i++) {
+      for (let i = 0; i < numScreens; i++) {
         const screen: any = {};
 
         const screen_1 = readFields(reader, [
           { name: 'valid', type: 'B' },
           { name: 'guy', type: 'B' },
-          { name: 'str', type: 'H' },
+          { name: 'str', type: Version.gt(version, { zeldaVersion: 0x192, build: 146 }) ? 'H' : 'B' },
           { name: 'room', type: 'B' },
           { name: 'item', type: 'B' },
-          { name: 'hasitem', type: 'B' },
+          { name: 'hasitem', type: 'B', if: Version.gte(version, { zeldaVersion: 0x211, build: 14 }) },
+          { name: '_padding', type: 'B', if: Version.lt(version, { zeldaVersion: 0x192, build: 154 }) },
           { name: 'tileWarpType', arrayLength: extendedArrays ? 4 : 1, type: 'B' },
           { name: 'doorComboSet', type: 'H', if: Version.gt(version, { zeldaVersion: 0x192, build: 153 }) },
           { name: 'warpReturnX', arrayLength: extendedArrays ? 4 : 1, type: 'B' },
@@ -436,10 +444,12 @@ const sections = {
           { name: 'color', type: sversion > 15 ? 'H' : 'B' },
           { name: 'enemyFlags', type: 'B' },
           { name: 'doors', arrayLength: 4, type: 'B' },
-          { name: 'tileWarpDmap', arrayLength: 4, type: 'H' },
+          { name: 'tileWarpDmap', arrayLength: extendedArrays ? 4 : 1, type: sversion > 11 ? 'H' : 'B' },
           { name: 'tileWarpScreen', arrayLength: extendedArrays ? 4 : 1, type: 'B' },
           { name: 'tileWarpOverlayFlags', type: 'B', if: sversion >= 15 },
           { name: 'exitDir', type: 'B' },
+          { name: '_padding', type: 'B', if: version.zeldaVersion < 0x193 },
+          { name: '_padding', type: 'B', if: Version.gt(version, { zeldaVersion: 0x192, build: 145 }) && Version.lt(version, { zeldaVersion: 0x192, build: 154 }) },
           { name: 'enemies', arrayLength: 10, type: Version.gte(version, { zeldaVersion: 0x192, build: 10 }) ? 'H' : 'B' },
           { name: 'pattern', type: 'B' },
           { name: 'sideWarpType', arrayLength: extendedArrays ? 4 : 1, type: 'B' },
@@ -451,6 +461,7 @@ const sections = {
           { name: 'sideWarpDmap', arrayLength: 4, type: 'H' },
           { name: 'sideWarpIndex', type: 'B', if: Version.gt(version, { zeldaVersion: 0x211, build: 7 }) },
           { name: 'underCombo', type: 'H' },
+          { name: 'old_cpage', type: 'B', if: version.zeldaVersion < 0x193 },
           { name: 'underCset', type: 'B' },
           { name: 'catchAll', type: 'H' },
           { name: 'flags', type: 'B' },
@@ -470,8 +481,12 @@ const sections = {
           { name: 'bossSfx', type: 'B', if: sversion >= 15 },
           { name: 'secretSfx', type: 'B', if: sversion >= 15 },
           { name: 'holdUpSfx', type: 'B', if: sversion >= 16 },
+
+          // this is a weird one for older versions
           { name: 'layerMap', arrayLength: 6, type: 'B', if: Version.gt(version, { zeldaVersion: 0x192, build: 97 }) },
           { name: 'layerScreen', arrayLength: 6, type: 'B', if: Version.gt(version, { zeldaVersion: 0x192, build: 97 }) },
+          { name: '_skip', arrayLength: 4, type: 'B', if: Version.gt(version, { zeldaVersion: 0x192, build: 23 }) && Version.lt(version, { zeldaVersion: 0x192, build: 98 }) },
+
           { name: 'layerOpacity', arrayLength: 6, type: 'B', if: Version.gt(version, { zeldaVersion: 0x192, build: 149 }) },
           { name: '_padding', type: 'B', if: Version.eq(version, { zeldaVersion: 0x192, build: 153 }) },
           { name: 'timedWarpTics', type: 'H', if: Version.gt(version, { zeldaVersion: 0x192, build: 153 }) },
@@ -480,6 +495,7 @@ const sections = {
           { name: 'secretCombos', arrayLength: numSecretCombos, type: Version.lt(version, { zeldaVersion: 0x192, build: 154 }) ? 'B' : 'H' },
           { name: 'secretCsets', arrayLength: 128, type: 'B', if: Version.gt(version, { zeldaVersion: 0x192, build: 153 }) },
           { name: 'secretFlags', arrayLength: 128, type: 'B', if: Version.gt(version, { zeldaVersion: 0x192, build: 153 }) },
+          { name: '_padding', type: 'B', if: Version.gt(version, { zeldaVersion: 0x192, build: 97 }) && Version.lt(version, { zeldaVersion: 0x192, build: 154 }) },
           { name: 'data', arrayLength: 16 * 11, type: 'H' },
           { name: 'sflag', arrayLength: 16 * 11, type: 'B', if: Version.gt(version, { zeldaVersion: 0x192, build: 20 }) },
           { name: 'cset', arrayLength: 16 * 11, type: 'B', if: Version.gt(version, { zeldaVersion: 0x192, build: 97 }) },
@@ -553,13 +569,18 @@ const sections = {
       slash: readArrayFields(reader, 4, fields),
     };
   },
+  // https://github.com/ArmageddonGames/ZeldaClassic/blob/bdac8e682ac1eda23d775dacc5e5e34b237b82c0/src/qst.cpp#L7423
   'WPN ': (reader: Reader, version: Version, sversion: number, cversion: number) => {
-    if (sversion < 5) throw new Error('TODO');
+    let numWeapons;
+    if (version.zeldaVersion < 0x186) numWeapons = 64;
+    if (version.zeldaVersion < 0x185) numWeapons = 32;
+    if (version.zeldaVersion > 0x192) numWeapons = reader.readInt();
 
-    const weaponsJustName = readArrayFields(reader, reader.readInt(), [
-      { name: 'name', type: '64s' },
+    const weaponsJustName = readArrayFields(reader, numWeapons, [
+      { name: 'name', type: '64s', if: sversion > 2 },
     ]);
-    const weaponsRest = readArrayFields(reader, weaponsJustName.length, [
+
+    const weaponsRest = readArrayFields(reader, numWeapons, [
       { name: 'tile', type: 'H' },
       { name: 'misc', type: 'B' },
       { name: 'csets', type: 'B' },
