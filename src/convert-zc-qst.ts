@@ -972,6 +972,45 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
       walk: walkFrames,
       stab: stabFrames,
     };
+  } else {
+    const linkAnimationStyle = qstData.INIT.linkAnimationStyle || 0;
+    const linktile = 4;
+    const arr4 = (start: number) => [start, start + 1, start + 2, start + 3];
+    const arr2 = (start: number) => [start, start + 1];
+
+    if (linkAnimationStyle === 0) {
+      quest.misc.HERO_FRAMES = {
+        walk: [
+          { gfxs: arr2(linktile + 20), flip: 0 },
+          { gfxs: arr2(linktile + 18), flip: 0 },
+          { gfxs: arr2(linktile + 16), flip: 1 },
+          { gfxs: arr2(linktile + 16), flip: 0 },
+        ],
+        stab: [
+          { gfxs: arr2(linktile + 23), flip: 0 },
+          { gfxs: arr2(linktile + 22), flip: 0 },
+          { gfxs: arr2(linktile + 21), flip: 1 },
+          { gfxs: arr2(linktile + 21), flip: 0 },
+        ],
+      };
+    } else if (linkAnimationStyle === 1) {
+      quest.misc.HERO_FRAMES = {
+        walk: [
+          { gfxs: arr4(linktile + 24), flip: 0 },
+          { gfxs: arr4(linktile + 19), flip: 0 },
+          { gfxs: arr4(linktile + 16), flip: 1 },
+          { gfxs: arr4(linktile + 16), flip: 0 },
+        ],
+        stab: [
+          { gfxs: arr4(linktile + 27), flip: 0 },
+          { gfxs: arr4(linktile + 23), flip: 0 },
+          { gfxs: arr4(linktile + 22), flip: 1 },
+          { gfxs: arr4(linktile + 22), flip: 0 },
+        ],
+      };
+    } else {
+      throw new Error('TODO linkAnimationStyle ' + linkAnimationStyle);
+    }
   }
 
   quest.misc.SPAWN_GFX_START = 72;

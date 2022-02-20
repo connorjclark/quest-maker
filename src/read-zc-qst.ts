@@ -652,11 +652,24 @@ const sections = {
 
     return { tunes };
   },
+  // https://github.com/ArmageddonGames/ZeldaClassic/blob/bdac8e682ac1eda23d775dacc5e5e34b237b82c0/src/qst.cpp#L11341
   'GUY ': (reader: Reader, version: Version, sversion: number, cversion: number) => {
     if (sversion >= 36) throw new Error('TODO');
+    if (sversion === 2) throw new Error('TODO');
+
+    if (sversion <= 2) {
+      // readlinksprites2
+      const holdSprites = readArrayFields(reader, 2, [
+        { name: 'tile', type: 'H' },
+        { name: 'tile2', type: 'H' },
+        { name: 'extend', type: 'B' },
+      ]);
+
+      return { holdSprites, guys: [] };
+    }
 
     const guysJustName = readArrayFields(reader, 512, [
-      { name: 'name', type: '64s' },
+      { name: 'name', type: '64s', if: sversion > 3 },
     ]);
     const guysRest = readArrayFields(reader, 512, [
       { name: 'flags', type: 'I' },
@@ -710,6 +723,50 @@ const sections = {
     const guys = guysJustName.map((w, i) => ({ ...w, ...guysRest[i] }));
 
     return { guys };
+  },
+  'INIT': (reader: Reader, version: Version, sversion: number, cversion: number) => {
+    const extendedArrays = sversion > 12 || Version.eq(version, { zeldaVersion: 0x211, build: 18 });
+    return readFields(reader, [
+      { name: 'items', arrayLength: 256, type: 'B', if: sversion >= 10 },
+      { name: '_padding', arrayLength: 6, type: 'B' },
+      { name: '_padding', arrayLength: 7, type: 'B', if: sversion < 10 },
+      { name: '_padding', arrayLength: 5, type: 'B', if: sversion < 10 },
+      { name: 'bombs', type: 'B' },
+      { name: 'superBombs', type: 'B' },
+      { name: '_padding', arrayLength: 10, type: 'B', if: sversion < 10 && Version.gt(version, { zeldaVersion: 0x192, build: 173 }) },
+      { name: '_padding', arrayLength: 10, type: 'B', if: sversion < 10 && version.zeldaVersion === 0x192 && version.build > 173 },
+      { name: 'hc', type: 'B' },
+      { name: 'startHeart', type: sversion >= 14 ? 'H' : 'B' },
+      { name: 'continueHeart', type: sversion >= 14 ? 'H' : 'B' },
+      { name: 'hcp', type: 'B' },
+      { name: 'hcpPerHc', type: 'B', if: sversion >= 14 },
+      { name: 'maxBombs', type: 'B' },
+      { name: 'keys', type: 'B' },
+      { name: 'rupees', type: 'H' },
+      { name: 'triforce', type: 'B' },
+      { name: 'map', arrayLength: extendedArrays ? 64 : 32, type: 'B' },
+      { name: 'compass', arrayLength: extendedArrays ? 64 : 32, type: 'B' },
+      { name: 'bossKeys', arrayLength: extendedArrays ? 64 : 32, type: 'B', if: Version.gt(version, { zeldaVersion: 0x192, build: 173 }) },
+      { name: 'misc', arrayLength: 16, type: 'B' },
+      { name: 'swordHearts', arrayLength: 4, type: 'B', if: sversion < 15 },
+      { name: 'lastMap', type: 'B' },
+      { name: 'lastScreen', type: 'B' },
+      { name: 'maxMagic', type: sversion >= 14 ? 'H' : 'B' },
+      { name: 'magic', type: sversion >= 14 ? 'H' : 'B' },
+      { name: 'beamHearts', arrayLength: 4, type: 'B', if: sversion < 15 },
+      { name: 'beamPercent', type: 'B', if: sversion < 15 },
+      { name: 'bombRatio', type: 'B', if: sversion >= 15 },
+      { name: 'bombPower', arrayLength: 4, type: sversion >= 14 ? 'H' : 'B', if: sversion < 15 },
+      { name: 'hookshotLinks', type: 'B', if: sversion < 15 },
+      { name: 'hookshotLength', type: 'B', if: sversion < 15 && sversion > 6 },
+      { name: 'longshotLinks', type: 'B', if: sversion < 15 && sversion > 6 },
+      { name: 'longshotLength', type: 'B', if: sversion < 15 && sversion > 6 },
+      { name: 'msgMoreX', type: 'B' },
+      { name: 'msgMorey', type: 'B' },
+      { name: 'subscreen', type: 'B' },
+      { name: 'startDmap', type: sversion > 10 ? 'H' : 'B', if: Version.gt(version, { zeldaVersion: 0x192, build: 173 }) },
+      { name: 'linkAnimationStyle', type: 'B', if: Version.gt(version, { zeldaVersion: 0x192, build: 173 }) },
+    ]);
   },
 };
 
