@@ -359,7 +359,11 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
   }
 
   for (const image of images) {
-    pixi.loader.add(image, `${questBasePath}/${image}`);
+    if (image.startsWith('blob:') || image.startsWith('data:')) {
+      pixi.loader.add(image, image);
+    } else {
+      pixi.loader.add(image, `${questBasePath}/${image}`);
+    }
   }
   await new Promise(resolve => pixi.loader.load(resolve));
 

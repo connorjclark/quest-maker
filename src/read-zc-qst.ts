@@ -198,7 +198,7 @@ const sections = {
       numTiles = reader.readInt();
     }
 
-    const hasEncodedFormats = Version.gte(version, { zeldaVersion: 0x211, build: 4 });
+    const hasEncodedFormats = Version.gt(version, { zeldaVersion: 0x211, build: 4 });
 
     // https://github.com/ArmageddonGames/ZeldaClassic/blob/b56ba20bc6be4a8e4bf01c7c681238d545069baf/src/tiles.cpp#L2579
     function tilesize(format: number) {
@@ -231,7 +231,7 @@ const sections = {
           throw new Error('unexpected tile format: ' + format);
       }
 
-      tiles.push({ format, pixels });
+      tiles.push(pixels);
     }
 
     return { tiles };
@@ -260,12 +260,7 @@ const sections = {
       // {'version': 0, 'key': 'triggerflags', 'read': lambda: section_bytes.read_array(4, 3)},
       // {'version': 12, 'key': 'triggerlevel', 'read': lambda: section_bytes.read_long()},
     ].filter(f => version.zeldaVersion >= f.version);
-
-    const numCombos = reader.readInt();
-    const combos = []
-    for (let i = 0; i < numCombos; i++) {
-      combos.push(readFields(reader, comboFields));
-    }
+    const combos = readArrayFields(reader, reader.readInt(), comboFields);
 
     return { combos };
   },
@@ -312,7 +307,6 @@ const sections = {
     }
 
     return {
-      colorData,
       palnames,
       cycles,
       csetColors,
@@ -432,7 +426,7 @@ const sections = {
           { name: 'color', type: sversion > 15 ? 'H' : 'B' },
           { name: 'enemyFlags', type: 'B' },
           { name: 'doors', arrayLength: 4, type: 'B' },
-          { name: 'tileWarpDmap', arrayLength: 2, type: 'H' },
+          { name: 'tileWarpDmap', arrayLength: 4, type: 'H' },
           { name: 'tileWarpScreen', arrayLength: extendedArrays ? 4 : 1, type: 'B' },
           { name: 'tileWarpOverlayFlags', type: 'B', if: sversion >= 15 },
           { name: 'exitDir', type: 'B' },

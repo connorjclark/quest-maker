@@ -455,19 +455,22 @@ async function createTileImages(qstData: any) {
   const context = canvas.getContext('2d');
   if (!context) throw new Error();
 
-  const images = [];
-
   // Save 400 at a time.
   const tilesPerRow = 20;
   const rowsPerPage = 13;
+  const tilesPerPage = tilesPerRow * rowsPerPage;
   const spriteSize = 16;
 
-  let tileIndex = 0;
-  let pageIndex = 0;
+  canvas.width = tilesPerRow * spriteSize;
+  canvas.height = rowsPerPage * spriteSize;
+
   const tiles = qstData.TILE.tiles;
-  const imageData = context.getImageData(0, 0, tilesPerRow * spriteSize, rowsPerPage * spriteSize).data;
+  const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+  const images = [];
+
+  let tileIndex = 0;
   while (tileIndex < tiles.length) {
-    for (let indexInPage = 0; indexInPage < tilesPerRow * rowsPerPage; indexInPage++) {
+    for (let indexInPage = 0; indexInPage < tilesPerPage; indexInPage++) {
       if (tileIndex >= tiles.length) break;
 
       const tile = tiles[tileIndex++];
@@ -481,29 +484,23 @@ async function createTileImages(qstData: any) {
           const x = spritesheet_x + tx;
           const y = spritesheet_y + ty;
 
-          if (csetOffset === 0) {
-            imageData[x + y * tilesPerRow * spriteSize + 0] = 0;
-            imageData[x + y * tilesPerRow * spriteSize + 1] = 0;
-            imageData[x + y * tilesPerRow * spriteSize + 2] = 0;
-            imageData[x + y * tilesPerRow * spriteSize + 3] = 0;
-          } else {
-            imageData[x + y * tilesPerRow * spriteSize + 0] = 0;
-            imageData[x + y * tilesPerRow * spriteSize + 1] = 0;
-            imageData[x + y * tilesPerRow * spriteSize + 2] = csetOffset;
-            imageData[x + y * tilesPerRow * spriteSize + 3] = 0;
-          }
+          imageData.data[(x + y * canvas.width) * 4 + 0] = 0;
+          imageData.data[(x + y * canvas.width) * 4 + 1] = 0;
+          imageData.data[(x + y * canvas.width) * 4 + 2] = csetOffset;
+          imageData.data[(x + y * canvas.width) * 4 + 3] = 255;
         }
       }
     }
 
-    const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
-    if (!blob) throw new Error('failed making tile image');
+    context.putImageData(imageData, 0, 0);
 
-    const url = URL.createObjectURL(blob);
+    // https://github.com/pixijs/pixijs/issues/2985
+    // const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
+    // if (!blob) throw new Error('failed making tile image');
+
+    // const url = URL.createObjectURL(blob);
+    const url = canvas.toDataURL('image/png', 100);
     images.push(url);
-    console.log({ url });
-
-    pageIndex += 1;
   }
 
   return images;
@@ -965,6 +962,10 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
   quest.misc.START_Y = 7;
 
   quest.name = '1st';
+
+  window.a = qstData;
+  window.q = quest;
+
 
   return quest;
 }
