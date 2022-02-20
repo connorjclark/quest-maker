@@ -458,7 +458,7 @@ const sections = {
           { name: 'warpArrivalY', type: 'B' },
           { name: 'path', arrayLength: 4, type: 'B' },
           { name: 'sideWarpScreen', arrayLength: extendedArrays ? 4 : 1, type: 'B' },
-          { name: 'sideWarpDmap', arrayLength: 4, type: 'H' },
+          { name: 'sideWarpDmap', arrayLength: extendedArrays ? 4 : 1, type: sversion > 11 ? 'H' : 'B' },
           { name: 'sideWarpIndex', type: 'B', if: Version.gt(version, { zeldaVersion: 0x211, build: 7 }) },
           { name: 'underCombo', type: 'H' },
           { name: 'old_cpage', type: 'B', if: version.zeldaVersion < 0x193 },
@@ -477,10 +477,10 @@ const sections = {
           { name: 'flags9', type: 'B', if: sversion > 5 },
           { name: 'flags10', type: 'B', if: sversion > 5 },
           { name: 'csensitive', type: 'B', if: sversion > 5 },
-          { name: 'oceanSfx', type: 'B', if: sversion >= 15 },
-          { name: 'bossSfx', type: 'B', if: sversion >= 15 },
-          { name: 'secretSfx', type: 'B', if: sversion >= 15 },
-          { name: 'holdUpSfx', type: 'B', if: sversion >= 16 },
+          { name: 'oceanSfx', type: 'B', if: sversion >= 14 },
+          { name: 'bossSfx', type: 'B', if: sversion >= 14 },
+          { name: 'secretSfx', type: 'B', if: sversion >= 14 },
+          { name: 'holdUpSfx', type: 'B', if: sversion >= 15 },
 
           // this is a weird one for older versions
           { name: 'layerMap', arrayLength: 6, type: 'B', if: Version.gt(version, { zeldaVersion: 0x192, build: 97 }) },
