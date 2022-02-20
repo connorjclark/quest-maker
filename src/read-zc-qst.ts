@@ -289,12 +289,20 @@ const sections = {
   },
   // https://github.com/ArmageddonGames/ZeldaClassic/blob/bdac8e682ac1eda23d775dacc5e5e34b237b82c0/src/qst.cpp#L15411
   'CSET': (reader: Reader, version: Version, sversion: number, cversion: number) => {
-    // https://github.com/ArmageddonGames/ZeldaClassic/blob/0fddc19a02ccf62c468d9201dd54dcb834b764ca/src/colors.h#L47
-    const newerpsTOTAL = (6701 << 4) * 3
-    const MAXLEVELS = 512
-    const PALNAMESIZE = 17
+    const MAXLEVELS = sversion < 3 ? 256 : 512;
+    const PALNAMESIZE = 17;
 
-    const colorData = reader.read(newerpsTOTAL);
+    // https://github.com/ArmageddonGames/ZeldaClassic/blob/0fddc19a02ccf62c468d9201dd54dcb834b764ca/src/colors.h#L47
+    let colorDataLength;
+    if (sversion >= 4) {
+      colorDataLength = (6701 << 4) * 3;
+    } else if (Version.gte(version, { zeldaVersion: 0x192, build: 73 })) {
+      colorDataLength = (3373 << 4) * 3;
+    } else {
+      colorDataLength = (240 << 4) * 3;
+    }
+
+    const colorData = reader.read(colorDataLength);
 
     const palnames = []
     for (let i = 0; i < MAXLEVELS; i++) {

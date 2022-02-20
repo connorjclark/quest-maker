@@ -612,7 +612,7 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
   }
 
   for (const zcWeapon of qstData.WPN.weapons) {
-    if (zcWeapon.name.startsWith('zz')) break;
+    if (zcWeapon.name && zcWeapon.name.startsWith('zz')) break;
 
     makeWeapon({
       name: zcWeapon.name,
