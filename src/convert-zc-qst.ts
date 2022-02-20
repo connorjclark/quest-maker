@@ -540,6 +540,9 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
     }
     return result;
   }
+
+  // @ts-expect-error
+  quest.midis = [];
   for (const tune of qstData.MIDI.tunes) {
     if (!tune) continue;
 
@@ -556,7 +559,9 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
     }
 
     const data = concatenate(Uint8Array, ...dataParts);
-    // const blob = new Blob([data.buffer], { type: 'application/octet-stream' });
+    const blob = new Blob([data.buffer], { type: 'application/octet-stream' });
+    // @ts-expect-error
+    quest.midis.push(URL.createObjectURL(blob));
   }
 
   for (const combo of qstData.CMBO.combos) {

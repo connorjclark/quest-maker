@@ -10,7 +10,6 @@ class SoundManager {
   private enabled = !window.IS_DEV;
 
   constructor(private app: QuestMakerApp) {
-    this.enabled = false; // TODO
   }
 
   playSong(id: number) {
@@ -18,7 +17,12 @@ class SoundManager {
     if (id === this.currentSongId) return;
 
     this.currentSongId = id;
-    this.midiPlayer.load(`${this.app.questBasePath}/midi${id}.mid`);
+    // @ts-expect-error
+    const url = this.app.state.quest.midis ?
+      // @ts-expect-error
+      this.app.state.quest.midis[id] :
+      `${this.app.questBasePath}/midi${id}.mid`;
+    this.midiPlayer.load(url);
     this.midiPlayer.play();
   }
 
