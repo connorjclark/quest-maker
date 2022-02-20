@@ -724,6 +724,7 @@ const sections = {
 
     return { guys };
   },
+  // https://github.com/ArmageddonGames/ZeldaClassic/blob/bdac8e682ac1eda23d775dacc5e5e34b237b82c0/src/qst.cpp#L16105
   'INIT': (reader: Reader, version: Version, sversion: number, cversion: number) => {
     const extendedArrays = sversion > 12 || Version.eq(version, { zeldaVersion: 0x211, build: 18 });
     return readFields(reader, [
@@ -767,6 +768,78 @@ const sections = {
       { name: 'startDmap', type: sversion > 10 ? 'H' : 'B', if: Version.gt(version, { zeldaVersion: 0x192, build: 173 }) },
       { name: 'linkAnimationStyle', type: 'B', if: Version.gt(version, { zeldaVersion: 0x192, build: 173 }) },
     ]);
+  },
+  // https://github.com/ArmageddonGames/ZeldaClassic/blob/bdac8e682ac1eda23d775dacc5e5e34b237b82c0/src/qst.cpp#L5695
+  'ITEM': (reader: Reader, version: Version, sversion: number, cversion: number) => {
+    let numItems;
+    if (version.zeldaVersion > 0x192) {
+      numItems = reader.readInt();
+    } else if (version.zeldaVersion < 0x186) {
+      numItems = 64;
+    } else {
+      numItems = 256;
+    }
+
+    if (sversion >= 26) throw new Error('TODO');
+
+    const itemsJustName = readArrayFields(reader, numItems, [
+      { name: 'name', type: '64s', if: sversion > 1 },
+    ]);
+    const itemsRest = readArrayFields(reader, numItems, [
+      { name: 'tile', type: sversion > 35 ? 'I' : 'H' },
+      { name: 'misc', type: 'B' },
+      { name: 'csets', type: 'B' },
+      { name: 'frames', type: 'B' },
+      { name: 'speed', type: 'B' },
+      { name: 'delay', type: 'B' },
+      { name: '_padding', type: 'B', if: version.zeldaVersion < 0x193 },
+
+      ...(sversion > 1 ? [
+        { name: 'ltm', type: 'I' },
+        { name: '_padding', type: '12s', if: version.zeldaVersion < 0x193 },
+        { name: 'family', type: sversion >= 31 ? 'I' : 'B' },
+        { name: 'familyType', type: 'B' },
+        { name: 'power', type: sversion >= 31 ? 'I' : 'B', if: sversion > 5 },
+        { name: 'flags', type: sversion >= 41 ? 'I' : 'H', if: sversion > 5 },
+        { name: 'flags_ITEM_GAMEDATA', type: 'B', if: sversion <= 5 },
+        { name: 'script', type: 'H' },
+        { name: 'count', type: 'B' },
+        { name: 'amount', type: 'H' },
+        { name: 'collectScript', type: 'H' },
+        { name: 'setMax', type: 'H' },
+        { name: 'max', type: 'H' },
+        { name: 'playSound', type: 'B' },
+        { name: 'initialD', arrayLength: 8, type: 'I' },
+        { name: 'initialA', arrayLength: 2, type: 'B' },
+      ] : []),
+
+      ...(sversion > 4 ? [
+        { name: 'flags_ITEM_EDIBLE', type: 'B', if: sversion <= 5 },
+
+        { name: 'wpn', arrayLength: sversion >= 15 ? 10 : 4, type: 'B', if: sversion > 5 },
+        { name: 'pickupHearts', type: 'B', if: sversion > 5 },
+        { name: 'misc1', type: sversion >= 15 ? 'I' : 'H', if: sversion > 5 },
+        { name: 'misc2', type: sversion >= 15 ? 'I' : 'H', if: sversion > 5 },
+        { name: 'magic', type: 'B', if: sversion > 5 },
+      ] : []),
+
+      ...(sversion >= 12 ? [
+        { name: 'misc3', type: 'H', if: sversion < 15 },
+        { name: 'misc4', type: 'H', if: sversion < 15 },
+
+        { name: 'misc3', type: 'I', if: sversion >= 15 },
+        { name: 'misc4', type: 'I', if: sversion >= 15 },
+        { name: 'misc5', type: 'I', if: sversion >= 15 },
+        { name: 'misc6', type: 'I', if: sversion >= 15 },
+        { name: 'misc7', type: 'I', if: sversion >= 15 },
+        { name: 'misc8', type: 'I', if: sversion >= 15 },
+        { name: 'misc9', type: 'I', if: sversion >= 15 },
+        { name: 'misc10', type: 'I', if: sversion >= 15 },
+      ] : []),
+    ]);
+    const items = itemsJustName.map((w, i) => ({ ...w, ...itemsRest[i] }));
+
+    return { items };
   },
 };
 

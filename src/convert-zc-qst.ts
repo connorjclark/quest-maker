@@ -600,9 +600,8 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
     }
   }
 
-  qstData.ITEM = { items: [] }; // TODO
   for (const zcItem of qstData.ITEM.items) {
-    if (zcItem.name.startsWith('zz')) break;
+    if (zcItem.name?.startsWith('zz')) break;
 
     quest.items.push({
       name: zcItem.name,
@@ -1020,6 +1019,11 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
   quest.misc.START_Y = 7;
 
   quest.name = '1st';
+
+  // @ts-expect-error
+  window.quest = quest;
+  // @ts-expect-error
+  window.qstData = qstData;
 
   return quest;
 }
