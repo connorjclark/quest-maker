@@ -103,6 +103,10 @@ class Reader {
     return this.data.length > this.cur;
   }
 
+  dataLeft() {
+    return this.data.length - this.cur;
+  }
+
   skip(len: number) {
     this.cur += len;
   }
@@ -168,6 +172,9 @@ class Reader {
 }
 
 const sections = {
+  // https://github.com/ArmageddonGames/ZeldaClassic/blob/bdac8e682ac1eda23d775dacc5e5e34b237b82c0/src/zq_class.cpp#L6189
+  // https://github.com/ArmageddonGames/ZeldaClassic/blob/20f9807a8e268172d0bd2b0461e417f1588b3882/src/qst.cpp#L2005
+  // zdefs.h
   'HDR ': (reader: Reader) => {
     return readFields(reader, [
       { name: 'zeldaVersion', type: 'H' },
@@ -180,6 +187,7 @@ const sections = {
       { name: 'title', type: '65s' },
       { name: 'author', type: '65s' },
       { name: 'useKeyfile', type: 'B' },
+      // TODO the rest
     ]);
   },
   'TILE': (reader: Reader, version: Version, sversion: number, cversion: number) => {
@@ -520,6 +528,20 @@ const sections = {
 
     return { maps };
   },
+  'LINK': (reader: Reader, version: Version, sversion: number, cversion: number) => {
+    if (sversion >= 6) throw new Error('TODO');
+
+    const fields = [
+      { name: 'tile', type: 'H' },
+      { name: 'flip', type: 'B' },
+      { name: 'extend', type: 'B' },
+    ];
+    return {
+      walk: readArrayFields(reader, 4, fields),
+      stab: readArrayFields(reader, 4, fields),
+      slash: readArrayFields(reader, 4, fields),
+    };
+  },
 };
 
 export async function convertZCQst(questFilePath: string) {
@@ -577,7 +599,15 @@ export async function convertZCQst(questFilePath: string) {
         console.log(sectionData);
       } catch (e) {
         console.error(e);
-        zcData[id.trim()] = { error: e };
+        zcData[id.trim()] = { errors: [e] };
+      }
+
+      const remainingBytes = sectionReader.dataLeft();
+      if (remainingBytes !== 0) {
+        const error = `did not read all data, ${remainingBytes} bytes remaining`;
+        console.error(error);
+        zcData[id.trim()].errors = zcData[id.trim()].errors || [];
+        zcData[id.trim()].errors.push(error);
       }
     }
   }
