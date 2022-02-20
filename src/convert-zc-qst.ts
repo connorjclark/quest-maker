@@ -1,617 +1,970 @@
-import DecodeZCModule from '../decode_zc/dist/zc.js';
-import struct from './third_party/struct.mjs';
+import * as assert from 'assert';
+// import * as fs from 'fs';
+// import * as path from 'path';
+// import * as glob from 'glob';
+import * as constants from '../src/constants';
+import makeQuest from '../src/make-quest';
+import { EnemyType, TileType } from '../src/types';
 
-interface Version {
-  zeldaVersion: number;
-  build: number;
+const { tileSize, screenWidth, screenHeight } = constants;
+
+function makeEnum<T>(vals: { [id: number]: T }) {
+  return (id: number) => vals[id];
 }
 
-const Version = {
-  eq(v1: Version, v2: Version) {
-    return Version.compare(v1, v2) === 0;
-  },
+const EnemyAnimationType = makeEnum([
+  'none',
+  'flip',
+  'unused1',
+  '2frm',
+  'unused2',
+  'octo',
+  'tek',
+  'lev',
+  'walk',
+  'zora',
+  'newzora',
+  'ghini',
+  'armos',
+  'rope',
+  'wallm',
+  'newwallm',
+  'dwalk',
+  'vire',
+  '3frm',
+  'wizz',
+  'aqua',
+  'dongo',
+  'manhan',
+  'gleeok',
+  'dig',
+  'ghoma',
+  'lanm',
+  '2frmpos',
+  '4frm4eye',
+  '4frm8eye',
+  '4frm4dirf',
+  '4frm4dir',
+  '4frm8dirf',
+  'armos4',
+  '4frmpos4dir',
+  '4frmpos8dir',
+  'unused3',
+  '4frm8dirb',
+  'newtek',
+  '3frm4dir',
+  '2frm4dir',
+  'newlev',
+  '2frm4eye',
+  'newwizz',
+  'newdongo',
+  'dongobs',
+  '4frmpos8dirf',
+  '4frmpos4dirf',
+  '4frmnodir',
+  'ganon',
+  '2frmb',
+] as const);
 
-  gte(v1: Version, v2: Version) {
-    return Version.compare(v1, v2) >= 0;
-  },
+enum EnemyFamily {
+  eeGUY = 0, eeWALK,
+  eeSHOOT/*DEPRECATED*/,
+  eeTEK, eeLEV, eePEAHAT, eeZORA, eeROCK,
+  //8
+  eeGHINI, eeARMOS/*DEPRECATED*/, eeKEESE, eeGEL/*DEPRECATED*/, eeZOL/*DEPRECATED*/, eeROPE/*DEPRECATED*/, eeGORIYA/*DEPRECATED*/, eeTRAP,
+  //16
+  eeWALLM, eeBUBBLE/*DEPRECATED*/, eeVIRE/*DEPRECATED*/, eeLIKE/*DEPRECATED*/, eePOLSV/*DEPRECATED*/, eeWIZZ, eeAQUA, eeMOLD,
+  //24
+  eeDONGO, eeMANHAN, eeGLEEOK, eeDIG, eeGHOMA, eeLANM, eePATRA, eeGANON,
+  //32
+  eePROJECTILE, eeGELTRIB/*DEPRECATED*/, eeZOLTRIB/*DEPRECATED*/, eeVIRETRIB/*DEPRECATED*/, eeKEESETRIB/*DEPRECATED*/, eeSPINTILE, eeNONE,
+  //39
+  eeFAIRY, eeFIRE, eeOTHER, eeMAX250, //eeFire is Other (Floating), eeOther is Other in the Editor.
+  eeSCRIPT01, eeSCRIPT02, eeSCRIPT03, eeSCRIPT04, eeSCRIPT05, eeSCRIPT06, eeSCRIPT07, eeSCRIPT08, eeSCRIPT09, eeSCRIPT10,
+  eeSCRIPT11, eeSCRIPT12, eeSCRIPT13, eeSCRIPT14, eeSCRIPT15, eeSCRIPT16, eeSCRIPT17, eeSCRIPT18, eeSCRIPT19, eeSCRIPT20,
+  eeFFRIENDLY01, eeFFRIENDLY02, eeFFRIENDLY03, eeFFRIENDLY04, eeFFRIENDLY05, eeFFRIENDLY06, eeFFRIENDLY07, eeFFRIENDLY08,
+  eeFFRIENDLY09, eeFFRIENDLY10,
+  eeMAX
+}
 
-  gt(v1: Version, v2: Version) {
-    return Version.compare(v1, v2) > 0;
-  },
-
-  lt(v1: Version, v2: Version) {
-    return Version.compare(v1, v2) < 0;
-  },
-
-  compare(v1: Version, v2: Version) {
-    if (v1.zeldaVersion > v2.zeldaVersion) return 1;
-    if (v1.zeldaVersion < v2.zeldaVersion) return -1;
-
-    if (v1.build > v2.build) return 1;
-    if (v1.build < v2.build) return -1;
-
-    return 0;
-  }
+enum WeaponType {
+  weaptypeNONE, weaptypeSWORD, weaptypeSWORDBEAM, weaptypeBRANG, weaptypeBOMBBLAST,
+  weaptypeSBOMBBLAST, weaptypeBOMB, weaptypeSBOMB, weaptypeARROW, weaptypeFIRE,
+  weaptypeWHISTLE, weaptypeBAIT, weaptypeWAND, weaptypeMAGIC, weaptypeCANDLE,
+  weaptypeWIND, weaptypeREFMAGIC, weaptypeREFFIREBALL, weaptypeREFROCK, weaptypeHAMMER,
+  weaptypeHOOKSHOT, weaptype21, weaptype22, weaptypeSPARKLE, weaptype24,
+  weaptype25, weaptypeBYRNA, weaptypeREFBEAM, weaptype28, weaptype29,
+  weaptypeSCRIPT1, weaptypeSCRIPT2, weaptypeSCRIPT3, weaptypeSCRIPT4, weaptypeSCRIPT5,
+  weaptypeSCRIPT6, weaptypeSCRIPT7, weaptypeSCRIPT8, weaptypeSCRIPT9, weaptypeSCRIPT10
 };
 
-const structs = {
-  sectionHeader: struct('<4sHHI'),
-  //  byte int
-  byte: struct('B'),
-  // 2 byte int
-  int: struct('<H'),
-  // 4 byte int
-  long: struct('<I'),
+// Not sure why there are two enums for this ...
+enum WeaponTypeGameEngine {
+  // 0
+  wNone, wSword, wBeam, wBrang,
+  wBomb, wSBomb, wLitBomb, wLitSBomb,
+  // 8
+  wArrow, wFire, wWhistle, wBait,
+  wWand, wMagic, wCatching, wWind,
+  // 16
+  wRefMagic, wRefFireball, wRefRock, wHammer,
+  wHookshot, wHSHandle, wHSChain, wSSparkle,
+  // 24
+  wFSparkle, wSmack, wPhantom, wCByrna,
+  //28
+  wRefBeam, wStomp,
+  //30
+  lwMax,
+  // Dummy weapons - must be between lwMax and wEnemyWeapons!
+  //31
+  wScript1, wScript2, wScript3, wScript4,
+  //35
+  wScript5, wScript6, wScript7, wScript8,
+  //39
+  wScript9, wScript10, wIce, wFlame, //ice rod, fire rod
+  wSound, // -Z: sound + defence split == digdogger, sound + one hit kill == pols voice -Z
+  wThrowRock, wPot, //Thrown pot or rock -Z
+  wLit, //Lightning or Electric -Z
+  wBombos, wEther, wQuake,// -Z
+  wSword180, wSwordLA,
+  // Enemy weapons
+  wEnemyWeapons = 128,
+  //129
+  ewFireball, ewArrow, ewBrang, ewSword,
+  ewRock, ewMagic, ewBomb, ewSBomb,
+  //137
+  ewLitBomb, ewLitSBomb, ewFireTrail, ewFlame,
+  ewWind, ewFlame2, ewFlame2Trail,
+  //145
+  ewIce, ewFireball2,
+  wMax
 };
 
-interface Field {
-  name: string;
-  type: string;
-  arrayLength?: number;
-  if?: boolean;
+export enum ItemFamily {
+  // 0
+  itype_sword, itype_brang, itype_arrow, itype_candle, itype_whistle,
+  itype_bait, itype_letter, itype_potion, itype_wand, itype_ring,
+  itype_wallet, itype_amulet, itype_shield, itype_bow, itype_raft,
+  itype_ladder, itype_book, itype_magickey, itype_bracelet, itype_flippers,
+  // 20
+  itype_boots, itype_hookshot, itype_lens, itype_hammer, itype_dinsfire,
+  itype_faroreswind, itype_nayruslove, itype_bomb, itype_sbomb, itype_clock,
+  itype_key, itype_magiccontainer, itype_triforcepiece, itype_map, itype_compass,
+  itype_bosskey, itype_quiver, itype_lkey, itype_cbyrna, itype_rupee,
+  // 40
+  itype_arrowammo, itype_fairy, itype_magic, itype_heart, itype_heartcontainer,
+  itype_heartpiece, itype_killem, itype_bombammo, itype_bombbag, itype_rocs,
+  itype_hoverboots, itype_spinscroll, itype_crossscroll, itype_quakescroll, itype_whispring,
+  itype_chargering, itype_perilscroll, itype_wealthmedal, itype_heartring, itype_magicring,
+  // 60
+  itype_spinscroll2, itype_quakescroll2, itype_agony, itype_stompboots, itype_whimsicalring,
+  itype_perilring, itype_misc,
+  // 67
+  itype_custom1, itype_custom2, itype_custom3, itype_custom4, itype_custom5,
+  itype_custom6, itype_custom7, itype_custom8, itype_custom9, itype_custom10,
+  itype_custom11, itype_custom12, itype_custom13, itype_custom14, itype_custom15,
+  itype_custom16, itype_custom17, itype_custom18, itype_custom19, itype_custom20,
+  // 87
+  itype_bowandarrow, itype_letterpotion,
+  itype_last,
+  itype_script1 = 256, //Scripted Weapons
+  itype_script2,
+  itype_script3,
+  itype_script4,
+  itype_script5,
+  itype_script6,
+  itype_script7,
+  itype_script8,
+  itype_script9,
+  itype_script10,
+  itype_icerod, //ice Rod
+
+  itype_templast,
+  itype_ether, itype_bombos, itype_quake,
+  itype_powder,
+  itype_trowel,
+  itype_instrument,
+  itype_sword180,
+  itype_sword_gb,
+  itype_firerod,
+  itype_scripted_001 = 400,
+  itype_scripted_002,
+  itype_scripted_003,
+  itype_scripted_004,
+  itype_scripted_005,
+  itype_scripted_006,
+  itype_scripted_007,
+  itype_scripted_008,
+  itype_scripted_009,
+  itype_scripted_010,
+
+  itype_max = 512
+};
+
+const ComboNameType = makeEnum([
+  '(None)',
+  'Stairs [A]',
+  'Cave (Walk Down) [A]',
+  'Water',
+  'Armos',
+  'Grave',
+  'Dock',
+  '-Unused',
+  'Push (Wait)',
+  'Push (Heavy)',
+  'Push (Heavy, Wait)',
+  'Left Statue',
+  'Right Statue',
+  'Slow Walk',
+  'Conveyor Up',
+  'Conveyor Down',
+  'Conveyor Left',
+  'Conveyor Right',
+  'Swim Warp [A]',
+  'Dive Warp [A]',
+  'Ladder or Hookshot',
+  'Step->Secrets (Temporary)',
+  'Step->Secrets (Permanent)',
+  '-Unused',
+  'Slash',
+  'Slash (Item)',
+  'Push (Very Heavy)',
+  'Push (Very Heavy, Wait)',
+  'Pound',
+  'Hookshot Grab',
+  '-Hookshot Bridge',
+  'Damage (1/2 Heart)',
+  'Damage (1 Heart)',
+  'Damage (2 hearts)',
+  'Damage (4 Hearts)',
+  'Center Statue',
+  'Trap (Horizontal, Line of Sight)',
+  'Trap (Vertical, Line of Sight)',
+  'Trap (4-Way)',
+  'Trap (Horizontal, Constant)',
+  'Trap (Vertical, Constant)',
+  'Direct Warp [A]',
+  'Hookshot Only',
+  'Overhead',
+  'No Flying Enemies',
+  'Magic Mirror (4-Way)',
+  'Magic Mirror (Up-Left, Down-Right)',
+  'Magic Mirror (Up-Right, Down-Left)',
+  'Magic Prism (3-Way)',
+  'Magic Prism (4-Way)',
+  'Block Magic',
+  'Cave (Walk Up) [A]',
+  'Eyeball (8-Way A)',
+  'Eyeball (8-Way B)',
+  'No Jumping Enemies',
+  'Bush',
+  'Flowers',
+  'Tall Grass',
+  'Shallow Water',
+  'Lock Block (Normal)',
+  'Lock Block (Normal, Copycat)',
+  'Lock Block (Boss)',
+  'Lock Block (Boss, Copycat)',
+  'Ladder Only',
+  'BS Grave',
+  'Treasure Chest (Normal)',
+  'Treasure Chest (Normal, Copycat)',
+  'Treasure Chest (Locked)',
+  'Treasure Chest (Locked, Copycat)',
+  'Treasure Chest (Boss)',
+  'Treasure Chest (Boss, Copycat)',
+  'Reset Room',
+  'Save Point',
+  'Save-Quit Point',
+  'Cave (Walk Down) [B]',
+  'Cave (Walk Down) [C]',
+  'Cave (Walk Down) [D]',
+  'Stairs [B]',
+  'Stairs [C]',
+  'Stairs [D]',
+  'Direct Warp [B]',
+  'Direct Warp [C]',
+  'Direct Warp [D]',
+  'Cave (Walk Up) [B]',
+  'Cave (Walk Up) [C]',
+  'Cave (Walk Up) [D]',
+  'Swim Warp [B]',
+  'Swim Warp [C]',
+  'Swim Warp [D]',
+  'Dive Warp [B]',
+  'Dive Warp [C]',
+  'Dive Warp [D]',
+  'Stairs [Random]',
+  'Direct Warp [Random]',
+  'Auto Side Warp [A]',
+  'Auto Side Warp [B]',
+  'Auto Side Warp [C]',
+  'Auto Side Warp [D]',
+  'Auto Side Warp [Random]',
+  'Sensitive Warp [A]',
+  'Sensitive Warp [B]',
+  'Sensitive Warp [C]',
+  'Sensitive Warp [D]',
+  'Sensitive Warp [Random]',
+  'Step->Secrets (Sensitive, Temp)',
+  'Step->Secrets (Sensitive, Perm.)',
+  'Step->Next',
+  'Step->Next (Same)',
+  'Step->Next (All)',
+  'Step->Next (Copycat)',
+  'No Enemies',
+  'Block Arrow (L1)',
+  'Block Arrow (L1, L2)',
+  'Block Arrow (All)',
+  'Block Brang (L1)',
+  'Block Brang (L1, L2)',
+  'Block Brang (All)',
+  'Block Sword Beam',
+  'Block All',
+  'Block Fireball',
+  'Damage (8 hearts)',
+  'Damage (16 hearts)',
+  'Damage (32 hearts)',
+  '-Unused',
+  'Spinning Tile (Immediate)',
+  '-Unused",',
+  'Screen Freeze (Except FFCs)',
+  'Screen Freeze (FFCs Only)',
+  'No Ground Enemies',
+  'Slash->Next',
+  'Slash->Next (Item)',
+  'Bush->Next',
+  'Slash (Continuous)',
+  'Slash (Item, Continuous)',
+  'Bush (Continuous)',
+  'Flowers (Continuous)',
+  'Tall Grass (Continuous)',
+  'Slash->Next (Continuous)',
+  'Slash->Next (Item, Continuous)',
+  'Bush->Next (Continuous)',
+  'Eyeball (4-Way)',
+  'Tall Grass->Next',
+  'Script 01',
+  'Script 02',
+  'Script 03',
+  'Script 04',
+  'Script 05',
+  'Script 06',
+  'Script 07',
+  'Script 08',
+  'Script 09',
+  'Script 10',
+  'Script 11',
+  'Script 12',
+  'Script 13',
+  'Script 14',
+  'Script 15',
+  'Script 16',
+  'Script 17',
+  'Script 18',
+  'Script 19',
+  'Script 20',
+  'Generic',
+  'Pitfall',
+  'Step->Effects',
+] as const);
+
+function getDefaultWeaponSprite(guy: any) {
+  let wpnsprite = -1;
+
+  switch (guy.weapon as WeaponTypeGameEngine) {
+    case WeaponTypeGameEngine.wSword:
+    case WeaponTypeGameEngine.wBeam:
+    case WeaponTypeGameEngine.wBrang:
+    case WeaponTypeGameEngine.wBomb:
+    case WeaponTypeGameEngine.wSBomb:
+    case WeaponTypeGameEngine.wLitBomb:
+    case WeaponTypeGameEngine.wLitSBomb:
+    case WeaponTypeGameEngine.wArrow:
+    case WeaponTypeGameEngine.wFire:
+    case WeaponTypeGameEngine.wWhistle:
+    case WeaponTypeGameEngine.wBait:
+    case WeaponTypeGameEngine.wWand:
+    case WeaponTypeGameEngine.wMagic:
+    case WeaponTypeGameEngine.wCatching:
+    case WeaponTypeGameEngine.wWind:
+    case WeaponTypeGameEngine.wRefMagic:
+    case WeaponTypeGameEngine.wRefFireball:
+    case WeaponTypeGameEngine.wRefRock:
+    case WeaponTypeGameEngine.wHammer:
+    case WeaponTypeGameEngine.wHookshot:
+    case WeaponTypeGameEngine.wHSHandle:
+    case WeaponTypeGameEngine.wHSChain:
+    case WeaponTypeGameEngine.wSSparkle:
+    case WeaponTypeGameEngine.wFSparkle:
+    case WeaponTypeGameEngine.wSmack:
+    case WeaponTypeGameEngine.wPhantom:
+    case WeaponTypeGameEngine.wCByrna:
+    case WeaponTypeGameEngine.wRefBeam:
+    case WeaponTypeGameEngine.wStomp:
+    case WeaponTypeGameEngine.lwMax:
+    case WeaponTypeGameEngine.wScript1:
+    case WeaponTypeGameEngine.wScript2:
+    case WeaponTypeGameEngine.wScript3:
+    case WeaponTypeGameEngine.wScript4:
+    case WeaponTypeGameEngine.wScript5:
+    case WeaponTypeGameEngine.wScript6:
+    case WeaponTypeGameEngine.wScript7:
+    case WeaponTypeGameEngine.wScript8:
+    case WeaponTypeGameEngine.wScript9:
+    case WeaponTypeGameEngine.wScript10:
+    case WeaponTypeGameEngine.wIce:
+      wpnsprite = -1;
+      break;
+
+    case WeaponTypeGameEngine.wEnemyWeapons:
+    case WeaponTypeGameEngine.ewFireball: wpnsprite = 17; break;
+
+    case WeaponTypeGameEngine.ewArrow: wpnsprite = 19; break;
+    case WeaponTypeGameEngine.ewBrang: wpnsprite = 4; break;
+    case WeaponTypeGameEngine.ewSword: wpnsprite = 20; break;
+    case WeaponTypeGameEngine.ewRock: wpnsprite = 18; break;
+    case WeaponTypeGameEngine.ewMagic: wpnsprite = 21; break;
+    case WeaponTypeGameEngine.ewBomb: wpnsprite = 78; break;
+    case WeaponTypeGameEngine.ewSBomb: wpnsprite = 79; break;
+    case WeaponTypeGameEngine.ewLitBomb: wpnsprite = 76; break;
+    case WeaponTypeGameEngine.ewLitSBomb: wpnsprite = 77; break;
+    case WeaponTypeGameEngine.ewFireTrail: wpnsprite = 80; break;
+    case WeaponTypeGameEngine.ewFlame: wpnsprite = 35; break;
+    case WeaponTypeGameEngine.ewWind: wpnsprite = 36; break;
+    case WeaponTypeGameEngine.ewFlame2: wpnsprite = 81; break;
+    case WeaponTypeGameEngine.ewFlame2Trail: wpnsprite = 82; break;
+    case WeaponTypeGameEngine.ewIce: wpnsprite = 83; break;
+    case WeaponTypeGameEngine.ewFireball2: wpnsprite = 17; break; //fireball (rising)
+
+    default: break; //No assign.
+  }
+
+  return wpnsprite;
 }
 
-function trimString(str: string) {
-  // Trim trailing null bytes.
-  return str.replace(/\0+$/, '');
-}
+// const dataPath = process.argv[2];
+// const dataDir = path.dirname(dataPath);
+// const qstData = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
 
-function readFields(reader: Reader, fields_: Array<Field | false>) {
-  const fields = fields_.filter(f => f && (f.if === undefined || f.if)) as Field[];
-  const format = '<' + fields.map(f => {
-    return (f.arrayLength ? f.arrayLength : '') + f.type;
-  }).join('');
-  const structResult = reader.readStruct(struct(format));
-  const data: any = {};
+// TODO: make CLI param.
+// const outputDir = `${__dirname}/../quests/1st`;
 
-  for (let i = 0; i < structResult.length; i++) {
-    if (typeof structResult[i] === 'string') {
-      structResult[i] = trimString(structResult[i]);
-    }
-  }
+async function createTileImages(qstData: any) {
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d');
+  if (!context) throw new Error();
 
-  let resultOffset = 0;
-  for (let i = 0; i < fields.length; i++) {
-    const field = fields[i];
-    if (field.arrayLength) {
-      data[field.name] = structResult.slice(resultOffset, resultOffset + field.arrayLength);
-      resultOffset += field.arrayLength;
-    } else {
-      data[field.name] = structResult[resultOffset];
-      resultOffset += 1;
-    }
-  }
+  const images = [];
 
-  return data;
-}
+  // Save 400 at a time.
+  const tilesPerRow = 20;
+  const rowsPerPage = 13;
+  const spriteSize = 16;
 
-function readArrayFields(reader: Reader, len: number, fields: Array<Field | false>) {
-  const result = [];
-  for (let i = 0; i < len; i++) {
-    result.push(readFields(reader, fields));
-  }
-  return result;
-}
+  let tileIndex = 0;
+  let pageIndex = 0;
+  const tiles = qstData.TILE.tiles;
+  const imageData = context.getImageData(0, 0, tilesPerRow * spriteSize, rowsPerPage * spriteSize).data;
+  while (tileIndex < tiles.length) {
+    for (let indexInPage = 0; indexInPage < tilesPerRow * rowsPerPage; indexInPage++) {
+      if (tileIndex >= tiles.length) break;
 
-class Reader {
-  private cur = 0;
+      const tile = tiles[tileIndex++];
+      const spritesheet_x = (indexInPage % tilesPerRow) * spriteSize;
+      const spritesheet_y = Math.floor(indexInPage / tilesPerRow) * spriteSize;
 
-  constructor(private data: Uint8Array) {
-  }
+      for (let tx = 0; tx < spriteSize; tx++) {
+        for (let ty = 0; ty < spriteSize; ty++) {
+          const tileOffset = tx + ty * spriteSize
+          const csetOffset = tile[tileOffset]; // 0-15
+          const x = spritesheet_x + tx;
+          const y = spritesheet_y + ty;
 
-  hasData() {
-    return this.data.length > this.cur;
-  }
-
-  dataLeft() {
-    return this.data.length - this.cur;
-  }
-
-  skip(len: number) {
-    this.cur += len;
-  }
-
-  goto(pos: number) {
-    this.cur = pos;
-  }
-
-  read(len: number) {
-    const result = this.data.subarray(this.cur, this.cur + len);
-    this.cur += len;
-    return result;
-  }
-
-  readStruct(struct_: ReturnType<typeof struct>) {
-    const result = struct_.unpack_from(this.data.buffer, this.data.byteOffset + this.cur);
-    this.cur += struct_.size;
-    return result;
-  }
-
-  readByte() {
-    return this.readStruct(structs.byte)[0];
-  }
-
-  readInt() {
-    return this.readStruct(structs.int)[0];
-  }
-
-  readLong() {
-    return this.readStruct(structs.long)[0];
-  }
-
-  readStr(len: number) {
-    return trimString(new TextDecoder().decode(this.read(len)));
-  }
-
-  find(value: number | string) {
-    if (typeof value === 'string' && value.length === 1) {
-      value = value.charCodeAt(0);
-    }
-
-    if (typeof value === 'number') {
-      const index = this.data.subarray(this.cur, this.data.length).findIndex(v => v === value);
-      if (index === -1) {
-        throw new Error('did not find: ' + value);
-      }
-      return this.cur + index;
-    }
-
-    let matched = 0;
-    const needle = new TextEncoder().encode(value);
-    for (let i = this.cur; i < this.data.length; i++) {
-      if (this.data[i] === needle[matched]) {
-        matched += 1;
-        if (matched === needle.length) return i - needle.length + 1;
-      } else {
-        matched = 0;
-      }
-    }
-
-    throw new Error('did not find: ' + value);
-  }
-}
-
-const sections = {
-  // https://github.com/ArmageddonGames/ZeldaClassic/blob/bdac8e682ac1eda23d775dacc5e5e34b237b82c0/src/zq_class.cpp#L6189
-  // https://github.com/ArmageddonGames/ZeldaClassic/blob/20f9807a8e268172d0bd2b0461e417f1588b3882/src/qst.cpp#L2005
-  // zdefs.h
-  'HDR ': (reader: Reader) => {
-    return readFields(reader, [
-      { name: 'zeldaVersion', type: 'H' },
-      { name: 'build', type: 'B' },
-      { name: 'pwHash', arrayLength: 16, type: 'B' },
-      { name: 'internal', type: 'H' },
-      { name: 'questNumber', type: 'B' },
-      { name: 'version', type: '9s' },
-      { name: 'minVersion', type: '9s' },
-      { name: 'title', type: '65s' },
-      { name: 'author', type: '65s' },
-      { name: 'useKeyfile', type: 'B' },
-      // TODO the rest
-    ]);
-  },
-  'TILE': (reader: Reader, version: Version, sversion: number, cversion: number) => {
-    let numTiles;
-    if (Version.gte(version, { zeldaVersion: 0x254, build: 41 })) {
-      numTiles = reader.readLong();
-    } else {
-      numTiles = reader.readInt();
-    }
-
-    const hasEncodedFormats = Version.gte(version, { zeldaVersion: 0x211, build: 4 });
-
-    // https://github.com/ArmageddonGames/ZeldaClassic/blob/b56ba20bc6be4a8e4bf01c7c681238d545069baf/src/tiles.cpp#L2579
-    function tilesize(format: number) {
-      if (format == 5) return 1024;
-      if (format == 4) return 768;
-      if (format >= 1 && format <= 3) return 64 << format;
-      return 256;
-    }
-
-    const tiles = [];
-    for (let i = 0; i < numTiles; i++) {
-      const format = hasEncodedFormats ? reader.readByte() : 1;
-      // Note: usages like this will always keep the qstBytes array buffer in memory.
-      let pixels = reader.read(tilesize(format));
-      switch (format) {
-        case 1:
-          const pixelsExpanded = new Uint8Array(pixels.length * 2);
-          for (let j = 0; j < pixels.length; j++) {
-            const pixel = pixels[j];
-            pixelsExpanded[j * 2] = pixel & 0xF;
-            pixelsExpanded[j * 2 + 1] = (pixel >> 4) & 0xF;
-          }
-          pixels = pixelsExpanded;
-          break;
-        case 0:
-        case 2:
-        case 3:
-          continue;
-        default:
-          throw new Error('unexpected tile format: ' + format);
-      }
-
-      tiles.push({ format, pixels });
-    }
-
-    return { tiles };
-  },
-  // https://github.com/ArmageddonGames/ZeldaClassic/blob/30c9e17409304390527fcf84f75226826b46b819/src/qst.cpp#L13150
-  'CMBO': (reader: Reader, version: Version, sversion: number, cversion: number) => {
-    // TODO: determine which versions each key was added in.
-    const comboFields = [
-      { version: 0, name: 'tile', type: sversion >= 11 ? 'I' : 'H' },
-      { version: 0, name: 'flip', type: 'B' },
-      { version: 0, name: 'walk', type: 'B' },
-      { version: 0, name: 'type', type: 'B' },
-      { version: 0, name: 'csets', type: 'B' },
-      { version: 0, name: 'frames', type: 'B' },
-      { version: 0, name: 'speed', type: 'B' },
-      { version: 0, name: 'nextcombo', type: 'H' },
-      { version: 0, name: 'nextcset', type: 'B' },
-      { version: 0, name: 'flag', type: 'B' },
-      { version: 0, name: 'skipanim', type: 'B' },
-      { version: 0, name: 'nexttimer', type: 'H' },
-      { version: 0, name: 'skipanimy', type: 'B' },
-      { version: 0, name: 'animflags', type: 'B' },
-      // Not tested.
-      // {'version': 0, 'key': 'attributes', 'read': lambda: section_bytes.read_array(4, NUM_COMBO_ATTRIBUTES)},
-      // {'version': 0, 'key': 'usrflags', 'read': lambda: section_bytes.read_long()},
-      // {'version': 0, 'key': 'triggerflags', 'read': lambda: section_bytes.read_array(4, 3)},
-      // {'version': 12, 'key': 'triggerlevel', 'read': lambda: section_bytes.read_long()},
-    ].filter(f => version.zeldaVersion >= f.version);
-
-    const numCombos = reader.readInt();
-    const combos = []
-    for (let i = 0; i < numCombos; i++) {
-      combos.push(readFields(reader, comboFields));
-    }
-
-    return { combos };
-  },
-  // https://github.com/ArmageddonGames/ZeldaClassic/blob/bdac8e682ac1eda23d775dacc5e5e34b237b82c0/src/qst.cpp#L15411
-  'CSET': (reader: Reader, version: Version, sversion: number, cversion: number) => {
-    // https://github.com/ArmageddonGames/ZeldaClassic/blob/0fddc19a02ccf62c468d9201dd54dcb834b764ca/src/colors.h#L47
-    const newerpsTOTAL = (6701 << 4) * 3
-    const MAXLEVELS = 512
-    const PALNAMESIZE = 17
-
-    const colorData = reader.read(newerpsTOTAL);
-
-    const palnames = []
-    for (let i = 0; i < MAXLEVELS; i++) {
-      palnames.push(reader.readStr(PALNAMESIZE));
-    }
-
-    const cycles = readArrayFields(reader, reader.readInt(), [
-      { name: 'first', arrayLength: 3, type: 'B' },
-      { name: 'count', arrayLength: 3, type: 'B' },
-      { name: 'speed', arrayLength: 3, type: 'B' },
-    ]);
-
-    let i = 0;
-    const csetColors = [];
-    while (i < colorData.length) {
-      const colors = [];
-      for (let j = 0; j < 16; j++) {
-        const r = colorData[i] * 4;
-        i++;
-        const g = colorData[i] * 4;
-        i++;
-        const b = colorData[i] * 4;
-        i++;
-        const a = j === 0 ? 0 : 255;
-        colors.push([r, g, b, a]);
-      }
-
-      if (colors.every(([r, g, b]) => r + g + b === 0)) {
-        csetColors.push([]);
-      } else {
-        csetColors.push(colors);
-      }
-    }
-
-    return {
-      colorData,
-      palnames,
-      cycles,
-      csetColors,
-    };
-  },
-  'DMAP': (reader: Reader, version: Version, sversion: number, cversion: number) => {
-    if (sversion < 9) throw new Error('TODO');
-
-    const numDmaps = reader.readInt();
-    const dmaps = [];
-    for (let i = 0; i < numDmaps; i++) {
-      const dmap: any = {};
-
-      const dmap_1 = readFields(reader, [
-        { name: 'map', type: 'B' },
-        { name: 'level', type: sversion >= 5 ? 'H' : 'B' },
-        { name: 'xoff', type: 'B' },
-        { name: 'compass', type: 'B' },
-        { name: 'color', type: sversion >= 9 ? 'H' : 'B' },
-        { name: 'midi', type: 'B' },
-        { name: 'cont', type: 'B' },
-        { name: 'type', type: 'B' },
-        { name: 'grid', arrayLength: 8, type: 'B' },
-      ]);
-
-      if (Version.lt(version, { zeldaVersion: 0x192, build: 41 })) {
-        throw new Error('TODO');
-      }
-
-      const dmap_2 = readFields(reader, [
-        { name: 'name', type: '21s' },
-        { name: 'title', type: '21s' },
-        { name: 'intro', type: '73s' },
-      ]);
-
-      dmap.minimap = readArrayFields(reader, 4, [
-        { name: 'tile', type: sversion >= 11 ? 'I' : 'H' },
-        { name: 'cset', type: 'B' },
-      ]);
-
-      const dmap_3 = readFields(reader, [
-        { name: 'tmusic', arrayLength: 56, type: 'B' },
-        sversion >= 2 && { name: 'tmusictrack', type: 'B' },
-        sversion >= 2 && { name: 'active_subscreen', type: 'B' },
-        sversion >= 2 && { name: 'passive_subscreen', type: 'B' },
-        sversion >= 3 && { name: 'di', arrayLength: 32, type: 'B' },
-        sversion >= 4 && { name: 'flags', type: sversion >= 6 ? 'I' : 'B' },
-      ]);
-
-      if (Version.gt(version, { zeldaVersion: 0x192, build: 41 }) && Version.lt(version, { zeldaVersion: 0x193, build: 0 })) {
-        // Padding.
-        reader.skip(1);
-      }
-
-      const dmap_4 = readFields(reader, [
-        sversion >= 10 && { name: 'sideview', type: 'B' },
-        sversion >= 12 && { name: 'script', type: 'H' },
-        sversion >= 12 && { name: 'initD', arrayLength: 8, type: 'I' },
-        sversion >= 13 && { name: 'initDLabel', arrayLength: 8 * 65, type: 'B' },
-        sversion >= 14 && { name: 'activeSubscript', type: 'H' },
-        sversion >= 14 && { name: 'passiveSubscript', type: 'H' },
-        sversion >= 14 && { name: 'subInitD', arrayLength: 8, type: 'I' },
-        sversion >= 14 && { name: 'subInitDLabel', arrayLength: 8 * 65, type: 'B' },
-      ]);
-
-      dmaps.push({
-        ...dmap,
-        ...dmap_1,
-        ...dmap_2,
-        ...dmap_3,
-        ...dmap_4,
-      });
-    }
-  },
-  'MAP ': (reader: Reader, version: Version, sversion: number, cversion: number) => {
-    if (sversion < 15) throw new Error('TODO');
-    if (sversion < 19 && version.zeldaVersion > 0x253) throw new Error('TODO');
-
-    const extendedArrays = Version.gt(version, { zeldaVersion: 0x211, build: 7 });
-
-    let numSecretCombos;
-    if (Version.lt(version, { zeldaVersion: 0x192, build: 137 })) {
-      numSecretCombos = 20;
-    } else if (Version.lt(version, { zeldaVersion: 0x192, build: 154 })) {
-      numSecretCombos = 256
-    } else {
-      numSecretCombos = 128;
-    }
-
-    const numMaps = reader.readInt();
-    const maps = [];
-    for (let i = 0; i < numMaps; i++) {
-      const map: any = {};
-
-      const map_1 = readFields(reader, [
-        { name: 'valid', type: 'B' },
-        { name: 'guy', type: 'B' },
-        { name: 'str', type: 'H' },
-        { name: 'room', type: 'B' },
-        { name: 'item', type: 'B' },
-        { name: 'hasitem', type: 'B' },
-        { name: 'tileWarpType', arrayLength: extendedArrays ? 4 : 1, type: 'B' },
-        { name: 'doorComboSet', type: 'H', if: Version.gt(version, { zeldaVersion: 0x192, build: 153 }) },
-        { name: 'warpReturnX', arrayLength: extendedArrays ? 4 : 1, type: 'B' },
-        { name: 'warpReturnY', arrayLength: extendedArrays ? 4 : 1, type: 'B' },
-        { name: 'warpReturnC', type: sversion >= 18 ? 'H' : 'B', if: Version.gt(version, { zeldaVersion: 0x211, build: 7 }) },
-        { name: 'stairX', type: 'B' },
-        { name: 'stairY', type: 'B' },
-        { name: 'itemX', type: 'B' },
-        { name: 'itemY', type: 'B' },
-        { name: 'color', type: sversion > 15 ? 'H' : 'B' },
-        { name: 'enemyFlags', type: 'B' },
-        { name: 'doors', arrayLength: 4, type: 'B' },
-        { name: 'tileWarpDmap', arrayLength: 2, type: 'H' },
-        { name: 'tileWarpScreen', arrayLength: extendedArrays ? 4 : 1, type: 'B' },
-        { name: 'tileWarpOverlayFlags', type: 'B', if: sversion >= 15 },
-        { name: 'exitDir', type: 'B' },
-        { name: 'enemies', arrayLength: 10, type: Version.gte(version, { zeldaVersion: 0x192, build: 10 }) ? 'H' : 'B' },
-        { name: 'pattern', type: 'B' },
-        { name: 'sideWarpType', arrayLength: extendedArrays ? 4 : 1, type: 'B' },
-        { name: 'sideWarpOverlayFlags', type: 'B', if: sversion >= 15 },
-        { name: 'warpArrivalX', type: 'B' },
-        { name: 'warpArrivalY', type: 'B' },
-        { name: 'path', arrayLength: 4, type: 'B' },
-        { name: 'sideWarpScreen', arrayLength: extendedArrays ? 4 : 1, type: 'B' },
-        { name: 'sideWarpDmap', arrayLength: 4, type: 'H' },
-        { name: 'sideWarpIndex', type: 'B', if: Version.gt(version, { zeldaVersion: 0x211, build: 7 }) },
-        { name: 'underCombo', type: 'H' },
-        { name: 'underCset', type: 'B' },
-        { name: 'catchAll', type: 'H' },
-        { name: 'flags', type: 'B' },
-        { name: 'flags2', type: 'B' },
-        { name: 'flags3', type: 'B' },
-        { name: 'flags4', type: 'B', if: Version.gt(version, { zeldaVersion: 0x211, build: 1 }) },
-        { name: 'flags5', type: 'B', if: Version.gt(version, { zeldaVersion: 0x211, build: 7 }) },
-        { name: 'noreset', type: 'H', if: Version.gt(version, { zeldaVersion: 0x211, build: 7 }) },
-        { name: 'nocarry', type: 'H', if: Version.gt(version, { zeldaVersion: 0x211, build: 7 }) },
-        { name: 'flags6', type: 'B', if: Version.gt(version, { zeldaVersion: 0x211, build: 9 }) },
-        { name: 'flags7', type: 'B', if: sversion > 5 },
-        { name: 'flags8', type: 'B', if: sversion > 5 },
-        { name: 'flags9', type: 'B', if: sversion > 5 },
-        { name: 'flags10', type: 'B', if: sversion > 5 },
-        { name: 'csensitive', type: 'B', if: sversion > 5 },
-        { name: 'oceanSfx', type: 'B', if: sversion >= 15 },
-        { name: 'bossSfx', type: 'B', if: sversion >= 15 },
-        { name: 'secretSfx', type: 'B', if: sversion >= 15 },
-        { name: 'holdUpSfx', type: 'B', if: sversion >= 16 },
-        { name: 'layerMap', arrayLength: 6, type: 'B', if: Version.gt(version, { zeldaVersion: 0x192, build: 97 }) },
-        { name: 'layerScreen', arrayLength: 6, type: 'B', if: Version.gt(version, { zeldaVersion: 0x192, build: 97 }) },
-        { name: 'layerOpacity', arrayLength: 6, type: 'B', if: Version.gt(version, { zeldaVersion: 0x192, build: 149 }) },
-        { name: '_padding', type: 'B', if: Version.eq(version, { zeldaVersion: 0x192, build: 153 }) },
-        { name: 'timedWarpTics', type: 'H', if: Version.gt(version, { zeldaVersion: 0x192, build: 153 }) },
-        { name: 'nextMap', type: 'B', if: Version.gt(version, { zeldaVersion: 0x211, build: 2 }) },
-        { name: 'nextScreen', type: 'B', if: Version.gt(version, { zeldaVersion: 0x211, build: 2 }) },
-        { name: 'secretCombos', arrayLength: numSecretCombos, type: Version.lt(version, { zeldaVersion: 0x192, build: 154 }) ? 'B' : 'H' },
-        { name: 'secretCsets', arrayLength: 128, type: 'B', if: Version.gt(version, { zeldaVersion: 0x192, build: 153 }) },
-        { name: 'secretFlags', arrayLength: 128, type: 'B', if: Version.gt(version, { zeldaVersion: 0x192, build: 153 }) },
-        { name: 'data', arrayLength: 16 * 11, type: 'H' },
-        { name: 'sflag', arrayLength: 16 * 11, type: 'B', if: Version.gt(version, { zeldaVersion: 0x192, build: 20 }) },
-        { name: 'cset', arrayLength: 16 * 11, type: 'B', if: Version.gt(version, { zeldaVersion: 0x192, build: 97 }) },
-        { name: 'screenMidi', type: 'H', if: sversion > 4 },
-        { name: 'lensLayer', type: 'B', if: sversion >= 17 },
-      ]);
-
-      if (sversion > 6) {
-        const ffBitmask = reader.readLong();
-        const MAXFFCS = 32;
-        map.ff = [];
-        for (let j = 0; j < MAXFFCS; j++) {
-          if ((ffBitmask >> j) & 1) {
-            map.ff.push(readFields(reader, [
-              { name: 'data', type: 'H' },
-              { name: 'cset', type: 'B' },
-              { name: 'delay', type: 'H' },
-              { name: 'x', type: 'I', if: sversion >= 9 },
-              { name: 'y', type: 'I', if: sversion >= 9 },
-              { name: 'xDelta', type: 'I', if: sversion >= 9 },
-              { name: 'yDelta', type: 'I', if: sversion >= 9 },
-              { name: 'xDelta2', type: 'I', if: sversion >= 9 },
-              { name: 'yDelta2', type: 'I', if: sversion >= 9 },
-              { name: 'link', type: 'B' },
-              { name: 'width', type: 'B', if: sversion > 7 },
-              { name: 'height', type: 'B', if: sversion > 7 },
-              { name: 'flags', type: 'I', if: sversion > 7 },
-              { name: 'script', type: 'H', if: sversion > 9 },
-              { name: 'initd', arrayLength: 8, type: 'I', if: sversion > 10 },
-              { name: 'inita', arrayLength: 2, type: 'B', if: sversion > 10 },
-            ]));
+          if (csetOffset === 0) {
+            imageData[x + y * tilesPerRow * spriteSize + 0] = 0;
+            imageData[x + y * tilesPerRow * spriteSize + 1] = 0;
+            imageData[x + y * tilesPerRow * spriteSize + 2] = 0;
+            imageData[x + y * tilesPerRow * spriteSize + 3] = 0;
           } else {
-            map.ff.push(null);
+            imageData[x + y * tilesPerRow * spriteSize + 0] = 0;
+            imageData[x + y * tilesPerRow * spriteSize + 1] = 0;
+            imageData[x + y * tilesPerRow * spriteSize + 2] = csetOffset;
+            imageData[x + y * tilesPerRow * spriteSize + 3] = 0;
           }
         }
       }
-
-      const map_2 = readFields(reader, [
-        { name: 'npcStrings', arrayLength: 10, type: 'I', if: sversion >= 19 && version.zeldaVersion > 0x253 },
-        { name: 'newItems', arrayLength: 10, type: 'H', if: sversion >= 19 && version.zeldaVersion > 0x253 },
-        { name: 'newItemX', arrayLength: 10, type: 'H', if: sversion >= 19 && version.zeldaVersion > 0x253 },
-        { name: 'newItemY', arrayLength: 10, type: 'H', if: sversion >= 19 && version.zeldaVersion > 0x253 },
-        { name: 'script', type: 'H', if: sversion >= 20 && version.zeldaVersion > 0x253 },
-        { name: 'screenInitd', arrayLength: 8, type: 'I', if: sversion >= 20 && version.zeldaVersion > 0x253 },
-        { name: 'preloadScript', type: 'B', if: sversion >= 21 && version.zeldaVersion > 0x253 },
-        { name: 'hideLayers', type: 'B', if: sversion >= 22 && version.zeldaVersion > 0x253 },
-        { name: 'hideScriptLayers', type: 'B', if: sversion >= 22 && version.zeldaVersion > 0x253 },
-      ]);
-
-      maps.push({
-        ...map_1,
-        ...map_2,
-        ...map,
-      });
     }
 
-    return { maps };
-  },
-  'LINK': (reader: Reader, version: Version, sversion: number, cversion: number) => {
-    if (sversion >= 6) throw new Error('TODO');
+    const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
+    if (!blob) throw new Error('failed making tile image');
 
-    const fields = [
-      { name: 'tile', type: 'H' },
-      { name: 'flip', type: 'B' },
-      { name: 'extend', type: 'B' },
-    ];
-    return {
-      walk: readArrayFields(reader, 4, fields),
-      stab: readArrayFields(reader, 4, fields),
-      slash: readArrayFields(reader, 4, fields),
+    const url = URL.createObjectURL(blob);
+    images.push(url);
+    console.log({ url });
+
+    pageIndex += 1;
+  }
+
+  return images;
+}
+
+export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
+  const { make, makeAdvanced, makeEnemy, makeGraphic, makeTile, makeWeapon, quest } = makeQuest();
+
+  console.log(qstData);
+
+  for (const url of await createTileImages(qstData)) {
+    for (let y = 0; y < 13; y++) {
+      for (let x = 0; x < 20; x++) {
+        makeGraphic({
+          file: url,
+          x: x * tileSize,
+          y: y * tileSize,
+          width: tileSize,
+          height: tileSize,
+        });
+      }
+    }
+  }
+
+  // for (const imgPath of glob.sync('*.png', { cwd: dataDir })) {
+  //   fs.copyFileSync(`${dataDir}/${imgPath}`, `${outputDir}/${imgPath}`);
+
+  //   for (let y = 0; y < 13; y++) {
+  //     for (let x = 0; x < 20; x++) {
+  //       makeGraphic({
+  //         file: imgPath,
+  //         x: x * tileSize,
+  //         y: y * tileSize,
+  //         width: tileSize,
+  //         height: tileSize,
+  //       });
+  //     }
+  //   }
+  // }
+
+  // TODO
+  // for (const midiPath of glob.sync('*.mid', { cwd: dataDir })) {
+  //   fs.copyFileSync(`${dataDir}/${midiPath}`, `${outputDir}/${midiPath}`);
+  // }
+
+  for (const combo of qstData.CMBO.combos) {
+    const tile = makeTile({
+      graphicId: combo.tile,
+      walkable: [!(combo.walk & 1), !(combo.walk & 4), !(combo.walk & 2), !(combo.walk & 8)],
+    });
+    if (combo.frames >= 2) {
+      tile.numFrames = combo.frames;
+      // https://www.zeldaclassic.com/wiki/index.php?title=Animation&q=%2Fwiki%2Findex.php%2FAnimation_Speed
+      const tics = combo.speed + 1;
+      tile.speed = 1 / tics;
+    }
+    if (combo.flip & 1) {
+      tile.flipHorizontal = true;
+    }
+    if (combo.flip & 2) {
+      tile.flipVertical = true;
+    }
+
+    const extraCsetQuadrants = combo.csets >> 4;
+    let extraCsetOffset = combo.csets & 0xf;
+    if (extraCsetOffset > 8) extraCsetOffset = extraCsetOffset - 16;
+    if (extraCsetQuadrants > 0) {
+      tile.extraCset = {
+        quadrants: [!(extraCsetQuadrants & 1), !(extraCsetQuadrants & 4), !(extraCsetQuadrants & 2), !(extraCsetQuadrants & 8)],
+        offset: extraCsetOffset,
+      };
+    }
+
+    const type = ComboNameType(combo.type);
+    if (type === 'Slow Walk') {
+      tile.type = TileType.SLOW_WALK;
+    } else if (type.includes('Cave')) {
+      tile.type = TileType.WARP;
+    }
+  }
+
+  qstData.ITEM = { items: [] }; // TODO
+  for (const zcItem of qstData.ITEM.items) {
+    if (zcItem.name.startsWith('zz')) break;
+
+    quest.items.push({
+      name: zcItem.name,
+      type: zcItem.family,
+      tile: zcItem.tile,
+    });
+  }
+
+  qstData.WPNS = { weapons: [] }; // TODO
+  for (const zcWeapon of qstData.WPNS.weapons) {
+    if (zcWeapon.name.startsWith('zz')) break;
+
+    makeWeapon({
+      name: zcWeapon.name,
+      graphic: zcWeapon.tile,
+      cset: zcWeapon.csets,
+    });
+  }
+
+  qstData.GUYS = { guys: [] }; // TODO
+  for (const guy of qstData.GUYS.guys) {
+    const animationType = EnemyAnimationType(guy.anim);
+
+    if (quest.enemies.length === -1) {
+      console.log(guy, { animationType });
+    }
+
+    const tiles = Array.from(Array(guy.width)).map((_, i) => guy.tile + i);
+    let frames: QuestMaker.Enemy['frames'] | undefined = undefined;
+    const attributes: QuestMaker.Enemy['attributes'] = {};
+    let type = EnemyType.NORMAL;
+
+    // attributes['enemy.life'] = guy.life;
+    attributes['enemy.directionChange'] = guy.rate / 16;
+    attributes['enemy.halt'] = guy.hrate / 16;
+    attributes['enemy.homing'] = guy.homing / 255;
+    attributes['enemy.speed'] = guy.step / 100;
+
+    if (guy.cset) {
+      attributes['enemy.cset'] = guy.cset;
+    }
+
+    attributes['enemy.animation.type'] = 'none';
+    attributes['enemy.animation.graphics'] = guy.tile;
+    attributes['enemy.animation.numGraphics'] = guy.width;
+
+    switch (animationType) {
+      case 'none':
+        // assert.equal(0, tiles.length);
+        break;
+      case 'flip':
+        attributes['enemy.animation.type'] = 'flip';
+        break;
+      case 'unused1':
+        break;
+      case '2frm':
+        break;
+      case 'unused2':
+        break;
+      case 'octo':
+        assert.equal(4, tiles.length);
+        frames = {};
+        frames.down = [tiles[0], tiles[1]];
+        frames.left = [tiles[2], tiles[3]];
+        break;
+      case 'tek':
+        break;
+      case 'lev':
+        assert.strictEqual(5, tiles.length);
+        frames = {};
+        frames.emerging = [tiles[0], tiles[1], tiles[2]];
+        frames.moving = [tiles[3], tiles[4]];
+        break;
+      case 'walk':
+        assert.equal(4, tiles.length);
+        frames = {};
+        frames.right = [tiles[0], tiles[1]];
+        frames.down = [tiles[2]];
+        frames.up = [tiles[3]];
+        break;
+      case 'zora':
+        break;
+      case 'newzora':
+        break;
+      case 'ghini':
+        break;
+      case 'armos':
+        assert.equal(4, tiles.length);
+        frames = {};
+        frames.down = [tiles[0], tiles[1]];
+        frames.up = [tiles[2], tiles[3]];
+        break;
+      case 'rope':
+        break;
+      case 'wallm':
+        break;
+      case 'newwallm':
+        break;
+      case 'dwalk':
+        attributes['enemy.animation.type'] = 'dwalk';
+        break;
+      case 'vire':
+        assert.equal(4, tiles.length);
+        frames = {};
+        frames.down = frames.right = frames.left = [tiles[0], tiles[1]];
+        frames.up = [tiles[2], tiles[3]];
+        break;
+      case '3frm':
+        break;
+      case 'wizz':
+        frames = {};
+        frames.right = [tiles[1]];
+        frames.down = [tiles[1]];
+        frames.up = [tiles[3]];
+        break;
+      case 'aqua':
+        break;
+      case 'dongo':
+        break;
+      case 'manhan':
+        break;
+      case 'gleeok':
+        break;
+      case 'dig':
+        break;
+      case 'ghoma':
+        break;
+      case 'lanm':
+        break;
+      case '2frmpos':
+        attributes['enemy.animation.type'] = animationType;
+        break;
+      case '4frm4eye':
+        break;
+      case '4frm8eye':
+        break;
+      case '4frm4dirf':
+        break;
+      case '4frm4dir':
+        break;
+      case '4frm8dirf':
+        break;
+      case 'armos4':
+        break;
+      case '4frmpos4dir':
+        break;
+      case '4frmpos8dir':
+        break;
+      case 'unused3':
+        break;
+      case '4frm8dirb':
+        break;
+      case 'newtek':
+        break;
+      case '3frm4dir':
+        break;
+      case '2frm4dir':
+        break;
+      case 'newlev':
+        break;
+      case '2frm4eye':
+        break;
+      case 'newwizz':
+        break;
+      case 'newdongo':
+        break;
+      case 'dongobs':
+        break;
+      case '4frmpos8dirf':
+        break;
+      case '4frmpos4dirf':
+        break;
+      case '4frmnodir':
+        break;
+      case 'ganon':
+        break;
+      case '2frmb':
+        break;
+      default:
+        throw new Error('unknown ' + guy.anim);
+    }
+
+    switch (guy.family as EnemyFamily) {
+      case EnemyFamily.eeLEV:
+        type = EnemyType.LEEVER;
+        break;
+      case EnemyFamily.eeWIZZ:
+        type = EnemyType.WIZARD;
+        break;
+      // case EnemyFamily.eeZOL:
+      //   type = EnemyType.ZOL;
+      //   break;
+    }
+
+    if (guy.weapon === WeaponTypeGameEngine.ewRock) {
+      // attributes['enemy.weapon'] = 1;
+      // TODO ...
+    }
+
+    // TODO: figure out weapons.
+    const wpnsprite = getDefaultWeaponSprite(guy);
+    attributes['enemy.weapon'] = wpnsprite + 1;
+    // if (guy.weapon) {
+    //   const weaponGraphic = getDefaultWeaponSprite(guy);
+    //   let weapon = quest.weapons.find(w => w.graphic === weaponGraphic);
+    //   if (!weapon) {
+    //     weapon = makeWeapon({
+    //       name: 'weapon',
+    //       graphic: weaponGraphic,
+    //     });
+    //   }
+    //   attributes['enemy.weapon'] = weapon.id;
+    // }
+
+    makeEnemy({
+      name: guy.name,
+      type,
+      frames,
+      attributes,
+    });
+  }
+
+  for (const zcDmap of qstData.DMAP.dmaps) {
+    const dmap = {
+      name: zcDmap.name,
+      map: zcDmap.map,
+      color: zcDmap.color,
+      song: zcDmap.midi,
     };
-  },
-};
 
-export async function convertZCQst(questFilePath: string) {
-  const zc = await DecodeZCModule();
+    if (dmap.name === '') break;
 
-  const resp = await fetch(questFilePath);
-  const buffer = await resp.arrayBuffer();
-  const data = new Int8Array(buffer);
+    quest.dmaps.push(dmap);
 
-  // Actual path on virtual fs does not matter. Hardcoded to "/quests/input.quest"
-  zc.FS.mkdir('/quests');
-  zc.FS.writeFile('/quests/input.qst', data);
+    // First 3 options are builtin to ZC, havent exported those midis yet.
+    // id >= 4 is for custom midis so shift ids down for now.
+    dmap.song = Math.max(0, dmap.song - 4);
 
-  const read_qst_file = zc.cwrap('read_qst_file', 'number', []);
-  const read_qst_file_res = read_qst_file();
-  if (read_qst_file_res !== 0) throw new Error(`error: ${read_qst_file_res}`);
-
-  const qstBytes: Uint8Array = zc.FS.readFile('/quests/input.qst.dat');
-  const qstReader = new Reader(qstBytes);
-
-  document.body.textContent = (new TextDecoder().decode(
-    qstBytes.subarray(0, 10000)
-  ));
-
-  const preamble = qstReader.readStr(qstReader.find('\n'));
-
-  const preambles = [
-    'AG Zelda Classic Quest File',
-    'AG ZC Enhanced Quest File',
-  ];
-
-  if (preamble !== preambles[1]) {
-    throw new Error('TODO: handle ' + preamble);
+    // TODO: midi2 won't play in browser.
+    if (dmap.song === 2) dmap.song += 1;
   }
 
-  qstReader.goto(qstReader.find('HDR '));
+  for (const zcMap of qstData.MAP.maps) {
+    const map: QuestMaker.Map_ = { screens: [] };
+    quest.maps.push(map);
 
-  const zcData: Record<string, any> = {};
-  let version: Version = { zeldaVersion: 0, build: 0 };
+    for (let screenx = 0; screenx < 16; screenx++) {
+      map.screens.push([]);
+      for (let screeny = 0; screeny < 9; screeny++) {
+        const zcScreen = zcMap.screens[screenx + screeny * 16];
+        if (!zcScreen) continue;
 
-  while (qstReader.hasData()) {
-    const [id, sversion, cversion, size] = qstReader.readStruct(structs.sectionHeader);
-    const sectionReader = new Reader(qstReader.read(size));
-
-    console.log({ id, sversion, cversion, size });
-
-    const section = sections[id as keyof typeof sections];
-    if (section !== undefined) {
-      try {
-        const sectionData = section(sectionReader, version, sversion, cversion);
-        if (id === 'HDR ') {
-          version = { zeldaVersion: sectionData.version, build: sectionData.build };
+        if (qstData.MAP.maps.indexOf(zcMap) === 1 && screenx === 3 && screeny === 6) {
+          // console.log(zcScreen);
         }
-        zcData[id.trim()] = sectionData;
-        console.log(sectionData);
-      } catch (e) {
-        console.error(e);
-        zcData[id.trim()] = { errors: [e] };
-      }
 
-      const remainingBytes = sectionReader.dataLeft();
-      if (remainingBytes !== 0) {
-        const error = `did not read all data, ${remainingBytes} bytes remaining`;
-        console.error(error);
-        zcData[id.trim()].errors = zcData[id.trim()].errors || [];
-        zcData[id.trim()].errors.push(error);
+        const screen: QuestMaker.Screen = {
+          tiles: [],
+          enemies: [],
+          warps: {},
+        };
+        map.screens[screenx].push(screen);
+
+        if (zcScreen.warpArrivalX || zcScreen.warpArrivalY) {
+          screen.warps.arrival = {
+            x: zcScreen.warpArrivalX,
+            y: zcScreen.warpArrivalY,
+          };
+        }
+
+        for (let i = 0; i < zcScreen.warpReturnX.length; i++) {
+          const returnx = zcScreen.warpReturnX[i];
+          const returny = zcScreen.warpReturnY[i];
+          const warpDMap = zcScreen.tileWarpDmap[i];
+          const warpScreen = zcScreen.tileWarpScreen[i];
+          const type = zcScreen.tileWarpType[i];
+          if (!returnx && !returny && !type && !warpScreen && !warpDMap) break;
+
+          screen.warps.data = screen.warps.data || [];
+
+          if (type === 0) {
+            screen.warps.data.push({
+              type: 'special-room',
+              guy: zcScreen.guy,
+              string: zcScreen.str,
+              item: zcScreen.catchAll,
+              return: { x: returnx, y: returny },
+            });
+          } else if (type === 2) {
+            screen.warps.data.push({
+              type: 'screen',
+              dmap: warpDMap,
+              screenX: warpScreen % 16,
+              screenY: Math.floor(warpScreen / 16),
+            });
+          } else {
+            // console.log(type); // ?
+          }
+        }
+
+        for (let x = 0; x < screenWidth; x++) {
+          screen.tiles.push([]);
+          for (let y = 0; y < screenHeight; y++) {
+            // TODO: why minus one?
+            let cset = zcScreen.cset[x + y * screenWidth];
+            // console.log(cset)
+            // if (cset === 0) cset = undefined;
+            // else cset -= 1;
+
+            screen.tiles[x].push({ tile: zcScreen.data[x + y * screenWidth], cset });
+          }
+        }
+
+        screen.enemies = (zcScreen.enemies as number[])
+          .filter(i => {
+            return i > 0 && quest.enemies.some(e => e.id === i && e.name);
+          })
+          .map(i => ({ enemyId: i }));
       }
     }
   }
 
-  console.log(zcData);
-  return zcData;
+  quest.color = { csets: [], palettes: [] };
+  for (const zcColors of qstData.CSET.csetColors) {
+    const colors = [];
+    for (const [r, g, b] of zcColors) {
+      colors.push({ r, g, b });
+    }
+    quest.color.csets.push({ colors });
+  }
+
+  // Main palette, numbers 0-15.
+  const mainPalette = {
+    name: 'Main',
+    csets: Array.from(new Array(15)).map((_, i) => i),
+  };
+  quest.color.palettes.push(mainPalette);
+
+  // Each level palette is the same as the main palette, except for csets 2, 3, 4, 9.
+  for (let i = 0; i < qstData.CSET.palnames.length; i++) {
+    if (!qstData.CSET.palnames[i]) {
+      // Alot of wasted space here for palettes that may not even be used. potential for savings here, but may break things.
+      // @ts-ignore
+      // quest.color.palettes.push(null);
+      // continue;
+    }
+
+    // See 'loadlvlpal', 'onColors_Main'.
+    const csetOffset = i * 13 + 15;
+
+    quest.color.palettes.push({
+      name: qstData.CSET.palnames[i],
+      csets: Array.from(new Array(15)).map((_, i) => {
+        const index = [2, 3, 4, 9].indexOf(i);
+        if (index !== -1) {
+          return csetOffset + index;
+        }
+
+        return i;
+      }),
+    });
+  }
+
+  const walkFrames = qstData.LINK.walk.map((d: any) => ({ gfxs: [d.tile, d.tile + 1, d.tile + 2], flip: d.flip }));
+  const stabFrames = qstData.LINK.stab.map((d: any) => ({ gfxs: [d.tile], flip: d.flip }));
+  quest.misc.HERO_FRAMES = {
+    walk: walkFrames,
+    stab: stabFrames,
+  };
+
+  quest.misc.SPAWN_GFX_START = 72;
+
+  // TODO
+  quest.misc.START_X = 7;
+  quest.misc.START_Y = 7;
+
+  quest.name = '1st';
+
+  return quest;
 }

@@ -7,6 +7,7 @@ import { QuestMakerApp } from './quest-maker-app';
 import { TileType, EnemyType, ItemType } from './types';
 import makeQuest from './make-quest';
 import { makeUI } from './ui/QuestMaker';
+import { readZCQst } from './read-zc-qst';
 import { convertZCQst } from './convert-zc-qst';
 
 const { screenWidth, screenHeight, tileSize } = constants;
@@ -291,6 +292,10 @@ function createQuest(): QuestMaker.Quest {
 
 // TODO: real quest loading/saving.
 async function loadQuest(path: string): Promise<QuestMaker.Quest> {
+  if (path.endsWith('.qst')) {
+    return await convertZCQst(await readZCQst(path));
+  }
+
   if (path === 'quests/debug') return createQuest();
 
   const questResp = await fetch(`${path}/quest.json`);
@@ -500,7 +505,7 @@ async function selectQuest(questPath: string) {
 }
 
 if (searchParamsObj.zcdebug) {
-  convertZCQst(searchParamsObj.zcdebug);
+  readZCQst(searchParamsObj.zcdebug);
 } else {
   selectQuest(searchParamsObj.quest || 'quests/1st');
 }
