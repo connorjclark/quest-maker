@@ -488,7 +488,7 @@ async function createTileImages(qstData: any) {
           imageData.data[(x + y * canvas.width) * 4 + 0] = 0;
           imageData.data[(x + y * canvas.width) * 4 + 1] = 0;
           imageData.data[(x + y * canvas.width) * 4 + 2] = csetOffset;
-          imageData.data[(x + y * canvas.width) * 4 + 3] = 255;
+          imageData.data[(x + y * canvas.width) * 4 + 3] = csetOffset ? 255 : 0;
         }
       }
     }
