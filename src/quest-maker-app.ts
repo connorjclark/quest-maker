@@ -10,6 +10,7 @@ class SoundManager {
   private enabled = !window.IS_DEV;
 
   constructor(private app: QuestMakerApp) {
+    this.enabled = false; // TODO
   }
 
   playSong(id: number) {

@@ -525,22 +525,6 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
     }
   }
 
-  // for (const imgPath of glob.sync('*.png', { cwd: dataDir })) {
-  //   fs.copyFileSync(`${dataDir}/${imgPath}`, `${outputDir}/${imgPath}`);
-
-  //   for (let y = 0; y < 13; y++) {
-  //     for (let x = 0; x < 20; x++) {
-  //       makeGraphic({
-  //         file: imgPath,
-  //         x: x * tileSize,
-  //         y: y * tileSize,
-  //         width: tileSize,
-  //         height: tileSize,
-  //       });
-  //     }
-  //   }
-  // }
-
   // TODO
   // for (const midiPath of glob.sync('*.mid', { cwd: dataDir })) {
   //   fs.copyFileSync(`${dataDir}/${midiPath}`, `${outputDir}/${midiPath}`);
@@ -593,8 +577,7 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
     });
   }
 
-  qstData.WPNS = { weapons: [] }; // TODO
-  for (const zcWeapon of qstData.WPNS.weapons) {
+  for (const zcWeapon of qstData.WPN.weapons) {
     if (zcWeapon.name.startsWith('zz')) break;
 
     makeWeapon({
@@ -963,9 +946,7 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
 
   quest.name = '1st';
 
-  window.a = qstData;
-  window.q = quest;
-
+  console.log({quest});
 
   return quest;
 }

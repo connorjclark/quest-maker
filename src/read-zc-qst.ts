@@ -543,6 +543,26 @@ const sections = {
       slash: readArrayFields(reader, 4, fields),
     };
   },
+  'WPN ': (reader: Reader, version: Version, sversion: number, cversion: number) => {
+    if (sversion < 5) throw new Error('TODO');
+
+    const weaponJustName = readArrayFields(reader, reader.readInt(), [
+      { name: 'name', type: '64s' },
+    ]);
+    const weaponsRest = readArrayFields(reader, weaponJustName.length, [
+      { name: 'tile', type: 'H' },
+      { name: 'misc', type: 'B' },
+      { name: 'csets', type: 'B' },
+      { name: 'frames', type: 'B' },
+      { name: 'speed', type: 'B' },
+      { name: 'type', type: 'B' },
+      { name: 'script', type: 'H', if: sversion >= 7 },
+      { name: 'newtile', type: 'I', if: sversion >= 7 },
+    ]);
+    const weapons = weaponJustName.map((w, i) => ({ ...w, ...weaponsRest[i] }));
+
+    return { weapons };
+  },
 };
 
 async function getQstBytes(questFilePath: string): Promise<Uint8Array> {
