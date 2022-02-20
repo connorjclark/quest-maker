@@ -556,10 +556,10 @@ const sections = {
   'WPN ': (reader: Reader, version: Version, sversion: number, cversion: number) => {
     if (sversion < 5) throw new Error('TODO');
 
-    const weaponJustName = readArrayFields(reader, reader.readInt(), [
+    const weaponsJustName = readArrayFields(reader, reader.readInt(), [
       { name: 'name', type: '64s' },
     ]);
-    const weaponsRest = readArrayFields(reader, weaponJustName.length, [
+    const weaponsRest = readArrayFields(reader, weaponsJustName.length, [
       { name: 'tile', type: 'H' },
       { name: 'misc', type: 'B' },
       { name: 'csets', type: 'B' },
@@ -569,7 +569,7 @@ const sections = {
       { name: 'script', type: 'H', if: sversion >= 7 },
       { name: 'newtile', type: 'I', if: sversion >= 7 },
     ]);
-    const weapons = weaponJustName.map((w, i) => ({ ...w, ...weaponsRest[i] }));
+    const weapons = weaponsJustName.map((w, i) => ({ ...w, ...weaponsRest[i] }));
 
     return { weapons };
   },
@@ -612,6 +612,65 @@ const sections = {
     }
 
     return { tunes };
+  },
+  'GUY ': (reader: Reader, version: Version, sversion: number, cversion: number) => {
+    if (sversion >= 36) throw new Error('TODO');
+
+    const guysJustName = readArrayFields(reader, 512, [
+      { name: 'name', type: '64s' },
+    ]);
+    const guysRest = readArrayFields(reader, 512, [
+      { name: 'flags', type: 'I' },
+      { name: 'flags2', type: 'I' },
+      { name: 'tile', type: 'H' },
+      { name: 'width', type: 'B' },
+      { name: 'height', type: 'B' },
+      { name: 's_tile', type: 'H' },
+      { name: 's_width', type: 'B' },
+      { name: 's_height', type: 'B' },
+      { name: 'e_tile', type: 'H' },
+      { name: 'e_width', type: 'B' },
+      { name: 'e_height', type: 'B' },
+      { name: 'hp', type: 'H' },
+      { name: 'family', type: 'H' },
+      { name: 'cset', type: 'H' },
+      { name: 'anim', type: 'H' },
+      { name: 'e_anim', type: 'H' },
+      { name: 'frate', type: 'H' },
+      { name: 'e_frate', type: 'H' },
+      { name: 'dp', type: 'H' },
+      { name: 'wdp', type: 'H' },
+      { name: 'weapon', type: 'H' },
+      { name: 'rate', type: 'H' },
+      { name: 'hrate', type: 'H' },
+      { name: 'step', type: 'H' },
+      { name: 'homing', type: 'H' },
+      { name: 'grumble', type: 'H' },
+      { name: 'itemSet', type: 'H' },
+      { name: 'misc', arrayLength: 10, type: 'I', if: sversion >= 22 },
+      { name: 'bgsfx', type: 'H' },
+      { name: 'bosspal', type: 'H' },
+      { name: 'extend', type: 'H' },
+      { name: 'defense', arrayLength: 19, type: 'B', if: sversion >= 16 },
+      { name: 'hitsfx', type: 'B', if: sversion >= 18 },
+      { name: 'deadsfx', type: 'B', if: sversion >= 18 },
+      { name: 'misc11', type: 'I', if: sversion >= 22 },
+      { name: 'misc12', type: 'I', if: sversion >= 22 },
+      { name: '_padding', arrayLength: 41 - 19, type: 'B', if: sversion > 24 },
+      { name: 'txsz', type: 'I', if: sversion > 25 },
+      { name: 'tysz', type: 'I', if: sversion > 25 },
+      { name: 'hxsz', type: 'I', if: sversion > 25 },
+      { name: 'hysz', type: 'I', if: sversion > 25 },
+      { name: 'hzsz', type: 'I', if: sversion > 25 },
+      { name: '_padding', arrayLength: 5, type: 'I', if: sversion >= 26 },
+      { name: 'frozenTile', type: 'I', if: sversion >= 30 },
+      { name: 'frozenCset', type: 'I', if: sversion >= 30 },
+      { name: 'frozenClock', type: 'I', if: sversion >= 30 },
+      { name: 'frozenMisc', arrayLength: 10, type: 'H', if: sversion >= 30 },
+    ]);
+    const guys = guysJustName.map((w, i) => ({ ...w, ...guysRest[i] }));
+
+    return { guys };
   },
 };
 

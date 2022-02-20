@@ -621,8 +621,7 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
     });
   }
 
-  qstData.GUYS = { guys: [] }; // TODO
-  for (const guy of qstData.GUYS.guys) {
+  for (const guy of qstData.GUY.guys) {
     const animationType = EnemyAnimationType(guy.anim);
 
     if (quest.enemies.length === -1) {
