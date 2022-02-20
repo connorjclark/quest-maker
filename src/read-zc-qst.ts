@@ -252,29 +252,38 @@ const sections = {
   },
   // https://github.com/ArmageddonGames/ZeldaClassic/blob/30c9e17409304390527fcf84f75226826b46b819/src/qst.cpp#L13150
   'CMBO': (reader: Reader, version: Version, sversion: number, cversion: number) => {
-    // TODO: determine which versions each key was added in.
-    const comboFields = [
-      { version: 0, name: 'tile', type: sversion >= 11 ? 'I' : 'H' },
-      { version: 0, name: 'flip', type: 'B' },
-      { version: 0, name: 'walk', type: 'B' },
-      { version: 0, name: 'type', type: 'B' },
-      { version: 0, name: 'csets', type: 'B' },
-      { version: 0, name: 'frames', type: 'B' },
-      { version: 0, name: 'speed', type: 'B' },
-      { version: 0, name: 'nextcombo', type: 'H' },
-      { version: 0, name: 'nextcset', type: 'B' },
-      { version: 0, name: 'flag', type: 'B' },
-      { version: 0, name: 'skipanim', type: 'B' },
-      { version: 0, name: 'nexttimer', type: 'H' },
-      { version: 0, name: 'skipanimy', type: 'B' },
-      { version: 0, name: 'animflags', type: 'B' },
+    let numCombos;
+    if (version.zeldaVersion < 0x174) {
+      numCombos = 1024;
+    } else if (version.zeldaVersion < 0x191) {
+      numCombos = 2048;
+    } else {
+      numCombos = reader.readInt();
+    }
+
+    const combos = readArrayFields(reader, numCombos, [
+      { name: 'tile', type: sversion >= 11 ? 'I' : 'H' },
+      { name: 'flip', type: 'B' },
+      { name: 'walk', type: 'B' },
+      { name: 'type', type: 'B' },
+      { name: 'csets', type: 'B' },
+      { name: '_padding', type: '2s', if: version.zeldaVersion < 0x193 },
+      { name: '_padding', type: '16s', if: version.zeldaVersion === 0x191 },
+      { name: 'frames', type: 'B' },
+      { name: 'speed', type: 'B' },
+      { name: 'nextcombo', type: 'H' },
+      { name: 'nextcset', type: 'B' },
+      { name: 'flag', type: 'B', if: sversion >= 3 },
+      { name: 'skipanim', type: 'B', if: sversion >= 4 },
+      { name: 'nexttimer', type: 'H', if: sversion >= 4 },
+      { name: 'skipanimy', type: 'B', if: sversion >= 5 },
+      { name: 'animflags', type: 'B', if: sversion >= 6 },
       // Not tested.
       // {'version': 0, 'key': 'attributes', 'read': lambda: section_bytes.read_array(4, NUM_COMBO_ATTRIBUTES)},
       // {'version': 0, 'key': 'usrflags', 'read': lambda: section_bytes.read_long()},
       // {'version': 0, 'key': 'triggerflags', 'read': lambda: section_bytes.read_array(4, 3)},
       // {'version': 12, 'key': 'triggerlevel', 'read': lambda: section_bytes.read_long()},
-    ].filter(f => version.zeldaVersion >= f.version);
-    const combos = readArrayFields(reader, reader.readInt(), comboFields);
+    ]);
 
     return { combos };
   },
