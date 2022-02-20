@@ -620,14 +620,15 @@ const sections = {
       }
 
       const tune = readFields(reader, [
-        { name: 'title', type: '36s' },
+        { name: 'title', type: sversion >= 4 ? '36s' : '20s' },
         { name: 'start', type: 'I' },
         { name: 'loopStart', type: 'I' },
         { name: 'loopEnd', type: 'I' },
         { name: 'loop', type: 'H' },
         { name: 'volume', type: 'H' },
+        { name: '_padding', type: 'I', if: version.zeldaVersion < 0x193 },
         { name: 'flags', type: 'B', if: sversion >= 3 },
-        { name: 'format', type: 'B' },
+        { name: 'format', type: 'B', if: sversion >= 2 },
       ]);
       tune.divisions = reader.readIntSignedBigEndian();
 
