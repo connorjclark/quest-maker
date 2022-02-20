@@ -7,6 +7,10 @@ interface Version {
 }
 
 const Version = {
+  eq(v1: Version, v2: Version) {
+    return Version.compare(v1, v2) === 0;
+  },
+
   gte(v1: Version, v2: Version) {
     return Version.compare(v1, v2) >= 0;
   },
@@ -44,6 +48,7 @@ interface Field {
   name: string;
   type: string;
   arrayLength?: number;
+  if?: boolean;
 }
 
 function trimString(str: string) {
@@ -52,7 +57,7 @@ function trimString(str: string) {
 }
 
 function readFields(reader: Reader, fields_: Array<Field | false>) {
-  const fields = fields_.filter(Boolean) as Field[];
+  const fields = fields_.filter(f => f && (f.if === undefined || f.if)) as Field[];
   const format = '<' + fields.map(f => {
     return (f.arrayLength ? f.arrayLength : '') + f.type;
   }).join('');
@@ -374,6 +379,147 @@ const sections = {
       });
     }
   },
+  'MAP ': (reader: Reader, version: Version, sversion: number, cversion: number) => {
+    if (sversion < 15) throw new Error('TODO');
+    if (sversion < 19 && version.zeldaVersion > 0x253) throw new Error('TODO');
+
+    const extendedArrays = Version.gt(version, { zeldaVersion: 0x211, build: 7 });
+
+    let numSecretCombos;
+    if (Version.lt(version, { zeldaVersion: 0x192, build: 137 })) {
+      numSecretCombos = 20;
+    } else if (Version.lt(version, { zeldaVersion: 0x192, build: 154 })) {
+      numSecretCombos = 256
+    } else {
+      numSecretCombos = 128;
+    }
+
+    const numMaps = reader.readInt();
+    const maps = [];
+    for (let i = 0; i < numMaps; i++) {
+      const map: any = {};
+
+      const map_1 = readFields(reader, [
+        { name: 'valid', type: 'B' },
+        { name: 'guy', type: 'B' },
+        { name: 'str', type: 'H' },
+        { name: 'room', type: 'B' },
+        { name: 'item', type: 'B' },
+        { name: 'hasitem', type: 'B' },
+        { name: 'tileWarpType', arrayLength: extendedArrays ? 4 : 1, type: 'B' },
+        { name: 'doorComboSet', type: 'H', if: Version.gt(version, { zeldaVersion: 0x192, build: 153 }) },
+        { name: 'warpReturnX', arrayLength: extendedArrays ? 4 : 1, type: 'B' },
+        { name: 'warpReturnY', arrayLength: extendedArrays ? 4 : 1, type: 'B' },
+        { name: 'warpReturnC', type: sversion >= 18 ? 'H' : 'B', if: Version.gt(version, { zeldaVersion: 0x211, build: 7 }) },
+        { name: 'stairX', type: 'B' },
+        { name: 'stairY', type: 'B' },
+        { name: 'itemX', type: 'B' },
+        { name: 'itemY', type: 'B' },
+        { name: 'color', type: sversion > 15 ? 'H' : 'B' },
+        { name: 'enemyFlags', type: 'B' },
+        { name: 'doors', arrayLength: 4, type: 'B' },
+        { name: 'tileWarpDmap', arrayLength: 2, type: 'H' },
+        { name: 'tileWarpScreen', arrayLength: extendedArrays ? 4 : 1, type: 'B' },
+        { name: 'tileWarpOverlayFlags', type: 'B', if: sversion >= 15 },
+        { name: 'exitDir', type: 'B' },
+        { name: 'enemies', arrayLength: 10, type: Version.gte(version, { zeldaVersion: 0x192, build: 10 }) ? 'H' : 'B' },
+        { name: 'pattern', type: 'B' },
+        { name: 'sideWarpType', arrayLength: extendedArrays ? 4 : 1, type: 'B' },
+        { name: 'sideWarpOverlayFlags', type: 'B', if: sversion >= 15 },
+        { name: 'warpArrivalX', type: 'B' },
+        { name: 'warpArrivalY', type: 'B' },
+        { name: 'path', arrayLength: 4, type: 'B' },
+        { name: 'sideWarpScreen', arrayLength: extendedArrays ? 4 : 1, type: 'B' },
+        { name: 'sideWarpDmap', arrayLength: 4, type: 'H' },
+        { name: 'sideWarpIndex', type: 'B', if: Version.gt(version, { zeldaVersion: 0x211, build: 7 }) },
+        { name: 'underCombo', type: 'H' },
+        { name: 'underCset', type: 'B' },
+        { name: 'catchAll', type: 'H' },
+        { name: 'flags', type: 'B' },
+        { name: 'flags2', type: 'B' },
+        { name: 'flags3', type: 'B' },
+        { name: 'flags4', type: 'B', if: Version.gt(version, { zeldaVersion: 0x211, build: 1 }) },
+        { name: 'flags5', type: 'B', if: Version.gt(version, { zeldaVersion: 0x211, build: 7 }) },
+        { name: 'noreset', type: 'H', if: Version.gt(version, { zeldaVersion: 0x211, build: 7 }) },
+        { name: 'nocarry', type: 'H', if: Version.gt(version, { zeldaVersion: 0x211, build: 7 }) },
+        { name: 'flags6', type: 'B', if: Version.gt(version, { zeldaVersion: 0x211, build: 9 }) },
+        { name: 'flags7', type: 'B', if: sversion > 5 },
+        { name: 'flags8', type: 'B', if: sversion > 5 },
+        { name: 'flags9', type: 'B', if: sversion > 5 },
+        { name: 'flags10', type: 'B', if: sversion > 5 },
+        { name: 'csensitive', type: 'B', if: sversion > 5 },
+        { name: 'oceanSfx', type: 'B', if: sversion >= 15 },
+        { name: 'bossSfx', type: 'B', if: sversion >= 15 },
+        { name: 'secretSfx', type: 'B', if: sversion >= 15 },
+        { name: 'holdUpSfx', type: 'B', if: sversion >= 16 },
+        { name: 'layerMap', arrayLength: 6, type: 'B', if: Version.gt(version, { zeldaVersion: 0x192, build: 97 }) },
+        { name: 'layerScreen', arrayLength: 6, type: 'B', if: Version.gt(version, { zeldaVersion: 0x192, build: 97 }) },
+        { name: 'layerOpacity', arrayLength: 6, type: 'B', if: Version.gt(version, { zeldaVersion: 0x192, build: 149 }) },
+        { name: '_padding', type: 'B', if: Version.eq(version, { zeldaVersion: 0x192, build: 153 }) },
+        { name: 'timedWarpTics', type: 'H', if: Version.gt(version, { zeldaVersion: 0x192, build: 153 }) },
+        { name: 'nextMap', type: 'B', if: Version.gt(version, { zeldaVersion: 0x211, build: 2 }) },
+        { name: 'nextScreen', type: 'B', if: Version.gt(version, { zeldaVersion: 0x211, build: 2 }) },
+        { name: 'secretCombos', arrayLength: numSecretCombos, type: Version.lt(version, { zeldaVersion: 0x192, build: 154 }) ? 'B' : 'H' },
+        { name: 'secretCsets', arrayLength: 128, type: 'B', if: Version.gt(version, { zeldaVersion: 0x192, build: 153 }) },
+        { name: 'secretFlags', arrayLength: 128, type: 'B', if: Version.gt(version, { zeldaVersion: 0x192, build: 153 }) },
+        { name: 'data', arrayLength: 16 * 11, type: 'H' },
+        { name: 'sflag', arrayLength: 16 * 11, type: 'B', if: Version.gt(version, { zeldaVersion: 0x192, build: 20 }) },
+        { name: 'cset', arrayLength: 16 * 11, type: 'B', if: Version.gt(version, { zeldaVersion: 0x192, build: 97 }) },
+        { name: 'screenMidi', type: 'H', if: sversion > 4 },
+        { name: 'lensLayer', type: 'B', if: sversion >= 17 },
+      ]);
+
+      if (sversion > 6) {
+        const ffBitmask = reader.readLong();
+        const MAXFFCS = 32;
+        map.ff = [];
+        for (let j = 0; j < MAXFFCS; j++) {
+          if ((ffBitmask >> j) & 1) {
+            map.ff.push(readFields(reader, [
+              { name: 'data', type: 'H' },
+              { name: 'cset', type: 'B' },
+              { name: 'delay', type: 'H' },
+              { name: 'x', type: 'I', if: sversion >= 9 },
+              { name: 'y', type: 'I', if: sversion >= 9 },
+              { name: 'xDelta', type: 'I', if: sversion >= 9 },
+              { name: 'yDelta', type: 'I', if: sversion >= 9 },
+              { name: 'xDelta2', type: 'I', if: sversion >= 9 },
+              { name: 'yDelta2', type: 'I', if: sversion >= 9 },
+              { name: 'link', type: 'B' },
+              { name: 'width', type: 'B', if: sversion > 7 },
+              { name: 'height', type: 'B', if: sversion > 7 },
+              { name: 'flags', type: 'I', if: sversion > 7 },
+              { name: 'script', type: 'H', if: sversion > 9 },
+              { name: 'initd', arrayLength: 8, type: 'I', if: sversion > 10 },
+              { name: 'inita', arrayLength: 2, type: 'B', if: sversion > 10 },
+            ]));
+          } else {
+            map.ff.push(null);
+          }
+        }
+      }
+
+      const map_2 = readFields(reader, [
+        { name: 'npcStrings', arrayLength: 10, type: 'I', if: sversion >= 19 && version.zeldaVersion > 0x253 },
+        { name: 'newItems', arrayLength: 10, type: 'H', if: sversion >= 19 && version.zeldaVersion > 0x253 },
+        { name: 'newItemX', arrayLength: 10, type: 'H', if: sversion >= 19 && version.zeldaVersion > 0x253 },
+        { name: 'newItemY', arrayLength: 10, type: 'H', if: sversion >= 19 && version.zeldaVersion > 0x253 },
+        { name: 'script', type: 'H', if: sversion >= 20 && version.zeldaVersion > 0x253 },
+        { name: 'screenInitd', arrayLength: 8, type: 'I', if: sversion >= 20 && version.zeldaVersion > 0x253 },
+        { name: 'preloadScript', type: 'B', if: sversion >= 21 && version.zeldaVersion > 0x253 },
+        { name: 'hideLayers', type: 'B', if: sversion >= 22 && version.zeldaVersion > 0x253 },
+        { name: 'hideScriptLayers', type: 'B', if: sversion >= 22 && version.zeldaVersion > 0x253 },
+      ]);
+
+      maps.push({
+        ...map_1,
+        ...map_2,
+        ...map,
+      });
+    }
+
+    return { maps };
+  },
 };
 
 export async function convertZCQst(questFilePath: string) {
@@ -431,7 +577,7 @@ export async function convertZCQst(questFilePath: string) {
         console.log(sectionData);
       } catch (e) {
         console.error(e);
-        zcData[id.trim()] = {error: e};
+        zcData[id.trim()] = { error: e };
       }
     }
   }
