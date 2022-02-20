@@ -621,7 +621,8 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
     });
   }
 
-  for (const guy of qstData.GUY.guys) {
+  // TODO
+  for (const guy of qstData.GUY.guys || []) {
     const animationType = EnemyAnimationType(guy.anim);
 
     if (quest.enemies.length === -1) {
@@ -964,12 +965,14 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
     });
   }
 
-  const walkFrames = qstData.LINK.walk.map((d: any) => ({ gfxs: [d.tile, d.tile + 1, d.tile + 2], flip: d.flip }));
-  const stabFrames = qstData.LINK.stab.map((d: any) => ({ gfxs: [d.tile], flip: d.flip }));
-  quest.misc.HERO_FRAMES = {
-    walk: walkFrames,
-    stab: stabFrames,
-  };
+  if (qstData.LINK) {
+    const walkFrames = qstData.LINK.walk.map((d: any) => ({ gfxs: [d.tile, d.tile + 1, d.tile + 2], flip: d.flip }));
+    const stabFrames = qstData.LINK.stab.map((d: any) => ({ gfxs: [d.tile], flip: d.flip }));
+    quest.misc.HERO_FRAMES = {
+      walk: walkFrames,
+      stab: stabFrames,
+    };
+  }
 
   quest.misc.SPAWN_GFX_START = 72;
 
