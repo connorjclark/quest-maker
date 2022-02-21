@@ -3,7 +3,8 @@ set -e
 
 mkdir -p dist/midi
 
-cp -r quests dist
+mkdir -p dist/quests
+cp -r data/debug dist/quests
 
 cp node_modules/timidity/libtimidity.wasm dist
 cp -r node_modules/freepats/* dist
