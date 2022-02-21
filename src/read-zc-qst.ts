@@ -894,6 +894,10 @@ function parseQstBytes(qstBytes: Uint8Array, debug: boolean) {
 
     if (debug) console.log({ id, sversion, cversion, size });
 
+    if (!/\w{3,4}/.test(id)) {
+      throw new Error(`unexpected section id: ${JSON.stringify(id)}`);
+    }
+
     const section = sections[id as keyof typeof sections];
     if (section !== undefined) {
       try {
