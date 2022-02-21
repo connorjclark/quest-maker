@@ -2,22 +2,29 @@ import { h, render } from 'preact';
 import { useState } from 'preact/hooks';
 import questManifest from '../../data/quest-manifest.json';
 
-const Quest = (props: typeof questManifest[0]) => {
-  function onClick() {
-    document.location = `?quest=${props.urls[0]}`;
+const Quest = (props: typeof questManifest[number]) => {
+  function onClick(index = 0) {
+    document.location = `?quest=${props.urls[index]}`;
   }
 
   return <div>
     <div class="flex">
       <div>
         {props.imageUrls.map(url => {
-          return <img src={url}></img>;
+          return <div><img src={url}></img></div>;
         })}
       </div>
       <div class="md-5">
         <div>{props.name}</div>
 
-        <button onClick={onClick}>Load Quest</button>
+        {
+          props.urls.length === 1 ?
+            <button onClick={() => onClick()}>Load Quest</button> :
+            props.urls.map((url, i) => {
+              const split = url.split('/');
+              return <button onClick={() => onClick(i)}>Load Quest - {split[split.length - 1]}</button>;
+            })
+        }
 
         <div>Author: {props.author}</div>
         <div>Genre: {props.genre}</div>
