@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "quest-maker",
   "scripts": {
     "build": "sh build.sh && parcel build --public-url '.' src/index.html",

@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
+    "module": "esnext",
     "moduleResolution": "node",
-    "target": "ES2019",
+    "esModuleInterop": true,
+    "target": "ES2021",
     "strict": true,
     "diagnostics": true,
     "sourceMap": true,
@@ -9,6 +11,7 @@
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
+    "noEmit": true,
     "jsx": "react",
     "jsxFactory": "h",
     "jsxFragmentFactory": "Fragment"
