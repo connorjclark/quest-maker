@@ -21,7 +21,7 @@ const Quest = (props: typeof questManifest[0]) => {
 
         <div>Author: {props.author}</div>
         <div>Genre: {props.genre}</div>
-        <div><a href={props.projectUrl} target="_blank">Project URL</a></div>
+        {props.projectUrl && <div><a href={props.projectUrl} target="_blank">Project URL</a></div>}
 
         <h3>Description</h3>
         <div>{props.description}</div>
@@ -39,7 +39,7 @@ const Quest = (props: typeof questManifest[0]) => {
 const LandingPage = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  return <div class="flex">
+  return <div class="quest-select flex">
     <div class="quest-select__pane col-1-3">
       {questManifest.map((quest, i) => {
         if (!quest.playable) return;
