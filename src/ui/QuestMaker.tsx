@@ -1,4 +1,4 @@
-import { render, h, Component, createContext, JSX, options } from 'preact';
+import { render, h, Component, createContext, JSX } from 'preact';
 import { useContext, useEffect, useRef } from 'preact/hooks';
 import { ComponentProps, createSubApp } from './common';
 import * as Utils from '../utils';
@@ -8,36 +8,19 @@ import { TilesTab } from './TilesTab';
 
 class Header extends Component {
   render() {
-    // const context = useContext(AppContext);
-
-    const options = [
-      'quests/1st',
-      'quests/debug',
-    ].map(file => {
-      return <option value={file} selected={window.app?.questBasePath === file}>{file}</option>
-    });
-
     return <div class="header">
       <div>
-        <label>Load Quest</label>
-        <select onChange={this.onLoadQuest}>
-          {options}
-        </select>
+        <button onClick={() => {
+          const url = new URL(document.location.href);
+          url.search = '';
+          document.location.href = url.toString();
+        }}>Back to quests</button>
       </div>
 
       <div>
         <button>Save (TODO)</button>
       </div>
     </div>
-  }
-
-  private async onLoadQuest(e: Event) {
-    const target = e.target as HTMLSelectElement;
-    const file = target.selectedOptions[0].value;
-    location.search = 'quest=' + file;
-    // TODO: figure out how to replace the quest without a page reload.
-    // const quest = await selectQuest(file);
-    // ...
   }
 }
 
