@@ -1,5 +1,5 @@
 import * as constants from './constants';
-import { TileType, EnemyType } from './types';
+import { EnemyType } from './types';
 
 const { tileSize } = constants;
 

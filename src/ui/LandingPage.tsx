@@ -42,6 +42,8 @@ const LandingPage = () => {
   return <div class="flex">
     <div class="quest-select__pane col-1-3">
       {questManifest.map((quest, i) => {
+        if (!quest.playable) return;
+
         return <div class={`quest-select__entry md-5 ${selectedIndex === i ? 'selected' : ''}`} onClick={() => setSelectedIndex(i)}>
           {quest.name}
         </div>;

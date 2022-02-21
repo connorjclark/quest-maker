@@ -843,15 +843,23 @@ const sections = {
   },
 };
 
-async function getQstBytes(questFilePath: string): Promise<Uint8Array> {
-  const zc = await DecodeZCModule();
+let zc: any;
+async function getQstBytes(questFilePathOrData: string | Uint8Array): Promise<Uint8Array> {
+  if (!zc) {
+    zc = await DecodeZCModule();
+    zc.FS.mkdir('/quests');
+  }
 
-  const resp = await fetch(questFilePath);
-  const buffer = await resp.arrayBuffer();
-  const data = new Int8Array(buffer);
+  let data;
+  if (typeof questFilePathOrData === 'string') {
+    const resp = await fetch(questFilePathOrData);
+    const buffer = await resp.arrayBuffer();
+    data = new Uint8Array(buffer);
+  } else {
+    data = questFilePathOrData;
+  }
 
   // Actual path on virtual fs does not matter. Hardcoded to "/quests/input.quest"
-  zc.FS.mkdir('/quests');
   zc.FS.writeFile('/quests/input.qst', data);
 
   const read_qst_file = zc.cwrap('read_qst_file', 'number', []);
@@ -861,7 +869,7 @@ async function getQstBytes(questFilePath: string): Promise<Uint8Array> {
   return zc.FS.readFile('/quests/input.qst.dat');
 }
 
-function parseQstBytes(qstBytes: Uint8Array) {
+function parseQstBytes(qstBytes: Uint8Array, debug: boolean) {
   const qstReader = new Reader(qstBytes);
 
   const preamble = qstReader.readStr(qstReader.find('\n'));
@@ -884,7 +892,7 @@ function parseQstBytes(qstBytes: Uint8Array) {
     const [id, sversion, cversion, size] = qstReader.readStruct(structs.sectionHeader);
     const sectionReader = new Reader(qstReader.read(size));
 
-    console.log({ id, sversion, cversion, size });
+    if (debug) console.log({ id, sversion, cversion, size });
 
     const section = sections[id as keyof typeof sections];
     if (section !== undefined) {
@@ -894,16 +902,16 @@ function parseQstBytes(qstBytes: Uint8Array) {
           version = { zeldaVersion: sectionData.zeldaVersion, build: sectionData.build };
         }
         zcData[id.trim()] = sectionData;
-        console.log(sectionData);
+        if (debug) console.log(sectionData);
       } catch (e) {
-        console.error(e);
+        if (debug) console.error(e);
         zcData[id.trim()] = { errors: [e] };
       }
 
       const remainingBytes = sectionReader.dataLeft();
       if (remainingBytes !== 0) {
         const error = `did not read all data, ${remainingBytes} bytes remaining`;
-        console.error(error);
+        if (debug) console.error(error);
         zcData[id.trim()] = zcData[id.trim()] || {};
         zcData[id.trim()].errors = zcData[id.trim()].errors || [];
         zcData[id.trim()].errors.push(error);
@@ -914,11 +922,8 @@ function parseQstBytes(qstBytes: Uint8Array) {
   return zcData;
 }
 
-export async function readZCQst(questFilePath: string) {
-  const qstBytes = await getQstBytes(questFilePath);
-  const qstData = parseQstBytes(qstBytes);
-  // document.body.textContent = (new TextDecoder().decode(
-  //   qstBytes.subarray(0, 10000)
-  // ));
+export async function readZCQst(questFilePathOrData: string | Uint8Array, debug = false) {
+  const qstBytes = await getQstBytes(questFilePathOrData);
+  const qstData = parseQstBytes(qstBytes, debug);
   return qstData;
 }

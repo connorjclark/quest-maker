@@ -1,7 +1,4 @@
 import * as assert from 'assert';
-// import * as fs from 'fs';
-// import * as path from 'path';
-// import * as glob from 'glob';
 import * as constants from '../src/constants';
 import makeQuest from '../src/make-quest';
 import { EnemyType, TileType } from '../src/types';
@@ -509,8 +506,6 @@ async function createTileImages(qstData: any) {
 
 export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
   const { make, makeAdvanced, makeEnemy, makeGraphic, makeTile, makeWeapon, quest } = makeQuest();
-
-  console.log(qstData);
 
   for (const url of await createTileImages(qstData)) {
     for (let y = 0; y < 13; y++) {

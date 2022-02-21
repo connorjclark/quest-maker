@@ -295,7 +295,7 @@ function createQuest(): QuestMaker.Quest {
 // TODO: real quest loading/saving.
 async function loadQuest(path: string): Promise<QuestMaker.Quest> {
   if (path.endsWith('.qst')) {
-    return await convertZCQst(await readZCQst(path));
+    return await convertZCQst(await readZCQst(path, window.IS_DEV));
   }
 
   if (path === 'quests/debug') return createQuest();
