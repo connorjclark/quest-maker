@@ -9,6 +9,7 @@ ENVIRONMENT="${ENVIRONMENT:-web}"
 OPTIMIZE_FLAGS="-Oz -s ENVIRONMENT=$ENVIRONMENT" # PRODUCTION
 # OPTIMIZE_FLAGS="-s ASSERTIONS=2 -s SAFE_HEAP=1 -s STACK_OVERFLOW_CHECK=1 -g3" # DEBUG
 
+mkdir -p dist
 emcc -o dist/zc.js $OPTIMIZE_FLAGS \
   -Ithird_party/allegro/include \
   -s MODULARIZE \
