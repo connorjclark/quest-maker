@@ -1,7 +1,8 @@
-#!/bin/sh -ex
+#!/bin/bash
+set -ex
 
 rm -rf dist
 yarn
 yarn build
 ssh root@hoten.cc "mkdir -p /var/www/hoten.cc/public_html/quest-maker/play/"
-rsync -ahvz --delete ./dist/ root@hoten.cc:/var/www/hoten.cc/public_html/quest-maker/play/
+rsync -ahvzL --delete ./dist/ root@hoten.cc:/var/www/hoten.cc/public_html/quest-maker/play/
