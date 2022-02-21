@@ -9,6 +9,7 @@ import makeQuest from './make-quest';
 import { makeUI } from './ui/QuestMaker';
 import { readZCQst } from './read-zc-qst';
 import { convertZCQst } from './convert-zc-qst';
+import { createLandingPage } from './ui/LandingPage';
 
 const { screenWidth, screenHeight, tileSize } = constants;
 
@@ -16,6 +17,7 @@ const searchParams = new URLSearchParams(location.search);
 const searchParamsObj = {
   quest: searchParams.get('quest'),
   dev: searchParams.has('dev'),
+  manifest: searchParams.has('manifest'),
   zcdebug: searchParams.get('zcdebug'),
 }
 
@@ -508,10 +510,14 @@ async function selectQuest(questPath: string) {
   load(quest, questPath);
 }
 
-if (searchParamsObj.zcdebug) {
+let ui: ReturnType<typeof makeUI>;
+
+if (searchParamsObj.manifest) {
+  const el = createLandingPage();
+  document.body.append(el);
+} else if (searchParamsObj.zcdebug) {
   readZCQst(searchParamsObj.zcdebug);
 } else {
   selectQuest(searchParamsObj.quest || 'quests/1st');
+  ui = makeUI(document.body);
 }
-
-const ui = makeUI(document.body);
