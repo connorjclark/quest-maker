@@ -2,6 +2,10 @@ name: Deploy
 
 on: [push]
 
+env:
+  EM_VERSION: 3.1.4
+  EM_CACHE_FOLDER: 'emsdk-cache'
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,9 +17,18 @@ jobs:
         with:
           node-version: 10
 
+      - name: Setup cache
+        id: cache-system-libraries
+        uses: actions/cache@v2
+        with:
+          path: ${{env.EM_CACHE_FOLDER}}
+          key: ${{env.EM_VERSION}}-${{ runner.os }}
+          actions-cache-folder: ${{env.EM_CACHE_FOLDER}}
       - uses: mymindstorm/setup-emsdk@v11
-      - run: sh decode_zc/download-deps.sh
-      - run: sh decode_zc/build.sh
+        with:
+          version: ${{env.EM_VERSION}}
+      - run: bash decode_zc/download-deps.sh
+      - run: bash decode_zc/build.sh
 
       - run: yarn
       - run: yarn build

@@ -3,8 +3,8 @@
   "name": "quest-maker",
   "scripts": {
     "ts-node": "TS_NODE_TRANSPILE_ONLY=1 node --loader ts-node/esm",
-    "build": "sh build.sh && parcel build --public-url '.' src/index.html",
-    "deploy": "sh deploy/deploy.sh",
+    "build": "bash build.sh && parcel build --public-url '.' src/index.html",
+    "deploy": "bash deploy/deploy.sh",
     "watch": "parcel src/index.html"
   },
   "dependencies": {
