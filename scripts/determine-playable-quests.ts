@@ -13,14 +13,16 @@ for (const questMeta of questManifest) {
     continue;
   }
 
-  const data = new Uint8Array(fs.readFileSync(questMeta.urls[0]));
-  try {
-    await readZCQst(data);
-    questMeta.playable = true;
-    questMeta.error = undefined;
-  } catch (error: any) {
-    questMeta.playable = false;
-    questMeta.error = error.message;
+  for (const url of questMeta.urls) {
+    const data = new Uint8Array(fs.readFileSync(url));
+    try {
+      await readZCQst(data);
+      questMeta.playable = true;
+      questMeta.error = undefined;
+    } catch (error: any) {
+      questMeta.playable = false;
+      questMeta.error = error.message;
+    }
   }
 }
 
