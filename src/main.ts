@@ -17,7 +17,6 @@ const searchParams = new URLSearchParams(location.search);
 const searchParamsObj = {
   quest: searchParams.get('quest'),
   dev: searchParams.has('dev'),
-  manifest: searchParams.has('manifest'),
   zcdebug: searchParams.get('zcdebug'),
 }
 
@@ -512,12 +511,12 @@ async function selectQuest(questPath: string) {
 
 let ui: ReturnType<typeof makeUI>;
 
-if (searchParamsObj.manifest) {
-  const el = createLandingPage();
-  document.body.append(el);
+if (searchParamsObj.quest) {
+  selectQuest(searchParamsObj.quest);
+  ui = makeUI(document.body);
 } else if (searchParamsObj.zcdebug) {
   readZCQst(searchParamsObj.zcdebug);
 } else {
-  selectQuest(searchParamsObj.quest || 'quests/1st');
-  ui = makeUI(document.body);
+  const el = createLandingPage();
+  document.body.append(el);
 }
