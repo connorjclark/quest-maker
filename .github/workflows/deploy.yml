@@ -14,6 +14,8 @@ jobs:
           node-version: 10
       
       - run: yarn
+      - run: sh decode_zc/download-deps.sh
+      - run: sh decode_zc/build.sh
       - run: yarn build
 
       - run: npx surge dist quest-maker.surge.sh --token ${{ secrets.SURGE_TOKEN }}

@@ -8,9 +8,10 @@ mkdir -p third_party/allegro
 mkdir tmp
 cd tmp
 
-git clone https://github.com/liballeg/allegro5.git
+# ZC actually uses 4.4.2 but this is probably fine.
+git clone --branch=4.4.3 --depth=1 https://github.com/liballeg/allegro5.git
+
 cd allegro5
-git checkout 4.4.3 # ZC actually uses 4.4.2 but this is probably fine.
 mv * ../../third_party/allegro
 
 echo "
