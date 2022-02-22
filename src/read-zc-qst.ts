@@ -664,12 +664,12 @@ const sections = {
 
     const namesBitFlags = sversion >= 4 ?
       reader.read(wavCount >> 3) :
-      new Uint8Array(Array(wavCount >> 3).fill(0xFF));
+      null;
 
     const sfxs = [];
     for (let i = 0; i < wavCount; i++) {
       let name = '';
-      if (sversion > 4 && namesBitFlags && accessFlag(namesBitFlags, i)) {
+      if (sversion > 4 && (!namesBitFlags || accessFlag(namesBitFlags, i))) {
         name = reader.readStr(36);
       }
       sfxs.push({ name });
