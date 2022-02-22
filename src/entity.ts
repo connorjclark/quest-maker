@@ -67,6 +67,7 @@ export class QuestEntity extends EntityBase {
     ticks: 0,
     /** 0 or 1, changes as entity moves. */
     positionTicks: 0,
+    positionTicksCounter: 0,
     previousPositionInt: { x: 0, y: 0 },
   };
 
@@ -173,7 +174,8 @@ export class QuestEntity extends EntityBase {
     if (this.animationData.ticks >= this.ticksPerCycle) this.animationData.ticks = 0;
 
     if (this.animationData.previousPositionInt.x !== ix || this.animationData.previousPositionInt.y !== iy) {
-      this.animationData.positionTicks = (this.animationData.positionTicks + 1) % 2;
+      this.animationData.positionTicksCounter = (this.animationData.positionTicksCounter + 1) % 100000;
+      this.animationData.positionTicks = Math.floor(this.animationData.positionTicksCounter / 4) % 2;
     }
 
     this.animationData.previousPositionInt.x = ix;
@@ -415,14 +417,18 @@ export class QuestEntity extends EntityBase {
       const dirNum = ['up', 'down', 'left', 'right'].indexOf(dir); // :(
       const state = this.attackTicks ? 'stab' : 'walk';
       const frame = data[state][dirNum];
+
+      let frameindex;
       if (this.attackTicks) {
         // const fx = data.stab[dirNum].gfxs.length === 3 ? f3 : f2;
         // gfx = frame.gfxs[fx % frame.gfxs.length];
-        gfx = frame.gfxs[0];
+        frameindex = 0;
       } else {
-        gfx = frame.gfxs[this.animationData.positionTicks % frame.gfxs.length];
+        frameindex = this.animationData.positionTicks % frame.gfxs.length;
       }
-      flip = frame.flip;
+
+      gfx = frame.gfxs[frameindex];
+      flip = Array.isArray(frame.flip) ? frame.flip[frameindex] : frame.flip;
     } else switch (animationType) {
       default:
       case 'none':
@@ -502,6 +508,10 @@ export class QuestEntity extends EntityBase {
     if (flip & 1) {
       texture.rotate = PIXI.groupD8.MIRROR_HORIZONTAL;
     }
+    if (flip & 2) {
+      texture.rotate = PIXI.groupD8.MIRROR_VERTICAL;
+    }
+    if (flip === 2) console.log('...');
     this.textureCache.set(graphicId + ',' + flip, texture);
     return texture;
   }

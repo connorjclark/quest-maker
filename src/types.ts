@@ -242,7 +242,7 @@ declare global {
         // Type -> Array [up, down, left, right]
         HERO_FRAMES: Record<string, Array<{
           gfxs: number[],
-          flip: number,
+          flip: number | number[],
         }>>;
         START_X: number;
         START_Y: number;

@@ -285,7 +285,7 @@ function createQuest(): QuestMaker.Quest {
   };
 
   quest.dmaps = [
-    { name: 'Overworld', map: 0, color: 0, song: 0 },
+    { name: 'Overworld', map: 0, color: 0, song: 0, continueScreenX: 7, continueScreenY: 7 },
   ];
 
   return quest;
@@ -294,7 +294,7 @@ function createQuest(): QuestMaker.Quest {
 // TODO: real quest loading/saving.
 async function loadQuest(path: string): Promise<QuestMaker.Quest> {
   if (path.endsWith('.qst')) {
-    return await convertZCQst(await readZCQst(path, window.IS_DEV));
+    return await convertZCQst(await readZCQst(path, window.IS_DEV || location.hostname === 'localhost'));
   }
 
   if (path === 'quests/debug') return createQuest();
@@ -352,6 +352,8 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
   const pixi = new PIXI.Application({
     transparent: true,
   });
+  // @ts-expect-error
+  window.pixi = pixi;
 
   // Find images to load.
   const images = new Set<string>();
@@ -418,7 +420,7 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
   };
 
   const swordIndex = quest.items.findIndex(item => item.name.includes('Sword'));
-  if (swordIndex) {
+  if (swordIndex !== -1) {
     state.game.inventory[0] = { item: swordIndex };
     state.game.equipped[1] = 0;
   }

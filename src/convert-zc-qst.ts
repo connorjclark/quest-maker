@@ -599,7 +599,7 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
     if (zcItem.name?.startsWith('zz')) break;
 
     quest.items.push({
-      name: zcItem.name,
+      name: zcItem.name || '',
       type: zcItem.family,
       tile: zcItem.tile,
     });
@@ -962,7 +962,20 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
   }
 
   if (qstData.LINK) {
-    const walkFrames = qstData.LINK.walk.map((d: any) => ({ gfxs: [d.tile, d.tile + 1, d.tile + 2], flip: d.flip }));
+    const walkFrames = qstData.LINK.walk.map((d: any, i: number) => {
+      // The 'up' direction is just one frame flipped.
+      if (i === 0) {
+        return {
+          gfxs: [d.tile, d.tile],
+          flip: [0, 1],
+        }
+      }
+
+      return {
+        gfxs: [d.tile, d.tile + 1, d.tile + 2],
+        flip: d.flip,
+      }
+    });
     const stabFrames = qstData.LINK.stab.map((d: any) => ({ gfxs: [d.tile], flip: d.flip }));
     quest.misc.HERO_FRAMES = {
       walk: walkFrames,
@@ -977,13 +990,13 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
     if (linkAnimationStyle === 0) {
       quest.misc.HERO_FRAMES = {
         walk: [
-          { gfxs: arr2(linktile + 20), flip: 0 },
+          { gfxs: [linktile + 20, linktile + 20], flip: [0, 1] },
           { gfxs: arr2(linktile + 18), flip: 0 },
           { gfxs: arr2(linktile + 16), flip: 1 },
           { gfxs: arr2(linktile + 16), flip: 0 },
         ],
         stab: [
-          { gfxs: arr2(linktile + 23), flip: 0 },
+          { gfxs: [linktile + 23], flip: [0, 1] },
           { gfxs: arr2(linktile + 22), flip: 0 },
           { gfxs: arr2(linktile + 21), flip: 1 },
           { gfxs: arr2(linktile + 21), flip: 0 },
