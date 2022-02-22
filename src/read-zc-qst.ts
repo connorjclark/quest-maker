@@ -652,6 +652,55 @@ const sections = {
 
     return { tunes };
   },
+  'SFX ': (reader: Reader, version: Version, sversion: number, cversion: number) => {
+    let wavCount = 256;
+    if (sversion < 6) wavCount = 128;
+
+    function accessFlag(flags: Uint8Array, num: number) {
+      const base = Math.floor(num / 8);
+      const shift = Math.floor(num % 8);
+      return (flags[base] & (1 << shift)) >> shift;
+    }
+
+    const namesBitFlags = sversion >= 4 ?
+      reader.read(wavCount >> 3) :
+      new Uint8Array(Array(wavCount >> 3).fill(0xFF));
+
+    const sfxs = [];
+    for (let i = 0; i < wavCount; i++) {
+      let name = '';
+      if (sversion > 4 && namesBitFlags && accessFlag(namesBitFlags, i)) {
+        name = reader.readStr(36);
+      }
+      sfxs.push({ name });
+    }
+
+    for (let i = 1; i < wavCount; i++) {
+      if (namesBitFlags && !accessFlag(namesBitFlags, i)) {
+        continue;
+      }
+
+      const sfxRest = readFields(reader, [
+        { name: 'bits', type: 'I' },
+        { name: 'stereo', type: 'I' },
+        { name: 'frequency', type: 'I' },
+        { name: 'priority', type: 'I' },
+        { name: 'length', type: 'I' },
+        { name: 'loopStart', type: 'I' },
+        { name: 'loopEnd', type: 'I' },
+        { name: 'param', type: 'I' },
+      ]);
+      let numBytes = (sfxRest.bits === 8 ? 1 : 2) * (sfxRest.stereo === 0 ? 1 : 2) * sfxRest.length;
+      if (sversion < 3) {
+        numBytes = (sfxRest.bits === 8 ? 1 : 2) * sfxRest.length;
+      }
+      sfxRest.data = reader.read(numBytes);
+
+      sfxs[i - 1] = { ...sfxs[i - 1], ...sfxRest };
+    }
+
+    return { sfxs };
+  },
   // https://github.com/ArmageddonGames/ZeldaClassic/blob/bdac8e682ac1eda23d775dacc5e5e34b237b82c0/src/qst.cpp#L11341
   'GUY ': (reader: Reader, version: Version, sversion: number, cversion: number) => {
     if (sversion >= 36) throw new Error('TODO');
