@@ -205,6 +205,8 @@ declare global {
       map: number;
       color: number;
       song: number;
+      continueScreenX: number;
+      continueScreenY: number;
     }
 
     interface Map_ {
@@ -244,6 +246,7 @@ declare global {
         }>>;
         START_X: number;
         START_Y: number;
+        START_DMAP: number;
       };
     }
 

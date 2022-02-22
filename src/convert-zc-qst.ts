@@ -820,10 +820,12 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
 
   for (const zcDmap of qstData.DMAP.dmaps) {
     const dmap = {
-      name: zcDmap.name,
+      name: zcDmap.name || zcDmap.title,
       map: zcDmap.map,
       color: zcDmap.color,
       song: zcDmap.midi,
+      continueScreenX: zcDmap.cont % screenWidth,
+      continueScreenY: Math.floor(zcDmap.cont / screenWidth),
     };
 
     if (dmap.name === '') break;
@@ -1012,6 +1014,7 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
   // TODO
   quest.misc.START_X = 7;
   quest.misc.START_Y = 7;
+  quest.misc.START_DMAP = qstData.INIT.startDmap || 0;
 
   quest.name = '1st';
 

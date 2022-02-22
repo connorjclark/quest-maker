@@ -368,18 +368,24 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
   }
   await new Promise(resolve => pixi.loader.load(resolve));
 
-  let initialDmap = 0;
+  let initialDmap = quest.misc.START_DMAP;
   let initialScreenX = quest.misc.START_X;
   let initialScreenY = quest.misc.START_Y;
+
+  if (quest.dmaps[initialDmap]) {
+    initialScreenX = quest.dmaps[initialDmap].continueScreenX;
+    initialScreenY = quest.dmaps[initialDmap].continueScreenY;
+  }
 
   // Simple code to quickly persist last screen position.
   if (localStorage.getItem('lastState')) {
     const lastStateByQuest = getLocalStorage();
     const lastState = lastStateByQuest[questBasePath];
     if (lastState && 'dmapIndex' in lastState && quest.dmaps[lastState.dmapIndex] && quest.dmaps[lastState.dmapIndex]) {
-      initialDmap = lastState.dmapIndex;
-      initialScreenX = lastState.screenX;
-      initialScreenY = lastState.screenY;
+      // TODO: just load the initial screen for now, not the last loaded one.
+      // initialDmap = lastState.dmapIndex;
+      // initialScreenX = lastState.screenX;
+      // initialScreenY = lastState.screenY;
     }
   }
   window.addEventListener('unload', () => {
@@ -411,8 +417,8 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
     currentScreen: quest.maps[initialMap].screens[initialScreenX][initialScreenY],
   };
 
-  if (questBasePath === 'quests/debug') {
-    const swordIndex = quest.items.findIndex(item => item.name === 'Sword');
+  const swordIndex = quest.items.findIndex(item => item.name.includes('Sword'));
+  if (swordIndex) {
     state.game.inventory[0] = { item: swordIndex };
     state.game.equipped[1] = 0;
   }
