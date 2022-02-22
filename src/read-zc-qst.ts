@@ -379,11 +379,11 @@ const sections = {
 
       const dmap_3 = readFields(reader, [
         { name: 'tmusic', arrayLength: 56, type: 'B' },
-        sversion >= 2 && { name: 'tmusictrack', type: 'B' },
-        sversion >= 2 && { name: 'active_subscreen', type: 'B' },
-        sversion >= 2 && { name: 'passive_subscreen', type: 'B' },
-        sversion >= 3 && { name: 'di', arrayLength: 32, type: 'B' },
-        sversion >= 4 && { name: 'flags', type: sversion >= 6 ? 'I' : 'B' },
+        { name: 'tmusictrack', type: 'B', if: sversion >= 2 },
+        { name: 'active_subscreen', type: 'B', if: sversion >= 2 },
+        { name: 'passive_subscreen', type: 'B', if: sversion >= 2 },
+        { name: 'di', arrayLength: 32, type: 'B', if: sversion >= 3 },
+        { name: 'flags', type: sversion >= 6 ? 'I' : 'B', if: sversion >= 4 },
       ]);
 
       if (Version.gt(version, { zeldaVersion: 0x192, build: 41 }) && Version.lt(version, { zeldaVersion: 0x193, build: 0 })) {
@@ -392,14 +392,14 @@ const sections = {
       }
 
       const dmap_4 = readFields(reader, [
-        sversion >= 10 && { name: 'sideview', type: 'B' },
-        sversion >= 12 && { name: 'script', type: 'H' },
-        sversion >= 12 && { name: 'initD', arrayLength: 8, type: 'I' },
-        sversion >= 13 && { name: 'initDLabel', arrayLength: 8 * 65, type: 'B' },
-        sversion >= 14 && { name: 'activeSubscript', type: 'H' },
-        sversion >= 14 && { name: 'passiveSubscript', type: 'H' },
-        sversion >= 14 && { name: 'subInitD', arrayLength: 8, type: 'I' },
-        sversion >= 14 && { name: 'subInitDLabel', arrayLength: 8 * 65, type: 'B' },
+        { name: 'sideview', type: 'B', if: sversion >= 10 },
+        { name: 'script', type: 'H', if: sversion >= 12 },
+        { name: 'initD', arrayLength: 8, type: 'I', if: sversion >= 12 },
+        { name: 'initDLabel', arrayLength: 8 * 65, type: 'B', if: sversion >= 13 },
+        { name: 'activeSubscript', type: 'H', if: sversion >= 14 },
+        { name: 'passiveSubscript', type: 'H', if: sversion >= 14 },
+        { name: 'subInitD', arrayLength: 8, type: 'I', if: sversion >= 14 },
+        { name: 'subInitDLabel', arrayLength: 8 * 65, type: 'B', if: sversion >= 14 },
       ]);
 
       dmaps.push({
