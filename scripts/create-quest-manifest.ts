@@ -1,8 +1,8 @@
 // yarn ts-node scripts/create-quest-manifest.ts
 
-import * as glob from 'glob';
-import * as fs from 'fs';
-import * as puppeteer from 'puppeteer';
+import glob from 'glob';
+import fs from 'fs';
+import puppeteer from 'puppeteer';
 
 interface QuestManifest {
   name: string;
@@ -18,13 +18,35 @@ interface QuestManifest {
   credits: string;
 }
 
+function loadQuests() {
+  const quests: QuestManifest[] = JSON.parse(fs.readFileSync('data/quest-manifest.json', 'utf-8'));
+  const questsMap = new Map<string, QuestManifest>();
+  for (const quest of quests) {
+    questsMap.set(quest.urls[0], quest);
+  }
+  return questsMap;
+}
+
+function saveQuests(questsMap: Map<string, QuestManifest>) {
+  const quests = [...questsMap.values()];
+  const featuredQuests = [
+    'BS Zelda 1st Quest',
+  ];
+  quests.sort((a, b) => {
+    if (featuredQuests.includes(a.name) && !featuredQuests.includes(b.name)) return -1;
+    if (featuredQuests.includes(b.name) && !featuredQuests.includes(a.name)) return 1;
+    return 0;
+  });
+  fs.writeFileSync('data/quest-manifest.json', JSON.stringify(quests, null, 2));
+}
+
 async function main() {
-  const quests: QuestManifest[] = [];
+  const questsMap = loadQuests();
 
   // Process the quests stored in source control.
   for (const questFile of glob.sync('data/zc_quests/*/quest.json')) {
     const quest = JSON.parse(fs.readFileSync(questFile, 'utf-8'));
-    quests.push(quest);
+    questsMap.set(quest.urls[0], quest);
   }
 
   const browser = await puppeteer.launch();
@@ -84,12 +106,12 @@ async function main() {
       tipsAndCheats,
       credits,
     };
-    quests.push(quest);
+    questsMap.set(quest.urls[0], quest);
 
-    fs.writeFileSync('data/quest-manifest.json', JSON.stringify(quests, null, 2));
+    if (questsMap.size % 10 === 0) saveQuests(questsMap);
   }
 
-  fs.writeFileSync('data/quest-manifest.json', JSON.stringify(quests, null, 2));
+  saveQuests(questsMap);
   await browser.close();
 }
 
