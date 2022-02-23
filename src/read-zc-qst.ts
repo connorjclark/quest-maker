@@ -58,8 +58,8 @@ interface Field {
 }
 
 function trimString(str: string) {
-  // Trim trailing null bytes.
-  return str.replace(/\0+$/, '');
+  const nullIndex = str.indexOf('\0');
+  return nullIndex !== -1 ? str.substring(0, nullIndex) : str;
 }
 
 function readFields(reader: Reader, fields_: Array<Field | false>) {
@@ -928,24 +928,67 @@ function parseQstBytes(qstBytes: Uint8Array, debug: boolean) {
     'AG ZC Enhanced Quest File',
   ];
 
+  if (preamble === preambles[0]) {
+    // WIP
+    // document.body.textContent = new TextDecoder().decode(qstBytes.subarray(0, 50000));
+
+    const data = readFields(qstReader, [
+      { name: '_padding', type: '1s' },
+      { name: 'zeldaVersion', type: 'H' },
+      { name: 'internal', type: 'H' },
+      { name: 'questNumber', type: 'B' },
+      { name: 'questRules', arrayLength: 2, type: 'B' },
+      { name: 'mapCount', type: 'B' },
+      { name: 'strCount', type: 'B' },
+      { name: 'tiles', type: 'B' },
+      { name: 'midiFlags', arrayLength: 4, type: 'B' },
+      { name: 'cheats', type: 'B' },
+      { name: '_padding', type: '14s' },
+      { name: 'moreQuestRules', arrayLength: 2, type: 'B' },
+      { name: '_padding', type: '1s' },
+
+      // ????
+      { name: '_padding', type: '4s' },
+
+      { name: 'version', type: '9s' },
+      { name: 'title', type: '65s' },
+      { name: 'author', type: '65s' },
+      // TODO the rest
+    ]);
+    console.log(data);
+  }
+
   if (preamble !== preambles[1]) {
     throw new Error('TODO: handle ' + preamble);
   }
 
   qstReader.goto(qstReader.find('HDR '));
 
-  const zcData: Record<string, any> = {};
+  const zcData: Record<string, any> = {
+    GUY: { guys: [] },
+  };
   let version: Version = { zeldaVersion: 0, build: 0 };
 
   while (qstReader.hasData()) {
-    const [id, sversion, cversion, size] = qstReader.readStruct(structs.sectionHeader);
+    let [id, sversion, cversion, size] = qstReader.readStruct(structs.sectionHeader);
+
+    // Sometimes there is garbage data between sections.
+    if (!/\w{3,4}/.test(id)) {
+      if (debug) console.log(`garbage section id: ${JSON.stringify(id)}, skipping ahead some bytes...`);
+
+      const validSectionIds = Object.keys(sections);
+      while (!validSectionIds.includes(id)) {
+        qstReader.skip(-structs.sectionHeader.size);
+        qstReader.skip(1);
+        [id, sversion, cversion, size] = qstReader.readStruct(structs.sectionHeader);
+      }
+    }
+
+    if (size === 0) continue;
+
     const sectionReader = new Reader(qstReader.read(size));
 
     if (debug) console.log({ id, sversion, cversion, size });
-
-    if (!/\w{3,4}/.test(id)) {
-      throw new Error(`unexpected section id: ${JSON.stringify(id)}`);
-    }
 
     const section = sections[id as keyof typeof sections];
     if (section !== undefined) {

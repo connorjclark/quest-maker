@@ -422,8 +422,7 @@
     "story": "A brave knight has stumbled into the lost Land of Serenity, which he soon learns has been cursed by a formidable sorcerer known only as \"The Dark Man\". The Dark Man has placed a curse on the land. The High Lands are stuck in constant daylight, which has created a great desert. The Middle Lands are normal in the daytime, but turn to obsidian at night. The Lower Lands are stuck in perpetual night by a huge lightning storm. It's up to him to find the four double-sided keys, the only artifacts potent enough to undo the curses. The Dark Man isn't making it easy, though. He has unleashed a terrible army for the knight to fight through. Good luck.",
     "tipsAndCheats": "In the early part of the game, eyes don't do anything.",
     "credits": "EIHoppe and sparky for beta testing(ZCN).",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "A Link to the Future",
@@ -1663,8 +1662,7 @@
     "story": "Common",
     "tipsAndCheats": "None",
     "credits": "Tiles: Mr.Z, Marcus\nMusic: www.vgmusic.com",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "Evil Castle 2.0",
@@ -1685,8 +1683,7 @@
     "story": "Every year, monsters from the evil castle search around in any near by villages to find a virgin girl that is the right age for them to sacrifice her life to the evil gods they worship. A girl named Heidi was taken from her village to the evil castle. As she sat in her cell up in one of the castle's towers, a bolt of lightning went through the window and hit her cell door and it opened. That's where her adventure begins.",
     "tipsAndCheats": "None.",
     "credits": "None.",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "Molka",
@@ -1768,8 +1765,7 @@
     "story": "None.",
     "tipsAndCheats": "SPOILERS!:Slash pots in a house to gain money very fast.",
     "credits": "XDRAGONSB\nI did everything myself.",
-    "playable": false,
-    "error": "unexpected section id: \"\\u00006L\\u0015\""
+    "playable": true
   },
   {
     "name": "The Legend of the Three Elements....",
@@ -1795,8 +1791,7 @@
     "story": "I forgot! ",
     "tipsAndCheats": "Find an old lady that says the password outloud.\n(Note: the pass has no caps or spaces)",
     "credits": "Me?",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "Oracle of Hyrule",
@@ -1829,8 +1824,7 @@
     "story": "Same as original.",
     "tipsAndCheats": "There's a cheat but you'll need to find the info on it.",
     "credits": "Me for making it\nMy computer for not crashing  \nArmegeddon games for making this awesome program\nand Nintendo because without them Zelda wouldn't exist (shudder)",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "Z Quest",
@@ -1850,8 +1844,7 @@
     "story": "Basic \"Save Zelda.\"",
     "tipsAndCheats": "Level-1  link",
     "credits": "Old-skool for making Zero Quest and graphics.",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "Lady of Dreams",
@@ -1899,8 +1892,7 @@
     "story": "A young boy named Link was wandering about when he heard a cry for help: and old woman was being attacked! He saved the old woman, and she was grateful to him. As thanks, she invited him to stay the night at her cave. It's dark out now, and Link has just shown up. Little does he know, he has a great adventure ahead of him: It's the original Legend of Zelda made new!",
     "tipsAndCheats": "not to reveal yet.",
     "credits": "BH4. I think the tileset is one of the quest's big pluses.",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "Return To the Dark World",
@@ -1946,8 +1938,7 @@
     "story": "^I think I just said it...",
     "tipsAndCheats": "once your done, save, and quit... then load your file for a hidden message...",
     "credits": "XdragonSB\nPolygonX8\nToaofgamecube\nSemiJuggalo",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000S=\""
+    "playable": true
   },
   {
     "name": "Link's Retirement",
@@ -1993,8 +1984,7 @@
     "story": "The Space Federation has hired the famous intergalactic bounty hunter Samus Aran to investigate a Metroid infestation on the planet Orphus IV.  They have also posted a sizeable bounty on the head of the space pirate Ridley.  Many bounty hunters have flocked to Orphus IV to try to catch Ridley.  Samus must find Ridley, stop the space pirates, and avoid her rival hunters, all while trying to uncover the Legend of the Metroids.",
     "tipsAndCheats": "All the cheats in this game, except for the level 4 cheat, are fairly easy to guess.",
     "credits": "Thanks to Trob for play-testing my game, helping me with the music, and helping get it uploaded.\n\nThank to PolygonX8.  I used his large and small Metroid tiles because my original Metroid tiles sucked (you can still see them as floor tiles in some of the dungeons in the game).  I also used his big Chozo statue, his big Samus spaceship, his large and small explosions, and his big flying Ridley tiles.\n\nThanks to me for drawing the Samus tiles, other hunters’ tiles, and much more tiles from scratch, as well as drawing and scanning in a couple of scenes.\n\nI got some of my music from vgmusic.com.  The rest was provided and assigned to the dungeons by Trob who got it elsewhere.",
-    "playable": false,
-    "error": "unexpected section id: \"\\b\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "The Power of Seasons",
@@ -2021,8 +2011,7 @@
     "story": "Ganon has kidnapped Zelda and he will senk the Temple of Seasons. Link must find all pieces of the Triforce to kill Ganon.",
     "tipsAndCheats": "None.",
     "credits": "Me! ",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "Zeldas Quest for Link",
@@ -2045,8 +2034,7 @@
     "story": "Zelda was just resued from Ganon. There was a quick celebration then they turned their heads toward home.\n\nThey were on their way back home to hopefully settle down and relax, thinking it was finally over. Little did they know someone had other plans.\n\nIn a bizzare twist, Link is captured and Zelda is dumb-founded.\n\nSo, now it is up to the princess to figure out who is behind all of this. Realizing that she is going to need as much power as she can get, she sets off to recollect all the fragments of the triforce of Power that she scattered right after Ganon had captured her the first time.  What she finds out is unreal.\n\nNow, she must try and find her hero before all hope is lost to Hyrule and put an end to this madness.",
     "tipsAndCheats": "There are walk thru walls in this quest. The flippers, master sword, and gold ring are not in this quest.\n\nIf you have any questions or find a bug, please email me at rocksfan13@hotmail.com or just PM me.",
     "credits": "I would like to thank Freedom and jessethe2nd and any other member that helped for all the advice, boram_c and tigger187c for beta testing, vgmusic for all the midis, and purezc for some of the tiles.",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "Arena Fight",
@@ -2069,8 +2057,7 @@
     "story": "Link has been fighting monsters, saving princesses, and making Ganon look like he shouldn't of gotten out of bed for years. One day, he receives an invitation for a contest. So he heads to the island to prove himself as a hero to another place that isn't called Hyrule.",
     "tipsAndCheats": "There are no cheats, but I can offer a few tips. A few of the blocks in the early dungeons are marked with letters. You should use the items that match those letters. Example is the F block in the first dungeon. You get the blue candle in that same dungeon. So basicly F equals Fire. Later on, there are blocks in the corners with the letters on them. These aren't to be hit. There is a block in that room that will react to that item.",
     "credits": "PureZC for tiles and sound files. Zelda Classic Forum for their support and test running. Zelda Classic makers for their creating ZC. I do have a credits part at the end, so I can be a bit more specific there. If I've missed anyone, I'm sorry. I appreciate all the resources and their creators.",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "Crossrealm Chaos",
@@ -2111,8 +2098,7 @@
     "story": "This chapter is sort of an adaptation of many of the LOZ stories. It begins where Link just beat Ganon to save Zelda. However, just because Ganon was defeated and encapsulated in stone doesn't mean that Ganon's minions are gone. On the way back to Hyrule Castle, Link was mobbed by a massive amount of darknuts. Unfortunately, the darknuts overwhelmed Link, and took all of his goods and Zelda. Now Link must save Zelda wherever she is. Link also recalls that Zelda told him of a 'blue Triforce' that, when combined, would let the worthy claim the true Triforces of Power, Courage, and Wisdom. Now Link must set off to save Zelda and claim the 'blue Triforce'.",
     "tipsAndCheats": "Tip 1: Don't get frustrated. This quest is not designed to be completed in five minutes. In fact the fastest run I made wasn't less than 10 hours. It is also designed to be tough, but not too tough. So if you are dying consistently, then either you need more hearts or better equipment. Tip 2: Explore everywhere! HCP's are direly needed in the quest as you don't get Heart Containers. The problem is that I counted the number of HCP's and the count comes out different each time. (it is between 81-84 but it really doesn't matter, you'll see why toward the end of the game.) So keep playing. Tip 3: PAY FOR THE HINTS!!! This will REALLY help your progression in the quest. Also, for those who can't get through, I will be making a walkthrough on a site here in the not so distant future, so keep your eyes open. If you have any questions, post them and I will see how to answer them to the best of my ability.\nwww.geocities.com/darthpikachu21/Level1.html",
     "credits": "To everyone I've ever met, and to all the people who have given me help making this on the respective forums. Also to a 'boozer' who pushed me in his own way to make me finish. Sorry, it was one year late.\nTo VGMUSIC and to the creators of Zelda Classic for an awesome program. \nTo this site that's given me a lot of inspiration to aspire to be better than myself.",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "The Legend of Link: Ganon's Curse",
@@ -2172,8 +2158,7 @@
     "story": "Imori wakes up after a black to find that hes somewhere different...",
     "tipsAndCheats": "none really just fixed stuff",
     "credits": "Vayne",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "EverNES",
@@ -2297,8 +2282,7 @@
     "story": "Darkness is coming back to Hyrule and Link must stop it but he needs a triforce piece to stop it.",
     "tipsAndCheats": "Yes I do I won't give out the cheats until the master (If I make one).",
     "credits": "Myself",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "The Hero of Dreams",
@@ -2371,8 +2355,7 @@
     "story": "Mother brain some how returned and Samus is sent out to destroy Mother brain once again.",
     "tipsAndCheats": "The metel blocks can be broken by using your beam. Metel blocks contain items sometimes. kill every enemy you find you might be rewarded.",
     "credits": "Just me.",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "The Missing Three Triforce",
@@ -2395,8 +2378,7 @@
     "story": "Read the storyline once you start playing this quest.",
     "tipsAndCheats": "Cheat code is available at the end of the game.\n\nWhite trees can be burned down.\n\nThere can't be a level 4 cheat. The 60 second countdown (from BH4) is being used as an misc. item and placed out of reach. It is to be used as a timer for mini-games. And the 3 second timer is subsituting as a Master Sword. If I had the level 4 cheat available, timers can be picked up if the \"no walls\" function is on and there won't be a timer in the Mini-Game. \nIn short, the cheat code you get when you beat the quest is a Level 3 cheat.\n\nThere will be walk-through walls on dungeon levels 3-6. Here is a hint to get the legendary items in an unmapped room. Level 4, while you are about to ride the first minecart, walk-through wall is above. Go through it and you can get the Farore's Wind. Level 5, after you rode the minecart, behind the pots is a walk-through wall. Get the Nayru's love. Level 6, in a room where there is just a rectangular lava, the right side is bombable. \nEnter through it and get the magic key. Don't leave the room yet, the right wall is a walk-through to get Din's fire. The legendary items are as the items from SNES A link to the past. Bombos medallion is Din's fire, Ether medallion is Nayru's love and quake medallion is Farore's wind.\n\nThere are unmapped rooms in all dungeons where there is 10 rupies. Accessed by blowing a hole in the wall by a bomb.\n\nLink's bed at Link's house is also a life restoring room. Walk to the far right side of the bed to restore Life energy.\n\nBe sure to buy the arrows at the village before going to the level 2 dungeon. Also you may need to buy an extra key before going in dungeon levels 2, 3, 5 and 6 (even 7 but if you've found the magic key in 6, you don't have to worry). Hint: Super bombs, key and stairs can be under any Armos statue.\n\nThe cactus that has no spikes can be pushed up to enter the shop.",
     "credits": "Myself for making this quest. Took me about 2 months. Lightning, train, minecart, and others are my hand-written tiles.\n\nSpecial Thanks to\nBH4: Four Swords pure Link, \"Functional\" compass, and the 60 second countdown for use in my mini-games; used blue edge color.\n\nLinkmystro100: Rain and snow. Only used rain.\n\nLink0445: Pure Link to the Past Items\n\nShashomaru: Pure houses and etc.",
-    "playable": false,
-    "error": "unexpected section id: \"\\b\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "Quest On",
@@ -2486,8 +2468,7 @@
     "story": "in mini hirule have four temples  and four monsters you need destroy all monsters and ganon to save mini hirule.",
     "tipsAndCheats": "none",
     "credits": "thanks for dessendant tiles and purezc  ",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "Quest for Hyrule 3: the Regenesis",
@@ -2514,8 +2495,7 @@
     "story": "Link sets off on a quest to rescue a fair maiden from the clutches of Ganon.",
     "tipsAndCheats": "- There are no walk-through walls in this quest.\n- Listen to what Old Man Davis has to say.\n- Make sure to explore ALL of Victory Road.\n- You are given clues to defeat every maze; just be observant.\n- If you are prone to seizures, turn off the \"Show Transparent Layers\" option when you get to Death Mountain.\n- Buy all the required items as soon as you can.",
     "credits": "Myself, ms_zelda_lady, idontknow, Warlock, plith, NoeL, Hergiswi, Beta Link, Radien, Mr. Z, tabsim, Glenn The Great, Prince MSC, DarkFlameWolf, Questions, kchan, Kalia Pickett, Van Huynh, Gannon-Banned.com, The Tileshop, VGMuic.com, PureZC.com, ZeldaClassic.com, and Nintendo. A very special thanks to all of y'all who (knowingly or otherwise) helped make this quest what it is.  ",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "X",
@@ -2535,8 +2515,7 @@
     "story": "After Mulders last quest, Mulder found new people that would help him. Chuck Norris (Yep,he's in ) is almost useless. An unknown thing from the future that can help you in some ways and its character is funny and a fool who is commanding robots of his own. Now Mulder must find the artifacts (we know them as Tri-Force) before he does. Obviously he can't get them before you.",
     "tipsAndCheats": "None.",
     "credits": "Me for the game.\nSome of the music is gotten from VGMusic and Purezc so music is not mine.",
-    "playable": false,
-    "error": "unexpected section id: \"\\b\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "Castle Haunt II",
@@ -2557,8 +2536,7 @@
     "story": "Once again....\nA warriors job is never done.\nHe would prefer to lay right there next to the loving Zelda,\nBUT a rescue was in order, she would just have to understand.\nWhy do the evil forces choose to ruin his every halloween?\nWell.... no matter, he's got it to do, might as well get to it.",
     "tipsAndCheats": "The zip file contains the quest, sfx.dat, and mp3 sound files.\nrename or move your sfx.dat to another folder to avoid over-writting it.\nUse only the 2.10 version of ZC to play this quest.",
     "credits": "Testers; Elise, Pauldoo, Ielen, boycm92, Jerimy.",
-    "playable": false,
-    "error": "unexpected section id: \"S\\u0005S\\u0005\""
+    "playable": true
   },
   {
     "name": "Castle Haunt I",
@@ -2689,8 +2667,7 @@
     "story": "Returning from a diplomatic mission, Princess Zelda's ship is Swashbuckled by pirates and she is captured and taken to the pirate stronghold know as Tortuga Island.\nHeld for a ransom of eight blue pearls, it's up to Link to pay the ransom in order get her back.",
     "tipsAndCheats": "Game play notes;\n*Link to Tortuga is designed to be played on the 2.10 version of Zelda Classic.\n\n*Overworld (spacebar) map has been turned off due to a serious bug in the 2.10 that causes the map to trigger secrets on layers of screens the map is used on.\n\n*You should never have to buy a key, they're there, you just have to find them.\n\n*Using a cheat program with \"no walls\" will cause you grief, I suggest against it, there are tons of hidden floor triggers.",
     "credits": "Special Thanks to:\nMiguel, Elise, Iriss, Joe, David Ballard Jr., and Shoelace for beta testing this quest.\nSprites of Joe and the Rabbit are from *b*'s Sun Tower tileset, thanks goes to him for releasing those.\nThanks goes to DN and fatcatfan for their hard work in releasing the new 2.10 Zelda Classic program, which this quest is designed to be played on.",
-    "playable": false,
-    "error": "unexpected section id: \"/\\u001dg+\""
+    "playable": true
   },
   {
     "name": "Elements",
@@ -2709,8 +2686,7 @@
     "story": "Ganon has thrown the Elements out of whak it is now up to you to gather the pieces of the Triforce and bring ballence back to the Elements.",
     "tipsAndCheats": "There are no cheats, and no tips that I can think of.",
     "credits": "PureZC for hosting this quest and also to PureZC for the tileset music Ect.",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "Shadow Fall",
@@ -2729,8 +2705,7 @@
     "story": "Ganon wants you his best warrior to go and kill the eight Sages.",
     "tipsAndCheats": "The Doors stay open in the last two dungeons but if you just skip through you will miss things. There are no cheats. Ther are heart pieces in the four corners of the castle grounds and other things strewn about.",
     "credits": "PureZC agin for hosting this quest. Myself for the good guy enemies. Mr. Z for the original tileset. Finnaly my Brother for testing it.",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "The Tao of Link",
@@ -2753,8 +2728,7 @@
     "story": "Same as original The Tao of Link.",
     "tipsAndCheats": "Please use the ZC 2.10 player to play the quest. If you get the midi bug, please minimize the ZC player and it should be back to normal.\nThere is also a TaoDC sfx dat file available at my web site.",
     "credits": "Special thanks to my beta tester Elise & also Freedom for quest design help.\nEveryone who is listed at the original Tao credits.\nAnyone else I may have forgotten to give credit to.",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "Link's Bath",
@@ -2884,8 +2858,7 @@
     "story": "Link comes back 100 yrs later. More bad guys to fight, more dungeons to explore.",
     "tipsAndCheats": "Only 10 hearts required for Magic sword! \nBomb Everything.\nTake a piece of meat into every dungeon!",
     "credits": "I do thank all at Pure ZC for allowing me to post. \nI thank AG, and Zelda Classic for the programs to work with.\n\nStoryline, editing, and new tiles, me!",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "Raft Mountains Quest 2.1",
@@ -2923,8 +2896,7 @@
     "story": "Link, a sword, a girl in trouble. What more do you need?",
     "tipsAndCheats": "I have included a hint sheet. It is not a complete walkthrough,\nbut it does tell you where each treasure can be found. \nie: \nLevel 1- Exit village. (Use Super bomb to remove large boulder. \nGo N 1x, E 4x. N 1x, W 2x. Use sword to break the fangs blocking your way.\nTreasures- Bracelet 1, Meat.\nBoss Key- W of boss door. Must have Bracelet. Push Rock, go in.\n\nSo you do get a specific help on a boss key, that you cannot cheat to get.\nBut the other treasures, you'll need to find on your own.\nIf you don't want the hints, don't look. :-) (Yeah, right)\n\nWARNING: Some items are for sale that you can find for free later in the game. \nThis was done so that you could win an item earlier in the game if you wanted to.\nIt also serves to help if you are stuck! So don't buy every item you see!\n\nDo take a piece of meat into every dungeon! (Most dungeons replace the meat, as you can find \nanother piece before leaving....",
     "credits": "I did use some music that I found on this site.",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "Boots of Destiny",
@@ -2963,8 +2935,7 @@
     "story": "Directly after Lands of Serenity, our knight makes his way home to Hyrule, only to find the land in ruins. He enters the Temple of Time, only to find Zelda laying on the floor in a pool of blood, and the Triforce rusted completely through. \"The Badlands,\" she whispered, before succumbing to death.\nSo, he has traveled far north to The Badlands to find the being responsible.\nHe has discovered only the name: The Titan\nThis quest isn't quite finished, as it's friggin' huge, but there are no impediments to gameplay. (Ignore that guy that says \"End of the line\")\n\nTHIS QUEST IS OUTDATED.  DOWNLOAD THE \"DIRECTOR'S CUT\" VERSION.\n\nhttps://www.purezc.n...e=quests&id=406",
     "tipsAndCheats": "None.",
     "credits": "None.",
-    "playable": false,
-    "error": "unexpected section id: \"9)\\u0014\\u0000\""
+    "playable": true
   },
   {
     "name": "Islands, The",
@@ -3072,8 +3043,7 @@
     "story": "Link has a terrible dream. He sees the graves of himself and Zelda side by side.\nGanon has won! Or did he?",
     "tipsAndCheats": "The Death of Link!\nNote: triforce markings are all over the overland. When you see one, it means something special is on that screen. The marking does NOT mark a place to bomb, burn, etc. It just means that something special is waiting to be found on that screen. Happy hunting.\n\nSuper bombs are needed at many times during the game. They can be found for free, but you'll have to buy them from time to time. Price is not high- 25 rupees each. Bomb shops are clearly marked and easy to find.\n\n\nItem Locations.\nWooden Sword- Right above where you start.\nWhite Sword- From Cemetary sign, go W 1x. Find hut with black roof.\n\tMust slash open the door with Wooden Sword.\nMagic Sword- From Cemetary sign, go S 3x, W 1x. Find Black hut.\n\tMust slash open the door with White Sword.\nMaster Sword- From Level 8 Entrance, Go S 1x, W 1x. Rock formation to the N, Super-Bomb the center of it.\n\tGo N, (Walk thru some rocks..) Find Black Hut. Slash door with Magic Sword, Go in, Get Master Sword \t\tif you have 16 hearts.\nMirror Sheild- 1. Can be found in Level 7. ( It is well hidden in there.) \n\t2.Or you can find it on the West Side of Western Forest, in Mtn Passage. Must hit statue with sword, \t\tpassage opens. Need boots & Ladder. Open Cave, Find Shield.\n\t3. Can be bought for 600 Rupees.\n\nBlue Ring/Shirt- Go down to footbridge, Go E 2x, Cut bushes, Go N 2 x. Open door to shop. \n\t(Must have magic sword.)\nLetter- Follow river to West, follow it all the way North to the 3 stream waterfall. Go W 1x.\n\tBomb x, find letter.\nWallet 1- From Cemetary Gate, Go E2x, S2x. Must have red candle to burn tree in front of house.\n\tYou are given small wallet.\nWallet 2- When you're in Level 8's Tunnel. From where you enter, there are two exits, one sends you out to the overland, where you are on a rock passage. Get Wallet, re-enter passage.\n\t\n\nBow 2- Can be bought for 250 Rupees.\nLens of truth- 1. Can be bought for 300 rupees.\n\t2. Can be found in level 4.\nRaft: (Must have whistle, whistle at bald spot in grass near Raft Shop. Buy/rent raft for 50 Rp)\nLens of Truth- Hidden in passage in #4. Bomb E. Does not look like passage, becomes one!\n\n\nMagic Container Locations- \n\t1. Farthest NE Corner, above level 6. Bomb cave.\n\t2 Tunnel in level 6. (Superbomb needed.)\n\t3. 7A. On dock in lake. (ladder needed.)\n\nHeart Containers- \n\t1. 4C. Bracelet1 move rock, cave opens...\n\t2. 0B. Bomb wall.\n\t3. 2A. Lost woods screen. Burn tree.\n\t4. 48. Burn Tree.\n\t5. Tunnel in Level 8.\n\t6. 03. Dive warp in waterfall\n\t7. 60. Whistle - Stairs.\n\t8. Tunnel in Ganon's Pyramid.\n\nHeart Pieces- \n\tOverland Locations: 5E, 4E, 1E (SWIM),3D,6D,2B,39, 55, 53, 22, 20 (SWIM).64,13.\n\tOther locations:\n\t1. Tunnel in level 2.  \n\t2. Tunnel in level 5.\n\t3. Tunnel in level 7.\n\t4. Tunnel in level 8.\n\t\n\nMore Bombs- \n\t1. 47. Shop easily found near start. (75 rp)\n\t2. 72. Shop at bottom of West Forest. (100 rp)\n\t3. 42. Shop middle of West Forest. (100 rp)\n\t4. Level 7. (85 rp)\n\t5. Level 8. Near Entry. (10 Rp)\n\nLevel Locations:\n\nLevel 1- Go south, find footbridge. Cross footbridge, as you are blocked from going S. \n\tGo either E or W 1x, go around the trees, \n\treturn either E or W, and Enter.\nBoss Key- Room with map. Bomb S. Defeat enemies, move blocks, get Boss Key from passage.\nTreasure- Whistle- Get super bomb from room with Red Moblins, Gels & Stalfos. When in tunnel, \n\tsuperbomb the wall blocking passage to right. Beat Aguamentus. Get Whistle.\n\nLevel 2- At footbridge, follow shoreline W 4x, Go S 1x, Find dock, take raft to island. Enter..\nBoss Key- Find arrow rooms. (they give the hint for lost woods to find level 3. UURD. The arrow room that \t\tpoints right. Bomb E. Defeat enemies, enter passage, take Key.\nTreasures- 2 Super Bombs, Magic Boomerang, Red Candle.\n\nLevel 3- From Cemetary gate, Go E 3x, S 1x. Find entrance, enter. Lost woods (Clue in 2, pay for infor as \t\twell. UURD.\nBoss Key- From feed the goriya room. Go N 2x. Defeat enemies, enter passage. Get Key.\nTreasures- Ladder\n\nLevel 4- From Cemetary Gate, Go S 3x, Go W 3x. Enter... (Must have ladder!)   \nBoss Key- From room with 2 big red spiders! Go S 1x, Bomb E, Defeat enemies, open passage, go get key.\nTreasures-Bow, Wand, Lens of Truth, Book, Super Bomb.\n\nLevel 5- From footbridge. Do not cross. Go E 4x, find second footbridge, go S 1x, Go E 2x, find pits between \t\ttwo statues, cross. (you need the ladder.) Go E 1x, N 2x. Enter...\nBoss Key- From Boss door, Go W 1x. Bomb W Wall... Defeat enemies, enter passage, get key.\nTreasures- Bracelet 1,Boots.\n\tNote: the boots are a bit complicated to get. The hint says: The arrows lie, There is an east arrow, \t\tthen a south arrow. Bomb W at east arrow, Bomb N at south arrow. You must throw magic with the wand \t\tat one of the flashing blocks. Passage opens, get boots.\n\nLevel 6- From footbridge, follow river E 2x, At river bend, Go N 4x. If you follow the river W when it \t\t\tbranches off, you see the twin waterfalls. Go E 2x. You see level 6. (You need the ladder to cross \t\t\tsome hot sands there...)\nBoss Key- Go N from Feed the Goriya, Go N Kill Giant Mandhandla, Go N, Kill enemies, open passage, take key. \nTreasures- Hookshot, Magic Container. \n\nLevel 7- Find the Twin Waterfalls. Enter cave between them, take passage. Exit in lava sands,\n\tGo W find entrance...\nBoss Key- After you emerge from the tunnel. Go S 2x, W 1x, S 2x, Solve the puzzle, Go W. Defeat enemies, get    \tboss Key.\nTreasures- Swim Fins, Hammer, More Bombs, Mirror Sheild.\n\nLevel 8- Go to Western Forest, West of River. Find a passage in rock to the NW, see pond behind open passage, \tmust swim. Go W 1x, N 1x, E 1x, N 1x. Find Entrance... \nBoss Key- From Entrance, Go N 3x, W 1x, N 1x, W 2x, N 2x. (or, find room with Keese, and flashing Swords to \t\tthe NW, Go N 2x, Defeat enemies, enter passage, Get Key.)\n\tMust have Magic Key to be able to passs through many locked doors.\nTreasures- Heart Container, (An extra one.) Amulet 1, Red Ring.\n\tMagic Key: From Entrance. Go N 3x, Go W 2x, Go S 2x. Defeat enemies, enter Dark Tunnels.\n\tGo down ladder, Go E, Hit wall with sword. (Not a super bomb here, :-) Enter find Key.)\n\nGanons Pyramid- Ganons pyramid is the easiest to find. Go to either NW or NE corners of graveyard. \n\tMove rock with L2 Bracelet. Go up mountain. Follow path to pyramid. (Must have triforce to enter.) \nBoss Key- From Entrance. N 2x, Bomb W, Go W 2x, N 2x, Take passage to arrow room. Arrow room, must shoot  \t \tarrow at Ganon statue to continue on. Go S 3x, take passage, Go S 2x. Defeat enemies, enter passage, \ttake Boss key!\nTreasures- Golden Ring, Golden Arrow.\n\nKokiri Temple- Follow river W from footbridge, Go W 5x, N 4x, Must swim across water, enter...\n\t(Need Swim fins...)\nBoss Key- From Room with 3 headed fire dragon. Go W 1x, Bomb- S 1x, Bomb- W 1x, defeat enemies, Get Key.\nTreasures- \n\tNayru's Love- Enter Tunnel (need Super Bomb.)\n\tDins's Fire-  Enter Tunnel (need Super Bomb.)\n\tFarore's Wind- Final Room has F Wind in it... Instead of Triforce Piece.\n\tFire Boomerang- From central room with 4 heart blocks. Bomb E, Go E,Bomb E, Go E, Bomb E, Go E. \n\tL2 Bracelet- From central room with 4 heart blocks, Bomb W, Go W, Bomb W, Go W, Bomb W Go W. Defeat \t\tenemies, move block, enter passage, find Bracelet.\n\nGraveyard Tunnels\nTreasures- Silver arrow, 2 Super Bombs.. Bracelet 2 is hidden here as well as K. Temple.\n\tImportant Note: There are two walk throughs here. Try all walls for walkthrough if you can.\n\tSilver Arrow- After the 2nd Spider, (The first one leaves you a magic container.) A passage opens  \t\tWest. Go, Defeat enemies, Super Bomb W. Go W Defeat enemies, Get Silver Arrow...",
     "credits": "Tom Seward\nBrilliant Minds Productions. \n\nThanks to creators of certain midi files. Great Job.\nNew music added \"Sleep Silent Child\" Daniel Amos",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "Trinity Worlds",
@@ -3098,8 +3068,7 @@
     "story": "It's been about a month after the events in A Link to the Past, and Link was finally able to settle down and enjoy his break from saving the world from Ganon. That is, until one day, when Princess Zelda sent him a message that will send him into an adventure unlike any other.",
     "tipsAndCheats": "The included FAQ has quite a few tips. ",
     "credits": "Matthew and Pokegamer1989, for beta-testing the quest.\nMyself, for making the quest.\nMore to be listed in the game.",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "Zelda Calling",
@@ -3124,8 +3093,7 @@
     "story": "Zelda calls Link back via a pretty cool looking teleporter screen to fight against Ganons minions once again.",
     "tipsAndCheats": "I've included a tip sheet walkthrough. Make sure you read it.\nIt can really help this game.\nThis game has a slight hang up on starting up. Don't know why.\nIf you go to file and reset the system it plays perfectly...\nHave fun!",
     "credits": "Tom Seward;\nHilary Seward for grinning at me occasionally.\n\nMany of you who contributed tiles and Midi files,\nthank you!",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "Quest for Retards",
@@ -3291,8 +3259,7 @@
     "story": "Ganon captures Zelda (Again...) and throws her into his elaborate Fortress-o-Doom (Again...) so Link has to save her. (Again... *sigh*) First, though, he'll need the Triforce pieces! (Again...) Good thing there's only four this time!",
     "tipsAndCheats": "Details on getting stuff is in the ZIP file.",
     "credits": "Me for the quest!\nZelda Classic, being the program I used to make said quest!\nRaiden for his New BS Tileset!\nThe numerous people and games I stole MIDI music from, you know, but I forgot, who you are.",
-    "playable": false,
-    "error": "unexpected section id: \"t\\u0000E\\u0000\""
+    "playable": true
   },
   {
     "name": "Mario Quest",
@@ -3308,8 +3275,7 @@
     "story": "n/a",
     "tipsAndCheats": "cheat",
     "credits": "The person who made the Mario tile pack.",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "The Eight Spirits",
@@ -3330,8 +3296,7 @@
     "story": "Collect the Eight Triforce Pieces in order to reach Ganon.",
     "tipsAndCheats": "Once you collect the Eight Triforce Pieces, you'll need to find 4 Special Labyrinths each holds a Dungeon Item in them. The Power Bracelet is needed to reach Level-9.",
     "credits": "Old-skool, for the Zero Quest Tileset.\n\nPokegamer1989, Blues Singer and others who tested out my quest.",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "Protector of the Damn Universe",
@@ -3353,8 +3318,7 @@
     "story": "Years ago, in another dimension, far, far, away, there waits a hero waiting to be awoken. Will he come to the call of the normal citizen? Or will he just sit on his chair, an read  magazines about short people, waiting for the next issue to come out?    \n              \nI can say now that the latter is the hero who is waiting to be awoken. As the old runes say, \"He who wield the sword can wield the world.\" But with every hero, there is a villain to counter-act that good...\n\nEnter Ganon. He lives in the mystical sixth dimension, after he was banished there by Link of Hyrule 1000 years ago. Unfortunately, the cracks are starting to appear on the barrier, and so Ganon has found a way to escape and reak havoc in another universe, the all-too similiar land of Crestfall.\n\nWhat happens next is almost exactly like any Legend of Zelda story.",
     "tipsAndCheats": "16 Heart Container Pieces around the game (4 Heart Containers for those who have trouble doing maths).\n\nTwo Secret Dungeons are in the Haven and Hylian Era, respectively (This means there are two secret dungeons in each era).\n\nAll the cheats are related to English culture. One is a song, one is a sportsman, one is an album and one is a cult film.",
     "credits": "Ziplobob2 - Beta Testing\nMy brother Matt (Mc_Nugget_Hunter) - Designed Secret Dungeon 2\nThose guys that made those midis that sound like Oasis, Kaiser Chiefs, AC/DC and various TV shows -   - to the guy that made prawn sandwiches -  \nThe PureZC Community, for supporting me.. I guess. \nDave - for having such a funny name.  ",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "Master Quest: New BS Edition",
@@ -3459,8 +3423,7 @@
     "story": "Subrosia has been invaded by Ganon the subrosian hero must save the land of Subrosia",
     "tipsAndCheats": "n/a",
     "credits": "The creator of the cgbz remake of the first quest and nintendo.",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "<Insert Quest Title Here>",
@@ -3637,8 +3600,7 @@
     "story": "Story is pretty simple. Ganon kidnaps Zelda, Link must go find Zelda. That's all. I generally go for gameplay over plot, much like the old NES game.",
     "tipsAndCheats": "Write down the few maze paths that are in the game. You may want to write down other things as well, as certain hints will only be given once (ie there is an item in the room). \n\nChoose your class before reaching Lvl 4. The two caves are very close to each other, right after you get through the maze path.\n\nGo for the first optional dungeon after beating Lvl 4 in order to open up the path to the town. You can buy all sorts of useful items there.\n\nLater in the game, there is a single superbomb. Use it in the right place (it's obvious) and you can get basically infinite coins. Great for buying everything in the town.\n\nLastly, the wizard will get items like the wand, potions, and magic spells. The knight gets items like the hammer, the gold ring, and the master sword.",
     "credits": "Everything in the quest was done by obake-san.\nBeta testing by obake-san, knives, and others.\n\nv0.98 (bug fixes)",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000&\\u0000ê\""
+    "playable": true
   },
   {
     "name": "1st Quest (german Translated)",
@@ -3659,7 +3621,7 @@
     "tipsAndCheats": "None.",
     "credits": "None.",
     "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0000\""
+    "error": "Structure larger than remaining buffer"
   },
   {
     "name": "Hyrules Big Flood",
@@ -3872,8 +3834,7 @@
     "story": "The quest starts out in Narajo Town, Link's home village. He vows to destroy the source that is uprooting parts of Hyrule, causing mountains to rise and magma to flow to the surface. Before his adventure will unfold, he needs something to fend himself off with. His mother gives him his ancestor's shield and some Rupees to start. He steps out his house keeping in mind that he needs to seek out the Triforce, and this is where the story begins...",
     "tipsAndCheats": "None.",
     "credits": "Defeat the final boss to view the credits scene.",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "The Hero Without a Name",
@@ -3898,8 +3859,7 @@
     "story": "You are a man that has found himself in a land being taken over by evil creatures.  You decide to set out to rid the land of it.\n\nYeah, so I'm not much for stories apparently, but more for the game play.\n\nHave fun!",
     "tipsAndCheats": "In level 9, save and copy before choosing your path.  There are 3 endings to find!  This will make it easier than trying to start all of the way over.\n\nIf you get stuck in some levels, throw/shoot some things at walls to trigger other things to do.  There are vague surroundings that point this out.\n\nListen to the old man in level 3!\n\n  It's possible to have the magical sword before entering level 5.  So if you don't have it, or enough hearts, keep searching!",
     "credits": "Well first I want to thank everyone who has helped me in making my indecisions into decisions from all of the help rooms.  The list is a bit long for everyone.\n\nThanks to all of the great questmakers, I probably stole your ideas into some of mine.  Some are definitely stolen.  READ: Please don't kill me Nightmare, OUCH!, and anyone else?\n\nThanks to Gleeok for testing the pilot episode of this quest of lvl 1-4 and his critiques helped me shape the rest.  \n\nI ripped a \"Link Statue\" from Armageddon Forever for this quest.  So thanks OUCH! and whoever originally ripped it (since it's everywhere).",
-    "playable": false,
-    "error": "unexpected section id: \"\\u001a\\u0000!\\u0000\""
+    "playable": true
   },
   {
     "name": "Triforce Peril",
@@ -4013,8 +3973,7 @@
     "story": "When Link defeated Ganon in he's last adventure, he did not noticed that Ganon was not dead... but simply fainted.\nSo, when Ganon woke up, he imediately kidnaped Zelda again.\nBut, while Ganon was going away with Zelda, Link followed him and he discovered that ganon was aking zelda to another land, called Partoga.",
     "tipsAndCheats": "No hints this time!  ",
     "credits": "Vgmusic.com, the guy who made the tileset and me.",
-    "playable": false,
-    "error": "unexpected section id: \"\\b\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "Soshi's Quest",
@@ -4086,8 +4045,7 @@
     "story": "Quest follows the original Zelda Story. Get the triforce, defeat Ganon, save Zelda.\nA little cliche', but none the less cliche'.\nEven the music is cliche'.",
     "tipsAndCheats": "This quest is quite simple. There are markings everywhere. If you see one, chances are something is.",
     "credits": "Credits go to Elise for pointing out the bugs I had in it when I first originally released it to AGN.",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "The Legend of Zelda Remix",
@@ -4162,8 +4120,7 @@
     "story": "Ganon has kidnapped Zelda, Link must save her. Most creative story EVER.",
     "tipsAndCheats": "Get the White Sword and Blue Ring as soon as possible. They make the quest SO much easier.",
     "credits": "Credit to me for making this quest. Also credit to BikdipOnABus aka 'Jish' for a couple of stolen errr... borrowed ideas for Dungeons.",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0000\""
+    "playable": true
   },
   {
     "name": "TLoZ: Secrets of Hyrule",
@@ -4179,8 +4136,7 @@
     "story": "Link is having a peaceful day of NOT fighting Ganon's monsters when... A dark shadow envelops the land and the land begins to change. Pathways disappear, while new ones are made. Link hears an evil laugh as he sets off on his latest adventure.",
     "tipsAndCheats": "Push on every wall, burn every bush, leave no tile unchecked. There are secrets on almost every screen. And most of all, if you find a bug, please post it in the comments.",
     "credits": "I created this whole thing myself, but my bro tested it.\n\nSpecial thanks to PureZC for hosting it ",
-    "playable": false,
-    "error": "unexpected section id: \"\\u001c\\u0000\\u001c\\u0000\""
+    "playable": true
   },
   {
     "name": "Hero's Downfall",
@@ -4204,8 +4160,7 @@
     "story": "You are in search of a power that you don't comprehend in order to save the one you love the most...",
     "tipsAndCheats": "There's a cheat, but I forgot what it was .\n\nUPDATE: Removed the cheat-no need for it now ",
     "credits": "-Plith for the Descendant Tileset\n-Ricky of Kokiri and Master Maniac for beta testing \n-Anyone whose sprites and music I took\n-YOU for playing it!",
-    "playable": false,
-    "error": "unexpected section id: \"\\u0000\\u0000\\u0000\\u0006\""
+    "playable": true
   },
   {
     "name": "Prepare Yourself",

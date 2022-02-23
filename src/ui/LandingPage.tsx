@@ -43,21 +43,21 @@ const Quest = (props: typeof questManifest[number]) => {
   </div>;
 };
 
+const quests = questManifest.filter((q) => q.playable);
+
 const LandingPage = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   return <div class="quest-select flex">
     <div class="quest-select__pane col-1-3">
-      {questManifest.map((quest, i) => {
-        if (!quest.playable) return;
-
+      {quests.map((quest, i) => {
         return <div class={`quest-select__entry md-5 ${selectedIndex === i ? 'selected' : ''}`} onClick={() => setSelectedIndex(i)}>
           {quest.name}
         </div>;
       })}
     </div>
     <div class="quest-select__pane col-2-3">
-      <Quest {...questManifest[selectedIndex]}></Quest>
+      <Quest {...quests[selectedIndex]}></Quest>
     </div>
   </div>;
 };
