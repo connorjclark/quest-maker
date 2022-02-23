@@ -539,12 +539,12 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
     return result;
   }
 
+  const midiCache = new Map<number, string>();
   // @ts-expect-error
-  quest.midis = [];
-  for (const tune of qstData.MIDI.tunes) {
-    if (!tune) continue;
-    // TODO skipping this part if running node script
-    if (typeof window === 'undefined') continue;
+  quest.getMidi = (id: number) => {
+    const tune = qstData.MIDI.tunes[id];
+    if (!tune) return;
+    if (midiCache.has(id)) return midiCache.get(id);
 
     const tracksWithData = tune.tracks.filter((t: Uint8Array) => t.length);
     const format = tracksWithData.length === 1 ? 0 : 1;
@@ -560,9 +560,10 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
 
     const data = concatenate(Uint8Array, ...dataParts);
     const blob = new Blob([data.buffer], { type: 'application/octet-stream' });
-    // @ts-expect-error
-    quest.midis.push(URL.createObjectURL(blob));
-  }
+    const url = URL.createObjectURL(blob);
+    midiCache.set(id, url);
+    return url;
+  };
 
   for (const combo of qstData.CMBO.combos) {
     const tile = makeTile({
