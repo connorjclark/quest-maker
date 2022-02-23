@@ -136,6 +136,7 @@ export default function () {
       HERO_FRAMES: {},
       START_X: 0,
       START_Y: 0,
+      START_DMAP: 0,
     }
   };
 

@@ -1,5 +1,6 @@
 import DecodeZCModule from '../decode_zc/dist/zc.js';
 import struct from './third_party/struct.mjs';
+import defaultItemNames from '../data/zc-item-names.json';
 
 interface Version {
   zeldaVersion: number;
@@ -887,6 +888,10 @@ const sections = {
       ] : []),
     ]);
     const items = itemsJustName.map((w, i) => ({ ...w, ...itemsRest[i] }));
+
+    items.forEach((item, i) => {
+      item.name = item.name || defaultItemNames[i];
+    });
 
     return { items };
   },

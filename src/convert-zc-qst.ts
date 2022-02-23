@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 import * as constants from '../src/constants';
 import makeQuest from '../src/make-quest';
-import { EnemyType, TileType } from '../src/types';
+import { EnemyType, ItemType, TileType } from '../src/types';
 import struct from './third_party/struct.mjs';
 
 const { tileSize, screenWidth, screenHeight } = constants;
@@ -598,9 +598,14 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
   for (const zcItem of qstData.ITEM.items) {
     if (zcItem.name?.startsWith('zz')) break;
 
+    let type = zcItem.family !== undefined ? zcItem.family : undefined;
+    if (type === undefined && zcItem.name.includes('Sword')) {
+      type = ItemType.SWORD;
+    }
+
     quest.items.push({
       name: zcItem.name || '',
-      type: zcItem.family,
+      type,
       tile: zcItem.tile,
     });
   }
