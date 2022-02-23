@@ -43,7 +43,11 @@ const Quest = (props: typeof questManifest[number]) => {
   </div>;
 };
 
-const quests = questManifest.filter((q) => q.playable);
+const knownBadQuests = [
+  'FleckQuest',
+  'Block Smasher',
+];
+const quests = questManifest.filter((q) => q.playable && !knownBadQuests.includes(q.name));
 
 const LandingPage = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);

@@ -22,6 +22,8 @@ class SoundManager {
       // @ts-expect-error
       this.app.state.quest.midis[id] :
       `${this.app.questBasePath}/midi${id}.mid`;
+    if (!url) return;
+
     this.midiPlayer.load(url);
     this.midiPlayer.play();
   }

@@ -361,6 +361,7 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
     images.add(graphic.file);
   }
 
+  console.log({ images });
   for (const image of images) {
     if (image.startsWith('blob:') || image.startsWith('data:')) {
       pixi.loader.add(image, image);
