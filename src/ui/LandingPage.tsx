@@ -49,14 +49,14 @@ const LandingPage = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   return <div class="quest-select flex">
-    <div class="quest-select__pane col-1-3">
+    <div class="quest-select__pane quest-select__pane--left">
       {quests.map((quest, i) => {
         return <div class={`quest-select__entry md-5 ${selectedIndex === i ? 'selected' : ''}`} onClick={() => setSelectedIndex(i)}>
           {quest.name}
         </div>;
       })}
     </div>
-    <div class="quest-select__pane col-2-3">
+    <div class="quest-select__pane quest-select__pane--right">
       <Quest {...quests[selectedIndex]}></Quest>
     </div>
   </div>;
