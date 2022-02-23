@@ -3496,7 +3496,8 @@
     "story": "Three Princesses have been stolen by Ganon, spread out over three quests. Your goal is to gather the pieces of 8 and enter Ganon's lair and destroy him and save your true love! (Typical Zelda fare, yawn)",
     "tipsAndCheats": "Be observant of your surroundings, not everything is the same as it was from the original quests. \nRead the PDF Read-Me for extra tips and hints.\n\nMay no longer work in the Lost Isle Build.",
     "credits": "Artwork Special Thanks:\nPeteo - For Tilework\nRadien - For Cave Tiles\nExate - For Custom Subscreen\nShadowTiger - For Editing Custom Subscreen\nRelic - For Custom Ganon Sprites\nSharon Daniel - For Tilework\n\nDungeon Block Puzzle Special Thanks:\nBlaman\n\nTesters:\nNathaniel\nSynbios1978\nSephiroth\nSystem Error\nBlaman\nLinktheMaster\nMoonwhisper\nDark Nation\nPeteo",
-    "playable": true
+    "playable": false,
+    "error": "unknown 7936"
   },
   {
     "name": "Lost Isle",
@@ -3523,7 +3524,8 @@
     "story": "You (as Link) have crash-landed on a seemingly deserted island out in the middle of the ocean. With no real reference point to indicate where exactly you are in the world, you have no choice but to explore the island and find some way of getting off of it and back to the mainland.  \n\nThough it appears that there was once a civilization here that was thriving, all that has turned to dust and dead bodies.  Undead and foul creatures fill the villages and take shelter in the woods and creep through the dark corners of the island.  What could have caused this great catastrophe and is this great evil still alive and well as you explore the very land that it destroyed?\n\nWelcome to Lost Isle...",
     "tipsAndCheats": "Read the readme pdf file, it has more info than you can shake a stick at and more than likely has the most obvious answers to your general questions about the quest.\n\nMay no longer work in the Lost Isle Build.",
     "credits": "Lost Isle Map Painting:\nNoeL\n\nGraphics:\nPeteo\nGashin\nPrinceMSC\nMr. Z\nRadien\nWildBill\nPureSet Crew\n\nMusic:\nLee Jackson\nRobert Prince\n\nTesters:\n/M/\nelise\nkoopa\nNate\nSephiroth\nShadowTiger\nsynbios1978\nSystem Error\nSpecial Thanks:\nDark Nation\nFreedom, Ian & Jish",
-    "playable": true
+    "playable": false,
+    "error": "unknown 7936"
   },
   {
     "name": "Dark Link's Temple Tour",

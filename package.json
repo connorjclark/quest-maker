@@ -2,7 +2,7 @@
   "type": "module",
   "name": "quest-maker",
   "scripts": {
-    "ts-node": "TS_NODE_TRANSPILE_ONLY=1 node --loader ts-node/esm",
+    "ts-node": "TS_NODE_TRANSPILE_ONLY=1 node --experimental-json-modules --loader ts-node/esm",
     "build": "bash build.sh && parcel build --public-url '.' src/index.html",
     "deploy": "bash deploy/deploy.sh",
     "watch": "parcel src/index.html"

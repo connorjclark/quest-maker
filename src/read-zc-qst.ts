@@ -960,7 +960,7 @@ function parseQstBytes(qstBytes: Uint8Array, debug: boolean) {
       { name: 'author', type: '65s' },
       // TODO the rest
     ]);
-    console.log(data);
+    // console.log(data);
   }
 
   if (preamble !== preambles[1]) {

@@ -507,16 +507,19 @@ async function createTileImages(qstData: any) {
 export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
   const { make, makeAdvanced, makeEnemy, makeGraphic, makeTile, makeWeapon, quest } = makeQuest();
 
-  for (const url of await createTileImages(qstData)) {
-    for (let y = 0; y < 13; y++) {
-      for (let x = 0; x < 20; x++) {
-        makeGraphic({
-          file: url,
-          x: x * tileSize,
-          y: y * tileSize,
-          width: tileSize,
-          height: tileSize,
-        });
+  // TODO skipping this part if running node script
+  if (typeof window !== 'undefined') {
+    for (const url of await createTileImages(qstData)) {
+      for (let y = 0; y < 13; y++) {
+        for (let x = 0; x < 20; x++) {
+          makeGraphic({
+            file: url,
+            x: x * tileSize,
+            y: y * tileSize,
+            width: tileSize,
+            height: tileSize,
+          });
+        }
       }
     }
   }
@@ -540,6 +543,8 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
   quest.midis = [];
   for (const tune of qstData.MIDI.tunes) {
     if (!tune) continue;
+    // TODO skipping this part if running node script
+    if (typeof window === 'undefined') continue;
 
     const tracksWithData = tune.tracks.filter((t: Uint8Array) => t.length);
     const format = tracksWithData.length === 1 ? 0 : 1;
@@ -1037,9 +1042,9 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
   quest.name = '1st';
 
   // @ts-expect-error
-  window.quest = quest;
+  globalThis.quest = quest;
   // @ts-expect-error
-  window.qstData = qstData;
+  globalThis.qstData = qstData;
 
   return quest;
 }

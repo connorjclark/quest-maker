@@ -2,11 +2,15 @@
 // Must first run: ENVIRONMENT=node sh decode_zc/build.sh
 
 import fs from 'fs';
+import { convertZCQst } from '../src/convert-zc-qst.js';
 import { readZCQst } from '../src/read-zc-qst.js';
 
 const questManifest = JSON.parse(fs.readFileSync('data/quest-manifest.json', 'utf-8'));
 
-for (const questMeta of questManifest) {
+for (let i = 0; i < questManifest.length; i++) {
+  const questMeta = questManifest[i];
+  console.log(`processing ${i + 1} of ${questManifest.length}`);
+
   if (questMeta.urls.length === 0) {
     questMeta.playable = false;
     questMeta.error = 'no valid qst files';
@@ -16,7 +20,8 @@ for (const questMeta of questManifest) {
   for (const url of questMeta.urls) {
     const data = new Uint8Array(fs.readFileSync(url));
     try {
-      await readZCQst(data);
+      const qstData = await readZCQst(data);
+      await convertZCQst(qstData);
       questMeta.playable = true;
       questMeta.error = undefined;
     } catch (error: any) {
