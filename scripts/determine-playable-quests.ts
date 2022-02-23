@@ -18,7 +18,7 @@ for (let i = 0; i < questManifest.length; i++) {
   }
 
   for (const url of questMeta.urls) {
-    const data = new Uint8Array(fs.readFileSync(url));
+    const data = new Uint8Array(fs.readFileSync('tmp/' + url));
     try {
       const qstData = await readZCQst(data);
       await convertZCQst(qstData);

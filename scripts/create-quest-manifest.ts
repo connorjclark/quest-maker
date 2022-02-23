@@ -18,16 +18,17 @@ interface QuestManifest {
   credits: string;
 }
 
+let questsMap: Map<string, QuestManifest>;
+
 function loadQuests() {
   const quests: QuestManifest[] = JSON.parse(fs.readFileSync('data/quest-manifest.json', 'utf-8'));
-  const questsMap = new Map<string, QuestManifest>();
+  questsMap = new Map<string, QuestManifest>();
   for (const quest of quests) {
     questsMap.set(quest.urls[0], quest);
   }
-  return questsMap;
 }
 
-function saveQuests(questsMap: Map<string, QuestManifest>) {
+function saveQuests() {
   const quests = [...questsMap.values()];
   const featuredQuests = [
     'BS Zelda 1st Quest',
@@ -40,8 +41,72 @@ function saveQuests(questsMap: Map<string, QuestManifest>) {
   fs.writeFileSync('data/quest-manifest.json', JSON.stringify(quests, null, 2));
 }
 
+async function processId(page: puppeteer.Page, id: number) {
+  const questDir = `zc_quests/${id}`;
+  const projectUrl = `https://www.purezc.net/index.php?page=quests&id=${id}`;
+
+  const allImgResponses: Record<string, puppeteer.HTTPResponse> = {};
+  page.on('response', (response) => {
+    if (response.request().resourceType() === 'image') {
+      allImgResponses[response.url()] = response;
+    }
+  });
+
+  const response = await page.goto(`https://www.purezc.net/index.php?page=quests&id=${id}`, { waitUntil: 'networkidle0' });
+  if (response.status() !== 200) {
+    return;
+  }
+
+  const name = (await page.title()).split('-')[0].trim();
+  const metadataRaw1 = await page.evaluate(() => {
+    return [...document.querySelectorAll('.ipsBox_container span')].map((e) => e.textContent || '');
+  });
+  const metadataRaw2 = await page.evaluate(() => {
+    return [...document.querySelectorAll('#item_contentBox .table_row')].map((e) => e.textContent || '');
+  });
+
+  const imagesRaw = await page.evaluate(() => {
+    return [...document.querySelectorAll('#imagelist2 img')].map((e: any) => e.src);
+  });
+
+  const author = (metadataRaw1[1].match(/Creator: (.*)/ms) || [])[1].trim();
+  const genre = (metadataRaw1[2].match(/Genre: (.*)/ms) || [])[1].trim();
+  const zcVersion = (metadataRaw1[4].match(/ZC Version: (.*)/ms) || [])[1].trim();
+  const description = metadataRaw2[1];
+  const story = metadataRaw2[3];
+  const tipsAndCheats = metadataRaw2[5];
+  const credits = metadataRaw2[7];
+
+  const imageUrls = [];
+  for (let i = 0; i < imagesRaw.length; i++) {
+    const resp = allImgResponses[imagesRaw[i]];
+    if (!resp) continue;
+
+    const ext = imagesRaw[i].match(/\.(\w+)$/)[1];
+    const imageUrl = `${questDir}/image${i}.${ext}`;
+    fs.writeFileSync(imageUrl, await resp.buffer());
+    imageUrls.push(imageUrl);
+  }
+
+  const qstFiles = glob.sync(`${questDir}/*.qst`);
+  const quest: QuestManifest = {
+    name,
+    author,
+    urls: qstFiles,
+    projectUrl,
+    imageUrls,
+    genre,
+    zcVersion,
+    description,
+    story,
+    tipsAndCheats,
+    credits,
+  };
+  questsMap.set(quest.urls[0], quest);
+}
+
 async function main() {
-  const questsMap = loadQuests();
+  loadQuests();
 
   // Process the quests stored in source control.
   for (const questFile of glob.sync('data/zc_quests/*/quest.json')) {
@@ -55,63 +120,15 @@ async function main() {
   const max = 768;
   for (let i = 1; i <= max; i++) {
     console.log(`processing ${i} of ${max}`);
-    const questDir = `tmp/zc_quests/${i}`;
-    const projectUrl = `https://www.purezc.net/index.php?page=quests&id=${i}`;
-    const response = await page.goto(`https://www.purezc.net/index.php?page=quests&id=${i}`, { waitUntil: 'networkidle0' });
-
-    if (response.status() !== 200) {
-      continue;
+    try {
+      await processId(page, i);
+    } catch (e) {
+      console.error(e);
     }
-
-    const name = (await page.title()).split('-')[0].trim();
-    const metadataRaw1 = await page.evaluate(() => {
-      return [...document.querySelectorAll('.ipsBox_container span')].map((e) => e.textContent || '');
-    });
-    const metadataRaw2 = await page.evaluate(() => {
-      return [...document.querySelectorAll('#item_contentBox .table_row')].map((e) => e.textContent || '');
-    });
-
-    const imagesRaw = await page.evaluate(() => {
-      return [...document.querySelectorAll('#imagelist2 img')].map((e: any) => e.src);
-    });
-
-    const author = (metadataRaw1[1].match(/Creator: (.*)/ms) || [])[1].trim();
-    const genre = (metadataRaw1[2].match(/Genre: (.*)/ms) || [])[1].trim();
-    const zcVersion = (metadataRaw1[4].match(/ZC Version: (.*)/ms) || [])[1].trim();
-    const description = metadataRaw2[1];
-    const story = metadataRaw2[3];
-    const tipsAndCheats = metadataRaw2[5];
-    const credits = metadataRaw2[7];
-
-    const imageUrls = [];
-    for (let i = 0; i < imagesRaw.length; i++) {
-      const imagePage = await page.goto(imagesRaw[i]);
-      const ext = imagesRaw[i].match(/\.(\w+)$/)[1];
-      const imageUrl = `${questDir}/image${i}.${ext}`;
-      fs.writeFileSync(imageUrl, await imagePage.buffer());
-      imageUrls.push(imageUrl);
-    }
-
-    const qstFiles = glob.sync(`${questDir}/*.qst`);
-    const quest: QuestManifest = {
-      name,
-      author,
-      urls: qstFiles,
-      projectUrl,
-      imageUrls,
-      genre,
-      zcVersion,
-      description,
-      story,
-      tipsAndCheats,
-      credits,
-    };
-    questsMap.set(quest.urls[0], quest);
-
-    if (questsMap.size % 10 === 0) saveQuests(questsMap);
+    if (questsMap.size % 10 === 0) saveQuests();
   }
 
-  saveQuests(questsMap);
+  saveQuests();
   await browser.close();
 }
 

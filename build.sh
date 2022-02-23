@@ -6,6 +6,9 @@ mkdir -p dist/midi
 mkdir -p dist/quests
 cp -r data/debug dist/quests
 
+mkdir -p tmp/zc_quests
+cp -r data/zc_quests/* tmp/zc_quests
+
 cp node_modules/timidity/libtimidity.wasm dist
 cp -r node_modules/freepats/* dist
 
