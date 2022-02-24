@@ -843,9 +843,9 @@ const sections = {
       { name: 'speed', type: 'B' },
       { name: 'delay', type: 'B' },
       { name: '_padding', type: 'B', if: version.zeldaVersion < 0x193 },
+      { name: 'ltm', type: 'I' },
 
       ...(sversion > 1 ? [
-        { name: 'ltm', type: 'I' },
         { name: '_padding', type: '12s', if: version.zeldaVersion < 0x193 },
         { name: 'family', type: sversion >= 31 ? 'I' : 'B' },
         { name: 'familyType', type: 'B' },
