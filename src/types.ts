@@ -34,6 +34,7 @@ declare global {
 
     interface Screen {
       tiles: ScreenTile[][];
+      layers: Array<{ map: number; x: number; y: number } | null>;
       enemies: Array<{
         enemyId: number;
       }>;

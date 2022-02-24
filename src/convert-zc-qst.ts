@@ -867,8 +867,18 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
           // console.log(zcScreen);
         }
 
+        const layerMap: number[] = zcScreen.layerMap; // TODO: should type zcData just a bit ...
         const screen: QuestMaker.Screen = {
           tiles: [],
+          layers: layerMap.map((m, i) => {
+            if (m === 0) return null;
+
+            return {
+              map: m - 1,
+              x: zcScreen.layerScreen[i] % screenWidth,
+              y: Math.floor(zcScreen.layerScreen[i] / screenWidth),
+            };
+          }),
           enemies: [],
           warps: {},
         };

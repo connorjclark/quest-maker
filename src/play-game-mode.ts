@@ -133,7 +133,22 @@ export class PlayGameMode extends QuestMakerMode {
     mask.endFill();
     this.container.mask = mask;
 
-    this.tileLayer.addChild(this.createScreenContainer(state.mapIndex, state.screenX, state.screenY));
+    const screen = state.quest.maps[state.mapIndex].screens[state.screenX][state.screenY];
+    const tileLayerContainers = [
+      { map: state.mapIndex, x: state.screenX, y: state.screenY },
+      ...screen.layers
+    ].map(layer => layer && this.createScreenLayerContainer(layer.map, layer.x, layer.y));
+    for (let i = 0; i < tileLayerContainers.length; i++) {
+      const layer = tileLayerContainers[i];
+      if (!layer) continue;
+
+      if (i < 3) {
+        this.tileLayer.addChild(layer);
+      } else {
+        this.layers[4].addChild(layer);
+      }
+    }
+
     this.entityLayer.addChild(this.heroEntity);
 
     this.hitTest.clear();
@@ -408,6 +423,25 @@ export class PlayGameMode extends QuestMakerMode {
     };
   }
 
+  createScreenLayerContainer(map: number, sx: number, sy: number) {
+    const container = new PIXI.Container();
+    const state = this.app.state;
+    const screen = state.quest.maps[map].screens[sx][sy];
+
+    for (let x = 0; x < screenWidth; x++) {
+      for (let y = 0; y < screenHeight; y++) {
+        if (screen.tiles[x][y].tile === 0) continue;
+
+        const sprite = this.app.createTileSprite(screen.tiles[x][y]);
+        sprite.x = x * tileSize;
+        sprite.y = y * tileSize;
+        container.addChild(sprite);
+      }
+    }
+
+    return container;
+  }
+
   createScreenContainer(map: number, sx: number, sy: number) {
     const container = new PIXI.Container();
     const state = this.app.state;
@@ -419,13 +453,9 @@ export class PlayGameMode extends QuestMakerMode {
     bg.endFill();
     container.addChild(bg);
 
-    for (let x = 0; x < screenWidth; x++) {
-      for (let y = 0; y < screenHeight; y++) {
-        const sprite = this.app.createTileSprite(screen.tiles[x][y]);
-        sprite.x = x * tileSize;
-        sprite.y = y * tileSize;
-        container.addChild(sprite);
-      }
+    container.addChild(this.createScreenLayerContainer(map, sx, sy));
+    for (const layer of screen.layers) {
+      if (layer) this.createScreenLayerContainer(layer.map, layer.x, layer.y);
     }
 
     return container;
