@@ -121,8 +121,9 @@ export class PlayGameMode extends QuestMakerMode {
     super.show();
     const state = this.app.state;
 
-    this.tileLayer.removeChildren();
-    this.entityLayer.removeChildren();
+    for (const layer of this.layers) {
+      layer.removeChildren();
+    }
 
     this.entities = [];
     this.entities.push(this.heroEntity);
@@ -430,8 +431,6 @@ export class PlayGameMode extends QuestMakerMode {
 
     for (let x = 0; x < screenWidth; x++) {
       for (let y = 0; y < screenHeight; y++) {
-        if (screen.tiles[x][y].tile === 0) continue;
-
         const sprite = this.app.createTileSprite(screen.tiles[x][y]);
         sprite.x = x * tileSize;
         sprite.y = y * tileSize;
@@ -455,7 +454,7 @@ export class PlayGameMode extends QuestMakerMode {
 
     container.addChild(this.createScreenLayerContainer(map, sx, sy));
     for (const layer of screen.layers) {
-      if (layer) this.createScreenLayerContainer(layer.map, layer.x, layer.y);
+      if (layer) container.addChild(this.createScreenLayerContainer(layer.map, layer.x, layer.y));
     }
 
     return container;
