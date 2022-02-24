@@ -460,6 +460,7 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
 
   ui.subscribe((state) => {
     app.state.mapIndex = state.currentMapIndex;
+    app.state.dmapIndex = quest.dmaps.findIndex(dmap => dmap.map === state.currentMapIndex);
     app.state.currentMap = quest.maps[state.currentMapIndex];
     app.state.screenX = state.screenX;
     app.state.screenY = state.screenY;
