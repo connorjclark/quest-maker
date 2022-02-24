@@ -19,12 +19,15 @@ const searchParamsObj = {
   dev: searchParams.has('dev'),
   zcdebug: searchParams.get('zcdebug'),
 }
+window.IS_DEV = searchParamsObj.dev;
+window.IS_LOCALHOST = location.hostname === 'localhost';
 
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
 // TODO: why is this a class?
 class Screen {
   public tiles: { tile: number }[][] = [];
+  public layers = [];
   public enemies: QuestMaker.Screen['enemies'] = [];
   public warps = {};
 
@@ -101,6 +104,8 @@ function createQuest(): QuestMaker.Quest {
     graphic: swordGraphics[0].id,
   });
   quest.items.push({
+    id: 1,
+    cset: 0,
     type: ItemType.SWORD,
     tile: swordGraphics[0].id,
     name: 'Sword',
@@ -294,7 +299,7 @@ function createQuest(): QuestMaker.Quest {
 // TODO: real quest loading/saving.
 async function loadQuest(path: string): Promise<QuestMaker.Quest> {
   if (path.endsWith('.qst')) {
-    return await convertZCQst(await readZCQst(path, window.IS_DEV || location.hostname === 'localhost'));
+    return await convertZCQst(await readZCQst(path, window.IS_DEV || window.IS_LOCALHOST));
   }
 
   if (path === 'quests/debug') return createQuest();
@@ -384,17 +389,16 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
   if (localStorage.getItem('lastState')) {
     const lastStateByQuest = getLocalStorage();
     const lastState = lastStateByQuest[questBasePath];
-    if (lastState && 'dmapIndex' in lastState && quest.dmaps[lastState.dmapIndex] && quest.dmaps[lastState.dmapIndex]) {
-      // TODO: just load the initial screen for now, not the last loaded one.
-      // initialDmap = lastState.dmapIndex;
-      // initialScreenX = lastState.screenX;
-      // initialScreenY = lastState.screenY;
+    if (window.IS_LOCALHOST && lastState && 'mapIndex' in lastState) {
+      initialDmap = quest.dmaps.findIndex(dmap => dmap.map === lastState.mapIndex);
+      initialScreenX = lastState.screenX;
+      initialScreenY = lastState.screenY;
     }
   }
   window.addEventListener('unload', () => {
-    const { dmapIndex, screenX, screenY } = state;
+    const { mapIndex, screenX, screenY } = state;
     const lastStateByQuest = getLocalStorage();
-    lastStateByQuest[questBasePath] = { dmapIndex, screenX, screenY };
+    lastStateByQuest[questBasePath] = { mapIndex, screenX, screenY };
     saveLocalStorage(lastStateByQuest);
   });
 
@@ -446,12 +450,17 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
 
   window.app = app;
 
-  ui.actions.setQuest(quest);
-  ui.actions.setCurrentScreen(state.screenX, state.screenY);
-  ui.actions.setCurrentMap(state.currentMap);
+  ui = makeUI(document.body, {
+    mode: 'edit',
+    quest,
+    currentMapIndex: initialMap,
+    screenX: initialScreenX,
+    screenY: initialScreenY,
+  });
 
   ui.subscribe((state) => {
-    if (state.currentMap) app.state.currentMap = state.currentMap;
+    app.state.mapIndex = state.currentMapIndex;
+    app.state.currentMap = quest.maps[state.currentMapIndex];
     app.state.screenX = state.screenX;
     app.state.screenY = state.screenY;
     app.state.currentScreen = app.state.currentMap.screens[app.state.screenX][app.state.screenY];
@@ -470,7 +479,7 @@ function tick(app: QuestMaker.App, dt: number) {
     if (app.state.editor.isPlayTesting) {
       app.setMode(editorMode);
       ui.actions.setCurrentScreen(app.state.screenX, app.state.screenY);
-      ui.actions.setCurrentMap(app.state.currentMap);
+      ui.actions.setCurrentMapIndex(app.state.mapIndex);
       ui.actions.setMode('edit');
     } else {
       app.destroyChildren(app.pixi.stage);
@@ -495,7 +504,6 @@ function tick(app: QuestMaker.App, dt: number) {
   app.tick(dt);
 }
 
-window.IS_DEV = searchParamsObj.dev;
 // @ts-ignore
 window.debugScreen = () => {
   if (!window.app) return;
@@ -522,7 +530,6 @@ let ui: ReturnType<typeof makeUI>;
 
 if (searchParamsObj.quest) {
   selectQuest(searchParamsObj.quest);
-  ui = makeUI(document.body);
 } else if (searchParamsObj.zcdebug) {
   readZCQst(searchParamsObj.zcdebug);
 } else {

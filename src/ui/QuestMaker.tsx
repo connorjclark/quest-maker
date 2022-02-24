@@ -27,17 +27,18 @@ class Header extends Component {
 type BottomProps = {
   screenX: number;
   screenY: number;
-  currentMap?: QuestMaker.Map_;
+  currentMapIndex: number;
   maps: QuestMaker.Map_[];
 }
 class Bottom extends Component<BottomProps> {
   render() {
     const context = useContext(AppContext);
     const ref = useRef<HTMLCanvasElement>(null);
+    const currentMap = this.props.maps[this.props.currentMapIndex];
 
     useEffect(() => {
       if (!ref.current) return;
-      if (!this.props.currentMap) return;
+      if (!currentMap) return;
 
       const canvas = ref.current as HTMLCanvasElement;
       const context = canvas.getContext('2d');
@@ -47,7 +48,7 @@ class Bottom extends Component<BottomProps> {
 
       for (let x = 0; x < 16; x++) {
         for (let y = 0; y < 9; y++) {
-          const screen = x < this.props.currentMap.screens.length && this.props.currentMap.screens[x][y];
+          const screen = x < currentMap.screens.length && currentMap.screens[x][y];
           let color = 'black';
           if (screen) color = '#0000ff';
           if (x === this.props.screenX && y === this.props.screenY) color = '#00ff00';
@@ -56,17 +57,16 @@ class Bottom extends Component<BottomProps> {
           context.fillRect(x * size, y * size, size, size);
         }
       }
-    }, [this.props.currentMap, this.props.screenX, this.props.screenY]);
+    }, [currentMap, this.props.screenX, this.props.screenY]);
 
     const options = []
     for (let i = 0; i < this.props.maps.length; i++) {
-      options.push(<option>Map {i}</option>);
+      options.push(<option value={i}>Map {i}</option>);
     }
     
     return <div>
       <canvas ref={ref}></canvas>
-      {/* @ts-ignore */}
-      <select onChange={(e) => context.setCurrentMap(this.props.maps[e.target.selectedIndex])}>
+      <select value={this.props.currentMapIndex} onChange={(e: any) => context.setCurrentMapIndex(Number(e.target.value))}>
         {options}
       </select>
       {this.props.screenX}, {this.props.screenY}
@@ -96,9 +96,9 @@ const actions = () => ({
       screenY: y,
     }
   },
-  setCurrentMap(state: QuestMakerState, map: QuestMaker.Map_): Partial<QuestMakerState> {
+  setCurrentMapIndex(state: QuestMakerState, mapIndex: number): Partial<QuestMakerState> {
     return {
-      currentMap: map,
+      currentMapIndex: mapIndex,
     }
   },
   setSelectedTile(state: QuestMakerState, selectedTile: QuestMaker.Tile): Partial<QuestMakerState> {
@@ -111,7 +111,7 @@ const actions = () => ({
 interface QuestMakerState {
   mode: 'play' | 'edit';
   quest?: QuestMaker.Quest;
-  currentMap?: QuestMaker.Map_;
+  currentMapIndex: number;
   screenX: number;
   screenY: number;
   selectedTile?: QuestMaker.Tile;
@@ -128,6 +128,8 @@ class QuestMaker extends Component<QuestMakerProps> {
   }
 
   render(props: QuestMakerProps) {
+    const currentMap = props.quest?.maps[props.currentMapIndex];
+
     useEffect(() => {
       document.addEventListener('click', e => {
         if (!(e.target instanceof HTMLElement)) return;
@@ -187,7 +189,7 @@ class QuestMaker extends Component<QuestMakerProps> {
       <div class="canvas">
         {props.quest && props.mode === 'edit' ?
           // @ts-expect-error
-          <EditorScreenArea canvas={window.app.pixi.view} map={props.currentMap} screenX={props.screenX} screenY={props.screenY}></EditorScreenArea> :
+          <EditorScreenArea canvas={window.app.pixi.view} map={currentMap} screenX={props.screenX} screenY={props.screenY}></EditorScreenArea> :
           null}
       </div>
       <div class="tiles">
@@ -196,7 +198,7 @@ class QuestMaker extends Component<QuestMakerProps> {
           null}
       </div>
       <div class="bottom">
-        <Bottom maps={props.quest?.maps || []} currentMap={props.currentMap} screenX={props.screenX} screenY={props.screenY}></Bottom>
+        <Bottom maps={props.quest?.maps || []} currentMapIndex={props.currentMapIndex} screenX={props.screenX} screenY={props.screenY}></Bottom>
         <div>
           Press Shift to toggle play test.
           <br></br>Use arrow keys to move screens.
@@ -213,7 +215,8 @@ class QuestMaker extends Component<QuestMakerProps> {
   }
 
   private onKeyUp(e: KeyboardEvent) {
-    if (!this.props.currentMap) return;
+    const currentMap = this.props.quest?.maps[this.props.currentMapIndex];
+    if (!currentMap) return;
 
     let dx = 0, dy = 0;
     if (e.key === 'ArrowLeft') dx -= 1;
@@ -222,19 +225,14 @@ class QuestMaker extends Component<QuestMakerProps> {
     else if (e.key === 'ArrowDown') dy += 1;
 
     if (dx !== 0 || dy !== 0) {
-      const x = Utils.clamp(0, this.props.screenX + dx, this.props.currentMap.screens.length - 1)
-      const y = Utils.clamp(0, this.props.screenY + dy, this.props.currentMap.screens[0].length - 1)
+      const x = Utils.clamp(0, this.props.screenX + dx, currentMap.screens.length - 1)
+      const y = Utils.clamp(0, this.props.screenY + dy, currentMap.screens[0].length - 1)
       this.props.setCurrentScreen(x, y);
     }
   }
 }
 
-export function makeUI(parentEl: HTMLElement) {
-  const initialState: QuestMakerState = {
-    mode: 'edit',
-    screenX: 0,
-    screenY: 0,
-  };
+export function makeUI(parentEl: HTMLElement, initialState: QuestMakerState) {
   const { SubApp, exportedActions, subscribe } = createSubApp(QuestMaker, initialState, actions);
   const el = render(<SubApp></SubApp>, parentEl);
   return {el, actions: exportedActions, subscribe};

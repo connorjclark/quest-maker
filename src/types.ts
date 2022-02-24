@@ -23,6 +23,7 @@ export enum ItemType {
 declare global {
   interface Window {
     IS_DEV: boolean;
+    IS_LOCALHOST: boolean;
     app?: QuestMakerApp;
   }
 
