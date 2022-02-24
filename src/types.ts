@@ -186,9 +186,11 @@ declare global {
     }
 
     interface Item {
+      id: number;
       name: string;
       type: ItemType;
       tile: number;
+      cset: number;
     }
 
     interface Weapon {

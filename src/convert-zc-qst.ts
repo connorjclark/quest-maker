@@ -610,9 +610,11 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
     }
 
     quest.items.push({
+      id: quest.items.length,
       name: zcItem.name || '',
       type,
       tile: zcItem.tile,
+      cset: zcItem.csets,
     });
   }
 
@@ -983,7 +985,7 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
       }
 
       return {
-        gfxs: [d.tile, d.tile + 1, d.tile + 2],
+        gfxs: [d.tile, d.tile + 1],
         flip: d.flip,
       }
     });

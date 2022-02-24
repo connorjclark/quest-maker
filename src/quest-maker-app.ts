@@ -45,6 +45,16 @@ export class QuestMakerApp extends App<QuestMaker.State> {
 
   constructor(pixi: PIXI.Application, state: QuestMaker.State, public ui: ReturnType<typeof makeUI>) {
     super(pixi, state);
+
+    // @ts-expect-error
+    window.createDebugGraphic = (id: number) => {
+      const sprite = this.createGraphicSprite(id, 6);
+      // @ts-expect-error
+      if (this.debugSprite) this.pixi.stage.removeChild(this.debugSprite);
+      // @ts-expect-error
+      this.debugSprite = sprite;
+      this.pixi.stage.addChild(sprite);
+    };
   }
 
   resize() {
@@ -52,8 +62,8 @@ export class QuestMakerApp extends App<QuestMaker.State> {
   }
 
   createItemSprite(id: number) {
-    const tile = this.state.quest.items[id].tile;
-    return this.createGraphicSprite(tile);
+    const {tile, cset} = this.state.quest.items[id];
+    return this.createGraphicSprite(tile, cset);
   }
 
   createTileSprite(screenTile: QuestMaker.ScreenTile) {
