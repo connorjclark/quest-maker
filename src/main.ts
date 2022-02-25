@@ -18,6 +18,9 @@ const searchParamsObj = {
   quest: searchParams.get('quest'),
   dev: searchParams.has('dev'),
   zcdebug: searchParams.get('zcdebug'),
+  dmap: searchParams.get('dmap'),
+  x: searchParams.get('x'),
+  y: searchParams.get('y'),
 }
 window.IS_DEV = searchParamsObj.dev;
 window.IS_LOCALHOST = location.hostname === 'localhost';
@@ -385,6 +388,12 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
     initialScreenY = quest.dmaps[initialDmap].continueScreenY;
   }
 
+  if (searchParamsObj.dmap && searchParamsObj.x && searchParamsObj.y) {
+    initialDmap = Number(searchParamsObj.dmap);
+    initialScreenX = Number(searchParamsObj.x);
+    initialScreenY = Number(searchParamsObj.y);
+  }
+
   // Simple code to quickly persist last screen position.
   if (localStorage.getItem('lastState')) {
     const lastStateByQuest = getLocalStorage();
@@ -466,7 +475,9 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
     app.state.screenY = state.screenY;
     app.state.currentScreen = app.state.currentMap.screens[app.state.screenX][app.state.screenY];
     app.state.editor.currentTile = state.selectedTile?.id || 0;
+    updateUrl(app.state);
   });
+  updateUrl(app.state);
 
   window.addEventListener('resize', () => app.resize());
   app.resize();
@@ -518,13 +529,19 @@ window.debugScreen = () => {
   });
 };
 
+function updateUrl(state: QuestMaker.State) {
+  const url = new URL(location.href);
+  const searchParams = new URLSearchParams(url.search);
+  searchParams.set('dmap', String(state.dmapIndex));
+  searchParams.set('x', String(state.screenX));
+  searchParams.set('y', String(state.screenY));
+  url.search = searchParams.toString();
+  history.replaceState({}, '', url);
+}
+
 async function selectQuest(questPath: string) {
   const quest = await loadQuest(questPath);
-  const url = new URL(location.href);
-  url.search = `quest=${questPath}`;
-  history.replaceState({}, '', url.toString());
-  // selectQuestEl.value = questPath;
-  load(quest, questPath);
+  await load(quest, questPath);
 }
 
 let ui: ReturnType<typeof makeUI>;
