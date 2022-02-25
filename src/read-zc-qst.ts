@@ -650,6 +650,7 @@ const sections = {
 
     return { tunes };
   },
+  // https://github.com/ArmageddonGames/ZeldaClassic/blob/bdac8e682ac1eda23d775dacc5e5e34b237b82c0/src/qst.cpp#L11056
   'SFX ': (reader: Reader, version: Version, sversion: number, cversion: number) => {
     let wavCount = 256;
     if (sversion < 6) wavCount = 128;
@@ -666,15 +667,16 @@ const sections = {
 
     const sfxs = [];
     for (let i = 0; i < wavCount; i++) {
-      let name = '';
       if (sversion > 4 && (!namesBitFlags || accessFlag(namesBitFlags, i))) {
-        name = reader.readStr(36);
+        const name = reader.readStr(36);
+        sfxs.push({ name });
+      } else {
+        sfxs.push(null);
       }
-      sfxs.push({ name });
     }
 
     for (let i = 1; i < wavCount; i++) {
-      if (namesBitFlags && !accessFlag(namesBitFlags, i)) {
+      if (namesBitFlags && !accessFlag(namesBitFlags, i - 1)) {
         continue;
       }
 
@@ -688,6 +690,7 @@ const sections = {
         { name: 'loopEnd', type: 'I' },
         { name: 'param', type: 'I' },
       ]);
+      if (sfxRest.bits !== 8 && sfxRest.bits !== 16) break; // TODO ? http://localhost:1234/?quest=zc_quests%2F446%2FPromised+Lands.qst
       let numBytes = (sfxRest.bits === 8 ? 1 : 2) * (sfxRest.stereo === 0 ? 1 : 2) * sfxRest.length;
       if (sversion < 3) {
         numBytes = (sfxRest.bits === 8 ? 1 : 2) * sfxRest.length;

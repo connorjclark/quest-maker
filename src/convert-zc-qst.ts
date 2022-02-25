@@ -566,6 +566,32 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
     return url;
   };
 
+  // @ts-expect-error
+  quest.getSfx = (id: number) => {
+    const sfx = qstData.SFX.sfxs[id];
+
+    const samplerate = sfx.frequency;
+    const channels = sfx.stereo ? 2 : 1;
+    const datalen = sfx.length * channels * sfx.bits / 8;
+    const size = datalen + 36;
+    const bytesPerSecond = samplerate * channels * sfx.bits / 8;
+    const blockalign = channels * sfx.bits / 8;
+
+    const type = 1;
+    const prefix = new Uint8Array(
+      struct('<4sI4s4sIHHIIHH4sI').pack('RIFF', size, 'WAVE', 'fmt ', 16, type, channels, samplerate, bytesPerSecond, blockalign, sfx.bits, 'data', datalen)
+    );
+
+    for (let i = 0; i < sfx.data.length; i++) {
+      sfx.data[i] = sfx.data[i] ^ 0x80;
+    }
+
+    const data = concatenate(Uint8Array, prefix, sfx.data);
+    const blob = new Blob([data.buffer], { type: 'audio/wav' });
+    const url = URL.createObjectURL(blob);
+    return url;
+  };
+
   for (const combo of qstData.CMBO.combos) {
     const tile = makeTile({
       graphicId: combo.tile,
