@@ -3476,8 +3476,7 @@
     "story": "Three Princesses have been stolen by Ganon, spread out over three quests. Your goal is to gather the pieces of 8 and enter Ganon's lair and destroy him and save your true love! (Typical Zelda fare, yawn)",
     "tipsAndCheats": "Be observant of your surroundings, not everything is the same as it was from the original quests. \nRead the PDF Read-Me for extra tips and hints.\n\nMay no longer work in the Lost Isle Build.",
     "credits": "Artwork Special Thanks:\nPeteo - For Tilework\nRadien - For Cave Tiles\nExate - For Custom Subscreen\nShadowTiger - For Editing Custom Subscreen\nRelic - For Custom Ganon Sprites\nSharon Daniel - For Tilework\n\nDungeon Block Puzzle Special Thanks:\nBlaman\n\nTesters:\nNathaniel\nSynbios1978\nSephiroth\nSystem Error\nBlaman\nLinktheMaster\nMoonwhisper\nDark Nation\nPeteo",
-    "playable": false,
-    "error": "unknown 7936"
+    "playable": true
   },
   {
     "name": "Lost Isle",
@@ -3505,7 +3504,7 @@
     "tipsAndCheats": "Read the readme pdf file, it has more info than you can shake a stick at and more than likely has the most obvious answers to your general questions about the quest.\n\nMay no longer work in the Lost Isle Build.",
     "credits": "Lost Isle Map Painting:\nNoeL\n\nGraphics:\nPeteo\nGashin\nPrinceMSC\nMr. Z\nRadien\nWildBill\nPureSet Crew\n\nMusic:\nLee Jackson\nRobert Prince\n\nTesters:\n/M/\nelise\nkoopa\nNate\nSephiroth\nShadowTiger\nsynbios1978\nSystem Error\nSpecial Thanks:\nDark Nation\nFreedom, Ian & Jish",
     "playable": false,
-    "error": "unknown 7936"
+    "error": "Expected values to be strictly equal:\n\n5 !== 0\n"
   },
   {
     "name": "Dark Link's Temple Tour",
@@ -5742,7 +5741,8 @@
     "story": "Play as the boulder from Pokemon as you go on an epic adventure throughout the depths of Mt. Moon, on a perilous quest for revenge!",
     "tipsAndCheats": "None.",
     "credits": "Lithium/Alison - game, graphics\nTaco_Chopper - graphics",
-    "playable": true
+    "playable": false,
+    "error": "Cannot read properties of undefined (reading 'length')"
   },
   {
     "name": "Link's Treasure Hunt",
@@ -5769,7 +5769,8 @@
     "story": "After defeating Ganon and rescuing Zelda Link decides to go on a treasure hunt only to find that their princess has been kidnapped by another pig demon who also happens to be called Ganon. The princess separated a 24 lb golden triangle into 8 segments to save it from ganon. You goal is to find this triangle and hopefully save the princess too.",
     "tipsAndCheats": "You might need help so PM me or start a thread to get my attention.",
     "credits": "This quest was created by me. Graphics and Sound are originally created by Nintendo and redone by AGN. Music is from Super Adventure Island 2, Crystalis, Lufia, and Adventure Island 2.",
-    "playable": true
+    "playable": false,
+    "error": "Cannot read properties of undefined (reading 'length')"
   },
   {
     "name": "My First Quest",
@@ -5790,7 +5791,8 @@
     "story": "You are Link, a young lad who is chosen by the gods to defeat Ganon.",
     "tipsAndCheats": "If you get stuck start a thread or PM me.",
     "credits": "blackbishop89",
-    "playable": true
+    "playable": false,
+    "error": "Cannot read properties of undefined (reading 'length')"
   },
   {
     "name": "Requiem for Hyrule",
@@ -5812,7 +5814,7 @@
     "tipsAndCheats": "Try everything!! Including pushing walls and pots.\nCan't find the sword? Get the lamp first then use it just outside the village.",
     "credits": "Credits to elise, Crackers, and Dafeedil for beta testing.\n\nVGMusic for the midis.\n\nPureZC for the tileset.",
     "playable": false,
-    "error": "unknown 512"
+    "error": "4 == 0"
   },
   {
     "name": "Bowl America",
@@ -5910,8 +5912,7 @@
     "story": "Link is resting in his house in the woods, when he is suddenly awaken by a shouting. When he goes out to check what it is he finds an injured soldier, that before dying entrusts link into the mission of saving Hyrule Castle and rescuing princess Zelda. But before going to the castle, he must find the 4 triforce pieces that the soldier achieved to hide before Ganondorf´s soldiers trapped him…\n\nThe rest of the story you will it find out while you play the quest.",
     "tipsAndCheats": "Try to complete the four dungeons simultaneously, for they are of increasing difficulty. In each one you´ll find 3 items and 4 keys to complete them. \nIf you get stuck, you´re probably missing a bombable wall or a raft path in the dungeon. Try to also find the secrets, like the maps and compasses.",
     "credits": "Developers of zeldaclassic and pure tileset",
-    "playable": false,
-    "error": "unknown 512"
+    "playable": true
   },
   {
     "name": "\"Fun in the Sun\" 8",
@@ -5962,7 +5963,7 @@
     "tipsAndCheats": "Remeber If you think, a boss is too hard. go out and fight and buy more upgrades, and If you any more help just PM, me Or start a topic in the \"Quest Players' Discussion and Help\" area, of the forums okay ",
     "credits": "Nintendo for making the Legend of Zelda, \nPureZC for hosting,\n\n~BB89: for scripting the the upgradeable sword , and boss's, And for helping me build level 4. \n~Isdrakthü: For making the side-view ladder Script, and for helping me to get it in my game.\n~Pokemonmaster64: For notifying me of a bug in level 2.\n~Jared: For testing some more, and helping me find and get rid of some more annoyance's and some string help.\n~kurt91: for Typo help\n\nAnd To all the people that made all the Midi's I used, and The ZC developers.",
     "playable": false,
-    "error": "unknown 512"
+    "error": "4 == 0"
   },
   {
     "name": "Legend of Mario",
@@ -6075,7 +6076,7 @@
     "tipsAndCheats": "No tips here. If you really need help on this simple quest. Just PM me ok?",
     "credits": "~PureZC for hosting~\n~Me for being bored~\n~ZC developers~",
     "playable": false,
-    "error": "unknown 512"
+    "error": "4 == 0"
   },
   {
     "name": "EA: Leisure Stroll",
@@ -6098,7 +6099,7 @@
     "tipsAndCheats": "-almost all screens have a secret\n-all dungeons have walk through and bombable walls, as well as some secret items\n-tricky dungeons are explained by NPCs almost nearby\n-secrets aren't terribly hard to find, the trickier ones have NPCs subtly hint at them",
     "credits": "Schwa - Item Eater script",
     "playable": false,
-    "error": "unknown 512"
+    "error": "4 == 0"
   },
   {
     "name": "I Like Chicken... in HELL!!1: Gray's Adventure",
@@ -6144,7 +6145,7 @@
     "tipsAndCheats": "The game is fundamentally exploration driven, so be sure to explore.  If you can't find what to do in an area, head to the opposite area and look around there.  And since you need a heart half from each area to make a new heart container, be sure to collect them from both areas.",
     "credits": "Music: All the creators of the songs in the Original Midi Pack, and Alestance for compiling them all into one easy package.\nGraphics: Mr. Z for PTUX, Peteo and DFW for the Lost Isle Set, and Prospekt for his edited sprites, which I edited some more.\nScripting: Schwa and SpacemanDan for support and help, Blackbiship and Joe123 for downloaded scripts.\nInspiration: Pokemonmaster64 (AKA Moosh), who encouraged me (both knowingly and unknowingly) to be a bit more script-heavy.\nSupport and criticism: TS, SC, Schwa, and William, who all gave me support, as well as critique on various things.\nPost-release bugfinders: Octorockoncrack",
     "playable": false,
-    "error": "unknown 7936"
+    "error": "Expected values to be strictly equal:\n\n5 !== 4\n"
   },
   {
     "name": "Path of Shadows",
@@ -6295,7 +6296,7 @@
     "tipsAndCheats": "No cheats. If you need any help on a certain level, just ask on this page here or in the help thread\nYou have to set up the Ex1-4 buttons, to control the raft. Set these up in the ZC player!\nTry not to stand on the edge of a raft, before moving it or it might float off without you. This is due to a bug with a script.",
     "credits": "aaa2 - Controllable Raft Scriptblackbishop89 - Blue/Red Block ScriptMoscowModder - Various important ScriptsBjorn Lynne - Various midisRadien - Some tiles from his DoR tilesetI made the palette and many of the tiles in this quest myself.",
     "playable": false,
-    "error": "unknown 7936"
+    "error": "Expected values to be strictly equal:\n\n5 !== 0\n"
   },
   {
     "name": "Zelda Hero of Courage",
@@ -6317,7 +6318,7 @@
     "tipsAndCheats": "none",
     "credits": "VGMusic for midis and PureZC for letting me upload this quest!",
     "playable": false,
-    "error": "unknown 512"
+    "error": "4 == 0"
   },
   {
     "name": "A Very Confusing Quest",
@@ -6339,8 +6340,7 @@
     "story": "After Ganon's Defeat, the monsters of Hyrule got angry. they got so angy that their master was defeated, they rearranged Hyrule, so it bacame more difficult for link to trek through. One Moblin shot an arrow at Link;s back, spilling blood that he collacted and carried to Ganon. he was then Resurrected.\nZelda quickly took the Triforce of Power, split it into eight pieces, and his them in dungeons and haunted houses around Hyrule. She trusted Link into collecting them once Ganon took her.\nIn order to obtain the triforce peices, Link must first defeat the guardians of the Dungeons, then Defeat the Dungeon Masters. Along the way, link must obtain many heart containers.",
     "tipsAndCheats": "Level 1: Riddle: What's Big, mean, and Green?\n\nLevel 2: Riddle: I like my surroundings nice and cool. i don't like Wizzrobes or Octoroks.\n\nLevel 3: Riddle: I am the guardian of the seventh item of the oracle.\n\nLevel 4: Riddle: I don't Appear  in many games! Especially Ocarina of Time!\n\nAll of the above are Characters or Bosses in the Zelda Series.\n\nThey are cheat levels.",
     "credits": "BikdipOnABus, for Tutorials\nAlphadog, for Tutorials",
-    "playable": false,
-    "error": "unknown 512"
+    "playable": true
   },
   {
     "name": "Royaldarkness",
@@ -6364,7 +6364,7 @@
     "tipsAndCheats": "many secrets now and you can get 16 or more hearts  you can now get the L3 blade and the Master sword(big secret) have as many hearts before going to level 9 for its more challenging than it was before and plus have a lot of equipment before going into the dark world ",
     "credits": "Creators of ZeldaClassic and ZQuest.\nNintendo and bringing Zelda into games.\nall who inspired me to start ZeldaClassic (Bikdiponabus, Teamudf and OhLookNoNumbers)",
     "playable": false,
-    "error": "unknown 7936"
+    "error": "4 == 0"
   },
   {
     "name": "Hero's Legend",
@@ -6499,7 +6499,8 @@
     "story": "There is not much of story but if you want one here!\n\nYou are a hero, on a quest for a Crown of no real significance.\n\n(There's the story. Sorry I suck in this area of quest making <_<)",
     "tipsAndCheats": "Bomb everything, Look for walk-though wall's and mountains.\nBurn everything. (you can never tell what you might find)\nIf you need any more help post in  Quest Players' Discussion and Help,\nOr PM me.",
     "credits": "Shallow Water Splash script: MoscowModder\nHeart Piece Message script: MoscowModder\nSignpost script: Joe123\nItem Pick Up Message script: Joe123\nUpgradable sword: Blackbishop89\nVarious Tiles: AgentLym, Anthus\nMany people that made the midi's\n\nPureZC for hosting, and Me for being bored.",
-    "playable": true
+    "playable": false,
+    "error": "Cannot read properties of undefined (reading 'length')"
   },
   {
     "name": "First Quest Layered",
@@ -6566,7 +6567,8 @@
     "story": "You know don't you?.... No you don't? OMGYOUMAKEMESOMAD!!!....Sorry forgive me ",
     "tipsAndCheats": "Just use the knowledge of the first quest to get you through this confusing game >_<",
     "credits": "Talon he's the one who made the game\nVentus (hey that's me!) I beta tested and fixed bugs!!!\n\nPureZC They are hosting this quest\nAND all the players who reported bugs.\n\nAND ONE MORE!!!\nNintendo for making Zelda and you know...stuff yeah... stuff.",
-    "playable": true
+    "playable": false,
+    "error": "Cannot read properties of undefined (reading 'length')"
   },
   {
     "name": "Hero of Lowrule 2",
@@ -6906,7 +6908,8 @@
     "story": "Link arrives on a Tropical Island to find it plauged by strange weather. Sumer Autumn Winter and Spring all in one day what could be causing it.",
     "tipsAndCheats": "Not passworded look at the editor. E is L4 cheat pur are others",
     "credits": "Pure Creator",
-    "playable": true
+    "playable": false,
+    "error": "Cannot read properties of undefined (reading 'length')"
   },
   {
     "name": "The Hero's Memory",
@@ -8118,7 +8121,7 @@
     "tipsAndCheats": "There is no password... GO CRAZY!",
     "credits": "Thanks To:Atrus W0nderHolidaygolightEddyTheOliveiraThe Creator (Joelmacool)",
     "playable": false,
-    "error": "unknown 7936"
+    "error": "4 == 0"
   },
   {
     "name": "Master Quest Chapter 2",
@@ -14478,7 +14481,7 @@
     "tipsAndCheats": "N/A",
     "credits": "Moosh - ScriptingZoriaRPG - ContributionsPrevious Staff - Prevous Contributions",
     "playable": false,
-    "error": "Cannot read properties of undefined (reading 'includes')"
+    "error": "qstData.ITEM.items is not iterable"
   },
   {
     "name": "Wanderlust",
