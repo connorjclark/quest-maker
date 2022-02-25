@@ -598,7 +598,7 @@ export class PlayGameMode extends QuestMakerMode {
     entity.delta = delta;
     entity.speed = speed;
 
-    const makeTextures = () => [weapon.graphic].map(f => this.app.createGraphicSprite(f, weapon.cset).texture);
+    const makeTextures = () => [weapon.graphic].map(f => this.app.createGraphicSprite(f, -1, weapon.cset).texture);
 
     if (weapon.rotate) {
       const rotated = (textures: PIXI.Texture[], rotation: PIXI.GD8Symmetry) => {

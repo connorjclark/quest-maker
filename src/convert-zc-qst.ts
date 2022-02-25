@@ -615,7 +615,7 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
       name: zcItem.name || '',
       type,
       tile: zcItem.tile,
-      cset: zcItem.csets,
+      cset: zcItem.csets & 0xF,
     });
   }
 

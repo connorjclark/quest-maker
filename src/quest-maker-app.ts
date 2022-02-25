@@ -74,7 +74,7 @@ export class QuestMakerApp extends App<QuestMaker.State> {
 
   createItemSprite(id: number) {
     const { tile, cset } = this.state.quest.items[id];
-    return this.createGraphicSprite(tile, this.getCurrentPaletteIndex(), cset);
+    return this.createGraphicSprite(tile, -1, cset);
   }
 
   createTileSprite(screenTile: QuestMaker.ScreenTile, paletteIndex = -1) {

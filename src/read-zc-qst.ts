@@ -838,7 +838,7 @@ const sections = {
     const itemsRest = readArrayFields(reader, numItems, [
       { name: 'tile', type: sversion > 35 ? 'I' : 'H' },
       { name: 'misc', type: 'B' },
-      { name: 'csets', type: 'B' },
+      { name: 'csets', type: 'B' }, // ffffcccc (f:flash cset, c:cset)
       { name: 'frames', type: 'B' },
       { name: 'speed', type: 'B' },
       { name: 'delay', type: 'B' },
