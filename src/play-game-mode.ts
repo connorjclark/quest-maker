@@ -548,7 +548,7 @@ export class PlayGameMode extends QuestMakerMode {
     if (enemy.frames) {
       // TODO: probably will remove all this.
       for (const [name, graphicIds] of Object.entries(enemy.frames)) {
-        framesToTextures[name] = graphicIds.map(id => this.app.createGraphicSprite(id, cset).texture);
+        framesToTextures[name] = graphicIds.map(id => this.app.createGraphicSprite(id, -1, cset).texture);
       }
 
       if (framesToTextures.left && !framesToTextures.right) {
