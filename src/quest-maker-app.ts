@@ -120,9 +120,11 @@ export class QuestMakerApp extends App<QuestMaker.State> {
     if (paletteIndex === -1) paletteIndex = this.getCurrentPaletteIndex();
 
     const graphic = this.state.quest.graphics[graphicId];
-    if (!graphic) debugger;
-    const sprite = this.createSprite(graphic.file, graphic.x, graphic.y, graphic.width, graphic.height);
+    if (!graphic) {
+      console.error('bad graphic:', graphicId);
+    }
 
+    const sprite = this.createSprite(graphic.file, graphic.x, graphic.y, graphic.width, graphic.height);
     if (!this.state.quest.color) {
       return sprite;
     }

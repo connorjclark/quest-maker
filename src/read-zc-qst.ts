@@ -279,11 +279,8 @@ const sections = {
       { name: 'nexttimer', type: 'H', if: sversion >= 4 },
       { name: 'skipanimy', type: 'B', if: sversion >= 5 },
       { name: 'animflags', type: 'B', if: sversion >= 6 },
-      // Not tested.
-      // {'version': 0, 'key': 'attributes', 'read': lambda: section_bytes.read_array(4, NUM_COMBO_ATTRIBUTES)},
-      // {'version': 0, 'key': 'usrflags', 'read': lambda: section_bytes.read_long()},
-      // {'version': 0, 'key': 'triggerflags', 'read': lambda: section_bytes.read_array(4, 3)},
-      // {'version': 12, 'key': 'triggerlevel', 'read': lambda: section_bytes.read_long()},
+      { name: 'attributes', arrayLength: 4, type: 'I', if: sversion >= 8 },
+      { name: 'usrflags', type: 'I', if: sversion >= 8 },
     ]);
 
     return { combos };
