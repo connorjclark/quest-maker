@@ -32,6 +32,7 @@ class Screen {
   public tiles: { tile: number }[][] = [];
   public layers = [];
   public enemies: QuestMaker.Screen['enemies'] = [];
+  public color = 0;
   public warps = {};
 
   constructor() {
@@ -363,6 +364,9 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
   // @ts-expect-error
   window.pixi = pixi;
 
+  // @ts-expect-error
+  window.getZcScreen = () => window.qstData.MAP.maps[app.state.mapIndex].screens[app.state.screenX + app.state.screenY * screenWidth];
+
   // Find images to load.
   const images = new Set<string>();
   for (const graphic of quest.graphics) {
@@ -499,7 +503,11 @@ function tick(app: QuestMaker.App, dt: number) {
 
       // Bit of a hack.
       const matchingDmapIndex = app.state.quest.dmaps.findIndex(dmap => dmap.map === app.state.mapIndex);
-      if (matchingDmapIndex !== -1) app.state.dmapIndex = matchingDmapIndex;
+      if (matchingDmapIndex !== -1) {
+        app.state.dmapIndex = matchingDmapIndex;
+        app.state.mapIndex = app.state.quest.dmaps[matchingDmapIndex].map;
+        app.state.currentMap = app.state.quest.maps[app.state.mapIndex];
+      }
 
       const mode = new PlayGameMode(app);
       if (window.IS_DEV) {

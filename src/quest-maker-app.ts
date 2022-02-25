@@ -61,16 +61,27 @@ export class QuestMakerApp extends App<QuestMaker.State> {
     this.pixi.stage.scale.set(this.pixi.renderer.width / this.pixi.stage.getLocalBounds().width);
   }
 
-  createItemSprite(id: number) {
-    const {tile, cset} = this.state.quest.items[id];
-    return this.createGraphicSprite(tile, cset);
+  getCurrentPaletteIndex() {
+    return this.getPaletteIndex(this.state.quest.dmaps[this.state.dmapIndex], this.state.currentScreen);
   }
 
-  createTileSprite(screenTile: QuestMaker.ScreenTile) {
+  getPaletteIndex(dmap: QuestMaker.DMap, screen: QuestMaker.Screen) {
+    // TODO dont like +1 here
+    let paletteIndex = dmap.color + 1;
+    if (screen.color) paletteIndex = screen.color + 1;
+    return paletteIndex;
+  }
+
+  createItemSprite(id: number) {
+    const { tile, cset } = this.state.quest.items[id];
+    return this.createGraphicSprite(tile, this.getCurrentPaletteIndex(), cset);
+  }
+
+  createTileSprite(screenTile: QuestMaker.ScreenTile, paletteIndex: number) {
     const tile = this.state.quest.tiles[screenTile.tile];
     if (!tile) {
       console.warn('unknown tile', screenTile.tile);
-      return this.createGraphicSprite(0, 0);
+      return this.createGraphicSprite(0, paletteIndex, 0);
     }
 
     let cset = screenTile.cset ?? 3;
@@ -78,21 +89,24 @@ export class QuestMakerApp extends App<QuestMaker.State> {
       cset = screenTile.cset;
     }
 
+    // cset = window.getZcScreen().color;
+    // console.log(window.getZcScreen().color);
+
     if (tile.numFrames && tile.numFrames > 1) {
       // TODO: improve API so we don't just ignore a newly created Sprite.
       const textures = Array.from(Array(tile.numFrames))
-        .map((_, i) => this._createSpriteForTileFrame(tile, i, cset).texture);
+        .map((_, i) => this._createSpriteForTileFrame(tile, i, paletteIndex, cset).texture);
       const sprite = new PIXI.AnimatedSprite(textures);
       sprite.animationSpeed = tile.speed || 1 / 60;
       sprite.play();
       return sprite;
     } else {
-      return this._createSpriteForTileFrame(tile, 0, cset);
+      return this._createSpriteForTileFrame(tile, 0, paletteIndex, cset);
     }
   }
 
-  _createSpriteForTileFrame(tile: QuestMaker.Tile, frame: number, cset: number) {
-    const sprite = this.createGraphicSprite(tile.graphicId + frame, cset, tile.extraCset);
+  _createSpriteForTileFrame(tile: QuestMaker.Tile, frame: number, paletteIndex: number, cset: number) {
+    const sprite = this.createGraphicSprite(tile.graphicId + frame, paletteIndex, cset, tile.extraCset);
 
     if (tile.flipHorizontal && tile.flipVertical) {
       sprite.texture.rotate = PIXI.groupD8.W;
@@ -105,7 +119,9 @@ export class QuestMakerApp extends App<QuestMaker.State> {
     return sprite;
   }
 
-  createGraphicSprite(graphicId: number, cset = 0, extraCset?: QuestMaker.Tile['extraCset']) {
+  createGraphicSprite(graphicId: number, paletteIndex = -1, cset = 0, extraCset?: QuestMaker.Tile['extraCset']) {
+    if (paletteIndex === -1) paletteIndex = this.getCurrentPaletteIndex();
+
     const graphic = this.state.quest.graphics[graphicId];
     if (!graphic) debugger;
     const sprite = this.createSprite(graphic.file, graphic.x, graphic.y, graphic.width, graphic.height);
@@ -119,12 +135,12 @@ export class QuestMakerApp extends App<QuestMaker.State> {
 
     try {
       if (extraCset) {
-        const replacements1 = this._getColorReplacementsForCset(cset);
-        const replacements2 = this._getColorReplacementsForCset(cset + extraCset.offset);
+        const replacements1 = this._getColorReplacementsForCset(paletteIndex, cset);
+        const replacements2 = this._getColorReplacementsForCset(paletteIndex, cset + extraCset.offset);
         return this._multiColorReplaceTwoCsetsSpriteCopy(sprite, extraCset.quadrants, replacements1, replacements2, 0.0001);
       }
 
-      return this._multiColorReplaceSpriteCopy(sprite, this._getColorReplacementsForCset(cset), 0.0001);
+      return this._multiColorReplaceSpriteCopy(sprite, this._getColorReplacementsForCset(paletteIndex, cset), 0.0001);
     } catch (err) {
       // TODO
       console.error({ graphicId, cset }, err);
@@ -183,13 +199,16 @@ export class QuestMakerApp extends App<QuestMaker.State> {
   }
 
   private replacementsCache = new Map<number, number[][]>();
-  _getColorReplacementsForCset(cset: number) {
+  _getColorReplacementsForCset(paletteIndex: number, cset: number) {
     if (!this.state.quest.color) {
       throw new Error('quest has no color data');
     }
 
-    // TODO dont like +1 here
-    const paletteIndex = this.state.quest.dmaps[this.state.dmapIndex].color + 1;
+    if (cset < 0 || cset > 15) {
+      console.error('got bad cset, resetting to 0', cset);
+      cset = 0;
+    }
+
     const palette = this.state.quest.color.palettes[paletteIndex];
     cset = palette.csets[cset];
 

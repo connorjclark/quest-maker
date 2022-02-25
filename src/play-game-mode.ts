@@ -101,9 +101,6 @@ export class PlayGameMode extends QuestMakerMode {
       this.container.addChild(layer);
     }
 
-    this.layers[2].addChild(this.swordSprite);
-    this.swordSprite.alpha = 0;
-
     const startPosition = state.currentScreen.warps.arrival ?? {
       x: screenWidth * tileSize / 2,
       y: screenHeight * tileSize / 2,
@@ -125,6 +122,9 @@ export class PlayGameMode extends QuestMakerMode {
       layer.removeChildren();
     }
 
+    this.layers[2].addChild(this.swordSprite);
+    this.swordSprite.alpha = 0;
+
     this.entities = [];
     this.entities.push(this.heroEntity);
 
@@ -138,7 +138,7 @@ export class PlayGameMode extends QuestMakerMode {
     const tileLayerContainers = [
       { map: state.mapIndex, x: state.screenX, y: state.screenY },
       ...screen.layers
-    ].map(layer => layer && this.createScreenLayerContainer(layer.map, layer.x, layer.y));
+    ].map(layer => layer && this.createScreenLayerContainer(state.dmapIndex, layer.x, layer.y, layer.map));
     for (let i = 0; i < tileLayerContainers.length; i++) {
       const layer = tileLayerContainers[i];
       if (!layer) continue;
@@ -421,18 +421,23 @@ export class PlayGameMode extends QuestMakerMode {
       frames: 0,
       screen: targetScreen,
       screenDelta: { x: transitionX, y: transitionY },
-      newScreenContainer: this.createScreenContainer(state.mapIndex, targetScreen.x, targetScreen.y),
+      newScreenContainer: this.createScreenContainer(state.dmapIndex, targetScreen.x, targetScreen.y),
     };
   }
 
-  createScreenLayerContainer(map: number, sx: number, sy: number) {
+  createScreenLayerContainer(dmapIndex: number, sx: number, sy: number, mapIndexOverride?: number) {
     const container = new PIXI.Container();
     const state = this.app.state;
-    const screen = state.quest.maps[map].screens[sx][sy];
+    const dmap = state.quest.dmaps[dmapIndex];
+    const screenToDeterminePalette = state.quest.maps[dmap.map].screens[sx][sy];
+    const paletteIndex = this.app.getPaletteIndex(dmap, screenToDeterminePalette);
 
+    const screen = mapIndexOverride === undefined ?
+      screenToDeterminePalette :
+      state.quest.maps[mapIndexOverride].screens[sx][sy];
     for (let x = 0; x < screenWidth; x++) {
       for (let y = 0; y < screenHeight; y++) {
-        const sprite = this.app.createTileSprite(screen.tiles[x][y]);
+        const sprite = this.app.createTileSprite(screen.tiles[x][y], paletteIndex);
         sprite.x = x * tileSize;
         sprite.y = y * tileSize;
         container.addChild(sprite);
@@ -442,10 +447,11 @@ export class PlayGameMode extends QuestMakerMode {
     return container;
   }
 
-  createScreenContainer(map: number, sx: number, sy: number) {
+  createScreenContainer(dmapIndex: number, sx: number, sy: number) {
     const container = new PIXI.Container();
     const state = this.app.state;
-    const screen = state.quest.maps[map].screens[sx][sy];
+    const dmap = state.quest.dmaps[dmapIndex];
+    const screen = state.quest.maps[dmap.map].screens[sx][sy];
 
     const bg = new PIXI.Graphics();
     bg.beginFill(0);
@@ -453,9 +459,9 @@ export class PlayGameMode extends QuestMakerMode {
     bg.endFill();
     container.addChild(bg);
 
-    container.addChild(this.createScreenLayerContainer(map, sx, sy));
+    container.addChild(this.createScreenLayerContainer(dmapIndex, sx, sy));
     for (const layer of screen.layers) {
-      if (layer) container.addChild(this.createScreenLayerContainer(layer.map, layer.x, layer.y));
+      if (layer) container.addChild(this.createScreenLayerContainer(dmapIndex, layer.x, layer.y, layer.map));
     }
 
     return container;
@@ -831,7 +837,6 @@ export class PlayGameMode extends QuestMakerMode {
       }
     }
 
-    const mapIndex = dmap === undefined ? state.mapIndex : state.quest.dmaps[dmap].map;
     return {
       transition: {
         type: 'direct',
@@ -841,7 +846,7 @@ export class PlayGameMode extends QuestMakerMode {
         screen: newScreenLocation,
         position: newPosition,
         screenDelta: { x: 0, y: 0 },
-        newScreenContainer: this.createScreenContainer(mapIndex, newScreenLocation.x, newScreenLocation.y),
+        newScreenContainer: this.createScreenContainer(dmap ?? state.dmapIndex, newScreenLocation.x, newScreenLocation.y),
       },
       returnTransition,
     };

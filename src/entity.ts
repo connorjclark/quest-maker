@@ -511,7 +511,7 @@ export class QuestEntity extends EntityBase {
     const cached = this.textureCache.get(graphicId + ',' + flip);
     if (cached) return cached;
 
-    const texture = mode.app.createGraphicSprite(graphicId, cset).texture;
+    const texture = mode.app.createGraphicSprite(graphicId, -1, cset).texture;
     if (flip & 1) {
       texture.rotate = PIXI.groupD8.MIRROR_HORIZONTAL;
     }

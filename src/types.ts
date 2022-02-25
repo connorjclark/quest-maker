@@ -39,6 +39,7 @@ declare global {
       enemies: Array<{
         enemyId: number;
       }>;
+      color: number;
       warps: {
         /** Position hero goes to for warps to this screen. */
         arrival?: {

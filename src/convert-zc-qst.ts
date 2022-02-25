@@ -881,6 +881,7 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
             };
           }),
           enemies: [],
+          color: zcScreen.color,
           warps: {},
         };
         map.screens[screenx].push(screen);
