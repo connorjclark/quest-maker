@@ -993,11 +993,10 @@ function parseQstBytes(qstBytes: Uint8Array, debug: boolean) {
       }
     }
 
+    if (debug) console.log({ id, sversion, cversion, size });
     if (size === 0) continue;
 
     const sectionReader = new Reader(qstReader.read(size));
-
-    if (debug) console.log({ id, sversion, cversion, size });
 
     const section = sections[id as keyof typeof sections];
     if (section !== undefined) {

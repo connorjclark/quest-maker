@@ -389,7 +389,7 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
   if (localStorage.getItem('lastState')) {
     const lastStateByQuest = getLocalStorage();
     const lastState = lastStateByQuest[questBasePath];
-    if (window.IS_LOCALHOST && lastState && 'mapIndex' in lastState) {
+    if (window.IS_DEV && lastState && 'mapIndex' in lastState) {
       initialDmap = quest.dmaps.findIndex(dmap => dmap.map === lastState.mapIndex);
       initialScreenX = lastState.screenX;
       initialScreenY = lastState.screenY;

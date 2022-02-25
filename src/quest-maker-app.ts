@@ -47,8 +47,8 @@ export class QuestMakerApp extends App<QuestMaker.State> {
     super(pixi, state);
 
     // @ts-expect-error
-    window.createDebugGraphic = (id: number) => {
-      const sprite = this.createGraphicSprite(id, 6);
+    window.createDebugGraphic = (id: number, cset: number) => {
+      const sprite = this.createGraphicSprite(id, cset);
       // @ts-expect-error
       if (this.debugSprite) this.pixi.stage.removeChild(this.debugSprite);
       // @ts-expect-error

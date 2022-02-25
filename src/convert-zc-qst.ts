@@ -3,6 +3,7 @@ import * as constants from '../src/constants';
 import makeQuest from '../src/make-quest';
 import { EnemyType, ItemType, TileType } from '../src/types';
 import struct from './third_party/struct.mjs';
+import defaultGuys from '../data/zc-default-guys.json';
 
 const { tileSize, screenWidth, screenHeight } = constants;
 
@@ -628,8 +629,8 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
     });
   }
 
-  // TODO
-  for (const guy of qstData.GUY.guys || []) {
+  const guys = qstData.GUY && qstData.GUY.guys.length ? qstData.GUY.guys : defaultGuys;
+  for (const guy of guys) {
     const animationType = EnemyAnimationType(guy.anim);
 
     if (quest.enemies.length === -1) {

@@ -143,11 +143,12 @@ export class PlayGameMode extends QuestMakerMode {
       const layer = tileLayerContainers[i];
       if (!layer) continue;
 
-      if (i < 3) {
+      if (i <= 2) {
         this.tileLayer.addChild(layer);
       } else {
         this.layers[4].addChild(layer);
       }
+      // TODO: https://www.purezc.net/forums/index.php?showtopic=75156
     }
 
     this.entityLayer.addChild(this.heroEntity);
