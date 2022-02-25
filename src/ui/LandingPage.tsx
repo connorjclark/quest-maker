@@ -47,16 +47,21 @@ const knownBadQuests = [
   'FleckQuest',
   'Block Smasher',
 ];
-const quests = questManifest.filter((q) => q.playable && !knownBadQuests.includes(q.name));
 
 const LandingPage = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [hideUnplayableQuests, setHideUnplayableQuests] = useState(true);
+  const quests = hideUnplayableQuests ?
+    questManifest.filter((q) => q.playable && !knownBadQuests.includes(q.name)) :
+    questManifest;
 
   return <div class="quest-select flex">
     <div class="quest-select__pane quest-select__pane--left">
+      Hide unplayable quests <input type="checkbox" onChange={(e: any) => setHideUnplayableQuests(e.target.checked)} checked={hideUnplayableQuests}></input>
+
       {quests.map((quest, i) => {
         return <div class={`quest-select__entry md-5 ${selectedIndex === i ? 'selected' : ''}`} onClick={() => setSelectedIndex(i)}>
-          {quest.name}
+          {quest.playable && !knownBadQuests.includes(quest.name) ? '' : ' (!)'} {quest.name}
         </div>;
       })}
     </div>

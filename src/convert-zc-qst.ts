@@ -789,7 +789,7 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
       case '2frmb':
         break;
       default:
-        throw new Error('unknown ' + guy.anim);
+        console.error('unknown animation type:', guy.anim);
     }
 
     switch (guy.family as EnemyFamily) {
