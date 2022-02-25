@@ -770,12 +770,10 @@ export class PlayGameMode extends QuestMakerMode {
       if (transition.dmap !== undefined) {
         state.dmapIndex = transition.dmap;
         state.mapIndex = targetMapIndex;
-        state.currentMap = state.quest.maps[targetMapIndex];
       }
 
       state.screenX = transition.screen.x;
       state.screenY = transition.screen.y;
-      state.currentScreen = targetScreen;
       this.container.x = 0;
       this.container.y = 0;
 

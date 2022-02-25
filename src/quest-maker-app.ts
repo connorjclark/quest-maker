@@ -62,7 +62,7 @@ export class QuestMakerApp extends App<QuestMaker.State> {
   }
 
   getCurrentPaletteIndex() {
-    return this.getPaletteIndex(this.state.quest.dmaps[this.state.dmapIndex], this.state.currentScreen);
+    return this.getPaletteIndex(this.state.currentDMap, this.state.currentScreen);
   }
 
   getPaletteIndex(dmap: QuestMaker.DMap, screen: QuestMaker.Screen) {
@@ -77,7 +77,7 @@ export class QuestMakerApp extends App<QuestMaker.State> {
     return this.createGraphicSprite(tile, this.getCurrentPaletteIndex(), cset);
   }
 
-  createTileSprite(screenTile: QuestMaker.ScreenTile, paletteIndex: number) {
+  createTileSprite(screenTile: QuestMaker.ScreenTile, paletteIndex = -1) {
     const tile = this.state.quest.tiles[screenTile.tile];
     if (!tile) {
       console.warn('unknown tile', screenTile.tile);
@@ -88,9 +88,6 @@ export class QuestMakerApp extends App<QuestMaker.State> {
     if (screenTile.cset !== undefined && screenTile.cset > 0) {
       cset = screenTile.cset;
     }
-
-    // cset = window.getZcScreen().color;
-    // console.log(window.getZcScreen().color);
 
     if (tile.numFrames && tile.numFrames > 1) {
       // TODO: improve API so we don't just ignore a newly created Sprite.

@@ -429,12 +429,18 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
       equipped: [null, null],
     },
     dmapIndex: initialDmap,
-    mapIndex: initialMap,
+    mapIndex: initialMap, // TODO: should this be a getter too, based on dmap?
     screenX: initialScreenX,
     screenY: initialScreenY,
-    // TODO: make these getters.
-    currentMap: quest.maps[initialMap],
-    currentScreen: quest.maps[initialMap].screens[initialScreenX][initialScreenY],
+    get currentDMap() {
+      return quest.dmaps[state.dmapIndex];
+    },
+    get currentMap() {
+      return quest.maps[state.mapIndex];
+    },
+    get currentScreen() {
+      return quest.maps[state.mapIndex].screens[state.screenX][state.screenY];
+    },
   };
 
   const swordIndex = quest.items.findIndex(item => item.name.includes('Sword'));
@@ -474,10 +480,8 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
   ui.subscribe((state) => {
     app.state.mapIndex = state.currentMapIndex;
     app.state.dmapIndex = quest.dmaps.findIndex(dmap => dmap.map === state.currentMapIndex);
-    app.state.currentMap = quest.maps[state.currentMapIndex];
     app.state.screenX = state.screenX;
     app.state.screenY = state.screenY;
-    app.state.currentScreen = app.state.currentMap.screens[app.state.screenX][app.state.screenY];
     app.state.editor.currentTile = state.selectedTile?.id || 0;
     updateUrl(app.state);
   });
@@ -506,7 +510,6 @@ function tick(app: QuestMaker.App, dt: number) {
       if (matchingDmapIndex !== -1) {
         app.state.dmapIndex = matchingDmapIndex;
         app.state.mapIndex = app.state.quest.dmaps[matchingDmapIndex].map;
-        app.state.currentMap = app.state.quest.maps[app.state.mapIndex];
       }
 
       const mode = new PlayGameMode(app);

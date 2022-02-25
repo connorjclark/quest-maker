@@ -272,6 +272,7 @@ declare global {
 
     interface State {
       quest: Quest;
+      currentDMap: DMap;
       currentMap: Map_;
       currentScreen: Screen;
       editor: {
