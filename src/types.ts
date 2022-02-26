@@ -216,6 +216,7 @@ declare global {
       song: number;
       continueScreenX: number;
       continueScreenY: number;
+      xoff: number;
     }
 
     interface Map_ {

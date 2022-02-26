@@ -918,6 +918,7 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
       song: zcDmap.midi,
       continueScreenX: zcDmap.cont % screenWidth,
       continueScreenY: Math.floor(zcDmap.cont / screenWidth),
+      xoff: zcDmap.xoff,
     };
 
     if (dmap.name === '') break;
@@ -941,10 +942,6 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
       for (let screeny = 0; screeny < 9; screeny++) {
         const zcScreen = zcMap.screens[screenx + screeny * 16];
         if (!zcScreen) continue;
-
-        if (qstData.MAP.maps.indexOf(zcMap) === 1 && screenx === 3 && screeny === 6) {
-          // console.log(zcScreen);
-        }
 
         const layerMap: number[] = zcScreen.layerMap; // TODO: should type zcData just a bit ...
         const screen: QuestMaker.Screen = {
@@ -990,11 +987,14 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
               return: { x: returnx, y: returny },
             });
           } else if (type === 2) {
+            // This is weird but ok :)
+            const warpScreenAdjusted = warpScreen + quest.dmaps[warpDMap].xoff;
+
             screen.warps.data.push({
               type: 'screen',
               dmap: warpDMap,
-              screenX: warpScreen % 16,
-              screenY: Math.floor(warpScreen / 16),
+              screenX: warpScreenAdjusted % screenWidth,
+              screenY: Math.floor(warpScreenAdjusted / screenWidth),
             });
           } else {
             // console.log(type); // ?
