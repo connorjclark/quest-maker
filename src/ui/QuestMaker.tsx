@@ -1,5 +1,5 @@
 import { render, h, Component, createContext, JSX } from 'preact';
-import { useContext, useEffect, useRef } from 'preact/hooks';
+import { useContext, useEffect, useRef, useState } from 'preact/hooks';
 import { ComponentProps, createSubApp } from './common';
 import * as Utils from '../utils';
 import { TabbedPane, TabbedPaneProps } from './TabbedPane';
@@ -32,6 +32,8 @@ type BottomProps = {
 }
 class Bottom extends Component<BottomProps> {
   render() {
+    const [selectedLayer, setSelectedLayer] = useState(0);
+    const [visibleLayers, setVisibleLayers] = useState([true, true, true, true, true, true, true]);
     const context = useContext(AppContext);
     const ref = useRef<HTMLCanvasElement>(null);
     const currentMap = this.props.maps[this.props.currentMapIndex];
@@ -63,13 +65,43 @@ class Bottom extends Component<BottomProps> {
     for (let i = 0; i < this.props.maps.length; i++) {
       options.push(<option value={i}>Map {i}</option>);
     }
-    
-    return <div>
-      <canvas ref={ref}></canvas>
-      <select value={this.props.currentMapIndex} onChange={(e: any) => context.setCurrentMapIndex(Number(e.target.value))}>
-        {options}
-      </select>
-      {this.props.screenX}, {this.props.screenY}
+
+    return <div class="bottom flex">
+      <div class="flex flex-column">
+        <canvas ref={ref}></canvas>
+        <select value={this.props.currentMapIndex} onChange={(e: any) => context.setCurrentMapIndex(Number(e.target.value))}>
+          {options}
+        </select>
+        {this.props.screenX}, {this.props.screenY}
+      </div>
+
+      <div>
+        <div class="flex">
+          <span class="md-5">Layers:</span>
+          {Array.from({ length: 7 }).map((_, i) => {
+            const layerExists = i === 0 || !!currentMap.screens[this.props.screenX][this.props.screenY].layers[i - 1];
+
+            return <div class="flex flex-column items-center md-5">
+              <input type="radio" disabled={!layerExists} name="layer" checked={selectedLayer === i} onClick={e => {
+                setSelectedLayer(i);
+                context.setSelectedLayer(i); // what a hack.
+              }} value={i}></input>
+              {i}
+              <input type="checkbox" disabled={!layerExists} checked={visibleLayers[i]} onClick={e => {
+                visibleLayers[i] = !visibleLayers[i];
+                setVisibleLayers([...visibleLayers]);
+                context.setVisibleLayers([...visibleLayers]);
+              }} value={i}></input>
+            </div>
+          })}
+        </div>
+
+        <div>
+          Press Shift to toggle play test.
+          <br></br>Use arrow keys to move screens.
+          <br></br>WARNING: MIDI music will play, but it is quite loud, so turn down your speakers to 25% max. Sorry!
+        </div>
+      </div>
     </div>;
   }
 }
@@ -106,6 +138,16 @@ const actions = () => ({
       selectedTile,
     }
   },
+  setSelectedLayer(state: QuestMakerState, selectedLayer: number): Partial<QuestMakerState> {
+    return {
+      selectedLayer,
+    }
+  },
+  setVisibleLayers(state: QuestMakerState, visibleLayers: boolean[]): Partial<QuestMakerState> {
+    return {
+      visibleLayers,
+    }
+  },
 });
 
 interface QuestMakerState {
@@ -116,6 +158,8 @@ interface QuestMakerState {
   screenY: number;
   selectedTile?: QuestMaker.Tile;
   window?: JSX.Element;
+  selectedLayer: number;
+  visibleLayers: boolean[];
 }
 
 export type QuestMakerProps = ComponentProps<QuestMakerState, typeof actions>;
@@ -184,12 +228,12 @@ class QuestMaker extends Component<QuestMakerProps> {
       }
     }, [props.mode]);
 
-    const editorUI = <div class="editor-ui" style={{display: props.mode === 'play' ? 'none' : null}}>
+    const editorUI = <div class="editor-ui" style={{ display: props.mode === 'play' ? 'none' : null }}>
       <Header></Header>
       <div class="canvas">
         {props.quest && props.mode === 'edit' ?
           // @ts-expect-error
-          <EditorScreenArea canvas={window.app.pixi.view} map={currentMap} screenX={props.screenX} screenY={props.screenY}></EditorScreenArea> :
+          <EditorScreenArea canvas={window.app.pixi.view} map={currentMap} screenX={props.screenX} screenY={props.screenY} visibleLayers={props.visibleLayers}></EditorScreenArea> :
           null}
       </div>
       <div class="tiles">
@@ -197,14 +241,7 @@ class QuestMaker extends Component<QuestMakerProps> {
           <TabbedPane tabs={tabs} background={true} childProps={{}}></TabbedPane> :
           null}
       </div>
-      <div class="bottom">
-        <Bottom maps={props.quest?.maps || []} currentMapIndex={props.currentMapIndex} screenX={props.screenX} screenY={props.screenY}></Bottom>
-        <div>
-          Press Shift to toggle play test.
-          <br></br>Use arrow keys to move screens.
-          <br></br>WARNING: MIDI music will play, but it is quite loud, so turn down your speakers to 25% max. Sorry!
-        </div>
-      </div>
+      <Bottom maps={props.quest?.maps || []} currentMapIndex={props.currentMapIndex} screenX={props.screenX} screenY={props.screenY}></Bottom>
     </div>;
 
     return <AppContext.Provider value={props}>
@@ -235,5 +272,5 @@ class QuestMaker extends Component<QuestMakerProps> {
 export function makeUI(parentEl: HTMLElement, initialState: QuestMakerState) {
   const { SubApp, exportedActions, subscribe } = createSubApp(QuestMaker, initialState, actions);
   const el = render(<SubApp></SubApp>, parentEl);
-  return {el, actions: exportedActions, subscribe};
+  return { el, actions: exportedActions, subscribe };
 }

@@ -113,6 +113,8 @@ function createQuest(): QuestMaker.Quest {
     type: ItemType.SWORD,
     tile: swordGraphics[0].id,
     name: 'Sword',
+    pickupSound: 0,
+    useSound: 0,
   });
 
   const spawnGraphics = make({
@@ -422,6 +424,8 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
     editor: {
       isPlayTesting: false,
       currentTile: 0,
+      selectedLayer: 0,
+      visibleLayers: [true, true, true, true, true, true, true],
     },
     game: {
       screenStates: new Map(),
@@ -475,6 +479,8 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
     currentMapIndex: initialMap,
     screenX: initialScreenX,
     screenY: initialScreenY,
+    selectedLayer: state.editor.selectedLayer,
+    visibleLayers: state.editor.visibleLayers,
   });
 
   ui.subscribe((state) => {
@@ -483,6 +489,8 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
     app.state.screenX = state.screenX;
     app.state.screenY = state.screenY;
     app.state.editor.currentTile = state.selectedTile?.id || 0;
+    app.state.editor.selectedLayer = state.selectedLayer;
+    app.state.editor.visibleLayers = state.visibleLayers;
     updateUrl(app.state);
   });
   updateUrl(app.state);

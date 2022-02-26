@@ -282,6 +282,8 @@ declare global {
       editor: {
         isPlayTesting: boolean;
         currentTile: number;
+        selectedLayer: number;
+        visibleLayers: boolean[];
       };
       game: {
         screenTransition?: ScreenTransition;
