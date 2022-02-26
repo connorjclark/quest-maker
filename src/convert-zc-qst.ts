@@ -566,9 +566,56 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
     return url;
   };
 
+  const defaultSounds = [
+    'ARROW',
+    'BEAM',
+    'BOMB',
+    'BRANG',
+    'CHIME',
+    'CHINK',
+    'CLEARED',
+    'DODONGO',
+    'DOOR',
+    'EDEAD',
+    'EHIT',
+    'ER',
+    'FIRE',
+    'GANON',
+    'GASP',
+    'HAMMER',
+    'HOOKSHOT',
+    'MSG',
+    'OUCH',
+    'PICKUP',
+    'PLACE',
+    'PLINK',
+    'REFILL',
+    'ROAR',
+    'SCALE',
+    'PICKUP', // 'SEA', // TODO: why are items pickup sound incorrectly set to this sfx? for now just force the right value
+    'SECRET',
+    'SPIRAL',
+    'STAIRS',
+    'SWORD',
+    'VADER',
+    'WAND',
+    'WHISTLE',
+    'ZELDA',
+  ];
+
+  const sfxCache = new Map<number, string>();
   // @ts-expect-error
   quest.getSfx = (id: number) => {
     const sfx = qstData.SFX.sfxs[id];
+
+    if (!sfx || !sfx.data) {
+      if (!defaultSounds[id]) return null;
+
+      // Return a default sound.
+      return `/zc_sfx/${defaultSounds[id].toLowerCase()}.wav`;
+    }
+
+    if (sfxCache.has(id)) return sfxCache.get(id);
 
     const samplerate = sfx.frequency;
     const channels = sfx.stereo ? 2 : 1;
@@ -589,6 +636,7 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
     const data = concatenate(Uint8Array, prefix, sfx.data);
     const blob = new Blob([data.buffer], { type: 'audio/wav' });
     const url = URL.createObjectURL(blob);
+    sfxCache.set(id, url);
     return url;
   };
 
@@ -642,6 +690,8 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
       type,
       tile: zcItem.tile,
       cset: zcItem.csets & 0xF,
+      pickupSound: zcItem.playSound,
+      useSound: zcItem.useSound,
     });
   }
 
@@ -673,6 +723,8 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
     attributes['enemy.halt'] = guy.hrate / 16;
     attributes['enemy.homing'] = guy.homing / 255;
     attributes['enemy.speed'] = guy.step / 100;
+    attributes['enemy.hitSfx'] = guy.hitsfx;
+    attributes['enemy.deathSfx'] = guy.deadsfx;
 
     if (guy.cset) {
       attributes['enemy.cset'] = guy.cset;

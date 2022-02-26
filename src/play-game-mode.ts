@@ -215,6 +215,7 @@ export class PlayGameMode extends QuestMakerMode {
         if (!isIntersecting(entity.getBounds(), this.swordSprite.getBounds())) continue;
 
         entity.hit && entity.hit(heroEntity.direction);
+        this.app.soundManager.playSfx(entity.misc.get('enemy.hitSfx'));
         // this.removeEntity(entity);
       }
     }
@@ -272,6 +273,7 @@ export class PlayGameMode extends QuestMakerMode {
           if (collision === 'top') dir.y += 1;
           if (collision === 'bottom') dir.y -= 1;
           this.heroEntity.hit(dir);
+          this.app.soundManager.playSfx(19);
           if (entity.type === 'projectile') this.removeEntity(entity);
         }
       }
@@ -647,6 +649,19 @@ export class PlayGameMode extends QuestMakerMode {
     return entity;
   }
 
+  killEntity(entity: QuestEntity) {
+    this.removeEntity(entity);
+    this.getScreenState().enemiesKilled += 1;
+
+    const items = this.app.state.quest.items.filter(item => item.tile && item.name.match(/rupee|heart/i))
+    if (items.length) {
+      const item = items[Utils.random(0, items.length - 1)];
+      this.createItem(item.id, entity.x / tileSize, entity.y / tileSize);
+    }
+
+    this.app.soundManager.playSfx(entity.misc.get('enemy.deathSfx'));
+  }
+
   removeEntity(entity: QuestEntity) {
     this.entityLayer.removeChild(entity);
     const index = this.entities.findIndex(e => e === entity);
@@ -703,6 +718,13 @@ export class PlayGameMode extends QuestMakerMode {
     this.swordSprite.x = heroCenterX + this.heroEntity.direction.x * this.swordSprite.width * 0.8;
     this.swordSprite.y = heroCenterY + this.heroEntity.direction.y * this.swordSprite.height * 0.8;
     this.swordSprite.alpha = 1;
+
+    const equippedIndex = this.app.state.game.equipped[1];
+    if (equippedIndex === null) return;
+
+    const equippedItemType = this.app.state.game.inventory[equippedIndex].item;
+    const equippedItem = this.app.state.quest.items[equippedItemType];
+    this.app.soundManager.playSfx(equippedItem.useSound);
   }
 
   performScreenTransition(transition: QuestMaker.ScreenTransition) {
@@ -877,5 +899,7 @@ export class PlayGameMode extends QuestMakerMode {
     if (item.type === ItemType.SWORD) {
       state.game.equipped[1] = inventoryIndex;
     }
+
+    this.app.soundManager.playSfx(item.pickupSound);
   }
 }

@@ -12,6 +12,20 @@ class SoundManager {
   constructor(private app: QuestMakerApp) {
   }
 
+  playSfx(id: number) {
+    if (!id) return;
+
+    // @ts-expect-error
+    const sfxUrl = this.app.state.quest.getSfx(id - 1);
+    if (!sfxUrl) {
+      console.error('invalid sfx:', id);
+      return;
+    }
+
+    const audio = new Audio(sfxUrl);
+    audio.play();
+  }
+
   playSong(id: number) {
     if (!this.enabled) return;
     if (id === this.currentSongId) return;

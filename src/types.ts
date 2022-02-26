@@ -162,6 +162,8 @@ declare global {
       'enemy.animation.graphics': number;
       'enemy.animation.numGraphics': number;
       'enemy.animation.type': EnemyAnimationType;
+      'enemy.hitSfx': number;
+      'enemy.deathSfx': number;
       'enemy.cset': number; // TODO: move to animation?
       'enemy.directionChange': number;
       'enemy.halt': number;
@@ -194,6 +196,8 @@ declare global {
       type: ItemType;
       tile: number;
       cset: number;
+      pickupSound: number;
+      useSound: number;
     }
 
     interface Weapon {

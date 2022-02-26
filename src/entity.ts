@@ -100,16 +100,7 @@ export class QuestEntity extends EntityBase {
         if (--this.invulnerableTimer <= 0) {
           this.alpha = 1;
           if (this.life <= 0) {
-            console.log('die');
-            mode.removeEntity(this);
-            mode.getScreenState().enemiesKilled += 1;
-
-            const items = mode.app.state.quest.items.filter(item => item.tile && item.name.match(/rupee|heart/i))
-            if (items.length) {
-              const item = items[Utils.random(0, items.length - 1)];
-              mode.createItem(item.id, this.x / tileSize, this.y / tileSize);
-            }
-
+            mode.killEntity(this);
             return;
           }
         }
