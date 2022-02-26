@@ -97,6 +97,7 @@ declare global {
       flipVertical?: boolean;
       /** top left, top right, bottom left, bottom right */
       walkable: [boolean, boolean, boolean, boolean];
+      flag: number;
     }
 
     type Attributes = EnemyAttributes & ScreenAttributes;
@@ -301,7 +302,8 @@ declare global {
 
     interface ScreenState {
       enemiesKilled: number;
-      secrets: boolean;
+      // secrets: boolean[][];
+      secretsTriggered: Boolean;
     }
 
     // Are these used?

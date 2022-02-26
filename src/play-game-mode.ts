@@ -4,6 +4,7 @@ import { TileType, EnemyType, ItemType } from './types';
 import * as Utils from './utils';
 import { QuestEntity, MiscBag } from './entity';
 import 'pixi-plugin-bump';
+import { ScreenFlag, SecretCombo } from './screen-flags';
 
 const { screenWidth, screenHeight, tileSize } = constants;
 
@@ -193,7 +194,9 @@ export class PlayGameMode extends QuestMakerMode {
     }
 
     if (this.app.keys.up['KeyR']) {
-      screenState.secrets = true;
+      screenState.secretsTriggered = !screenState.secretsTriggered;
+      // @ts-expect-error
+      if (screenState.secretsTriggered) this.app.soundManager.playSfx(getZcScreen().secretSfx);
       // TODO: update more performantly!
       this.initDraw();
     }
@@ -415,10 +418,137 @@ export class PlayGameMode extends QuestMakerMode {
   }
 
   _getTile(screen: QuestMaker.Screen, screenState: QuestMaker.ScreenState, x: number, y: number): QuestMaker.ScreenTile {
-    if (screenState.secrets) {
-      // @ts-expect-error
-      const sflag = getZcScreen().sflag[x + y * screenWidth];
-      if (sflag) return screen.secretTiles[3];
+    if (screenState.secretsTriggered) {
+      // @ts-expect-error TODO kinda giving up on recreating the state in QuestMaker.Quest
+      const zcScreen = getZcScreen();
+
+      // Flags can come from the screen or the tile.
+      let sflag = zcScreen.sflag[x + y * screenWidth];
+      if (sflag === ScreenFlag.CF_NONE) {
+        // TODO ignores screen state ...
+        const tileId = screen.tiles[x][y].tile;
+        sflag = this.app.state.quest.tiles[tileId].flag;
+        if (sflag === ScreenFlag.CF_NONE) return screen.tiles[x][y];
+      }
+
+      if (sflag >= ScreenFlag.CF_SECRETS01 && sflag <= ScreenFlag.CF_SECRETS16) {
+        const secretIndex = sflag - 15 - 1; // TODO: why is this not just -15?
+        return screen.secretTiles[SecretCombo.SECCMB_SECRET01 + secretIndex];
+      }
+
+      const defaultToUnderCombo = (tile: QuestMaker.ScreenTile) => {
+        if (tile.tile) return tile;
+        return { tile: zcScreen.underCombo, cset: zcScreen.underCset };
+      }
+
+      switch (sflag) {
+        case ScreenFlag.CF_PUSHUPDOWN: return defaultToUnderCombo(screen.secretTiles[SecretCombo.SECCMB_STAIRS]);
+        case ScreenFlag.CF_PUSH4WAY: return defaultToUnderCombo(screen.secretTiles[SecretCombo.SECCMB_STAIRS]);
+        case ScreenFlag.CF_WHISTLE: break;
+        case ScreenFlag.CF_CANDLE1: return defaultToUnderCombo(screen.secretTiles[SecretCombo.SECCMB_BCANDLE]);
+        case ScreenFlag.CF_ARROW: break;
+        case ScreenFlag.CF_BOMB: return screen.secretTiles[SecretCombo.SECCMB_BOMB];
+        case ScreenFlag.CF_FAIRY: break;
+        case ScreenFlag.CF_RAFT: break;
+        case ScreenFlag.CF_ARMOSSECRET: return defaultToUnderCombo(screen.secretTiles[SecretCombo.SECCMB_STAIRS]);
+        case ScreenFlag.CF_ARMOSITEM: break;
+        case ScreenFlag.CF_SBOMB: break;
+        case ScreenFlag.CF_RAFTBRANCH: break;
+        case ScreenFlag.CF_DIVEITEM: break;
+        case ScreenFlag.CF_ZELDA: break;
+        case ScreenFlag.CF_SECRETS01: break;
+        case ScreenFlag.CF_SECRETS02: break;
+        case ScreenFlag.CF_SECRETS03: break;
+        case ScreenFlag.CF_SECRETS04: break;
+        case ScreenFlag.CF_SECRETS05: break;
+        case ScreenFlag.CF_SECRETS06: break;
+        case ScreenFlag.CF_SECRETS07: break;
+        case ScreenFlag.CF_SECRETS08: break;
+        case ScreenFlag.CF_SECRETS09: break;
+        case ScreenFlag.CF_SECRETS10: break;
+        case ScreenFlag.CF_SECRETS11: break;
+        case ScreenFlag.CF_SECRETS12: break;
+        case ScreenFlag.CF_SECRETS13: break;
+        case ScreenFlag.CF_SECRETS14: break;
+        case ScreenFlag.CF_SECRETS15: break;
+        case ScreenFlag.CF_SECRETS16: break;
+        case ScreenFlag.CF_TRAPH: break;
+        case ScreenFlag.CF_TRAPV: break;
+        case ScreenFlag.CF_TRAP4WAY: break;
+        case ScreenFlag.CF_TRAPLR: break;
+        case ScreenFlag.CF_TRAPUD: break;
+        case ScreenFlag.CF_ENEMY0: break;
+        case ScreenFlag.CF_ENEMY1: break;
+        case ScreenFlag.CF_ENEMY2: break;
+        case ScreenFlag.CF_ENEMY3: break;
+        case ScreenFlag.CF_ENEMY4: break;
+        case ScreenFlag.CF_ENEMY5: break;
+        case ScreenFlag.CF_ENEMY6: break;
+        case ScreenFlag.CF_ENEMY7: break;
+        case ScreenFlag.CF_ENEMY8: break;
+        case ScreenFlag.CF_ENEMY9: break;
+        case ScreenFlag.CF_PUSHLR: break;
+        case ScreenFlag.CF_PUSHUP: break;
+        case ScreenFlag.CF_PUSHDOWN: break;
+        case ScreenFlag.CF_PUSHLEFT: break;
+        case ScreenFlag.CF_PUSHRIGHT: break;
+        case ScreenFlag.CF_PUSHUPDOWNNS: break;
+        case ScreenFlag.CF_PUSHLEFTRIGHTNS: break;
+        case ScreenFlag.CF_PUSH4WAYNS: break;
+        case ScreenFlag.CF_PUSHUPNS: break;
+        case ScreenFlag.CF_PUSHDOWNNS: break;
+        case ScreenFlag.CF_PUSHLEFTNS: break;
+        case ScreenFlag.CF_PUSHRIGHTNS: break;
+        case ScreenFlag.CF_PUSHUPDOWNINS: break;
+        case ScreenFlag.CF_PUSHLEFTRIGHTINS: break;
+        case ScreenFlag.CF_PUSH4WAYINS: break;
+        case ScreenFlag.CF_PUSHUPINS: break;
+        case ScreenFlag.CF_PUSHDOWNINS: break;
+        case ScreenFlag.CF_PUSHLEFTINS: break;
+        case ScreenFlag.CF_PUSHRIGHTINS: break;
+        case ScreenFlag.CF_BLOCKTRIGGER: break;
+        case ScreenFlag.CF_NOBLOCKS: break;
+        case ScreenFlag.CF_BRANG1: break;
+        case ScreenFlag.CF_BRANG2: break;
+        case ScreenFlag.CF_BRANG3: break;
+        case ScreenFlag.CF_ARROW2: break;
+        case ScreenFlag.CF_ARROW3: break;
+        case ScreenFlag.CF_CANDLE2: break;
+        case ScreenFlag.CF_WANDFIRE: break;
+        case ScreenFlag.CF_DINSFIRE: break;
+        case ScreenFlag.CF_WANDMAGIC: break;
+        case ScreenFlag.CF_REFMAGIC: break;
+        case ScreenFlag.CF_REFFIREBALL: break;
+        case ScreenFlag.CF_SWORD1: break;
+        case ScreenFlag.CF_SWORD2: break;
+        case ScreenFlag.CF_SWORD3: break;
+        case ScreenFlag.CF_SWORD4: break;
+        case ScreenFlag.CF_SWORD1BEAM: break;
+        case ScreenFlag.CF_SWORD2BEAM: break;
+        case ScreenFlag.CF_SWORD3BEAM: break;
+        case ScreenFlag.CF_SWORD4BEAM: break;
+        case ScreenFlag.CF_HOOKSHOT: break;
+        case ScreenFlag.CF_WAND: break;
+        case ScreenFlag.CF_HAMMER: break;
+        case ScreenFlag.CF_STRIKE: break;
+        case ScreenFlag.CF_BLOCKHOLE: break;
+        case ScreenFlag.CF_MAGICFAIRY: break;
+        case ScreenFlag.CF_ALLFAIRY: break;
+        case ScreenFlag.CF_SINGLE: break;
+        case ScreenFlag.CF_SINGLE16: break;
+        case ScreenFlag.CF_NOENEMY: break;
+        case ScreenFlag.CF_NOGROUNDENEMY: break;
+        case ScreenFlag.CF_SCRIPT1: break;
+        case ScreenFlag.CF_SCRIPT2: break;
+        case ScreenFlag.CF_SCRIPT3: break;
+        case ScreenFlag.CF_SCRIPT4: break;
+        case ScreenFlag.CF_SCRIPT5: break;
+      }
+
+      console.log('TODO sflag:', sflag);
+
+      // TODO remove
+      if (sflag) return { tile: 0 };
     }
 
     return screen.tiles[x][y];
@@ -749,7 +879,7 @@ export class PlayGameMode extends QuestMakerMode {
     const state = this.app.state;
     let screenState = state.game.screenStates.get(screen);
     if (!screenState) {
-      screenState = { enemiesKilled: 0, secrets: false };
+      screenState = { enemiesKilled: 0, secretsTriggered: false };
       state.game.screenStates.set(screen, screenState);
     }
     return screenState;

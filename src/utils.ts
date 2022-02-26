@@ -63,7 +63,7 @@ export function inBounds(x: number, y: number, width: number, height: number) {
   return x >= 0 && y >= 0 && x < width && y < height;
 }
 
-export function isSolid (state: QuestMaker.State, x: number, y: number, quadrant?: number) {
+export function isSolid(state: QuestMaker.State, x: number, y: number, quadrant?: number) {
   if (!inBounds(x, y, screenWidth, screenHeight)) return true;
 
   const tileNumber = state.currentScreen.tiles[x][y].tile;
@@ -73,3 +73,14 @@ export function isSolid (state: QuestMaker.State, x: number, y: number, quadrant
     return !state.quest.tiles[tileNumber].walkable[quadrant];
   }
 };
+
+export function create2dArray<T>(rows: number, columns: number, defaultValue: T): T[][] {
+  const arr: T[][] = [];
+  for (var i = 0; i < rows; i++) {
+    arr[i] = [];
+    for (var j = 0; j < columns; j++) {
+      arr[i].push(defaultValue);
+    }
+  }
+  return arr;
+}

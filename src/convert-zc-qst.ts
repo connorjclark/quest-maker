@@ -644,6 +644,7 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
     const tile = makeTile({
       graphicId: combo.tile,
       walkable: [!(combo.walk & 1), !(combo.walk & 4), !(combo.walk & 2), !(combo.walk & 8)],
+      flag: combo.flag,
     });
     if (combo.frames >= 2) {
       tile.numFrames = combo.frames;
