@@ -606,7 +606,7 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
   const sfxCache = new Map<number, string>();
   // @ts-expect-error
   quest.getSfx = (id: number) => {
-    const sfx = qstData.SFX.sfxs[id];
+    const sfx = qstData.SFX?.sfxs[id];
 
     if (!sfx || !sfx.data) {
       if (!defaultSounds[id]) return null;
