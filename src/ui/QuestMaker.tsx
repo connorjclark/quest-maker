@@ -214,7 +214,15 @@ class QuestMaker extends Component<QuestMakerProps> {
     let playUI;
     if (props.mode === 'play') {
       playUI = <div class="play-ui">
-        <div ref={ref} class="canvas-wrapper"></div>
+        <div class="canvas-wrapper flex flex-column">
+          <div ref={ref}></div>
+          <div>
+            <div>Arrow keys to move</div>
+            <div>X to swing sword</div>
+            <div>R to trigger secrets</div>
+            <div>Shift to return to editor</div>
+          </div>
+        </div>
       </div>
     }
 
