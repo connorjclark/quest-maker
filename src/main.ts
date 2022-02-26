@@ -296,7 +296,7 @@ function createQuest(): QuestMaker.Quest {
   };
 
   quest.dmaps = [
-    { name: 'Overworld', map: 0, color: 0, song: 0, continueScreenX: 7, continueScreenY: 7 },
+    { name: 'Overworld', map: 0, color: 0, song: 0, continueScreenX: 7, continueScreenY: 7, xoff: 0 },
   ];
 
   return quest;
@@ -494,6 +494,13 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
     updateUrl(app.state);
   });
   updateUrl(app.state);
+
+  // Hello Safari!
+  const doSafariFix = () => {
+    app.soundManager.playSfx(1, 0);
+    window.removeEventListener('click', doSafariFix);
+  };
+  window.addEventListener('click', doSafariFix);
 
   window.addEventListener('resize', () => app.resize());
   app.resize();

@@ -4,16 +4,22 @@ import { MultiColorReplaceFilter } from "@pixi/filter-multi-color-replace";
 import Timidity from 'timidity';
 import { makeUI } from "./ui/QuestMaker";
 
+const audioBufferCache = new Map<string, AudioBuffer>();
+
 class SoundManager {
   private midiPlayer = new Timidity(location.pathname);
   private currentSongId = -1;
   private enabled = !window.IS_DEV;
+  // This is weird. Sharing the audio context allows us music to play
+  // in Safari after the user gesture approves the `.playSfx` call in main.ts
+  private audioContext = this.midiPlayer._audioContext as AudioContext;
 
   constructor(private app: QuestMakerApp) {
   }
 
-  playSfx(id: number) {
+  playSfx(id: number, volume = 1) {
     if (!id) return;
+    if (this.audioContext.state === 'suspended') this.audioContext.resume();
 
     // @ts-expect-error
     const sfxUrl = this.app.state.quest.getSfx(id - 1);
@@ -22,8 +28,38 @@ class SoundManager {
       return;
     }
 
-    const audio = new Audio(sfxUrl);
-    audio.play();
+    // This was simple (just used new Audio(sfxUrl).play()), but Safari has a huge lag
+    // with Audio (and <audio>) and only allows one sound to play at a time, so must use
+    // new WebAudio api.
+
+    const play = () => {
+      const buffer = audioBufferCache.get(sfxUrl);
+      if (!buffer) return;
+
+      const sourceNode = this.audioContext.createBufferSource();
+      sourceNode.buffer = buffer;
+      // sourceNode.connect(this.audioContext.destination);
+
+      const gainNode = this.audioContext.createGain();
+      gainNode.gain.value = volume;
+      sourceNode.connect(gainNode);
+      gainNode.connect(this.audioContext.destination);
+
+      sourceNode.start();
+      sourceNode.addEventListener('ended', () => sourceNode.disconnect());
+    };
+
+    if (audioBufferCache.has(sfxUrl)) {
+      play();
+    } else {
+      fetch(sfxUrl)
+        .then(resp => resp.arrayBuffer())
+        .then(arrayBuffer => this.audioContext.decodeAudioData(arrayBuffer))
+        .then((buffer) => {
+          audioBufferCache.set(sfxUrl, buffer);
+          play();
+        });
+    }
   }
 
   playSong(id: number) {
