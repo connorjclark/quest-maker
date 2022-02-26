@@ -612,7 +612,7 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
       if (!defaultSounds[id]) return null;
 
       // Return a default sound.
-      return `/zc_sfx/${defaultSounds[id].toLowerCase()}.wav`;
+      return `zc_sfx/${defaultSounds[id].toLowerCase()}.wav`;
     }
 
     if (sfxCache.has(id)) return sfxCache.get(id);
