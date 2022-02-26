@@ -254,8 +254,6 @@ declare global {
           gfxs: number[],
           flip: number | number[],
         }>>;
-        START_X: number;
-        START_Y: number;
         START_DMAP: number;
       };
     }

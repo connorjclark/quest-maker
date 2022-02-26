@@ -126,9 +126,9 @@ export class QuestMakerApp extends App<QuestMaker.State> {
     return this.getPaletteIndex(this.state.currentDMap, this.state.currentScreen);
   }
 
-  getPaletteIndex(dmap: QuestMaker.DMap, screen: QuestMaker.Screen) {
-    // TODO dont like +1 here
-    let paletteIndex = dmap.color + 1;
+  getPaletteIndex(dmap: QuestMaker.DMap | undefined, screen: QuestMaker.Screen) {
+    let paletteIndex = 0;
+    if (dmap) paletteIndex = dmap.color + 1;
     if (screen.color) paletteIndex = screen.color + 1;
     return paletteIndex;
   }

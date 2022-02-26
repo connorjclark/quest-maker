@@ -18,9 +18,10 @@ const searchParamsObj = {
   quest: searchParams.get('quest'),
   dev: searchParams.has('dev'),
   zcdebug: searchParams.get('zcdebug'),
-  dmap: searchParams.get('dmap'),
-  x: searchParams.get('x'),
-  y: searchParams.get('y'),
+  map: searchParams.has('map') ? Number(searchParams.get('map')) : null,
+  dmap: searchParams.has('dmap') ? Number(searchParams.get('dmap')) : null,
+  x: searchParams.has('x') ? Number(searchParams.get('x')) : null,
+  y: searchParams.has('y') ? Number(searchParams.get('y')) : null,
 }
 window.IS_DEV = searchParamsObj.dev;
 window.IS_LOCALHOST = location.hostname === 'localhost';
@@ -385,39 +386,17 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
   }
   await new Promise(resolve => pixi.loader.load(resolve));
 
-  let initialDmap = quest.misc.START_DMAP;
-  let initialScreenX = quest.misc.START_X;
-  let initialScreenY = quest.misc.START_Y;
+  const initialDmap = searchParamsObj.dmap ?? quest.misc.START_DMAP;
+  const initialMap = searchParamsObj.map ?? quest.dmaps[initialDmap].map;
+  const initialScreenX = searchParamsObj.x ?? quest.dmaps[initialDmap].continueScreenX;
+  const initialScreenY = searchParamsObj.y ?? quest.dmaps[initialDmap].continueScreenY;
 
-  if (quest.dmaps[initialDmap]) {
-    initialScreenX = quest.dmaps[initialDmap].continueScreenX;
-    initialScreenY = quest.dmaps[initialDmap].continueScreenY;
-  }
-
-  if (searchParamsObj.dmap && searchParamsObj.x && searchParamsObj.y) {
-    initialDmap = Number(searchParamsObj.dmap);
-    initialScreenX = Number(searchParamsObj.x);
-    initialScreenY = Number(searchParamsObj.y);
-  }
-
-  // Simple code to quickly persist last screen position.
-  if (localStorage.getItem('lastState')) {
-    const lastStateByQuest = getLocalStorage();
-    const lastState = lastStateByQuest[questBasePath];
-    if (window.IS_DEV && lastState && 'mapIndex' in lastState) {
-      initialDmap = quest.dmaps.findIndex(dmap => dmap.map === lastState.mapIndex);
-      initialScreenX = lastState.screenX;
-      initialScreenY = lastState.screenY;
-    }
-  }
   window.addEventListener('unload', () => {
     const { mapIndex, screenX, screenY } = state;
     const lastStateByQuest = getLocalStorage();
     lastStateByQuest[questBasePath] = { mapIndex, screenX, screenY };
     saveLocalStorage(lastStateByQuest);
   });
-
-  const initialMap = quest.dmaps[initialDmap].map;
 
   const state: QuestMaker.State = {
     quest,
@@ -550,10 +529,20 @@ window.debugScreen = () => {
 
 function updateUrl(state: QuestMaker.State) {
   const url = new URL(location.href);
-  const searchParams = new URLSearchParams(url.search);
-  searchParams.set('dmap', String(state.dmapIndex));
+  const searchParams = new URLSearchParams();
+
+  searchParams.set('quest', String(url.searchParams.get('quest')));
+  if (state.dmapIndex === -1) {
+    searchParams.set('map', String(state.mapIndex));
+    searchParams.delete('dmap');
+  } else {
+    searchParams.set('dmap', String(state.dmapIndex));
+    searchParams.delete('map');
+  }
   searchParams.set('x', String(state.screenX));
   searchParams.set('y', String(state.screenY));
+  if (url.searchParams.get('dev')) searchParams.set('dev', 'true');
+
   url.search = searchParams.toString();
   history.replaceState({}, '', url);
 }

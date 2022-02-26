@@ -134,8 +134,6 @@ export default function () {
     misc: {
       SPAWN_GFX_START: 0,
       HERO_FRAMES: {},
-      START_X: 0,
-      START_Y: 0,
       START_DMAP: 0,
     }
   };

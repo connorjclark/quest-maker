@@ -1126,10 +1126,6 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
   }
 
   quest.misc.SPAWN_GFX_START = 72;
-
-  // TODO
-  quest.misc.START_X = 7;
-  quest.misc.START_Y = 7;
   quest.misc.START_DMAP = qstData.INIT.startDmap || 0;
 
   quest.name = '1st';
