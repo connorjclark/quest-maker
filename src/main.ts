@@ -495,13 +495,6 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
   });
   updateUrl(app.state);
 
-  // Hello Safari!
-  const doSafariFix = () => {
-    app.soundManager.playSfx(1, 0);
-    window.removeEventListener('click', doSafariFix);
-  };
-  window.addEventListener('click', doSafariFix);
-
   window.addEventListener('resize', () => app.resize());
   app.resize();
 }

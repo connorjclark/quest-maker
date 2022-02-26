@@ -6,13 +6,24 @@ import { makeUI } from "./ui/QuestMaker";
 
 const audioBufferCache = new Map<string, AudioBuffer>();
 
+// This is for Safari.
+function unlockAudioContext(audioContext: AudioContext) {
+  if (audioContext.state !== 'suspended') return audioContext;
+
+  const b = document.body;
+  const events = ['touchstart', 'touchend', 'mousedown', 'keydown'];
+  events.forEach(e => b.addEventListener(e, unlock, false));
+  function unlock() { audioContext.resume().then(clean); }
+  function clean() { events.forEach(e => b.removeEventListener(e, unlock)); }
+
+  return audioContext;
+}
+
 class SoundManager {
   private midiPlayer = new Timidity(location.pathname);
   private currentSongId = -1;
   private enabled = !window.IS_DEV;
-  // This is weird. Sharing the audio context allows us music to play
-  // in Safari after the user gesture approves the `.playSfx` call in main.ts
-  private audioContext = this.midiPlayer._audioContext as AudioContext;
+  private audioContext = unlockAudioContext(this.midiPlayer._audioContext);
 
   constructor(private app: QuestMakerApp) {
   }
