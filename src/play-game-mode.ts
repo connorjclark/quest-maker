@@ -489,8 +489,27 @@ export class PlayGameMode extends QuestMakerMode {
 
     for (let x = 0; x < screenWidth; x++) {
       for (let y = 0; y < screenHeight; y++) {
-        const { tile } = screen.tiles[x][y];
-        const walkable = state.quest.tiles[tile].walkable;
+        const walkable = [true, true, true, true];
+
+        // These layers are used for walkable checks.
+        for (let i = 0; i <= 2; i++) {
+          let layerScreen;
+          if (i === 0) {
+            layerScreen = screen;
+          } else {
+            const layer = screen.layers[i - 1];
+            if (!layer) continue;
+
+            layerScreen = state.quest.maps[layer.map].screens[layer.x][layer.y];
+          }
+
+          const { tile } = layerScreen.tiles[x][y];
+          walkable[0] &&= state.quest.tiles[tile].walkable[0];
+          walkable[1] &&= state.quest.tiles[tile].walkable[1];
+          walkable[2] &&= state.quest.tiles[tile].walkable[2];
+          walkable[3] &&= state.quest.tiles[tile].walkable[3];
+        }
+
         const allSolid = walkable.every(w => !w);
 
         // Just make one big square. Should make hit tests faster.
