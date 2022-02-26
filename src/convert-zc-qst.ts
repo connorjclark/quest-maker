@@ -946,6 +946,9 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
         const layerMap: number[] = zcScreen.layerMap; // TODO: should type zcData just a bit ...
         const screen: QuestMaker.Screen = {
           tiles: [],
+          secretTiles: (zcScreen.secretCombos as any[]).map((combo, i) => {
+            return { tile: combo, cset: zcScreen.secretCsets[i] };
+          }),
           layers: layerMap.map((m, i) => {
             if (m === 0) return null;
 
@@ -1010,7 +1013,10 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
             // if (cset === 0) cset = undefined;
             // else cset -= 1;
 
-            screen.tiles[x].push({ tile: zcScreen.data[x + y * screenWidth], cset });
+            screen.tiles[x].push({
+              tile: zcScreen.data[x + y * screenWidth],
+              cset,
+            });
           }
         }
 

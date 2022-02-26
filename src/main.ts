@@ -31,6 +31,7 @@ PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 // TODO: why is this a class?
 class Screen {
   public tiles: { tile: number }[][] = [];
+  public secretTiles: { tile: number }[] = [];
   public layers = [];
   public enemies: QuestMaker.Screen['enemies'] = [];
   public color = 0;

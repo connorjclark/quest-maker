@@ -35,6 +35,7 @@ declare global {
 
     interface Screen {
       tiles: ScreenTile[][];
+      secretTiles: ScreenTile[];
       layers: Array<{ map: number; x: number; y: number } | null>;
       enemies: Array<{
         enemyId: number;
@@ -288,9 +289,7 @@ declare global {
         screenTransition?: ScreenTransition;
         /** Pending transition for when hero leaves a special room. */
         warpReturnTransition?: ScreenTransition;
-        screenStates: Map<Screen, {
-          enemiesKilled: number
-        }>;
+        screenStates: Map<Screen, ScreenState>;
         inventory: Array<{ item: number }>;
         equipped: [number | null, number | null];
       };
@@ -298,6 +297,11 @@ declare global {
       mapIndex: number;
       screenX: number;
       screenY: number;
+    }
+
+    interface ScreenState {
+      enemiesKilled: number;
+      secrets: boolean;
     }
 
     // Are these used?

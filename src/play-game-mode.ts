@@ -116,17 +116,25 @@ export class PlayGameMode extends QuestMakerMode {
 
   show() {
     super.show();
+    this.swordSprite.alpha = 0;
+    this.entities = [];
+    this.entities.push(this.heroEntity);
+    this.initDraw();
+    this.onEnterScreen();
+  }
+
+  initDraw() {
     const state = this.app.state;
 
     for (const layer of this.layers) {
       layer.removeChildren();
     }
 
-    this.layers[2].addChild(this.swordSprite);
-    this.swordSprite.alpha = 0;
+    for (const entity of this.entities) {
+      this.entityLayer.addChild(entity);
+    }
 
-    this.entities = [];
-    this.entities.push(this.heroEntity);
+    this.layers[2].addChild(this.swordSprite);
 
     const mask = new PIXI.Graphics();
     mask.beginFill(0);
@@ -138,7 +146,8 @@ export class PlayGameMode extends QuestMakerMode {
     const tileLayerContainers = [
       { map: state.mapIndex, x: state.screenX, y: state.screenY },
       ...screen.layers
-    ].map(layer => layer && this.createScreenLayerContainer(state.dmapIndex, layer.x, layer.y, layer.map));
+    ].map((_, i) => this.createScreenLayerContainer(state.dmapIndex, screen, i));
+
     for (let i = 0; i < tileLayerContainers.length; i++) {
       const layer = tileLayerContainers[i];
       if (!layer) continue;
@@ -159,8 +168,6 @@ export class PlayGameMode extends QuestMakerMode {
     if (window.debug) {
       this.layers[4].addChild(this.hitTest.container);
     }
-
-    this.onEnterScreen();
   }
 
   hide() {
@@ -172,6 +179,7 @@ export class PlayGameMode extends QuestMakerMode {
   tick(dt: number) {
     const state = this.app.state;
     const heroEntity = this.heroEntity;
+    const screenState = this.getCurrentScreenState();
 
     if (this.app.keys.up['Space']) {
       paused = !paused;
@@ -182,6 +190,12 @@ export class PlayGameMode extends QuestMakerMode {
     if (transition) {
       this.performScreenTransition(transition);
       return;
+    }
+
+    if (this.app.keys.up['KeyR']) {
+      screenState.secrets = true;
+      // TODO: update more performantly!
+      this.initDraw();
     }
 
     let dx = 0, dy = 0;
@@ -389,7 +403,7 @@ export class PlayGameMode extends QuestMakerMode {
     for (const { x, y, names } of sideTilesByPoints) {
       if (!Utils.inBounds(x, y, screenWidth, screenHeight)) continue;
 
-      const { tile } = state.currentScreen.tiles[x][y];
+      const { tile } = this._getTile(state.currentScreen, screenState, x, y);
       const tile_ = state.quest.tiles[tile]; // ... naming issue ....
       if (tile_.type === 'default') continue;
 
@@ -398,6 +412,16 @@ export class PlayGameMode extends QuestMakerMode {
 
     // Transition screen when hero enters edge.
     this._checkForTransition();
+  }
+
+  _getTile(screen: QuestMaker.Screen, screenState: QuestMaker.ScreenState, x: number, y: number): QuestMaker.ScreenTile {
+    if (screenState.secrets) {
+      // @ts-expect-error
+      const sflag = getZcScreen().sflag[x + y * screenWidth];
+      if (sflag) return screen.secretTiles[3];
+    }
+
+    return screen.tiles[x][y];
   }
 
   _checkForTransition() {
@@ -437,19 +461,38 @@ export class PlayGameMode extends QuestMakerMode {
     };
   }
 
-  createScreenLayerContainer(dmapIndex: number, sx: number, sy: number, mapIndexOverride?: number) {
+  getScreen(dmapIndex: number, mapIndex: number, sx: number, sy: number) {
+    // TODO: should dmapIndex always be enough?
+    const dmap = this.app.state.quest.dmaps[dmapIndex] || { map: mapIndex };
+    const screen = this.app.state.quest.maps[dmap.map].screens[sx][sy];
+    return screen;
+  }
+
+  getScreenLayer(screen: QuestMaker.Screen, layerIndex: number) {
+    if (layerIndex === 0) return screen;
+
+    const layer = screen.layers[layerIndex - 1];
+    if (layer) return this.app.state.quest.maps[layer.map].screens[layer.x][layer.y];
+  }
+
+  createScreenLayerContainer(dmapIndex: number, screen: QuestMaker.Screen, layerIndex: number) {
     const container = new PIXI.Container();
     const state = this.app.state;
     const dmap = state.quest.dmaps[dmapIndex] || { map: 0 };
-    const screenToDeterminePalette = state.quest.maps[dmap.map].screens[sx][sy];
-    const paletteIndex = this.app.getPaletteIndex(dmap, screenToDeterminePalette);
+    // const screen = this.getScreen(dmapIndex, 0, sx, sy);
+    const paletteIndex = this.app.getPaletteIndex(dmap, screen);
 
-    const screen = mapIndexOverride === undefined ?
-      screenToDeterminePalette :
-      state.quest.maps[mapIndexOverride].screens[sx][sy];
+    const layerScreen = this.getScreenLayer(screen, layerIndex);
+    if (!layerScreen) return container;
+
+    // const screenToDeterminePalette = state.quest.maps[dmap.map].screens[sx][sy];
+    // const paletteIndex = this.app.getPaletteIndex(dmap, screenToDeterminePalette);
+
+    const screenState = this.getScreenState(screen);
+
     for (let x = 0; x < screenWidth; x++) {
       for (let y = 0; y < screenHeight; y++) {
-        const sprite = this.app.createTileSprite(screen.tiles[x][y], paletteIndex);
+        const sprite = this.app.createTileSprite(this._getTile(layerScreen, screenState, x, y), paletteIndex);
         sprite.x = x * tileSize;
         sprite.y = y * tileSize;
         container.addChild(sprite);
@@ -471,9 +514,9 @@ export class PlayGameMode extends QuestMakerMode {
     bg.endFill();
     container.addChild(bg);
 
-    container.addChild(this.createScreenLayerContainer(dmapIndex, sx, sy));
-    for (const layer of screen.layers) {
-      if (layer) container.addChild(this.createScreenLayerContainer(dmapIndex, layer.x, layer.y, layer.map));
+    container.addChild(this.createScreenLayerContainer(dmapIndex, screen, 0));
+    for (let i = 0; i < screen.layers.length; i++) {
+      this.createScreenLayerContainer(dmapIndex, screen, i);
     }
 
     return container;
@@ -484,6 +527,7 @@ export class PlayGameMode extends QuestMakerMode {
 
     const state = this.app.state;
     const screen = state.currentScreen;
+    const screenState = this.getCurrentScreenState();
 
     const add = (x: number, y: number, size: number) => {
       this.hitTest.add('screen', x, y, size, size);
@@ -505,7 +549,7 @@ export class PlayGameMode extends QuestMakerMode {
             layerScreen = state.quest.maps[layer.map].screens[layer.x][layer.y];
           }
 
-          const { tile } = layerScreen.tiles[x][y];
+          const { tile } = this._getTile(layerScreen, screenState, x, y);
           walkable[0] &&= state.quest.tiles[tile].walkable[0];
           walkable[1] &&= state.quest.tiles[tile].walkable[1];
           walkable[2] &&= state.quest.tiles[tile].walkable[2];
@@ -680,7 +724,7 @@ export class PlayGameMode extends QuestMakerMode {
 
   killEntity(entity: QuestEntity) {
     this.removeEntity(entity);
-    this.getScreenState().enemiesKilled += 1;
+    this.getCurrentScreenState().enemiesKilled += 1;
 
     const items = this.app.state.quest.items.filter(item => item.tile && item.name.match(/rupee|heart/i))
     if (items.length) {
@@ -697,12 +741,16 @@ export class PlayGameMode extends QuestMakerMode {
     if (index !== -1) this.entities.splice(index, 1);
   }
 
-  getScreenState() {
+  getCurrentScreenState(): QuestMaker.ScreenState {
+    return this.getScreenState(this.app.state.currentScreen);
+  }
+
+  getScreenState(screen: QuestMaker.Screen): QuestMaker.ScreenState {
     const state = this.app.state;
-    let screenState = state.game.screenStates.get(state.currentScreen);
+    let screenState = state.game.screenStates.get(screen);
     if (!screenState) {
-      screenState = { enemiesKilled: 0 };
-      state.game.screenStates.set(state.currentScreen, screenState);
+      screenState = { enemiesKilled: 0, secrets: false };
+      state.game.screenStates.set(screen, screenState);
     }
     return screenState;
   }
@@ -722,7 +770,7 @@ export class PlayGameMode extends QuestMakerMode {
 
     const enemies = [...state.currentScreen.enemies]
       .sort(() => Math.random() - 0.5);
-    const screenState = this.getScreenState();
+    const screenState = this.getScreenState(state.currentScreen);
     enemies.splice(0, screenState.enemiesKilled);
 
     for (const { enemyId } of enemies) {
