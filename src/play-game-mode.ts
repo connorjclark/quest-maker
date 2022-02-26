@@ -208,6 +208,8 @@ export class PlayGameMode extends QuestMakerMode {
       const heroCenterY = this.heroEntity.y + this.heroEntity.height / 2 + 3;
       this.swordSprite.x = heroCenterX + this.heroEntity.direction.x * this.swordSprite.width * 0.8;
       this.swordSprite.y = heroCenterY + this.heroEntity.direction.y * this.swordSprite.height * 0.8;
+      this.swordSprite.pivot.set(this.swordSprite.width / 2, this.swordSprite.height / 2);
+      this.swordSprite.texture.rotate = PIXI.groupD8.byDirection(-this.heroEntity.direction.y, -this.heroEntity.direction.x);
     }
 
     const equippedX = state.game.equipped[1] !== null && state.game.inventory[state.game.equipped[1]];
@@ -737,9 +739,6 @@ export class PlayGameMode extends QuestMakerMode {
   }
 
   performSwordAttack() {
-    // TODO: attach weapon sprite to hero.
-    this.swordSprite.pivot.set(this.swordSprite.width / 2, this.swordSprite.height / 2);
-    this.swordSprite.texture.rotate = PIXI.groupD8.byDirection(-this.heroEntity.direction.y, -this.heroEntity.direction.x);
     this.swordSprite.alpha = 1;
 
     const equippedIndex = this.app.state.game.equipped[1];
