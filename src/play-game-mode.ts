@@ -277,7 +277,7 @@ export class PlayGameMode extends QuestMakerMode {
         const tile = this._getTile(state.currentScreen, screenState, location.tx, location.ty, 0);
         // TODO really need to rename tile to screenTile and tile.tile to tile.id
         const tileData = state.quest.tiles[tile.tile];
-        // console.log(TileType[tileData.type]);
+        // if (tileData.type) console.log(TileType[tileData.type]);
 
         const isSlashable = [
           TileType.Bush,
@@ -1169,7 +1169,7 @@ export class PlayGameMode extends QuestMakerMode {
     const warpIndex = getWarpIndex(type);
 
     if (warpIndex !== undefined) {
-      if (names.includes('bottomLeft') && names.includes('bottomRight')) {
+      if ((names.includes('bottomLeft') && names.includes('bottomRight')) || (names.includes('bottom') && names.includes('top'))) {
         const warp = state.currentScreen.warps.tileWarps.find((warp) => warp.index === warpIndex);
         if (warp) {
           const { transition, returnTransition } = this._createScreenTransitionFromWarp(warp);
