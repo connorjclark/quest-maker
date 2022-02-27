@@ -514,37 +514,11 @@ export class PlayGameMode extends QuestMakerMode {
         case ScreenFlag.CF_RAFTBRANCH: break;
         case ScreenFlag.CF_DIVEITEM: break;
         case ScreenFlag.CF_ZELDA: break;
-        case ScreenFlag.CF_SECRETS01: break;
-        case ScreenFlag.CF_SECRETS02: break;
-        case ScreenFlag.CF_SECRETS03: break;
-        case ScreenFlag.CF_SECRETS04: break;
-        case ScreenFlag.CF_SECRETS05: break;
-        case ScreenFlag.CF_SECRETS06: break;
-        case ScreenFlag.CF_SECRETS07: break;
-        case ScreenFlag.CF_SECRETS08: break;
-        case ScreenFlag.CF_SECRETS09: break;
-        case ScreenFlag.CF_SECRETS10: break;
-        case ScreenFlag.CF_SECRETS11: break;
-        case ScreenFlag.CF_SECRETS12: break;
-        case ScreenFlag.CF_SECRETS13: break;
-        case ScreenFlag.CF_SECRETS14: break;
-        case ScreenFlag.CF_SECRETS15: break;
-        case ScreenFlag.CF_SECRETS16: break;
         case ScreenFlag.CF_TRAPH: break;
         case ScreenFlag.CF_TRAPV: break;
         case ScreenFlag.CF_TRAP4WAY: break;
         case ScreenFlag.CF_TRAPLR: break;
         case ScreenFlag.CF_TRAPUD: break;
-        case ScreenFlag.CF_ENEMY0: break;
-        case ScreenFlag.CF_ENEMY1: break;
-        case ScreenFlag.CF_ENEMY2: break;
-        case ScreenFlag.CF_ENEMY3: break;
-        case ScreenFlag.CF_ENEMY4: break;
-        case ScreenFlag.CF_ENEMY5: break;
-        case ScreenFlag.CF_ENEMY6: break;
-        case ScreenFlag.CF_ENEMY7: break;
-        case ScreenFlag.CF_ENEMY8: break;
-        case ScreenFlag.CF_ENEMY9: break;
         case ScreenFlag.CF_PUSHLR: break;
         case ScreenFlag.CF_PUSHUP: break;
         case ScreenFlag.CF_PUSHDOWN: break;
@@ -603,7 +577,7 @@ export class PlayGameMode extends QuestMakerMode {
         case ScreenFlag.CF_SCRIPT5: break;
       }
 
-      console.log('TODO sflag:', sflag);
+      console.log('TODO sflag:', ScreenFlag[sflag]);
 
       // TODO remove
       if (sflag) return { tile: 0 };
@@ -965,6 +939,38 @@ export class PlayGameMode extends QuestMakerMode {
   onEnterScreen() {
     const state = this.app.state;
 
+    if (state.quest.name !== 'debug') {
+      this.app.soundManager.playSong(state.quest.dmaps[state.dmapIndex].song);
+    }
+
+    if (state.currentScreen.item && !this.getCurrentScreenState().collectedItem) {
+      const item = this.createItem(state.currentScreen.item.id, state.currentScreen.item.x, state.currentScreen.item.y);
+      item.misc.set('item.isScreenItem', true);
+    }
+
+    this.spawnEnemies();
+  }
+
+  spawnEnemies() {
+    const state = this.app.state;
+    const enemies = Object.entries(state.currentScreen.enemies);
+    const screenState = this.getScreenState(state.currentScreen);
+    enemies.splice(0, screenState.enemiesKilled);
+    if (!enemies.length) return;
+
+    // @ts-expect-error TODO kinda giving up on recreating the state in QuestMaker.Quest
+    const zcScreen = getZcScreen();
+    const enemyFlagLocations = [];
+    for (let x = 0; x < screenWidth; x++) {
+      for (let y = 0; y < screenHeight; y++) {
+        const flag = zcScreen.sflag[x + y * screenWidth];
+        if (flag >= ScreenFlag.CF_ENEMY0 && flag <= ScreenFlag.CF_ENEMY9) {
+          const enemyIndex = flag - ScreenFlag.CF_ENEMY0;
+          enemyFlagLocations[enemyIndex] = { x, y };
+        }
+      }
+    }
+
     const walkableAreas = [];
     for (let x = 0; x < screenWidth; x++) {
       for (let y = 0; y < screenHeight; y++) {
@@ -975,26 +981,19 @@ export class PlayGameMode extends QuestMakerMode {
       }
     }
 
-    const enemies = [...state.currentScreen.enemies]
-      .sort(() => Math.random() - 0.5);
-    const screenState = this.getScreenState(state.currentScreen);
-    enemies.splice(0, screenState.enemiesKilled);
+    for (let [i, { enemyId }] of enemies) {
+      const index = Number(i); // :(
 
-    for (const { enemyId } of enemies) {
-      if (walkableAreas.length === 0) break;
+      let pos;
+      if (enemyFlagLocations[index]) {
+        pos = enemyFlagLocations[index];
+      } else {
+        if (walkableAreas.length === 0) break;
+        [pos] = walkableAreas.splice(Utils.random(0, walkableAreas.length - 1), 1);
+      }
 
       const enemy = state.quest.enemies[enemyId];
-      const [pos] = walkableAreas.splice(Utils.random(0, walkableAreas.length - 1), 1);
       this.spawnEnemy(enemy, pos.x, pos.y);
-    }
-
-    if (state.quest.name !== 'debug') {
-      this.app.soundManager.playSong(state.quest.dmaps[state.dmapIndex].song);
-    }
-
-    if (state.currentScreen.item && !this.getCurrentScreenState().collectedItem) {
-      const item = this.createItem(state.currentScreen.item.id, state.currentScreen.item.x, state.currentScreen.item.y);
-      item.misc.set('item.isScreenItem', true);
     }
   }
 
