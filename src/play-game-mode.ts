@@ -232,7 +232,6 @@ export class PlayGameMode extends QuestMakerMode {
 
     const equippedX = state.game.equipped[1] !== null && state.game.inventory[state.game.equipped[1]];
     if (heroEntity.attackTicks === 0 && equippedX && state.quest.items[equippedX.item].type === ItemType.SWORD && this.app.keys.down['KeyX']) {
-      console.log('swing');
       // @ts-ignore
       this.heroEntity.animationData.ticks = 0;
       this.performSwordAttack();
@@ -244,12 +243,54 @@ export class PlayGameMode extends QuestMakerMode {
 
         entity.hit && entity.hit(heroEntity.direction);
         this.app.soundManager.playSfx(entity.misc.get('enemy.hitSfx'));
-        // this.removeEntity(entity);
       }
     }
 
     if (heroEntity.attackTicks <= 0) {
       this.swordSprite.alpha = 0;
+    }
+
+    // Slash tiles.
+    if (heroEntity.attackTicks === 10) {
+      const touchedTileLocations: Array<{ tx: number, ty: number }> = [];
+      const addPoint = (x: number, y: number) => {
+        const tx = Math.floor(x / tileSize);
+        const ty = Math.floor(y / tileSize);
+        if (touchedTileLocations.find(l => l.tx === tx && l.ty === ty)) return;
+        if (!Utils.inBounds(tx, ty, screenWidth, screenHeight)) return;
+
+        touchedTileLocations.push({ tx, ty });
+      };
+
+      const left = this.swordSprite.x;
+      const right = this.swordSprite.x + this.swordSprite.width;
+      const top = this.swordSprite.y;
+      const bottom = this.swordSprite.y + this.swordSprite.height;
+      addPoint(left, top);
+      addPoint(right, top);
+      addPoint(left, bottom);
+      addPoint(right, bottom);
+
+      let dirty = false;
+      for (const location of touchedTileLocations) {
+        const tile = this._getTile(state.currentScreen, screenState, location.tx, location.ty);
+        // TODO really need to rename tile to screenTile and tile.tile to tile.id
+        const tileData = state.quest.tiles[tile.tile];
+
+        const isSlashable = [
+          TileType.Bush,
+          TileType['Bush (Continuous)'],
+          TileType.Slash,
+          TileType['Slash (Continuous)'],
+        ].includes(tileData.type);
+        if (isSlashable) {
+          // @ts-expect-error
+          const newTile = { tile: getZcScreen().underCombo, cset: getZcScreen().underCset };
+          screenState.replacedTiles[location.tx][location.ty] = newTile;
+          dirty = true;
+        }
+      }
+      if (dirty) this.initDraw();
     }
 
     // Hacky way to make only bottom half of hero solid.
@@ -418,7 +459,12 @@ export class PlayGameMode extends QuestMakerMode {
     this._checkForTransition();
   }
 
+  /**
+   * Returns the tile at the given location, given the current screen state (secrets, replaced tiles, etc.)
+   */
   _getTile(screen: QuestMaker.Screen, screenState: QuestMaker.ScreenState, x: number, y: number): QuestMaker.ScreenTile {
+    const defaultTile = screenState.replacedTiles[x][y] || screen.tiles[x][y];
+
     if (screenState.secretsTriggered) {
       // @ts-expect-error TODO kinda giving up on recreating the state in QuestMaker.Quest
       const zcScreen = getZcScreen();
@@ -427,9 +473,9 @@ export class PlayGameMode extends QuestMakerMode {
       let sflag = zcScreen.sflag[x + y * screenWidth];
       if (sflag === ScreenFlag.CF_NONE) {
         // TODO ignores screen state ...
-        const tileId = screen.tiles[x][y].tile;
+        const tileId = defaultTile.tile;
         sflag = this.app.state.quest.tiles[tileId].flag;
-        if (sflag === ScreenFlag.CF_NONE) return screen.tiles[x][y];
+        if (sflag === ScreenFlag.CF_NONE) return defaultTile;
       }
 
       if (sflag >= ScreenFlag.CF_SECRETS01 && sflag <= ScreenFlag.CF_SECRETS16) {
@@ -552,7 +598,7 @@ export class PlayGameMode extends QuestMakerMode {
       if (sflag) return { tile: 0 };
     }
 
-    return screen.tiles[x][y];
+    return defaultTile;
   }
 
   _checkForTransition() {
@@ -894,7 +940,11 @@ export class PlayGameMode extends QuestMakerMode {
     const state = this.app.state;
     let screenState = state.game.screenStates.get(screen);
     if (!screenState) {
-      screenState = { enemiesKilled: 0, secretsTriggered: false };
+      screenState = {
+        enemiesKilled: 0,
+        secretsTriggered: false,
+        replacedTiles: Utils.create2dArray(screenWidth, screenHeight, null),
+      };
       state.game.screenStates.set(screen, screenState);
     }
     return screenState;

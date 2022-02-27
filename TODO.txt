@@ -9,7 +9,6 @@
 Below are quick links to interesting test screens.
 ------
 
-
 go to map 2, error cuz dmap -1 :) http://localhost:1234/?quest=zc_quests%2F559%2FThe+Land+of+Anarchy.qst
 
 bad colors
@@ -18,45 +17,37 @@ http://localhost:1234/?quest=zc_quests%2F27%2FLink%27s+Birthday+250.qst&dmap=0&x
 http://localhost:1234/?quest=zc_quests%2F27%2FLink%27s+Birthday+250.qst&dmap=0&x=1&y=4
 http://localhost:1234/?quest=zc_quests%2Fbs3.1%2FNewBS+3.1+-+1st+Quest.qst&dmap=0&x=9&y=8 color error
 
-
 bad item gfx. I think the default tile gfx exist in qst.dat
 http://localhost:1234/?quest=zc_quests%2Fbs3.1%2FNewBS+3.1+-+1st+Quest.qst&dmap=0&x=15&y=0
 
-
 really weird
 http://localhost:1234/?quest=zc_quests%2F238%2FLINK+IN+HOLBERINA.qst&dmap=1&x=1&y=3
-
-
 
 multiple warps, does it work?
 http://localhost:1234/?quest=zc_quests%2Fbs3.1%2FNewBS+3.1+-+1st+Quest.qst&dmap=0&x=11&y=0
 Both dungeon entrance to level 6 and the secret stairs go to same place in the original game! not my bug.
 see https://gamefaqs.gamespot.com/boards/563433-the-legend-of-zelda/52191039
 
-
-undercombos
+Bushes / undercombos
 http://localhost:1234/?quest=zc_quests%2F122%2FLinks_Retirement.qst&dmap=0&x=3&y=2
-
 
 item
 http://localhost:1234/?quest=zc_quests%2Fbs3.1%2FNewBS+3.1+-+1st+Quest.qst&dmap=0&x=15&y=4
 
-
 push block
 http://localhost:1234/?quest=zc_quests%2F122%2FLinks_Retirement.qst&dmap=0&x=3&y=1
-
 
 do secret
 http://localhost:1234/?quest=zc_quests%2F122%2FLinks_Retirement.qst&dmap=0&x=1&y=2
 http://localhost:1234/?quest=zc_quests%2Fbs3.1%2FNewBS+3.1+-+1st+Quest.qst&dmap=0&x=4&y=3
 
-
 interesting
 http://localhost:1234/?quest=zc_quests%2F559%2FThe+Land+of+Anarchy.qst&dmap=65&x=3&y=4
-
-
 
 warps 
 http://localhost:1234/?quest=zc_quests%2F26%2Flttf-fixed.qst&dmap=7&x=7&y=7
 http://localhost:1234/?quest=zc_quests%2F122%2FLinks_Retirement.qst&dmap=0&x=8&y=7
 
+This was kinda creepy (go down). Music stutters, game freezes up and suddenly you are in a creepy environment.
+Warning: will probably freeze browser.
+http://localhost:1234/?quest=zc_quests%2F122%2FLinks_Retirement.qst&dmap=54&x=1&y=7

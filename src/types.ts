@@ -291,8 +291,8 @@ declare global {
 
     interface ScreenState {
       enemiesKilled: number;
-      // secrets: boolean[][];
-      secretsTriggered: Boolean;
+      secretsTriggered: boolean;
+      replacedTiles: (ScreenTile | null)[][];
     }
 
     // Are these used?
