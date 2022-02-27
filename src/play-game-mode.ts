@@ -918,6 +918,10 @@ export class PlayGameMode extends QuestMakerMode {
       if (ScreenFlags.killAllEnemiesForSecrets(this.app.state.currentScreen.flags)) {
         this.triggerSecrets();
       }
+      if (ScreenFlags.item(this.app.state.currentScreen.flags)) {
+        this.createScreenItem();
+        this.app.soundManager.playSfx(7);
+      }
     }
 
     const items = this.app.state.quest.items.filter(item => item.tile && item.name.match(/rupee|heart/i))
@@ -961,7 +965,8 @@ export class PlayGameMode extends QuestMakerMode {
       this.app.soundManager.playSong(state.quest.dmaps[state.dmapIndex].song);
     }
 
-    this.createScreenItem();
+    if (!ScreenFlags.item(state.currentScreen.flags)) this.createScreenItem();
+
     this.spawnEnemies();
   }
 

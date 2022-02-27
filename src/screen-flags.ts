@@ -8,6 +8,10 @@ function read(flagIndex: number, bitIndex: number) {
 
 export const ScreenFlags = {
   shutters: read(0, 0),
+  /**
+   * If not set, item will appear right away.
+   * Otherwise only appears after enemies killed / secrets revealed (based on other flags).
+   */
   item: read(0, 1),
   dark: read(0, 2),
   roar: read(0, 3),
