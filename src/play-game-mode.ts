@@ -1047,11 +1047,17 @@ export class PlayGameMode extends QuestMakerMode {
         dmapIndex = warp.dmap;
       }
 
+      // Set the position to set link at. First try 'warp.returns' based on the warp index.
+      // Fall back to the screen's arrival coordinates.
       if (dmapIndex !== undefined) {
         const state = this.app.state;
         const dmap = state.quest.dmaps[dmapIndex];
         const newScreen = state.quest.maps[dmap.map].screens[warp.screenX][warp.screenY];
         newPosition = newScreen.warps.returns[warp.index];
+
+        if (!newPosition.x && !newPosition.y && newScreen.warps.arrival) {
+          newPosition = newScreen.warps.arrival;
+        }
       }
     }
 
