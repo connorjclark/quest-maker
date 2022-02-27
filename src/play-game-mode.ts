@@ -716,7 +716,7 @@ export class PlayGameMode extends QuestMakerMode {
 
     container.addChild(this.createScreenLayerContainer(dmapIndex, screen, 0));
     for (let i = 0; i < screen.layers.length; i++) {
-      this.createScreenLayerContainer(dmapIndex, screen, i);
+      container.addChild(this.createScreenLayerContainer(dmapIndex, screen, i));
     }
 
     return container;

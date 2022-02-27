@@ -51,3 +51,7 @@ http://localhost:1234/?quest=zc_quests%2F122%2FLinks_Retirement.qst&dmap=0&x=8&y
 This was kinda creepy (go down). Music stutters, game freezes up and suddenly you are in a creepy environment.
 Warning: will probably freeze browser.
 http://localhost:1234/?quest=zc_quests%2F122%2FLinks_Retirement.qst&dmap=54&x=1&y=7
+
+bad animations
+http://localhost:1234/?quest=zc_quests%2F559%2FThe+Land+of+Anarchy.qst&dmap=64&x=3&y=4
+
