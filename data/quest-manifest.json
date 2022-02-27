@@ -13275,7 +13275,7 @@
     "tipsAndCheats": "Take some notes and make some maps.Back in the day when playing Z1 and Z2 for the first time, I for one enjoyed making maps and keeping track of clues. If you're a player with a brain that doesn't require you to do that, well hats off to you. If you're like me however, and don't have a super sticky memory but you don't happen to enjoy jotting down where some passages lead to or walls you've tried bombing, this quest may not be for you - just sayin'.",
     "credits": "NintendoAlphadawgEveryone who helped with the comprehensive ZQuest 2.50 tutorialPureZC, Zelda Classic, and all involved with creating and supporting ZQuestThe best quest creators for their inspiration - you know who you are!Overworld theme by John AtteyDungeon music by Cocteau TwinsLogo by Vendetta",
     "playable": false,
-    "error": "Cannot read properties of undefined (reading 'includes')"
+    "error": "qstData.ITEM.items is not iterable"
   },
   {
     "name": "OverHead",
@@ -13730,7 +13730,7 @@
     "tipsAndCheats": "Dungeons are possible in any order, and with just the Level one weapon. That said if you can manage to beat the harder ones first you could open other things early!Also I'm curious who can beat this in the fastest time.",
     "credits": "Shane-testingespalonzx- testing(sorry i forgot you buddy)Shoshon-testingMoosh-testing + scriptsSpriters resource - graphicsKHinsider-midisanyone else im forgetting",
     "playable": false,
-    "error": "Cannot read properties of undefined (reading 'includes')"
+    "error": "qstData.ITEM.items is not iterable"
   },
   {
     "name": "Fragments of Power: Reimagined",
@@ -13749,7 +13749,7 @@
     "tipsAndCheats": "Use your 4 button items to traverse dungeons.Update (09-03-21):Fixed a minorly major sequence error where you could get through level 8.5 without first finding an item you were supposed to need.Update (09-04-21):Nerfed the final boss to be a challenge, but not ridiculous.Update (09-06-21):Fixed a couple potential minor sequence break issues in levels 4 and 5.Hopefully made the kid pre-level 4 appear correctly.Added Compass Beeps to every room in dungeons with a key, or the dungeon item.Update (10-04-21):Nerfed late game bosses and enemies.Buffed early game bosses.Nerfed the first three sword beams.Added a new area before level 5.Added Moosh maps for every dungeon.Customized the subscreen, both active and passive.Turned off the ability to stunlock.Replaced quick switching items with having 4 button items.Other small fixes, and possibly big ones that I forgot.Update (11-17-2021):Added a title screenUpdate (12-10-2021):Fixed F6.",
     "credits": "I did everything. Bagu made the title sequence.Got scripts from some people, mainly Moosh.Zaxarone, Shane and this other guy pointed out a few issues.",
     "playable": false,
-    "error": "Cannot read properties of undefined (reading 'includes')"
+    "error": "qstData.ITEM.items is not iterable"
   },
   {
     "name": "The Bounds of Waterford",
@@ -13777,7 +13777,7 @@
     "tipsAndCheats": "There are three different pay for info rooms and a few other info guys that will point you in the right direction. I suggest you use them.There is little wasted space in the dungeons. Every room either leads to important room or is important itself. If you feel like you're lost, check out your map and make sure you didn't miss anything. Sometimes you will have to backtrack and take look closer.As you will find out, there are eight keys hidden throughout the overworld guarded by. You need these to complete the final dungeon. You will not be able to get them all at the beginning of the game.",
     "credits": "Beta tests by James24 and XanadudeInitial Tileset by Avaro (Zelda XD)VGMusic Midi Contributors: King Meteor, Tsu Ryu, Daniel, C. Luigi_Drummer, Michael Martin, Teck, Jonah Fall, Joe Cortez, tdkim, GiGaHeRTZEverything else by ME! (Expect for the things I forgot).",
     "playable": false,
-    "error": "Cannot read properties of undefined (reading 'includes')"
+    "error": "qstData.ITEM.items is not iterable"
   },
   {
     "name": "IcyZelda3rd.qst",
@@ -13894,7 +13894,7 @@
     "tipsAndCheats": "You can only miss once.",
     "credits": "TheCup93: Original design that I used to make the sprited Ganon head.FireSeraphim: Tileset.Whisky: The source of all inspiration.This Quest Bears the Unofficial Greeeeeeok Seal of Kwalitee.",
     "playable": false,
-    "error": "Cannot read properties of undefined (reading 'includes')"
+    "error": "qstData.ITEM.items is not iterable"
   },
   {
     "name": "Project Storm",
@@ -13965,7 +13965,7 @@
     "tipsAndCheats": "N/A",
     "credits": "This carries the Timelord Seal of Approval",
     "playable": false,
-    "error": "Cannot read properties of undefined (reading 'includes')"
+    "error": "qstData.ITEM.items is not iterable"
   },
   {
     "name": "Fortressvania",
@@ -14208,7 +14208,7 @@
     "tipsAndCheats": "N/A",
     "credits": "Quest designed by: JamianTileset: InstrumentalityExtra tiles: www.spriters-resource.com, EZGBC tilesetScripts: Jamian, with additional scripts by Emily, Mero, Moosh, SaffithMidis: www.vgmusic.com and a custom midi by BaguBeta testing: Moosh, bti182, phatjak69",
     "playable": false,
-    "error": "Cannot read properties of undefined (reading 'includes')"
+    "error": "qstData.ITEM.items is not iterable"
   },
   {
     "name": "Nayru's Odyssey: Definitive Edition",
@@ -14364,7 +14364,7 @@
     "tipsAndCheats": "You can burn bushes and bomb walls, just like the original!There is a spacebar map... on the overworld.Update:Fixed a staircase/block trigger issue in levels 8 and 9.Removed Slash (apparently I had this removed but I forgot to update).Made it to where rooms can't be cheesed in doorways.",
     "credits": "I just used the base Z1 tileset, and created my own overworld with it with unique dungeons.So it's nothing more than the bare minimum.",
     "playable": false,
-    "error": "Cannot read properties of undefined (reading 'includes')"
+    "error": "qstData.ITEM.items is not iterable"
   },
   {
     "name": "Shadowblazer's Tiny Quest",
@@ -14383,7 +14383,7 @@
     "tipsAndCheats": "N/A",
     "credits": "Shadowblazer - Original quest4matsy - Testing",
     "playable": false,
-    "error": "Cannot read properties of undefined (reading 'includes')"
+    "error": "qstData.ITEM.items is not iterable"
   },
   {
     "name": "Imzogelmo's 5th Quest Candidate",
@@ -14428,7 +14428,7 @@
     "tipsAndCheats": "Generally speaking, most dead ends are kill all enemy rooms. Most other enemies are intended to either be ignored or avoided.LEARN YOUR HITBOXES AND EXPLOITS. For example: The Hammer extends ever so slightly farther to the right than it does the left when aiming to hammer pegs down. 0 damage weapons stun enemies, etc..As opposed to the usual type B quest, F6ing is not only allowed, but should be actively used as a tool you, the player, have under your belt.Death Knights have a high heart drop rate. If you are next to a room with one, consider using them to heal up.If you wish to figure out the gimmick for level 2 yourself, don't read this spoiler, but if you can't be bothered by my vague design, go ahead and read here:\n\tSpoiler \n\tMaze paths are visually indicated, and you're supposed to be able to figure them out by looking around carefully. If you cannot figure out the visual indicators, they are as follows:Grave = UpArmos: LeftSign: RightFence: Down\n",
     "credits": "- My closest friends for encouraging me to keep at it.- Z-Zone for hosting the Type B quest contest.- TheBlueTophat for hosting the contest.- \"Britany\" (You know who you are.) for pressing me into making a unique palette for Level 1.- Moosh for playing my entry through to the end, encouraging me to make tweaks for the database release, and recommending some as well.- The current ZC devs for their continued work on the program, which gave me the inspiration to work on this in the first place.- Ironically James24 since he inspired the contest.",
     "playable": false,
-    "error": "Cannot read properties of undefined (reading 'includes')"
+    "error": "qstData.ITEM.items is not iterable"
   },
   {
     "name": "The Zelda Legend (1984 Arcade)",
@@ -14532,7 +14532,7 @@
     "tipsAndCheats": "Inertia stopped by Link sword, direction change, Link shield down position",
     "credits": "N/A",
     "playable": false,
-    "error": "Cannot read properties of undefined (reading 'includes')"
+    "error": "qstData.ITEM.items is not iterable"
   },
   {
     "name": "Remembrance of Shadows",

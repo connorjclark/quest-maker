@@ -281,6 +281,14 @@ const sections = {
       { name: 'animflags', type: 'B', if: sversion >= 6 },
       { name: 'attributes', arrayLength: 4, type: 'I', if: sversion >= 8 },
       { name: 'usrflags', type: 'I', if: sversion >= 8 },
+
+      { name: 'triggerFlags', arrayLength: 2, type: 'I', if: sversion === 9 },
+      { name: 'triggerLevel', type: 'I', if: sversion === 9 },
+      { name: 'triggerFlags', arrayLength: 3, type: 'I', if: sversion >= 10 },
+      { name: 'triggerLevel', type: 'I', if: sversion >= 10 },
+
+      { name: 'label', arrayLength: 11, type: 'B', if: sversion >= 12 },
+      { name: '_padding', type: '11s', if: version.zeldaVersion < 0x193 },
     ]);
 
     return { combos };
@@ -704,7 +712,6 @@ const sections = {
   },
   // https://github.com/ArmageddonGames/ZeldaClassic/blob/bdac8e682ac1eda23d775dacc5e5e34b237b82c0/src/qst.cpp#L11341
   'GUY ': (reader: Reader, version: Version, sversion: number, cversion: number) => {
-    if (sversion >= 36) throw new Error('TODO');
     if (sversion === 2) throw new Error('TODO');
 
     if (sversion <= 2) {
@@ -724,13 +731,13 @@ const sections = {
     const guysRest = readArrayFields(reader, 512, [
       { name: 'flags', type: 'I' },
       { name: 'flags2', type: 'I' },
-      { name: 'tile', type: 'H' },
+      { name: 'tile', type: sversion >= 36 ? 'I' : 'H' },
       { name: 'width', type: 'B' },
       { name: 'height', type: 'B' },
-      { name: 's_tile', type: 'H' },
+      { name: 's_tile', type: sversion >= 36 ? 'I' : 'H' },
       { name: 's_width', type: 'B' },
       { name: 's_height', type: 'B' },
-      { name: 'e_tile', type: 'H' },
+      { name: 'e_tile', type: sversion >= 36 ? 'I' : 'H' },
       { name: 'e_width', type: 'B' },
       { name: 'e_height', type: 'B' },
       { name: 'hp', type: 'H' },
@@ -749,15 +756,22 @@ const sections = {
       { name: 'homing', type: 'H' },
       { name: 'grumble', type: 'H' },
       { name: 'itemSet', type: 'H' },
-      { name: 'misc', arrayLength: 10, type: 'I', if: sversion >= 22 },
+      { name: 'misc', arrayLength: 10, type: sversion >= 22 ? 'I' : 'H' },
       { name: 'bgsfx', type: 'H' },
       { name: 'bosspal', type: 'H' },
       { name: 'extend', type: 'H' },
       { name: 'defense', arrayLength: 19, type: 'B', if: sversion >= 16 },
       { name: 'hitsfx', type: 'B', if: sversion >= 18 },
       { name: 'deadsfx', type: 'B', if: sversion >= 18 },
-      { name: 'misc11', type: 'I', if: sversion >= 22 },
-      { name: 'misc12', type: 'I', if: sversion >= 22 },
+
+      ...(sversion >= 22 ? [
+        { name: 'misc11', type: 'I' },
+        { name: 'misc12', type: 'I' },
+      ] : [
+        { name: 'misc11', type: 'H', if: sversion >= 19 },
+        { name: 'misc12', type: 'H', if: sversion >= 19 },
+      ]),
+
       { name: '_padding', arrayLength: 41 - 19, type: 'B', if: sversion > 24 },
       { name: 'txsz', type: 'I', if: sversion > 25 },
       { name: 'tysz', type: 'I', if: sversion > 25 },
@@ -769,6 +783,28 @@ const sections = {
       { name: 'frozenCset', type: 'I', if: sversion >= 30 },
       { name: 'frozenClock', type: 'I', if: sversion >= 30 },
       { name: 'frozenMisc', arrayLength: 10, type: 'H', if: sversion >= 30 },
+
+      ...(sversion >= 34 ? [
+        { name: 'fireSfx', type: 'H' },
+        { name: 'misc16', arrayLength: 17, type: 'I' },
+        { name: 'movement', arrayLength: 32, type: 'I' },
+        { name: 'newWeapon', arrayLength: 32, type: 'I' },
+        { name: 'script', type: 'H' },
+        { name: 'initD', arrayLength: 8, type: 'I' },
+        { name: 'initA', arrayLength: 2, type: 'I' },
+      ] : []),
+
+      { name: 'editorFlags', type: 'I', if: sversion >= 37 },
+
+      ...(sversion >= 38 ? [
+        { name: 'misc13', type: 'I' },
+        { name: 'misc14', type: 'I' },
+        { name: 'misc15', type: 'I' },
+      ] : []),
+
+      { name: '_skip', arrayLength: 8 * 65 * 2, type: 'B', if: sversion >= 39 },
+      { name: 'weaponScript', type: 'H', if: sversion >= 40 },
+      { name: 'weaponInitialD', arrayLength: 8, type: 'I', if: sversion >= 41 },
     ]);
     const guys = guysJustName.map((w, i) => ({ ...w, ...guysRest[i] }));
 
@@ -830,8 +866,6 @@ const sections = {
       numItems = 256;
     }
 
-    if (sversion >= 26) throw new Error('TODO');
-
     const itemsJustName = readArrayFields(reader, numItems, [
       { name: 'name', type: '64s', if: sversion > 1 },
     ]);
@@ -886,7 +920,49 @@ const sections = {
         { name: 'misc9', type: 'I', if: sversion >= 15 },
         { name: 'misc10', type: 'I', if: sversion >= 15 },
 
-        { name: 'useSound', type: 'B', if: sversion >= 12 },
+        { name: 'useSound', type: 'B' },
+      ] : []),
+
+      ...(sversion >= 26 ? [
+        { name: 'useWeapon', type: 'B' },
+        { name: 'useDefense', type: 'B' },
+        { name: 'weaponRange', type: 'I' },
+        { name: 'weaponDuration', type: 'I' },
+        { name: 'weaponPattern', arrayLength: 10, type: 'I' },
+      ] : []),
+
+      ...(sversion >= 27 ? [
+        { name: 'duplicates', type: 'I' },
+        { name: 'weaponInitialD', arrayLength: 8, type: 'I' },
+        { name: 'weaponInitialA', arrayLength: 2, type: 'B' },
+        { name: 'drawLayer', type: 'B' },
+        { name: 'hxofs', type: 'I' },
+        { name: 'hyofs', type: 'I' },
+        { name: '_skip', arrayLength: 16, type: 'I' },
+        { name: '_skip', arrayLength: 1, type: 'H' },
+      ] : []),
+
+      ...(sversion >= 28 ? [
+        { name: 'overrideFlags', type: 'I' },
+        { name: 'tileW', type: 'I' },
+        { name: 'tileH', type: 'I' },
+      ] : []),
+
+      ...(sversion >= 29 ? [
+        { name: 'weaponOverrideFlags', type: 'I' },
+        { name: 'weaponTileW', type: 'I' },
+        { name: 'weaponTileH', type: 'I' },
+      ] : []),
+
+      { name: 'pickup', type: 'I', if: sversion >= 30 },
+      { name: 'pString', type: 'H', if: sversion >= 32 },
+      { name: 'pickupStringFlags', type: 'H', if: sversion >= 33 },
+      { name: 'costCounter', type: 'B', if: sversion >= 34 },
+
+      ...(sversion >= 44 ? [
+        { name: '_skip', arrayLength: 8 * (65 * 3 + 4), type: 'B' },
+        { name: 'spriteInitialA', arrayLength: 2, type: 'B' },
+        { name: 'spriteScript', type: 'H' },
       ] : []),
     ]);
     const items = itemsJustName.map((w, i) => ({ ...w, ...itemsRest[i] }));
