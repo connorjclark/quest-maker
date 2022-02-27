@@ -4,12 +4,13 @@ import * as constants from './constants';
 import { EditorMode } from './editor-mode';
 import { PlayGameMode } from './play-game-mode';
 import { QuestMakerApp } from './quest-maker-app';
-import { TileType, EnemyType, ItemType } from './types';
+import { EnemyType, ItemType } from './types';
 import makeQuest from './make-quest';
 import { makeUI } from './ui/QuestMaker';
 import { readZCQst } from './read-zc-qst';
 import { convertZCQst } from './convert-zc-qst';
 import { createLandingPage } from './ui/LandingPage';
+import { TileType } from './tile-type';
 
 const { screenWidth, screenHeight, tileSize } = constants;
 
@@ -240,7 +241,7 @@ function createQuest(): QuestMaker.Quest {
   for (let i = 0; i < quest.tiles.length; i++) quest.tiles[i].id = i;
 
   // Stairs.
-  quest.tiles[2].type = TileType.WARP;
+  quest.tiles[2].type = TileType['Stairs [A]'];
 
   quest.maps[0].screens[0][0].tiles[9][7].tile = 2;
 

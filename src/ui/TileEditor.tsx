@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import { TileType } from '../types';
+import { TileType } from '../tile-type';
 import { Tile } from './common';
 
 type TileEditorProps = {
@@ -14,8 +14,13 @@ export class TileEditor extends Component<TileEditorProps> {
 
   render(props: TileEditorProps) {
     let types = [];
-    for (const type of Object.values(TileType)) {
-      types.push(<option value={type} selected={type === props.tile.type}>{type}</option>);
+
+    // iterating typescript enums is so blegh
+    const numTypes = Object.keys(TileType).length;
+    for (let i = 0; i < numTypes; i++) {
+      const tileType = i as TileType;
+      const tileTypeName = TileType[i];
+      types.push(<option value={tileType} selected={tileType === props.tile.type}>{tileTypeName}</option>);
     }
 
     return <div class="tile-editor">
@@ -48,8 +53,7 @@ export class TileEditor extends Component<TileEditorProps> {
     const target = e.target as HTMLSelectElement;
     const option = target.selectedOptions[0];
 
-    // @ts-ignore
-    this.props.tile.type = option.value;
+    this.props.tile.type = Number(option.value);
     this.forceUpdate();
   }
 

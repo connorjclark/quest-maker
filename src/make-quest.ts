@@ -1,4 +1,5 @@
 import * as constants from './constants';
+import { TileType } from './tile-type';
 import { EnemyType } from './types';
 
 const { tileSize } = constants;
@@ -20,10 +21,9 @@ export default function () {
     return graphic;
   }
 
-  function makeTile(opts: Omit<QuestMaker.Tile, 'id' | 'type' | 'walkable'> & Partial<Pick<QuestMaker.Tile, 'walkable'>>): QuestMaker.Tile {
+  function makeTile(opts: Omit<QuestMaker.Tile, 'id' | 'walkable'> & Partial<Pick<QuestMaker.Tile, 'walkable'>>): QuestMaker.Tile {
     const tile = {
       id: tiles.length,
-      type: 'default' as QuestMaker.TileType,
       walkable: [true, true, true, true] as QuestMaker.Tile['walkable'],
       ...opts,
     };
@@ -58,7 +58,9 @@ export default function () {
 
       if (opts.tile) {
         const tile = makeTile({
+          type: TileType.None,
           graphicId: graphic.id,
+          flag: 0,
         });
         tiles.push(tile);
       }
@@ -91,7 +93,9 @@ export default function () {
 
       if (opts.tile) {
         const tile = makeTile({
+          type: TileType.None,
           graphicId: graphic.id,
+          flag: 0,
         });
         tiles.push(tile);
       }

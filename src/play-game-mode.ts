@@ -1,10 +1,11 @@
 import * as constants from './constants';
 import { QuestMakerMode } from "./quest-maker-mode";
-import { TileType, EnemyType, ItemType } from './types';
+import { EnemyType, ItemType } from './types';
 import * as Utils from './utils';
 import { QuestEntity, MiscBag } from './entity';
 import 'pixi-plugin-bump';
 import { ScreenFlag, SecretCombo } from './screen-flags';
+import { getWarpIndex, TileType } from './tile-type';
 
 const { screenWidth, screenHeight, tileSize } = constants;
 
@@ -408,7 +409,7 @@ export class PlayGameMode extends QuestMakerMode {
 
       const { tile } = this._getTile(state.currentScreen, screenState, x, y);
       const tile_ = state.quest.tiles[tile]; // ... naming issue ....
-      if (tile_.type === 'default') continue;
+      if (tile_.type === TileType.None) continue;
 
       this.performTileAction(tile_.type, names);
     }
@@ -1096,19 +1097,20 @@ export class PlayGameMode extends QuestMakerMode {
     };
   }
 
-  performTileAction(type: QuestMaker.TileType, names: string[]) {
+  performTileAction(type: TileType, names: string[]) {
     const state = this.app.state;
+    const warpIndex = getWarpIndex(type);
 
-    if (type === TileType.WARP) {
+    if (warpIndex !== undefined) {
       if (names.includes('bottomLeft') && names.includes('bottomRight')) {
-        const warp = state.currentScreen.warps.tileWarps.find((warp) => warp.index === 0);
+        const warp = state.currentScreen.warps.tileWarps.find((warp) => warp.index === warpIndex);
         if (warp) {
           const { transition, returnTransition } = this._createScreenTransitionFromWarp(warp);
           state.game.screenTransition = transition;
           state.game.warpReturnTransition = returnTransition;
         }
       }
-    } else if (type === TileType.SLOW_WALK) {
+    } else if (type === TileType['Slow Walk']) {
       this.heroEntity.speed = DEFAULT_HERO_SPEED * 0.5;
     }
   }

@@ -1,12 +1,6 @@
 import { QuestMakerApp } from "./quest-maker-app";
 import { QuestMakerMode } from "./quest-maker-mode";
-
-export enum TileType {
-  DEFAULT = 'default',
-  SLOW_WALK = 'slow walk',
-  WARP = 'warp',
-}
-type TileType_ = TileType;
+import { TileType } from "./tile-type";
 
 export enum EnemyType {
   NORMAL = 'normal',
@@ -76,8 +70,6 @@ declare global {
       width: number;
       height: number;
     }
-
-    type TileType = TileType_;
 
     interface Tile {
       id: number;
