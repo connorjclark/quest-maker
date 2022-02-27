@@ -84,3 +84,11 @@ export function create2dArray<T>(rows: number, columns: number, defaultValue: T)
   }
   return arr;
 }
+
+export function create3dArray<T>(depth: number, rows: number, columns: number, defaultValue: T): T[][][] {
+  const arr: T[][][] = [];
+  for (var i = 0; i < depth; i++) {
+    arr[i] = create2dArray(rows, columns, defaultValue);
+  }
+  return arr;
+}

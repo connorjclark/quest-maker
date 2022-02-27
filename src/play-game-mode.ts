@@ -273,7 +273,8 @@ export class PlayGameMode extends QuestMakerMode {
 
       let dirty = false;
       for (const location of touchedTileLocations) {
-        const tile = this._getTile(state.currentScreen, screenState, location.tx, location.ty);
+        // TODO: handle all layers
+        const tile = this._getTile(state.currentScreen, screenState, location.tx, location.ty, 0);
         // TODO really need to rename tile to screenTile and tile.tile to tile.id
         const tileData = state.quest.tiles[tile.tile];
         // console.log(TileType[tileData.type]);
@@ -294,7 +295,7 @@ export class PlayGameMode extends QuestMakerMode {
         if (isSlashable) {
           // @ts-expect-error
           const newTile = { tile: getZcScreen().underCombo, cset: getZcScreen().underCset };
-          screenState.replacedTiles[location.tx][location.ty] = newTile;
+          screenState.replacedTiles[0][location.tx][location.ty] = newTile;
           dirty = true;
         }
       }
@@ -457,7 +458,7 @@ export class PlayGameMode extends QuestMakerMode {
     for (const { x, y, names } of sideTilesByPoints) {
       if (!Utils.inBounds(x, y, screenWidth, screenHeight)) continue;
 
-      const { tile } = this._getTile(state.currentScreen, screenState, x, y);
+      const { tile } = this._getTile(state.currentScreen, screenState, x, y, 0);
       const tile_ = state.quest.tiles[tile]; // ... naming issue ....
       if (tile_.type === TileType.None) continue;
 
@@ -471,8 +472,9 @@ export class PlayGameMode extends QuestMakerMode {
   /**
    * Returns the tile at the given location, given the current screen state (secrets, replaced tiles, etc.)
    */
-  _getTile(screen: QuestMaker.Screen, screenState: QuestMaker.ScreenState, x: number, y: number): QuestMaker.ScreenTile {
-    const defaultTile = screenState.replacedTiles[x][y] || screen.tiles[x][y];
+  _getTile(screen: QuestMaker.Screen, screenState: QuestMaker.ScreenState, x: number, y: number, layerIndex: number): QuestMaker.ScreenTile {
+    // TODO: handle all layers
+    const defaultTile = screenState.replacedTiles[layerIndex][x][y] || screen.tiles[x][y];
 
     if (screenState.secretsTriggered) {
       // @ts-expect-error TODO kinda giving up on recreating the state in QuestMaker.Quest
@@ -692,7 +694,7 @@ export class PlayGameMode extends QuestMakerMode {
 
     for (let x = 0; x < screenWidth; x++) {
       for (let y = 0; y < screenHeight; y++) {
-        const sprite = this.app.createTileSprite(this._getTile(layerScreen, screenState, x, y), paletteIndex);
+        const sprite = this.app.createTileSprite(this._getTile(layerScreen, screenState, x, y, layerIndex), paletteIndex);
         sprite.x = x * tileSize;
         sprite.y = y * tileSize;
         container.addChild(sprite);
@@ -749,7 +751,7 @@ export class PlayGameMode extends QuestMakerMode {
             layerScreen = state.quest.maps[layer.map].screens[layer.x][layer.y];
           }
 
-          const { tile } = this._getTile(layerScreen, screenState, x, y);
+          const { tile } = this._getTile(layerScreen, screenState, x, y, i);
           walkable[0] &&= state.quest.tiles[tile].walkable[0];
           walkable[1] &&= state.quest.tiles[tile].walkable[1];
           walkable[2] &&= state.quest.tiles[tile].walkable[2];
@@ -952,7 +954,7 @@ export class PlayGameMode extends QuestMakerMode {
       screenState = {
         enemiesKilled: 0,
         secretsTriggered: false,
-        replacedTiles: Utils.create2dArray(screenWidth, screenHeight, null),
+        replacedTiles: Utils.create3dArray(constants.numLayers, screenWidth, screenHeight, null),
         collectedItem: false,
       };
       state.game.screenStates.set(screen, screenState);

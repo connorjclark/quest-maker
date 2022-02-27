@@ -294,7 +294,7 @@ declare global {
     interface ScreenState {
       enemiesKilled: number;
       secretsTriggered: boolean;
-      replacedTiles: (ScreenTile | null)[][];
+      replacedTiles: (ScreenTile | null)[][][];
       collectedItem: boolean;
     }
 
