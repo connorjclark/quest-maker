@@ -8,7 +8,6 @@ type Props = {
   map: QuestMaker.Map_;
   screenX: number;
   screenY: number;
-  screen: QuestMaker.Screen;
   visibleLayers: boolean[];
 };
 export class EditorScreenArea extends Component<Props> {

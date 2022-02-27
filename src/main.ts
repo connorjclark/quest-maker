@@ -455,22 +455,22 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
 
   ui = makeUI(document.body, {
     mode: 'edit',
-    quest,
-    currentMapIndex: initialMap,
-    screenX: initialScreenX,
-    screenY: initialScreenY,
-    selectedLayer: state.editor.selectedLayer,
-    visibleLayers: state.editor.visibleLayers,
+    ...app.state,
   });
 
   ui.subscribe((state) => {
-    app.state.mapIndex = state.currentMapIndex;
-    app.state.dmapIndex = quest.dmaps.findIndex(dmap => dmap.map === state.currentMapIndex);
-    app.state.screenX = state.screenX;
-    app.state.screenY = state.screenY;
-    app.state.editor.currentTile = state.selectedTile?.id || 0;
-    app.state.editor.selectedLayer = state.selectedLayer;
-    app.state.editor.visibleLayers = state.visibleLayers;
+    app.state = {
+      ...state,
+      get currentDMap() {
+        return quest.dmaps[app.state.dmapIndex];
+      },
+      get currentMap() {
+        return quest.maps[app.state.mapIndex];
+      },
+      get currentScreen() {
+        return quest.maps[app.state.mapIndex].screens[app.state.screenX][app.state.screenY];
+      },
+    };
     updateUrl(app.state);
   });
   updateUrl(app.state);
@@ -486,9 +486,7 @@ function tick(app: QuestMaker.App, dt: number) {
 
     if (app.state.editor.isPlayTesting) {
       app.setMode(editorMode);
-      ui.actions.setCurrentScreen(app.state.screenX, app.state.screenY);
-      ui.actions.setCurrentMapIndex(app.state.mapIndex);
-      ui.actions.setMode('edit');
+      ui.actions.setState({ ...app.state, mode: 'edit' });
     } else {
       app.destroyChildren(app.pixi.stage);
       app.state.game.screenTransition = app.state.game.warpReturnTransition = undefined;
@@ -506,7 +504,7 @@ function tick(app: QuestMaker.App, dt: number) {
         if (swordId !== -1) mode.pickupItem(swordId);
       }
       app.setMode(mode);
-      ui.actions.setMode('play');
+      ui.actions.setState({ ...app.state, mode: 'play' });
     }
 
     app.state.editor.isPlayTesting = !app.state.editor.isPlayTesting;

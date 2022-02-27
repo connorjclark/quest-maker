@@ -107,19 +107,14 @@ class Bottom extends Component<BottomProps> {
 }
 
 const actions = () => ({
-  setMode(state: QuestMakerState, mode: QuestMakerState['mode']): Partial<QuestMakerState> {
+  setState(_: QuestMakerState, state: QuestMakerState): Partial<QuestMakerState> {
     return {
-      mode,
+      ...state,
     };
   },
   setWindow(state: QuestMakerState, window: QuestMakerState['window']): Partial<QuestMakerState> {
     return {
       window,
-    };
-  },
-  setQuest(state: QuestMakerState, quest: QuestMaker.Quest): Partial<QuestMakerState> {
-    return {
-      quest,
     };
   },
   setCurrentScreen(state: QuestMakerState, x: number, y: number): Partial<QuestMakerState> {
@@ -130,36 +125,29 @@ const actions = () => ({
   },
   setCurrentMapIndex(state: QuestMakerState, mapIndex: number): Partial<QuestMakerState> {
     return {
-      currentMapIndex: mapIndex,
+      mapIndex,
     }
   },
-  setSelectedTile(state: QuestMakerState, selectedTile: QuestMaker.Tile): Partial<QuestMakerState> {
+  setCurrentTile(state: QuestMakerState, currentTile: QuestMaker.Tile): Partial<QuestMakerState> {
     return {
-      selectedTile,
+      editor: { ...state.editor, currentTile: currentTile.id },
     }
   },
   setSelectedLayer(state: QuestMakerState, selectedLayer: number): Partial<QuestMakerState> {
     return {
-      selectedLayer,
+      editor: { ...state.editor, selectedLayer },
     }
   },
   setVisibleLayers(state: QuestMakerState, visibleLayers: boolean[]): Partial<QuestMakerState> {
     return {
-      visibleLayers,
+      editor: { ...state.editor, visibleLayers },
     }
   },
 });
 
-interface QuestMakerState {
+interface QuestMakerState extends Omit<QuestMaker.State, 'currentDmap' | 'currentMap' | 'currentScreen'> {
   mode: 'play' | 'edit';
-  quest?: QuestMaker.Quest;
-  currentMapIndex: number;
-  screenX: number;
-  screenY: number;
-  selectedTile?: QuestMaker.Tile;
   window?: JSX.Element;
-  selectedLayer: number;
-  visibleLayers: boolean[];
 }
 
 export type QuestMakerProps = ComponentProps<QuestMakerState, typeof actions>;
@@ -172,7 +160,7 @@ class QuestMaker extends Component<QuestMakerProps> {
   }
 
   render(props: QuestMakerProps) {
-    const currentMap = props.quest?.maps[props.currentMapIndex];
+    const currentMap = props.quest?.maps[props.mapIndex];
 
     useEffect(() => {
       document.addEventListener('click', e => {
@@ -196,7 +184,7 @@ class QuestMaker extends Component<QuestMakerProps> {
       skills: {
         label: 'Tiles',
         content: <TilesTab
-          selectedTile={props.selectedTile}
+          selectedTile={props.quest.tiles[props.editor.currentTile]}
           tiles={props.quest?.tiles || []}>
         </TilesTab>,
       },
@@ -241,7 +229,7 @@ class QuestMaker extends Component<QuestMakerProps> {
       <div class="canvas">
         {props.quest && props.mode === 'edit' ?
           // @ts-expect-error
-          <EditorScreenArea canvas={window.app.pixi.view} map={currentMap} screenX={props.screenX} screenY={props.screenY} visibleLayers={props.visibleLayers}></EditorScreenArea> :
+          <EditorScreenArea canvas={window.app.pixi.view} map={currentMap} screenX={props.screenX} screenY={props.screenY} visibleLayers={props.editor.visibleLayers}></EditorScreenArea> :
           null}
       </div>
       <div class="tiles">
@@ -249,7 +237,7 @@ class QuestMaker extends Component<QuestMakerProps> {
           <TabbedPane tabs={tabs} background={true} childProps={{}}></TabbedPane> :
           null}
       </div>
-      <Bottom maps={props.quest?.maps || []} currentMapIndex={props.currentMapIndex} screenX={props.screenX} screenY={props.screenY}></Bottom>
+      <Bottom maps={props.quest?.maps || []} currentMapIndex={props.mapIndex} screenX={props.screenX} screenY={props.screenY}></Bottom>
     </div>;
 
     return <AppContext.Provider value={props}>
@@ -260,7 +248,7 @@ class QuestMaker extends Component<QuestMakerProps> {
   }
 
   private onKeyUp(e: KeyboardEvent) {
-    const currentMap = this.props.quest?.maps[this.props.currentMapIndex];
+    const currentMap = this.props.quest?.maps[this.props.mapIndex];
     if (!currentMap) return;
 
     let dx = 0, dy = 0;
