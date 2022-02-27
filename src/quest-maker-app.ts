@@ -26,6 +26,10 @@ class SoundManager {
   private audioContext = unlockAudioContext(this.midiPlayer._audioContext);
 
   constructor(private app: QuestMakerApp) {
+    this.midiPlayer.on('ended', () => {
+      this.midiPlayer.seek(0);
+      this.midiPlayer.play();
+    });
   }
 
   playSfx(id: number, volume = 1) {
