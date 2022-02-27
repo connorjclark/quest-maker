@@ -787,7 +787,7 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
           }),
           enemies: [],
           color: zcScreen.color,
-          item: zcScreen.item ? {
+          item: zcScreen.hasItem ? {
             id: zcScreen.item,
             x: zcScreen.itemX / tileSize,
             y: zcScreen.itemY / tileSize,
@@ -797,6 +797,19 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
             tileWarps: convertWarps('tile', zcScreen.tileWarpType, zcScreen.tileWarpDmap, zcScreen.tileWarpScreen),
             sideWarps: convertWarps('side', zcScreen.sideWarpType, zcScreen.sideWarpDmap, zcScreen.sideWarpScreen),
           },
+          flags: [
+            zcScreen.flags,
+            zcScreen.flags1,
+            zcScreen.flags2,
+            zcScreen.flags3,
+            zcScreen.flags4,
+            zcScreen.flags5,
+            zcScreen.flags6,
+            zcScreen.flags7,
+            zcScreen.flags8,
+            zcScreen.flags9,
+            zcScreen.flags10,
+          ].filter(f => f !== undefined),
         };
         map.screens[screenx].push(screen);
 

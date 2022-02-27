@@ -46,6 +46,7 @@ declare global {
         tileWarps: Warp[];
         sideWarps: Warp[];
       };
+      flags: any;
     }
 
     type Warp = {

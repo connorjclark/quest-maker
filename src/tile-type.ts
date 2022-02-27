@@ -1,3 +1,6 @@
+// https://github.com/ArmageddonGames/ZeldaClassic/blob/2.55-master/output/docs/zquest.txt
+// https://www.purezc.net/forums/index.php?showtopic=36148
+
 export enum TileType {
   'None',
   'Stairs [A]',

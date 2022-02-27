@@ -445,7 +445,7 @@ const sections = {
           { name: 'str', type: Version.gt(version, { zeldaVersion: 0x192, build: 146 }) ? 'H' : 'B' },
           { name: 'room', type: 'B' },
           { name: 'item', type: 'B' },
-          { name: 'hasitem', type: 'B', if: Version.gte(version, { zeldaVersion: 0x211, build: 14 }) },
+          { name: 'hasItem', type: 'B', if: Version.gte(version, { zeldaVersion: 0x211, build: 14 }) },
           { name: '_padding', type: 'B', if: Version.lt(version, { zeldaVersion: 0x192, build: 154 }) },
           { name: 'tileWarpType', arrayLength: extendedArrays ? 4 : 1, type: 'B' },
           { name: 'doorComboSet', type: 'H', if: Version.gt(version, { zeldaVersion: 0x192, build: 153 }) },
