@@ -6,6 +6,7 @@ import { QuestEntity, MiscBag } from './entity';
 import 'pixi-plugin-bump';
 import { TileFlag, SecretCombo } from './tile-flags';
 import { getWarpIndex, TileType } from './tile-type';
+import { ScreenFlags } from './screen-flags';
 
 const { screenWidth, screenHeight, tileSize } = constants;
 
@@ -195,11 +196,7 @@ export class PlayGameMode extends QuestMakerMode {
     }
 
     if (this.app.keys.up['KeyR']) {
-      screenState.secretsTriggered = !screenState.secretsTriggered;
-      // @ts-expect-error
-      if (screenState.secretsTriggered) this.app.soundManager.playSfx(getZcScreen().secretSfx);
-      // TODO: update more performantly!
-      this.initDraw();
+      this.triggerSecrets();
     }
 
     let dx = 0, dy = 0;
@@ -467,6 +464,18 @@ export class PlayGameMode extends QuestMakerMode {
 
     // Transition screen when hero enters edge.
     this._checkForTransition();
+  }
+
+  triggerSecrets() {
+    const screenState = this.getCurrentScreenState();
+
+    screenState.secretsTriggered = !screenState.secretsTriggered; // TODO: remove toggling
+    // @ts-expect-error
+    if (screenState.secretsTriggered) this.app.soundManager.playSfx(getZcScreen().secretSfx);
+    if (screenState.secretsTriggered) this.createScreenItem();
+
+    // TODO: update more performantly!
+    this.initDraw();
   }
 
   /**
@@ -902,6 +911,12 @@ export class PlayGameMode extends QuestMakerMode {
     this.removeEntity(entity);
     this.getCurrentScreenState().enemiesKilled += 1;
 
+    if (this.getCurrentScreenState().enemiesKilled === this.app.state.currentScreen.enemies.length) {
+      if (ScreenFlags.killAllEnemiesForSecrets(this.app.state.currentScreen.flags)) {
+        this.triggerSecrets();
+      }
+    }
+
     const items = this.app.state.quest.items.filter(item => item.tile && item.name.match(/rupee|heart/i))
     if (items.length) {
       const item = items[Utils.random(0, items.length - 1)];
@@ -943,12 +958,18 @@ export class PlayGameMode extends QuestMakerMode {
       this.app.soundManager.playSong(state.quest.dmaps[state.dmapIndex].song);
     }
 
-    if (state.currentScreen.item && !this.getCurrentScreenState().collectedItem) {
-      const item = this.createItem(state.currentScreen.item.id, state.currentScreen.item.x, state.currentScreen.item.y);
-      item.misc.set('item.isScreenItem', true);
-    }
-
+    this.createScreenItem();
     this.spawnEnemies();
+  }
+
+  createScreenItem() {
+    const state = this.app.state;
+    if (!state.currentScreen.item) return;
+    if (this.getCurrentScreenState().collectedItem) return;
+    if (ScreenFlags.itemIsSecret(state.currentScreen.flags) && !this.getCurrentScreenState().secretsTriggered) return;
+
+    const item = this.createItem(state.currentScreen.item.id, state.currentScreen.item.x, state.currentScreen.item.y);
+    item.misc.set('item.isScreenItem', true);
   }
 
   spawnEnemies() {
