@@ -35,6 +35,7 @@ declare global {
         enemyId: number;
       }>;
       color: number;
+      item?: { id: number; x: number; y: number };
       warps: {
         /** Position hero goes to for warps to this screen. */
         returns: Array<{ x: number, y: number }>;
@@ -93,6 +94,7 @@ declare global {
 
     type EntityAttributes = EnemyAttributes & {
       'item.id': number;
+      'item.isScreenItem': boolean;
     };
 
     // TODO: write comments for each.
@@ -293,6 +295,7 @@ declare global {
       enemiesKilled: number;
       secretsTriggered: boolean;
       replacedTiles: (ScreenTile | null)[][];
+      collectedItem: boolean;
     }
 
     // Are these used?

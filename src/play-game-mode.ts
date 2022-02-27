@@ -338,6 +338,7 @@ export class PlayGameMode extends QuestMakerMode {
 
         if (entity.type === 'item' && this.hitTest.hit(heroHitSprite, [entity])) {
           this.pickupItem(entity.misc.get('item.id'));
+          if (entity.misc.get('item.isScreenItem')) screenState.collectedItem = true;
           this.removeEntity(entity);
         }
 
@@ -952,6 +953,7 @@ export class PlayGameMode extends QuestMakerMode {
         enemiesKilled: 0,
         secretsTriggered: false,
         replacedTiles: Utils.create2dArray(screenWidth, screenHeight, null),
+        collectedItem: false,
       };
       state.game.screenStates.set(screen, screenState);
     }
@@ -986,6 +988,11 @@ export class PlayGameMode extends QuestMakerMode {
 
     if (state.quest.name !== 'debug') {
       this.app.soundManager.playSong(state.quest.dmaps[state.dmapIndex].song);
+    }
+
+    if (state.currentScreen.item && !this.getCurrentScreenState().collectedItem) {
+      const item = this.createItem(state.currentScreen.item.id, state.currentScreen.item.x, state.currentScreen.item.y);
+      item.misc.set('item.isScreenItem', true);
     }
   }
 

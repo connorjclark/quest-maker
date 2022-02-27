@@ -787,6 +787,11 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
           }),
           enemies: [],
           color: zcScreen.color,
+          item: zcScreen.item ? {
+            id: zcScreen.item,
+            x: zcScreen.itemX / tileSize,
+            y: zcScreen.itemY / tileSize,
+          } : undefined,
           warps: {
             returns: (zcScreen.warpReturnX as number[]).map((x, i) => ({ x, y: zcScreen.warpReturnY[i] })),
             tileWarps: convertWarps('tile', zcScreen.tileWarpType, zcScreen.tileWarpDmap, zcScreen.tileWarpScreen),
