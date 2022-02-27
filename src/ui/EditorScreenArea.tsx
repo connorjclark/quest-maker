@@ -215,8 +215,15 @@ export class EditorScreenArea extends Component<Props> {
     };
 
     container.addListener('mousedown', (e) => {
-      container.addListener('mousemove', setTile);
-      setTile(e);
+      if (e.data.originalEvent.metaKey || e.data.originalEvent.ctrlKey) {
+        const pos = e.data.getLocalPosition(e.currentTarget);
+        const x = Math.floor(pos.x / tileSize) - 1;
+        const y = Math.floor(pos.y / tileSize) - 1;
+        app.ui.actions.setCurrentTile(currentScreen.tiles[x][y].tile);
+      } else {
+        container.addListener('mousemove', setTile);
+        setTile(e);
+      }
     });
     container.addListener('mouseup', (e) => {
       container.removeListener('mousemove', setTile);

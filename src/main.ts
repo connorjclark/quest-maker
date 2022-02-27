@@ -372,6 +372,10 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
   // @ts-expect-error
   window.getZcScreen = () => window.qstData.MAP.maps[app.state.mapIndex].screens[app.state.screenX + app.state.screenY * screenWidth];
 
+  pixi.view.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+  });
+
   // Find images to load.
   const images = new Set<string>();
   for (const graphic of quest.graphics) {
@@ -458,6 +462,7 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
     mode: 'edit',
     ...app.state,
   });
+  app.ui = ui;
 
   ui.subscribe((state) => {
     app.state = {

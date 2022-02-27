@@ -104,7 +104,7 @@ class TilePicker extends Component<TilePickerProps> {
       const sprite = e.target as PIXI.Sprite;
       const tileNumber = spriteToTileNumber.get(sprite);
       if (tileNumber !== undefined) {
-        context.setCurrentTile(tiles[tileNumber]);
+        context.setCurrentTile(tileNumber);
       }
     });
 

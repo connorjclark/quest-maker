@@ -30,6 +30,7 @@ see https://gamefaqs.gamespot.com/boards/563433-the-legend-of-zelda/52191039
 
 Bushes / undercombos
 http://localhost:1234/?quest=zc_quests%2F122%2FLinks_Retirement.qst&dmap=0&x=3&y=2
+http://localhost:1234/?quest=zc_quests%2F27%2FLink%27s+Birthday+250.qst&dmap=0&x=2&y=5
 
 item
 http://localhost:1234/?quest=zc_quests%2Fbs3.1%2FNewBS+3.1+-+1st+Quest.qst&dmap=0&x=15&y=4
