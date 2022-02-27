@@ -276,12 +276,20 @@ export class PlayGameMode extends QuestMakerMode {
         const tile = this._getTile(state.currentScreen, screenState, location.tx, location.ty);
         // TODO really need to rename tile to screenTile and tile.tile to tile.id
         const tileData = state.quest.tiles[tile.tile];
+        // console.log(TileType[tileData.type]);
 
         const isSlashable = [
           TileType.Bush,
-          TileType['Bush (Continuous)'],
           TileType.Slash,
+          TileType['Bush (Continuous)'],
+          TileType['Bush->Next (Continuous)'],
+          TileType['Bush->Next'],
           TileType['Slash (Continuous)'],
+          TileType['Slash (Item, Continuous)'],
+          TileType['Slash (Item)'],
+          TileType['Slash->Next (Continuous)'],
+          TileType['Slash->Next (Item, Continuous)'],
+          TileType['Slash->Next (Item)'],
         ].includes(tileData.type);
         if (isSlashable) {
           // @ts-expect-error
