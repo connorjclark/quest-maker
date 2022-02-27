@@ -718,7 +718,7 @@ export class PlayGameMode extends QuestMakerMode {
 
     container.addChild(this.createScreenLayerContainer(dmapIndex, screen, 0));
     for (let i = 0; i < screen.layers.length; i++) {
-      container.addChild(this.createScreenLayerContainer(dmapIndex, screen, i));
+      container.addChild(this.createScreenLayerContainer(dmapIndex, screen, i + 1));
     }
 
     return container;
@@ -1042,6 +1042,7 @@ export class PlayGameMode extends QuestMakerMode {
         // Black.
         if (stepFrames === 1) {
           this.tileLayer.removeChildren();
+          this.layers[4].removeChildren();
           for (const entity of [...this.entities]) {
             if (entity !== this.heroEntity) this.removeEntity(entity);
           }
