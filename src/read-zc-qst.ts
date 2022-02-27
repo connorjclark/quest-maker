@@ -289,6 +289,15 @@ const sections = {
 
       { name: 'label', arrayLength: 11, type: 'B', if: sversion >= 12 },
       { name: '_padding', type: '11s', if: version.zeldaVersion < 0x193 },
+      { name: 'attribytes', arrayLength: 4, type: 'B', if: sversion >= 13 },
+      { name: 'script', type: 'H', if: sversion >= 14 },
+      { name: 'initd', arrayLength: 2, type: 'I', if: sversion >= 14 },
+
+      ...(sversion >= 15 ? [
+        { name: 'o_tile', type: 'I' },
+        { name: 'curFrame', type: 'B' },
+        { name: 'aclk', type: 'B' },
+      ] : []),
     ]);
 
     return { combos };
@@ -1050,6 +1059,7 @@ function parseQstBytes(qstBytes: Uint8Array, debug: boolean) {
   qstReader.goto(qstReader.find('HDR '));
 
   const zcData: Record<string, any> = {
+    playable: true,
     GUY: { guys: [] },
   };
   let version: Version = { zeldaVersion: 0, build: 0 };
@@ -1083,8 +1093,9 @@ function parseQstBytes(qstBytes: Uint8Array, debug: boolean) {
         }
         zcData[id.trim()] = sectionData;
         if (debug) console.log(sectionData);
-      } catch (e) {
+      } catch (e: any) {
         if (debug) console.error(e);
+        if (e.message.includes('TODO')) zcData.playable = false;
         zcData[id.trim()] = { errors: [e] };
       }
 

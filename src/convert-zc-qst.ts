@@ -536,10 +536,6 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
   for (const guy of guys) {
     const animationType = EnemyAnimationType(guy.anim);
 
-    if (quest.enemies.length === -1) {
-      console.log(guy, { animationType });
-    }
-
     const tiles = Array.from(Array(guy.width)).map((_, i) => guy.tile + i);
     let frames: QuestMaker.Enemy['frames'] | undefined = undefined;
     const attributes: QuestMaker.Enemy['attributes'] = {};
@@ -939,7 +935,7 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
     });
   }
 
-  if (qstData.LINK) {
+  if (qstData.LINK?.walk && qstData.LINK?.stab) {
     const walkFrames = qstData.LINK.walk.map((d: any, i: number) => {
       // The 'up' direction is just one frame flipped.
       if (i === 0) {
