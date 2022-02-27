@@ -336,7 +336,10 @@ export class PlayGameMode extends QuestMakerMode {
 
         if (entity.type === 'item' && this.hitTest.hit(heroHitSprite, [entity])) {
           this.pickupItem(entity.misc.get('item.id'));
-          if (entity.misc.get('item.isScreenItem')) screenState.collectedItem = true;
+          if (entity.misc.get('item.isScreenItem')) {
+            screenState.collectedItem = true;
+            if (ScreenFlags.pickupItemShowsSecrets(state.currentScreen.flags)) this.triggerSecrets();
+          }
           this.removeEntity(entity);
         }
 
