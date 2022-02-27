@@ -559,15 +559,20 @@ export class PlayGameMode extends QuestMakerMode {
 
     let transitionX = 0;
     let transitionY = 0;
+    let direction = 0;
 
     if (this.heroEntity.x + this.heroEntity.width / 2 > tileSize * screenWidth) {
       transitionX = 1;
+      direction = 3;
     } else if (this.heroEntity.x + this.heroEntity.width / 2 < 0) {
       transitionX = -1;
+      direction = 2;
     } else if (this.heroEntity.y + this.heroEntity.height / 2 < 0) {
       transitionY = -1;
+      direction = 1;
     } else if (this.heroEntity.y + this.heroEntity.height / 2 > tileSize * screenHeight) {
       transitionY = 1;
+      direction = 0;
     }
 
     if (transitionX === 0 && transitionY === 0) return;
@@ -578,7 +583,16 @@ export class PlayGameMode extends QuestMakerMode {
       return;
     }
 
+    const sideWarp = state.currentScreen.warps.sideWarps.find((warp) => warp.index === direction);
+    if (sideWarp) {
+      const { transition, returnTransition } = this._createScreenTransitionFromWarp(sideWarp);
+      state.game.screenTransition = transition;
+      state.game.warpReturnTransition = returnTransition;
+      return;
+    }
+
     let targetScreen = { x: state.screenX + transitionX, y: state.screenY + transitionY };
+
     if (!Utils.inBounds(targetScreen.x, targetScreen.y, state.currentMap.screens.length, state.currentMap.screens[0].length)) return;
     if (!state.quest.maps[state.mapIndex].screens[targetScreen.x] || !state.quest.maps[state.mapIndex].screens[targetScreen.x][targetScreen.y]) return;
 
@@ -1021,7 +1035,7 @@ export class PlayGameMode extends QuestMakerMode {
   _createScreenTransitionFromWarp(warp: QuestMaker.Warp): { transition: QuestMaker.ScreenTransition, returnTransition?: QuestMaker.ScreenTransition } {
     const state = this.app.state;
 
-    let dmap = undefined;
+    let dmapIndex = undefined;
     let newScreenLocation = { x: state.screenX, y: state.screenY + 1 };
     let newPosition = undefined;
     let returnTransition = undefined;
@@ -1029,22 +1043,26 @@ export class PlayGameMode extends QuestMakerMode {
 
     if (warp && warp.type === 'screen') {
       newScreenLocation = { x: warp.screenX, y: warp.screenY };
-      if (warp.x && warp.y) {
-        newPosition = { x: warp.x, y: warp.y };
-      }
       if (warp.dmap !== undefined) {
-        dmap = warp.dmap;
+        dmapIndex = warp.dmap;
+      }
+
+      if (dmapIndex !== undefined) {
+        const state = this.app.state;
+        const dmap = state.quest.dmaps[dmapIndex];
+        const newScreen = state.quest.maps[dmap.map].screens[warp.screenX][warp.screenY];
+        newPosition = newScreen.warps.returns[warp.index];
       }
     }
 
     if (warp && warp.type === 'special-room') {
       newScreenLocation = { x: 0, y: 8 };
       returnTransition = this._createScreenTransitionFromWarp({
+        index: warp.index,
         type: 'screen',
+        dmap: state.dmapIndex,
         screenX: state.screenX,
         screenY: state.screenY,
-        x: warp.return.x,
-        y: warp.return.y,
       }).transition;
       // Hardcode spawn at bottom of screen.
       newPosition = {
@@ -1061,12 +1079,12 @@ export class PlayGameMode extends QuestMakerMode {
       transition: {
         type: 'direct',
         frames: 0,
-        dmap,
+        dmap: dmapIndex,
         item, // TODO: model room/warp behavior better.
         screen: newScreenLocation,
         position: newPosition,
         screenDelta: { x: 0, y: 0 },
-        newScreenContainer: this.createScreenContainer(dmap ?? state.dmapIndex, newScreenLocation.x, newScreenLocation.y),
+        newScreenContainer: this.createScreenContainer(dmapIndex ?? state.dmapIndex, newScreenLocation.x, newScreenLocation.y),
       },
       returnTransition,
     };
@@ -1077,7 +1095,7 @@ export class PlayGameMode extends QuestMakerMode {
 
     if (type === TileType.WARP) {
       if (names.includes('bottomLeft') && names.includes('bottomRight')) {
-        const warp = state.currentScreen.warps.data && state.currentScreen.warps.data[0];
+        const warp = state.currentScreen.warps.tileWarps.find((warp) => warp.index === 0);
         if (warp) {
           const { transition, returnTransition } = this._createScreenTransitionFromWarp(warp);
           state.game.screenTransition = transition;

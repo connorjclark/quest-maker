@@ -961,10 +961,15 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
           }),
           enemies: [],
           color: zcScreen.color,
-          warps: {},
+          warps: {
+            returns: (zcScreen.warpReturnX as number[]).map((x, i) => ({ x, y: zcScreen.warpReturnY[i] })),
+            tileWarps: convertWarps('tile', zcScreen.tileWarpType, zcScreen.tileWarpDmap, zcScreen.tileWarpScreen),
+            sideWarps: convertWarps('side', zcScreen.sideWarpType, zcScreen.sideWarpDmap, zcScreen.sideWarpScreen),
+          },
         };
         map.screens[screenx].push(screen);
 
+        // TODO: this is legacy, controlled by 'Use Warp Return Points Only'
         if (zcScreen.warpArrivalX || zcScreen.warpArrivalY) {
           screen.warps.arrival = {
             x: zcScreen.warpArrivalX,
@@ -972,37 +977,56 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
           };
         }
 
-        for (let i = 0; i < zcScreen.warpReturnX.length; i++) {
-          const returnx = zcScreen.warpReturnX[i];
-          const returny = zcScreen.warpReturnY[i];
-          const warpDMap = zcScreen.tileWarpDmap[i];
-          const warpScreen = zcScreen.tileWarpScreen[i];
-          const type = zcScreen.tileWarpType[i];
-          if (!returnx && !returny && !type && !warpScreen && !warpDMap) break;
+        function convertWarps(sideOrTile: 'side' | 'tile', warpTypes: number[], warpDmaps: number[], warpScreens: number[]) {
+          const warps = [];
 
-          screen.warps.data = screen.warps.data || [];
+          for (let i = 0; i < warpTypes.length; i++) {
+            const type = warpTypes[i];
+            const dmap = warpDmaps[i];
+            const screen = warpScreens[i];
 
-          if (type === 0) {
-            screen.warps.data.push({
-              type: 'special-room',
-              guy: zcScreen.guy,
-              string: zcScreen.str,
-              item: zcScreen.catchAll,
-              return: { x: returnx, y: returny },
-            });
-          } else if (type === 2) {
-            // This is weird but ok :)
-            const warpScreenAdjusted = warpScreen + quest.dmaps[warpDMap].xoff;
+            // ???
+            if (sideOrTile === 'side' && !type && !dmap && !screen) continue;
 
-            screen.warps.data.push({
-              type: 'screen',
-              dmap: warpDMap,
-              screenX: warpScreenAdjusted % screenWidth,
-              screenY: Math.floor(warpScreenAdjusted / screenWidth),
-            });
-          } else {
-            // console.log(type); // ?
+            if (type === 0) {
+              if (!zcScreen.guy && !zcScreen.catchAll) continue;
+
+              warps.push({
+                index: i,
+                type: 'special-room' as const,
+                guy: zcScreen.guy,
+                string: zcScreen.str,
+                item: zcScreen.catchAll,
+              });
+            } else if (type === 2) {
+              // This is weird but ok :)
+              const warpScreenAdjusted = screen + quest.dmaps[dmap].xoff;
+
+              warps.push({
+                index: i,
+                type: 'screen' as const,
+                dmap,
+                screenX: warpScreenAdjusted % screenWidth,
+                screenY: Math.floor(warpScreenAdjusted / screenWidth),
+              });
+            } else {
+              // TODO for now just consider this a screen warp.
+              console.log('unknown warp type', type);
+
+              // This is weird but ok :)
+              const warpScreenAdjusted = screen + quest.dmaps[dmap].xoff;
+
+              warps.push({
+                index: i,
+                type: 'screen' as const,
+                dmap,
+                screenX: warpScreenAdjusted % screenWidth,
+                screenY: Math.floor(warpScreenAdjusted / screenWidth),
+              });
+            }
           }
+
+          return warps;
         }
 
         for (let x = 0; x < screenWidth; x++) {

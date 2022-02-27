@@ -35,7 +35,7 @@ class Screen {
   public layers = [];
   public enemies: QuestMaker.Screen['enemies'] = [];
   public color = 0;
-  public warps = {};
+  public warps: any = {};
 
   constructor() {
     for (let x = 0; x < screenWidth; x++) {

@@ -43,32 +43,29 @@ declare global {
       color: number;
       warps: {
         /** Position hero goes to for warps to this screen. */
+        returns: Array<{ x: number, y: number }>;
         arrival?: {
           x: number;
           y: number;
         };
-        data?: Warp[];
+        tileWarps: Warp[];
+        sideWarps: Warp[];
       };
     }
 
     type Warp = {
+      index: number;
       type: 'special-room';
       guy: number;
       string: number;
-      /** Position hero goes to when returning from a special room warp. */
-      return: {
-        x: number;
-        y: number;
-      };
       // guy?: number;
       item?: number;
     } | {
+      index: number;
       type: 'screen',
       dmap?: number;
       screenX: number;
       screenY: number;
-      x?: number;
-      y?: number;
     };
 
     interface Graphic {
