@@ -741,7 +741,8 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
 
   for (const zcDmap of qstData.DMAP.dmaps) {
     const dmap = {
-      name: zcDmap.name || zcDmap.title,
+      name: zcDmap.name,
+      title: zcDmap.title,
       map: zcDmap.map,
       color: zcDmap.color,
       song: zcDmap.midi,

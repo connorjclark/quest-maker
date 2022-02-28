@@ -991,6 +991,9 @@ export class PlayGameMode extends QuestMakerMode {
     if (!ScreenFlags.item(state.currentScreen.flags)) this.createScreenItem();
 
     this.spawnEnemies();
+
+    // Update UI that lives in react, like the current dmap title.
+    this.app.ui.actions.setState(state);
   }
 
   createScreenItem() {

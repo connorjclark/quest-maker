@@ -205,6 +205,7 @@ declare global {
     // TODO: Better name for Map / DMap ?
     interface DMap {
       name: string;
+      title: string;
       map: number;
       color: number;
       song: number;

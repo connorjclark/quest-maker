@@ -302,7 +302,7 @@ function createQuest(): QuestMaker.Quest {
   };
 
   quest.dmaps = [
-    { name: 'Overworld', map: 0, color: 0, song: 0, continueScreenX: 7, continueScreenY: 7, xoff: 0 },
+    { name: 'Overworld', title: 'Overworld', map: 0, color: 0, song: 0, continueScreenX: 7, continueScreenY: 7, xoff: 0 },
   ];
 
   return quest;
