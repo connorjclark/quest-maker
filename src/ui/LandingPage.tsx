@@ -4,11 +4,15 @@ import questManifest from '../../data/quest-manifest.json';
 
 const Quest = (props: typeof questManifest[number]) => {
   function onClickEditor(index = 0) {
-    document.location = `?quest=${props.urls[index]}`;
+    const params = new URLSearchParams();
+    params.set('quest', props.urls[index]);
+    document.location = '?' + params.toString();
   }
 
   function onClickPlay(index = 0) {
-    document.location = `?quest=${props.urls[index]}&play`;
+    const params = new URLSearchParams();
+    params.set('quest', props.urls[index]);
+    document.location = '?' + params.toString() + '&play';
   }
 
   return <div>
