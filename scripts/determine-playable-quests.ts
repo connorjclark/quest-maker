@@ -21,12 +21,12 @@ for (let i = 0; i < questManifest.length; i++) {
     const data = new Uint8Array(fs.readFileSync('tmp/' + url));
     try {
       const qstData = await readZCQst(data);
-      await convertZCQst(qstData);
-      questMeta.playable = true;
-      questMeta.error = undefined;
+      const result = await convertZCQst(qstData);
+      questMeta.playable = result.errors.length === 0;
+      questMeta.errors = result.errors.length ? result.errors : undefined;
     } catch (error: any) {
       questMeta.playable = false;
-      questMeta.error = error.message;
+      questMeta.errors = [error.message];
     }
   }
 }

@@ -337,8 +337,14 @@ async function createTileImages(qstData: any) {
   return images;
 }
 
-export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
+export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Quest, errors: string[] }> {
   const { make, makeAdvanced, makeEnemy, makeGraphic, makeTile, makeWeapon, quest } = makeQuest();
+  const errors: string[] = [];
+
+  function logError(error: string) {
+    console.error(error);
+    errors.push(error);
+  }
 
   // TODO skipping this part if running node script
   if (typeof window !== 'undefined') {
@@ -992,7 +998,7 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
         ],
       };
     } else {
-      throw new Error('TODO linkAnimationStyle ' + linkAnimationStyle);
+      logError('linkAnimationStyle: ' + linkAnimationStyle);
     }
   }
 
@@ -1006,5 +1012,5 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
   // @ts-expect-error
   globalThis.qstData = qstData;
 
-  return quest;
+  return { quest, errors };
 }
