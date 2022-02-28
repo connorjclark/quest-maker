@@ -1002,6 +1002,12 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
     }
   }
 
+  if (qstData.STR?.strings) {
+    quest.misc.strings = qstData.STR?.strings.map((s: any) => s.string);
+  } else {
+    quest.misc.strings = [];
+  }
+
   quest.misc.SPAWN_GFX_START = 72;
   quest.misc.START_DMAP = qstData.INIT.startDmap || 0;
   quest.name = '1st';

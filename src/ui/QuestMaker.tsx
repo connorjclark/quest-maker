@@ -204,6 +204,7 @@ class QuestMaker extends Component<QuestMakerProps> {
     if (props.mode === 'play') {
       playUI = <div class="play-ui">
         <div class="canvas-wrapper flex flex-column">
+          <div class="string"></div>
           <div ref={ref}></div>
           <div>
             <div>Arrow keys to move</div>

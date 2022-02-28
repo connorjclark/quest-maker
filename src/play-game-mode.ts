@@ -1141,9 +1141,13 @@ export class PlayGameMode extends QuestMakerMode {
 
       this.show();
 
-      // TODO do this somewhere else ...
       if (transition.item) {
         this.createItem(transition.item, screenWidth / 2, screenHeight / 2);
+      }
+      if (transition.string !== undefined) {
+        Utils.find('.string').textContent = state.quest.misc.strings[transition.string];
+      } else {
+        Utils.find('.string').textContent = '';
       }
     }
   }
@@ -1208,6 +1212,7 @@ export class PlayGameMode extends QuestMakerMode {
         frames: 0,
         dmap: dmapIndex,
         item, // TODO: model room/warp behavior better.
+        string: warp.type === 'special-room' ? warp.string : undefined,
         screen: newScreenLocation,
         position: newPosition,
         screenDelta: { x: 0, y: 0 },
