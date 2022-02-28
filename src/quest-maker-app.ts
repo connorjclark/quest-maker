@@ -122,6 +122,27 @@ export class QuestMakerApp extends App<QuestMaker.State> {
     };
   }
 
+  updateUrl() {
+    const url = new URL(location.href);
+    const searchParams = new URLSearchParams();
+
+    searchParams.set('quest', String(url.searchParams.get('quest')));
+    if (this.state.dmapIndex === -1) {
+      searchParams.set('map', String(this.state.mapIndex));
+      searchParams.delete('dmap');
+    } else {
+      searchParams.set('dmap', String(this.state.dmapIndex));
+      searchParams.delete('map');
+    }
+    searchParams.set('x', String(this.state.screenX));
+    searchParams.set('y', String(this.state.screenY));
+    if (url.searchParams.get('dev')) searchParams.set('dev', '');
+
+    url.search = searchParams.toString();
+    if (this.state.mode === 'play') url.search += '&play';
+    history.replaceState({}, '', url);
+  }
+
   resize() {
     this.pixi.stage.scale.set(this.pixi.renderer.width / this.pixi.stage.getLocalBounds().width);
   }

@@ -406,6 +406,7 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
   });
 
   const state: QuestMaker.State = {
+    mode: searchParamsObj.play ? 'play' : 'edit',
     quest,
     editor: {
       currentTile: 0,
@@ -456,7 +457,6 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
   pixi.ticker.add(dt => tick(app, dt));
 
   ui = makeUI(document.body, {
-    mode: searchParamsObj.play ? 'play' : 'edit',
     ...app.state,
   });
   app.ui = ui;
@@ -474,7 +474,7 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
         return quest.maps[app.state.mapIndex].screens[app.state.screenX][app.state.screenY];
       },
     };
-    updateUrl(app.state);
+    app.updateUrl();
   });
 
   window.addEventListener('resize', () => app.resize());
@@ -492,7 +492,7 @@ function enterEditorMode(app: QuestMaker.App) {
   editorMode = editorMode || new EditorMode(app);
   app.setMode(editorMode);
   ui.actions.setState({ ...app.state, mode: 'edit' });
-  updateUrl(app.state);
+  app.updateUrl();
 }
 
 function enterPlayGameMode(app: QuestMaker.App) {
@@ -541,27 +541,6 @@ window.debugScreen = () => {
     enemies: state.currentScreen.enemies.map(e => state.quest.enemies[e.enemyId]),
   });
 };
-
-function updateUrl(state: QuestMaker.State) {
-  const url = new URL(location.href);
-  const searchParams = new URLSearchParams();
-
-  searchParams.set('quest', String(url.searchParams.get('quest')));
-  if (state.dmapIndex === -1) {
-    searchParams.set('map', String(state.mapIndex));
-    searchParams.delete('dmap');
-  } else {
-    searchParams.set('dmap', String(state.dmapIndex));
-    searchParams.delete('map');
-  }
-  searchParams.set('x', String(state.screenX));
-  searchParams.set('y', String(state.screenY));
-  if (url.searchParams.get('dev')) searchParams.set('dev', '');
-
-  url.search = searchParams.toString();
-  if (window.app?.getMode() instanceof PlayGameMode) url.search += '&play';
-  history.replaceState({}, '', url);
-}
 
 async function selectQuest(questPath: string) {
   const quest = await loadQuest(questPath);

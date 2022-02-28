@@ -58,7 +58,7 @@ declare global {
       item?: number;
     } | {
       index: number;
-      type: 'direct'|'scroll',
+      type: 'direct' | 'scroll',
       dmap: number;
       screenX: number;
       screenY: number;
@@ -268,6 +268,7 @@ declare global {
     }
 
     interface State {
+      mode: 'edit' | 'play';
       quest: Quest;
       currentDMap: DMap;
       currentMap: Map_;

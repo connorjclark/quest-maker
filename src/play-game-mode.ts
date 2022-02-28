@@ -129,6 +129,7 @@ export class PlayGameMode extends QuestMakerMode {
     this.entities.push(this.heroEntity);
     this.initDraw();
     this.onEnterScreen();
+    this.app.updateUrl();
   }
 
   initDraw() {
