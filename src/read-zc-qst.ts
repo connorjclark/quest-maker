@@ -187,7 +187,6 @@ class Reader {
 }
 
 const sections = {
-  // https://github.com/ArmageddonGames/ZeldaClassic/blob/bdac8e682ac1eda23d775dacc5e5e34b237b82c0/src/zq_class.cpp#L6189
   // https://github.com/ArmageddonGames/ZeldaClassic/blob/20f9807a8e268172d0bd2b0461e417f1588b3882/src/qst.cpp#L2005
   // zdefs.h
   'HDR ': (reader: Reader) => {
@@ -205,6 +204,13 @@ const sections = {
       // TODO the rest
     ]);
   },
+  // https://github.com/ArmageddonGames/ZeldaClassic/blob/20f9807a8e268172d0bd2b0461e417f1588b3882/src/qst.cpp#L2733
+  'RULE': (reader: Reader, version: Version, sversion: number, cversion: number) => {
+    return readFields(reader, [
+      { name: 'rules', arrayLength: sversion >= 15 ? 100 : 20, type: 'B' },
+    ]);
+  },
+  // https://github.com/ArmageddonGames/ZeldaClassic/blob/20f9807a8e268172d0bd2b0461e417f1588b3882/src/qst.cpp#L15613
   'TILE': (reader: Reader, version: Version, sversion: number, cversion: number) => {
     let numTiles;
     if (Version.gte(version, { zeldaVersion: 0x254, build: 41 })) {

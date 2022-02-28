@@ -249,6 +249,7 @@ declare global {
           flip: number | number[],
         }>>;
         START_DMAP: number;
+        rules: number[];
       };
     }
 

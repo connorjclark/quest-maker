@@ -857,7 +857,7 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
               });
             } else {
               // TODO for now just consider this a screen warp.
-              console.log('unknown warp type', type);
+              // console.log('unknown warp type', type);
 
               // This is weird but ok :)
               const warpScreenAdjusted = screen + quest.dmaps[dmap].xoff;
@@ -1004,8 +1004,8 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
 
   quest.misc.SPAWN_GFX_START = 72;
   quest.misc.START_DMAP = qstData.INIT.startDmap || 0;
-
   quest.name = '1st';
+  quest.misc.rules = qstData.RULE?.rules || [];
 
   // @ts-expect-error
   globalThis.quest = quest;
