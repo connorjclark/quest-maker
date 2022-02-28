@@ -838,13 +838,13 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
                 string: zcScreen.str,
                 item: zcScreen.catchAll,
               });
-            } else if (type === 2) {
+            } else if (type === 2 || type === 3) {
               // This is weird but ok :)
               const warpScreenAdjusted = screen + quest.dmaps[dmap].xoff;
 
               warps.push({
                 index: i,
-                type: 'screen' as const,
+                type: type === 2 ? ('direct' as const) : ('scroll' as const),
                 dmap,
                 screenX: warpScreenAdjusted % screenWidth,
                 screenY: Math.floor(warpScreenAdjusted / screenWidth),
@@ -858,7 +858,7 @@ export async function convertZCQst(qstData: any): Promise<QuestMaker.Quest> {
 
               warps.push({
                 index: i,
-                type: 'screen' as const,
+                type: 'direct' as const,
                 dmap,
                 screenX: warpScreenAdjusted % screenWidth,
                 screenY: Math.floor(warpScreenAdjusted / screenWidth),

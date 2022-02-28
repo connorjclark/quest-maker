@@ -499,6 +499,7 @@ function tick(app: QuestMaker.App, dt: number) {
       app.state.game.screenTransition = app.state.game.warpReturnTransition = undefined;
 
       // Bit of a hack.
+      // TODO This is acually quite wrong because multiple dmaps can be on the same map.
       const matchingDmapIndex = app.state.quest.dmaps.findIndex(dmap => dmap.map === app.state.mapIndex);
       if (matchingDmapIndex !== -1) {
         app.state.dmapIndex = matchingDmapIndex;

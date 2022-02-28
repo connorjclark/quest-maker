@@ -58,8 +58,8 @@ declare global {
       item?: number;
     } | {
       index: number;
-      type: 'screen',
-      dmap?: number;
+      type: 'direct'|'scroll',
+      dmap: number;
       screenX: number;
       screenY: number;
     };

@@ -613,10 +613,10 @@ export class PlayGameMode extends QuestMakerMode {
       direction = 2;
     } else if (this.heroEntity.y + this.heroEntity.height / 2 < 0) {
       transitionY = -1;
-      direction = 1;
+      direction = 0;
     } else if (this.heroEntity.y + this.heroEntity.height / 2 > tileSize * screenHeight) {
       transitionY = 1;
-      direction = 0;
+      direction = 1;
     }
 
     if (transitionX === 0 && transitionY === 0) return;
@@ -627,25 +627,41 @@ export class PlayGameMode extends QuestMakerMode {
       return;
     }
 
-    const sideWarp = state.currentScreen.warps.sideWarps.find((warp) => warp.index === direction);
+    let targetScreen = { x: state.screenX + transitionX, y: state.screenY + transitionY };
+    let targetDmapIndex = state.dmapIndex;
+
+    const canSideWarp =
+      (direction === 0 && ScreenFlags.up(state.currentScreen.flags)) ||
+      (direction === 1 && ScreenFlags.down(state.currentScreen.flags)) ||
+      (direction === 2 && ScreenFlags.left(state.currentScreen.flags)) ||
+      (direction === 3 && ScreenFlags.right(state.currentScreen.flags));
+    // idk :)
+    // @ts-expect-error
+    const sideWarpIndex = (getZcScreen().sideWarpIndex >> (direction * 2)) & 3;
+    const sideWarp = canSideWarp && state.currentScreen.warps.sideWarps.find((warp) => warp.index === sideWarpIndex);
     if (sideWarp) {
-      const { transition, returnTransition } = this._createScreenTransitionFromWarp(sideWarp);
-      state.game.screenTransition = transition;
-      state.game.warpReturnTransition = returnTransition;
-      return;
+      if (sideWarp.type === 'scroll') {
+        targetScreen = { x: sideWarp.screenX, y: sideWarp.screenY };
+        targetDmapIndex = sideWarp.dmap;
+      } else {
+        const { transition, returnTransition } = this._createScreenTransitionFromWarp(sideWarp);
+        state.game.screenTransition = transition;
+        state.game.warpReturnTransition = returnTransition;
+        return;
+      }
     }
 
-    let targetScreen = { x: state.screenX + transitionX, y: state.screenY + transitionY };
-
-    if (!Utils.inBounds(targetScreen.x, targetScreen.y, state.currentMap.screens.length, state.currentMap.screens[0].length)) return;
-    if (!state.quest.maps[state.mapIndex].screens[targetScreen.x] || !state.quest.maps[state.mapIndex].screens[targetScreen.x][targetScreen.y]) return;
+    const targetMap = state.quest.maps[state.quest.dmaps[targetDmapIndex].map];
+    if (!Utils.inBounds(targetScreen.x, targetScreen.y, targetMap.screens.length, targetMap.screens[0].length)) return;
+    if (!targetMap.screens[targetScreen.x] || !targetMap.screens[targetScreen.x][targetScreen.y]) return;
 
     state.game.screenTransition = {
       type: 'scroll',
       frames: 0,
+      dmap: targetDmapIndex, // TODO: fold into screen property
       screen: targetScreen,
       screenDelta: { x: transitionX, y: transitionY },
-      newScreenContainer: this.createScreenContainer(state.dmapIndex, targetScreen.x, targetScreen.y),
+      newScreenContainer: this.createScreenContainer(targetDmapIndex, targetScreen.x, targetScreen.y),
     };
   }
 
@@ -1138,11 +1154,9 @@ export class PlayGameMode extends QuestMakerMode {
     let returnTransition = undefined;
     let item = undefined;
 
-    if (warp && warp.type === 'screen') {
+    if (warp && warp.type === 'direct') {
       newScreenLocation = { x: warp.screenX, y: warp.screenY };
-      if (warp.dmap !== undefined) {
-        dmapIndex = warp.dmap;
-      }
+      dmapIndex = warp.dmap;
 
       // Set the position to set link at. First try 'warp.returns' based on the warp index.
       // Fall back to the screen's arrival coordinates.
@@ -1162,7 +1176,7 @@ export class PlayGameMode extends QuestMakerMode {
       newScreenLocation = { x: 0, y: 8 };
       returnTransition = this._createScreenTransitionFromWarp({
         index: warp.index,
-        type: 'screen',
+        type: 'direct',
         dmap: state.dmapIndex,
         screenX: state.screenX,
         screenY: state.screenY,
@@ -1178,9 +1192,13 @@ export class PlayGameMode extends QuestMakerMode {
       }
     }
 
+    let transitionType: QuestMaker.ScreenTransitionType;
+    if (warp.type === 'special-room') transitionType = 'direct';
+    else transitionType = warp.type;
+
     return {
       transition: {
-        type: 'direct',
+        type: transitionType,
         frames: 0,
         dmap: dmapIndex,
         item, // TODO: model room/warp behavior better.
