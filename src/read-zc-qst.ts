@@ -210,6 +210,39 @@ const sections = {
       { name: 'rules', arrayLength: sversion >= 15 ? 100 : 20, type: 'B' },
     ]);
   },
+  // https://github.com/ArmageddonGames/ZeldaClassic/blob/20f9807a8e268172d0bd2b0461e417f1588b3882/src/qst.cpp#L3252
+  'STR ': (reader: Reader, version: Version, sversion: number, cversion: number) => {
+    if (version.zeldaVersion < 0x193) throw new Error('TODO');
+
+    const stringLength = (sversion < 2) ? 73 : 145;
+    const strings = readArrayFields(reader, reader.readInt(), [
+      { name: 'string', type: `${stringLength}s` },
+      { name: 'nextString', type: 'H' },
+
+      ...(sversion >= 2 ? [
+        { name: 'tile', type: sversion >= 6 ? 'I' : 'H' },
+        { name: 'cset', type: 'B' },
+        { name: 'trans', type: 'B' },
+        { name: 'font', type: 'B' },
+        { name: 'y', type: 'B', if: sversion < 5 },
+      ] : []),
+
+      ...(sversion >= 5 ? [
+        { name: 'x', type: 'H' },
+        { name: 'y', type: 'H' },
+        { name: 'w', type: 'H' },
+        { name: 'h', type: 'H' },
+        { name: 'hspace', type: 'B' },
+        { name: 'vspace', type: 'B' },
+        { name: 'stringFlags', type: 'B' },
+      ] : []),
+
+      { name: 'sfx', type: 'B', if: sversion >= 2 },
+      { name: 'listPos', type: 'H', if: sversion > 3 },
+    ]);
+
+    return { strings };
+  },
   // https://github.com/ArmageddonGames/ZeldaClassic/blob/20f9807a8e268172d0bd2b0461e417f1588b3882/src/qst.cpp#L15613
   'TILE': (reader: Reader, version: Version, sversion: number, cversion: number) => {
     let numTiles;
