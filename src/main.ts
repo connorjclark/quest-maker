@@ -11,6 +11,7 @@ import { readZCQst } from './read-zc-qst';
 import { convertZCQst } from './convert-zc-qst';
 import { createLandingPage } from './ui/LandingPage';
 import { TileType } from './tile-type';
+import { QuestRules } from './quest-rules';
 
 const { screenWidth, screenHeight, tileSize } = constants;
 
@@ -542,6 +543,14 @@ window.debugScreen = () => {
     enemies: state.currentScreen.enemies.map(e => state.quest.enemies[e.enemyId]),
   });
 };
+
+// @ts-expect-error
+window.debugQuestRules = () => {
+  for (const name of Object.keys(QuestRules)) {
+    const enabled = QuestRules[name as keyof typeof QuestRules](window.app?.state.quest.misc.rules || []);
+    if (enabled) console.log(name);
+  }
+}
 
 async function selectQuest(questPath: string) {
   const quest = await loadQuest(questPath);

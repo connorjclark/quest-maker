@@ -1,3 +1,5 @@
+// https://github.com/ArmageddonGames/ZeldaClassic/blob/2.55-master/src/dialog/quest_rules.cpp#L30
+
 function bit(flag: number, index: number) {
   return (flag & (1 << index)) !== 0;
 }
