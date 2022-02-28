@@ -1,10 +1,7 @@
-- "What is this?" UI
 - save quest maker quest to file system
 - quest manifest videos
 - color screen cells based on dmap
 - "Play" button
-- add link to source code GH
-
 
 Below are quick links to interesting test screens.
 ------

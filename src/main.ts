@@ -17,6 +17,7 @@ const { screenWidth, screenHeight, tileSize } = constants;
 const searchParams = new URLSearchParams(location.search);
 const searchParamsObj = {
   quest: searchParams.get('quest'),
+  play: searchParams.has('play'),
   dev: searchParams.has('dev'),
   zcdebug: searchParams.get('zcdebug'),
   map: searchParams.has('map') ? Number(searchParams.get('map')) : null,
@@ -383,7 +384,6 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
     images.add(graphic.file);
   }
 
-  console.log({ images });
   for (const image of images) {
     if (image.startsWith('blob:') || image.startsWith('data:')) {
       pixi.loader.add(image, image);
@@ -408,7 +408,6 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
   const state: QuestMaker.State = {
     quest,
     editor: {
-      isPlayTesting: false,
       currentTile: 0,
       selectedLayer: 0,
       visibleLayers: [true, true, true, true, true, true, true],
@@ -440,7 +439,7 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
   }
 
   const app = new QuestMakerApp(pixi, state, ui);
-  editorMode = new EditorMode(app);
+  window.app = app;
   app.questBasePath = questBasePath;
 
   // TODO: move to engine.
@@ -455,12 +454,9 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
   };
 
   pixi.ticker.add(dt => tick(app, dt));
-  app.setMode(editorMode);
-
-  window.app = app;
 
   ui = makeUI(document.body, {
-    mode: 'edit',
+    mode: searchParamsObj.play ? 'play' : 'edit',
     ...app.state,
   });
   app.ui = ui;
@@ -480,42 +476,54 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
     };
     updateUrl(app.state);
   });
-  updateUrl(app.state);
 
   window.addEventListener('resize', () => app.resize());
   app.resize();
+
+  if (searchParamsObj.play) {
+    enterPlayGameMode(app);
+  } else {
+    enterEditorMode(app);
+  }
 }
 
 let editorMode: EditorMode;
+function enterEditorMode(app: QuestMaker.App) {
+  editorMode = editorMode || new EditorMode(app);
+  app.setMode(editorMode);
+  ui.actions.setState({ ...app.state, mode: 'edit' });
+  updateUrl(app.state);
+}
+
+function enterPlayGameMode(app: QuestMaker.App) {
+  // Bit of a hack.
+  // TODO This is acually quite wrong because multiple dmaps can be on the same map.
+  const matchingDmapIndex = app.state.quest.dmaps.findIndex(dmap => dmap.map === app.state.mapIndex);
+  if (matchingDmapIndex !== -1) {
+    app.state.dmapIndex = matchingDmapIndex;
+    app.state.mapIndex = app.state.quest.dmaps[matchingDmapIndex].map;
+  }
+
+  const mode = new PlayGameMode(app);
+  if (window.IS_DEV) {
+    const swordId = app.state.quest.items.findIndex(item => item.type === ItemType.SWORD);
+    if (swordId !== -1) mode.pickupItem(swordId);
+  }
+  app.setMode(mode);
+  ui.actions.setState({ ...app.state, mode: 'play' });
+}
+
 function tick(app: QuestMaker.App, dt: number) {
   if (app.keys.down['ShiftLeft'] || app.keys.down['ShiftRight']) {
     app.destroyChildren(app.pixi.stage);
 
-    if (app.state.editor.isPlayTesting) {
-      app.setMode(editorMode);
-      ui.actions.setState({ ...app.state, mode: 'edit' });
+    if (app.getMode() instanceof PlayGameMode) {
+      enterEditorMode(app);
     } else {
       app.destroyChildren(app.pixi.stage);
       app.state.game.screenTransition = app.state.game.warpReturnTransition = undefined;
-
-      // Bit of a hack.
-      // TODO This is acually quite wrong because multiple dmaps can be on the same map.
-      const matchingDmapIndex = app.state.quest.dmaps.findIndex(dmap => dmap.map === app.state.mapIndex);
-      if (matchingDmapIndex !== -1) {
-        app.state.dmapIndex = matchingDmapIndex;
-        app.state.mapIndex = app.state.quest.dmaps[matchingDmapIndex].map;
-      }
-
-      const mode = new PlayGameMode(app);
-      if (window.IS_DEV) {
-        const swordId = app.state.quest.items.findIndex(item => item.type === ItemType.SWORD);
-        if (swordId !== -1) mode.pickupItem(swordId);
-      }
-      app.setMode(mode);
-      ui.actions.setState({ ...app.state, mode: 'play' });
+      enterPlayGameMode(app);
     }
-
-    app.state.editor.isPlayTesting = !app.state.editor.isPlayTesting;
   }
 
   app.tick(dt);
@@ -548,9 +556,10 @@ function updateUrl(state: QuestMaker.State) {
   }
   searchParams.set('x', String(state.screenX));
   searchParams.set('y', String(state.screenY));
-  if (url.searchParams.get('dev')) searchParams.set('dev', 'true');
+  if (url.searchParams.get('dev')) searchParams.set('dev', '');
 
   url.search = searchParams.toString();
+  if (window.app?.getMode() instanceof PlayGameMode) url.search += '&play';
   history.replaceState({}, '', url);
 }
 

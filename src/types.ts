@@ -273,7 +273,6 @@ declare global {
       currentMap: Map_;
       currentScreen: Screen;
       editor: {
-        isPlayTesting: boolean;
         currentTile: number;
         selectedLayer: number;
         visibleLayers: boolean[];

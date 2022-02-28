@@ -115,6 +115,11 @@ export class PlayGameMode extends QuestMakerMode {
     this.heroEntity.life = Number.MAX_SAFE_INTEGER;
     this.heroEntity.speed = DEFAULT_HERO_SPEED;
     this.heroEntity.misc.set('enemy.cset', 6);
+
+    const sprite = new PIXI.Sprite();
+    sprite.width = tileSize * screenWidth;
+    this.app.pixi.stage.addChild(sprite);
+    this.app.resize();
   }
 
   show() {

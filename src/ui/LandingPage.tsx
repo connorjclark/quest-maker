@@ -3,8 +3,12 @@ import { useState } from 'preact/hooks';
 import questManifest from '../../data/quest-manifest.json';
 
 const Quest = (props: typeof questManifest[number]) => {
-  function onClick(index = 0) {
+  function onClickEditor(index = 0) {
     document.location = `?quest=${props.urls[index]}`;
+  }
+
+  function onClickPlay(index = 0) {
+    document.location = `?quest=${props.urls[index]}&play`;
   }
 
   return <div>
@@ -17,14 +21,28 @@ const Quest = (props: typeof questManifest[number]) => {
       <div class="md-5">
         <div>{props.name}</div>
 
-        {
-          props.urls.length === 1 ?
-            <button onClick={() => onClick()}>Load Quest</button> :
-            props.urls.map((url, i) => {
-              const split = url.split('/');
-              return <button onClick={() => onClick(i)}>Load Quest - {split[split.length - 1]}</button>;
-            })
-        }
+        <div>
+          <div class="md-5">
+            {
+              props.urls.length === 1 ?
+                <button onClick={() => onClickEditor()}>Load Quest in Editor</button> :
+                props.urls.map((url, i) => {
+                  const split = url.split('/');
+                  return <button onClick={() => onClickEditor(i)}>Load Quest in Editor - {split[split.length - 1]}</button>;
+                })
+            }
+          </div>
+          <div class="md-5">
+            {
+              props.urls.length === 1 ?
+                <button onClick={() => onClickPlay()}>Play Quest</button> :
+                props.urls.map((url, i) => {
+                  const split = url.split('/');
+                  return <button onClick={() => onClickPlay(i)}>Play Quest - {split[split.length - 1]}</button>;
+                })
+            }
+          </div>
+        </div>
 
         <div>Author: {props.author}</div>
         <div>Genre: {props.genre}</div>

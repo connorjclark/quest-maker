@@ -69,6 +69,10 @@ export class App<S> {
     this.currentMode.show();
   }
 
+  getMode() {
+    return this.currentMode;
+  }
+
   debug(name: string) {
     if (!this.debugs[name]) {
       this.debugs[name] = new PIXI.Graphics();
