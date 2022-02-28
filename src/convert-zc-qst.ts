@@ -751,7 +751,7 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
       xoff: zcDmap.xoff,
     };
 
-    if (dmap.name === '') break;
+    if (dmap.name === '' && dmap.title === '') break;
 
     quest.dmaps.push(dmap);
 
@@ -846,13 +846,6 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
                 item: zcScreen.catchAll,
               });
             } else if (type === 2 || type === 3) {
-              if (!quest.dmaps[dmap]) {
-                // ???
-                // http://localhost:1234/?quest=zc_quests%2F25%2FLandsofSerenity.qst
-                logError('unknown dmap: ' + dmap);
-                continue;
-              }
-
               // This is weird but ok :)
               const warpScreenAdjusted = screen + quest.dmaps[dmap].xoff;
 
@@ -866,12 +859,6 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
             } else {
               // TODO for now just consider this a screen warp.
               // console.log('unknown warp type', type);
-              if (!quest.dmaps[dmap]) {
-                // ???
-                // http://localhost:1234/?quest=zc_quests%2F26%2Flttf-fixed.qst
-                logError('unknown dmap: ' + dmap);
-                continue;
-              }
 
               // This is weird but ok :)
               const warpScreenAdjusted = screen + quest.dmaps[dmap].xoff;

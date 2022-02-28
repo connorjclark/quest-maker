@@ -396,6 +396,7 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
   await new Promise(resolve => pixi.loader.load(resolve));
 
   const initialDmap = searchParamsObj.dmap ?? quest.misc.START_DMAP;
+  console.log({initialDmap});
   const initialMap = searchParamsObj.map ?? quest.dmaps[initialDmap].map;
   const initialScreenX = searchParamsObj.x ?? quest.dmaps[initialDmap].continueScreenX;
   const initialScreenY = searchParamsObj.y ?? quest.dmaps[initialDmap].continueScreenY;
