@@ -13729,7 +13729,8 @@
     "story": "Play to find out!",
     "tipsAndCheats": "Dungeons are possible in any order, and with just the Level one weapon. That said if you can manage to beat the harder ones first you could open other things early!Also I'm curious who can beat this in the fastest time.",
     "credits": "Shane-testingespalonzx- testing(sorry i forgot you buddy)Shoshon-testingMoosh-testing + scriptsSpriters resource - graphicsKHinsider-midisanyone else im forgetting",
-    "playable": true
+    "playable": false,
+    "error": "Cannot read properties of undefined (reading 'map')"
   },
   {
     "name": "Fragments of Power: Reimagined",
@@ -13775,7 +13776,8 @@
     "story": "Ganon has kidnapped the princess and taken her to the once peaceful and beautiful land of Waterford. Link must find the eight triforce fragments, save Zelda and stop Ganon from the further destruction of the realm. (Real original)",
     "tipsAndCheats": "There are three different pay for info rooms and a few other info guys that will point you in the right direction. I suggest you use them.There is little wasted space in the dungeons. Every room either leads to important room or is important itself. If you feel like you're lost, check out your map and make sure you didn't miss anything. Sometimes you will have to backtrack and take look closer.As you will find out, there are eight keys hidden throughout the overworld guarded by. You need these to complete the final dungeon. You will not be able to get them all at the beginning of the game.",
     "credits": "Beta tests by James24 and XanadudeInitial Tileset by Avaro (Zelda XD)VGMusic Midi Contributors: King Meteor, Tsu Ryu, Daniel, C. Luigi_Drummer, Michael Martin, Teck, Jonah Fall, Joe Cortez, tdkim, GiGaHeRTZEverything else by ME! (Expect for the things I forgot).",
-    "playable": true
+    "playable": false,
+    "error": "Cannot read properties of undefined (reading 'map')"
   },
   {
     "name": "IcyZelda3rd.qst",
@@ -13891,7 +13893,8 @@
     "story": "The end of the line! Link must face off against the decapitated head of Ganondorf, one final time, armed only with a fragile Deku Stick.",
     "tipsAndCheats": "You can only miss once.",
     "credits": "TheCup93: Original design that I used to make the sprited Ganon head.FireSeraphim: Tileset.Whisky: The source of all inspiration.This Quest Bears the Unofficial Greeeeeeok Seal of Kwalitee.",
-    "playable": true
+    "playable": false,
+    "error": "Cannot read properties of undefined (reading 'map')"
   },
   {
     "name": "Project Storm",
@@ -13961,7 +13964,8 @@
     "story": "N/A",
     "tipsAndCheats": "N/A",
     "credits": "This carries the Timelord Seal of Approval",
-    "playable": true
+    "playable": false,
+    "error": "Cannot read properties of undefined (reading 'map')"
   },
   {
     "name": "Fortressvania",
@@ -14058,7 +14062,8 @@
     "story": "N/A",
     "tipsAndCheats": "N/A",
     "credits": "N/A",
-    "playable": true
+    "playable": false,
+    "error": "Cannot read properties of undefined (reading 'map')"
   },
   {
     "name": "New Quest",
@@ -14358,7 +14363,8 @@
     "story": "Ganon is up to no good again.Kill him with death!",
     "tipsAndCheats": "You can burn bushes and bomb walls, just like the original!There is a spacebar map... on the overworld.Update:Fixed a staircase/block trigger issue in levels 8 and 9.Removed Slash (apparently I had this removed but I forgot to update).Made it to where rooms can't be cheesed in doorways.",
     "credits": "I just used the base Z1 tileset, and created my own overworld with it with unique dungeons.So it's nothing more than the bare minimum.",
-    "playable": true
+    "playable": false,
+    "error": "Cannot read properties of undefined (reading 'map')"
   },
   {
     "name": "Shadowblazer's Tiny Quest",
@@ -14525,7 +14531,8 @@
     "story": "N/A",
     "tipsAndCheats": "Inertia stopped by Link sword, direction change, Link shield down position",
     "credits": "N/A",
-    "playable": true
+    "playable": false,
+    "error": "Cannot read properties of undefined (reading 'map')"
   },
   {
     "name": "Remembrance of Shadows",

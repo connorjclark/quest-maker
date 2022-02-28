@@ -108,6 +108,8 @@ async function processId(page: puppeteer.Page, id: number) {
 async function main() {
   loadQuests();
 
+  // TODO: fix qst files names like "zc_quests/435/Eddy&#39;s Troll Day.qst"
+
   // Process the quests stored in source control.
   for (const questFile of glob.sync('data/zc_quests/*/quest.json')) {
     const quest = JSON.parse(fs.readFileSync(questFile, 'utf-8'));
