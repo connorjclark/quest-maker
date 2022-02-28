@@ -37,7 +37,7 @@ class EntityBase extends PIXI.AnimatedSprite {
   }
 }
 
-type QuestEntityType = 'normal' | 'projectile' | 'enemy' | 'item';
+type QuestEntityType = 'normal' | 'projectile' | 'enemy' | 'item' | 'npc';
 
 export class QuestEntity extends EntityBase {
   public speed = 1;
@@ -84,7 +84,9 @@ export class QuestEntity extends EntityBase {
 
   tick(mode: PlayGameMode) {
     // TODO: common code for basic vx/vy movement?
-    if (this.type === 'projectile') {
+    if (this.misc.get('enemy.npc')) {
+
+    } else if (this.type === 'projectile') {
       this.vx = this.delta.x * this.speed;
       this.vy = this.delta.y * this.speed;
 

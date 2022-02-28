@@ -329,6 +329,7 @@ export class PlayGameMode extends QuestMakerMode {
       for (let entity of this.entities.values()) {
         entity.tick(this);
         if (entity === this.heroEntity) continue;
+        if (entity.type === 'npc') continue;
 
         if (entity.type === 'projectile') {
           if (this.hitTest.test(entity, this.hitTest.sections.screen.objects)) {
@@ -818,8 +819,8 @@ export class PlayGameMode extends QuestMakerMode {
     }
   }
 
-  createEntityFromEnemy(enemy: QuestMaker.Enemy, x: number, y: number) {
-    const entity = new QuestEntity('enemy', enemy.attributes);
+  createEntityFromEnemy(enemy: QuestMaker.Enemy, x: number, y: number, npc = false) {
+    const entity = new QuestEntity(npc ? 'npc' : 'enemy', enemy.attributes);
     entity.x = x * tileSize;
     entity.y = y * tileSize;
     entity.enemyType = enemy.type;
@@ -1144,6 +1145,9 @@ export class PlayGameMode extends QuestMakerMode {
       if (transition.item) {
         this.createItem(transition.item, screenWidth / 2, screenHeight / 2);
       }
+      if (transition.guy !== undefined) {
+        this.createEntityFromEnemy(state.quest.enemies[transition.guy], screenWidth / 2, screenHeight / 3, true);
+      }
       if (transition.string !== undefined) {
         Utils.find('.string').textContent = state.quest.misc.strings[transition.string];
       } else {
@@ -1213,6 +1217,7 @@ export class PlayGameMode extends QuestMakerMode {
         dmap: dmapIndex,
         item, // TODO: model room/warp behavior better.
         string: warp.type === 'special-room' ? warp.string : undefined,
+        guy: warp.type === 'special-room' ? warp.guy : undefined,
         screen: newScreenLocation,
         position: newPosition,
         screenDelta: { x: 0, y: 0 },

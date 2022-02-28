@@ -264,6 +264,7 @@ declare global {
       dmap?: number;
       item?: number;
       string?: number;
+      guy?: number;
       screen: { x: number, y: number };
       position?: { x: number, y: number };
       screenDelta: { x: number, y: number };
