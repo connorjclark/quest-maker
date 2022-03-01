@@ -12,6 +12,7 @@ import { convertZCQst } from './convert-zc-qst';
 import { createLandingPage } from './ui/LandingPage';
 import { TileType } from './tile-type';
 import { QuestRules } from './quest-rules';
+import { ScreenFlags } from './screen-flags';
 
 const { screenWidth, screenHeight, tileSize } = constants;
 
@@ -540,7 +541,7 @@ window.debugScreen = () => {
   console.log({ map: state.mapIndex, x: state.screenX, y: state.screenY });
   console.log({
     ...state.currentScreen,
-    enemies: state.currentScreen.enemies.map(e => state.quest.enemies[e.enemyId]),
+    enemies: state.currentScreen.enemies.map(e => e !== null && state.quest.enemies[e.enemyId]),
   });
 };
 
@@ -548,6 +549,14 @@ window.debugScreen = () => {
 window.debugQuestRules = () => {
   for (const name of Object.keys(QuestRules)) {
     const enabled = QuestRules[name as keyof typeof QuestRules](window.app?.state.quest.misc.rules || []);
+    if (enabled) console.log(name);
+  }
+}
+
+// @ts-expect-error
+window.debugScreenFlags = () => {
+  for (const name of Object.keys(ScreenFlags)) {
+    const enabled = ScreenFlags[name as keyof typeof ScreenFlags](window.app?.state.currentScreen.flags || []);
     if (enabled) console.log(name);
   }
 }

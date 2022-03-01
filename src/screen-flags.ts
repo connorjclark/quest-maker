@@ -47,10 +47,40 @@ export const ScreenFlags = {
   saveRoom: read(3, 6),
   saveOnEntry: read(3, 7),
 
-  // TODO: the rest
+  randomTimedWarp: read(4, 0),
+  damageWithBoots: read(4, 1),
+  directAWarp: read(4, 2),
+  directSWarp: read(4, 3),
+  tempSecrets: read(4, 4),
+  // skipped
+  toggleDiving: read(4, 6),
+  noFFCarryover: read(4, 7),
+
+  caveRoom: read(5, 0),
+  dungeonRoom: read(5, 1),
+  triggerFPerm: read(5, 2),
+  continueHere: read(5, 3),
+  noContinueHereAfterWarp: read(5, 4),
+  triggerF16_31: read(5, 5),
+  toggleRingDamage: read(5, 6),
+  wrapAroundFF: read(5, 7),
+
+  layer3Background: read(6, 0),
+  layer2Background: read(6, 1),
+  itemFalls: read(6, 2),
+  sideView: read(6, 3),
+  noHeroMarker: read(6, 4),
+  specialItemMarker: read(6, 5),
+  whistlePalette: read(6, 6),
+  whistleWater: read(6, 7),
 
   itemIsSecret: read(7, 6),
   pickupItemShowsSecrets: read(7, 7),
 
-  // TODO: the rest
+  itemSecretPerm: read(8, 0),
+  itemReturn: read(8, 1),
+  belowReturn: read(8, 2),
+  darkDither: read(8, 3),
+  darkTrans: read(8, 4),
+  disableMirror: read(8, 5),
 };
