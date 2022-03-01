@@ -311,7 +311,7 @@ function createQuest(): QuestMaker.Quest {
 // TODO: real quest loading/saving.
 async function loadQuest(path: string): Promise<QuestMaker.Quest> {
   if (path.endsWith('.qst')) {
-    const result = await convertZCQst(await readZCQst(path, window.IS_DEV || window.IS_LOCALHOST));
+    const result = await convertZCQst(await readZCQst(path, true));
     return result.quest;
   }
 
@@ -396,7 +396,6 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
   await new Promise(resolve => pixi.loader.load(resolve));
 
   const initialDmap = searchParamsObj.dmap ?? quest.misc.START_DMAP;
-  console.log({initialDmap});
   const initialMap = searchParamsObj.map ?? quest.dmaps[initialDmap].map;
   const initialScreenX = searchParamsObj.x ?? quest.dmaps[initialDmap].continueScreenX;
   const initialScreenY = searchParamsObj.y ?? quest.dmaps[initialDmap].continueScreenY;

@@ -304,7 +304,7 @@ async function createTileImages(qstData: any) {
     for (let indexInPage = 0; indexInPage < tilesPerPage; indexInPage++) {
       if (tileIndex >= tiles.length) break;
 
-      const tile = tiles[tileIndex++];
+      const tile = tiles[tileIndex++].pixels;
       const spritesheet_x = (indexInPage % tilesPerRow) * spriteSize;
       const spritesheet_y = Math.floor(indexInPage / tilesPerRow) * spriteSize;
 

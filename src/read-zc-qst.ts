@@ -285,7 +285,7 @@ const sections = {
           throw new Error('unexpected tile format: ' + format);
       }
 
-      tiles.push(pixels);
+      tiles.push({format, pixels});
     }
 
     return { tiles };
