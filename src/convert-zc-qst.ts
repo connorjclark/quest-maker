@@ -275,23 +275,16 @@ function getDefaultWeaponSprite(guy: any) {
   return wpnsprite;
 }
 
-// const dataPath = process.argv[2];
-// const dataDir = path.dirname(dataPath);
-// const qstData = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
-
-// TODO: make CLI param.
-// const outputDir = `${__dirname}/../quests/1st`;
+// Save 260 at a time.
+const tilesPerRow = 20;
+const rowsPerPage = 13;
+const tilesPerPage = tilesPerRow * rowsPerPage;
+const spriteSize = 16;
 
 async function createTileImages(qstData: any) {
   const canvas = document.createElement('canvas');
   const context = canvas.getContext('2d');
   if (!context) throw new Error();
-
-  // Save 400 at a time.
-  const tilesPerRow = 20;
-  const rowsPerPage = 13;
-  const tilesPerPage = tilesPerRow * rowsPerPage;
-  const spriteSize = 16;
 
   canvas.width = tilesPerRow * spriteSize;
   canvas.height = rowsPerPage * spriteSize;
@@ -302,10 +295,8 @@ async function createTileImages(qstData: any) {
 
   let tileIndex = 0;
   while (tileIndex < tiles.length) {
-    for (let indexInPage = 0; indexInPage < tilesPerPage; indexInPage++) {
-      if (tileIndex >= tiles.length) break;
-
-      const tile = tiles[tileIndex++].pixels;
+    for (let indexInPage = 0; indexInPage < tilesPerPage && tileIndex < tiles.length; indexInPage++) {
+      const tile = tiles[tileIndex].pixels;
       const spritesheet_x = (indexInPage % tilesPerRow) * spriteSize;
       const spritesheet_y = Math.floor(indexInPage / tilesPerRow) * spriteSize;
 
@@ -322,6 +313,8 @@ async function createTileImages(qstData: any) {
           imageData.data[(x + y * canvas.width) * 4 + 3] = csetOffset ? 255 : 0;
         }
       }
+
+      tileIndex += 1;
     }
 
     context.putImageData(imageData, 0, 0);
@@ -350,8 +343,8 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
   // TODO skipping this part if running node script
   if (typeof window !== 'undefined') {
     for (const url of await createTileImages(qstData)) {
-      for (let y = 0; y < 13; y++) {
-        for (let x = 0; x < 20; x++) {
+      for (let y = 0; y < rowsPerPage; y++) {
+        for (let x = 0; x < tilesPerRow; x++) {
           makeGraphic({
             file: url,
             x: x * tileSize,

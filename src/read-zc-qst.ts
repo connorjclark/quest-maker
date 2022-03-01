@@ -280,7 +280,7 @@ const sections = {
         case 0:
         case 2:
         case 3:
-          continue;
+          break;
         default:
           throw new Error('unexpected tile format: ' + format);
       }
