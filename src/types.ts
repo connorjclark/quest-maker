@@ -47,6 +47,7 @@ declare global {
         sideWarps: Warp[];
       };
       flags: any;
+      midi: number;
     }
 
     type Warp = {

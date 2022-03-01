@@ -814,6 +814,7 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
             zcScreen.flags9,
             zcScreen.flags10,
           ].filter(f => f !== undefined),
+          midi: zcScreen.screenMidi,
         };
         map.screens[screenx].push(screen);
 
