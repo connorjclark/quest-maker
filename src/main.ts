@@ -13,6 +13,7 @@ import { createLandingPage } from './ui/LandingPage';
 import { TileType } from './tile-type';
 import { QuestRules } from './quest-rules';
 import { ScreenFlags } from './screen-flags';
+import { TileFlag } from './tile-flags';
 
 const { screenWidth, screenHeight, tileSize } = constants;
 
@@ -559,6 +560,33 @@ window.debugScreenFlags = () => {
     const enabled = ScreenFlags[name as keyof typeof ScreenFlags](window.app?.state.currentScreen.flags || []);
     if (enabled) console.log(name);
   }
+}
+
+// @ts-expect-error
+window.debugTileFlags = () => {
+  // @ts-expect-error
+  const screen = getZcScreen();
+
+  let grid = '';
+  const seen = new Set<TileFlag>();
+  for (let y = 0; y < screenHeight; y++) {
+    for (let x = 0; x < screenWidth; x++) {
+      const flag = screen.sflag[x + y * screenWidth];
+      seen.add(flag);
+      grid += flag.toString().padEnd(3, ' ') + ' ';
+    }
+    grid += '\n';
+  }
+  for (const flag of [...seen].sort((a, b) => a - b)) {
+    console.log(flag, TileFlag[flag]);
+  }
+  console.log(grid);
+
+
+  // for (const name of Object.keys(TileFlag)) {
+  //   const enabled = ScreenFlags[name as keyof typeof ScreenFlags](window.app?.state.currentScreen.flags || []);
+  //   if (enabled) console.log(name);
+  // }
 }
 
 async function selectQuest(questPath: string) {

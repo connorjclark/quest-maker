@@ -46,7 +46,7 @@ declare global {
         tileWarps: Warp[];
         sideWarps: Warp[];
       };
-      flags: any;
+      flags: number[];
       midi?: number;
       string?: number;
     }
