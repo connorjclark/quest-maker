@@ -128,7 +128,8 @@ export class TilesTab extends Component<TilesTabProps> {
       </div>
       <div class="tile-pickers">
         <TilePicker tiles={props.tiles}></TilePicker>
-        <TilePicker tiles={props.tiles}></TilePicker>
+        {/* Just have one for now. */}
+        {/* <TilePicker tiles={props.tiles}></TilePicker> */}
       </div>
     </div>;
   }
