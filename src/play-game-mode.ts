@@ -996,7 +996,7 @@ export class PlayGameMode extends QuestMakerMode {
     const state = this.app.state;
 
     if (state.quest.name !== 'debug') {
-      const song = state.currentScreen.midi || state.quest.dmaps[state.dmapIndex].song;
+      const song = state.currentScreen.midi ?? state.quest.dmaps[state.dmapIndex].song;
       this.app.soundManager.playSong(song);
     }
 
