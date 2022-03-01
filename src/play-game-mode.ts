@@ -703,7 +703,10 @@ export class PlayGameMode extends QuestMakerMode {
 
     for (let x = 0; x < screenWidth; x++) {
       for (let y = 0; y < screenHeight; y++) {
-        const sprite = this.app.createTileSprite(this._getTile(layerScreen, screenState, x, y, layerIndex), paletteIndex);
+        const tile = this._getTile(layerScreen, screenState, x, y, layerIndex);
+        if (tile.tile === 0 && layerIndex != 0) continue;
+
+        const sprite = this.app.createTileSprite(tile, paletteIndex);
         sprite.x = x * tileSize;
         sprite.y = y * tileSize;
         container.addChild(sprite);

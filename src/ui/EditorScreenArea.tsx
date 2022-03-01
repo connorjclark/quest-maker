@@ -139,6 +139,7 @@ export class EditorScreenArea extends Component<Props> {
           if (screen) {
             const screenTile = screen.tiles[x0][y0];
             if (!screenTile) continue;
+            if (screenTile.tile === 0 && layerIndex !== 0) continue;
 
             sprite = app.createTileSprite(screenTile);
             if (x === -1 || y === -1 || x === screenWidth || y === screenHeight) {

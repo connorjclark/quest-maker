@@ -208,6 +208,7 @@ export class QuestMakerApp extends App<QuestMaker.State> {
     const graphic = this.state.quest.graphics[graphicId];
     if (!graphic) {
       console.error('bad graphic:', graphicId);
+      return new PIXI.Sprite();
     }
 
     const sprite = this.createSprite(graphic.file, graphic.x, graphic.y, graphic.width, graphic.height);
