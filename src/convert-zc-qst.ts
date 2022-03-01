@@ -4,6 +4,7 @@ import makeQuest from '../src/make-quest';
 import { EnemyType, ItemType } from '../src/types';
 import struct from './third_party/struct.mjs';
 import defaultGuys from '../data/zc-default-guys.json'; // TODO this is wrong! this is just the BS Zelda custom guys data.
+import { QuestRules } from './quest-rules';
 
 const { tileSize, screenWidth, screenHeight } = constants;
 

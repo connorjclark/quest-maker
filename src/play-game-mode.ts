@@ -7,6 +7,7 @@ import 'pixi-plugin-bump';
 import { TileFlag, SecretCombo } from './tile-flags';
 import { getWarpIndex, TileType } from './tile-type';
 import { ScreenFlags } from './screen-flags';
+import { QuestRules } from './quest-rules';
 
 const { screenWidth, screenHeight, tileSize } = constants;
 
@@ -104,10 +105,17 @@ export class PlayGameMode extends QuestMakerMode {
       this.container.addChild(layer);
     }
 
-    const startPosition = state.currentScreen.warps.arrival ?? {
-      x: screenWidth * tileSize / 2,
-      y: screenHeight * tileSize / 2,
-    };
+    let startPosition;
+    if (QuestRules.NOARRIVALPOINT(state.quest.misc.rules)) {
+      startPosition = state.currentScreen.warps.returns[0];
+    } else if (state.currentScreen.warps.arrival) {
+      startPosition = state.currentScreen.warps.arrival;
+    } else {
+      startPosition = {
+        x: screenWidth * tileSize / 2,
+        y: screenHeight * tileSize / 2,
+      };
+    }
 
     this.heroEntity.x = startPosition.x;
     this.heroEntity.y = startPosition.y;
