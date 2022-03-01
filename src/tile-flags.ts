@@ -150,3 +150,66 @@ export enum SecretCombo {
   SECCMB_STRIKE,
   SECCMB_SECRETSNEXT,
 };
+
+export function getPushData(flag: TileFlag) {
+  const isPushFlag = [
+    TileFlag.CF_PUSHUPDOWN,
+    TileFlag.CF_PUSH4WAY,
+    TileFlag.CF_PUSHLR,
+    TileFlag.CF_PUSHUP,
+    TileFlag.CF_PUSHDOWN,
+    TileFlag.CF_PUSHLEFT,
+    TileFlag.CF_PUSHRIGHT,
+    TileFlag.CF_PUSHUPDOWNNS,
+    TileFlag.CF_PUSHLEFTRIGHTNS,
+    TileFlag.CF_PUSH4WAYNS,
+    TileFlag.CF_PUSHUPNS,
+    TileFlag.CF_PUSHDOWNNS,
+    TileFlag.CF_PUSHLEFTNS,
+    TileFlag.CF_PUSHRIGHTNS,
+    TileFlag.CF_PUSHUPDOWNINS,
+    TileFlag.CF_PUSHLEFTRIGHTINS,
+    TileFlag.CF_PUSH4WAYINS,
+    TileFlag.CF_PUSHUPINS,
+    TileFlag.CF_PUSHDOWNINS,
+    TileFlag.CF_PUSHLEFTINS,
+    TileFlag.CF_PUSHRIGHTINS,
+  ].includes(flag);
+  if (!isPushFlag) return;
+
+  const directions = [];
+  if ([TileFlag.CF_PUSHUPDOWN, TileFlag.CF_PUSHUP, TileFlag.CF_PUSH4WAY, TileFlag.CF_PUSHUPINS, TileFlag.CF_PUSHUPDOWNINS, TileFlag.CF_PUSHUPNS, TileFlag.CF_PUSH4WAYINS].includes(flag)) {
+    directions.push('up');
+  }
+  if ([TileFlag.CF_PUSHUPDOWN, TileFlag.CF_PUSHDOWN, TileFlag.CF_PUSH4WAY, TileFlag.CF_PUSHDOWNINS, TileFlag.CF_PUSHUPDOWNINS, TileFlag.CF_PUSHDOWNNS, TileFlag.CF_PUSH4WAYINS].includes(flag)) {
+    directions.push('down');
+  }
+  if ([TileFlag.CF_PUSHLR, TileFlag.CF_PUSHLEFT, TileFlag.CF_PUSH4WAY, TileFlag.CF_PUSHLEFTINS, TileFlag.CF_PUSHLEFTRIGHTINS, TileFlag.CF_PUSHLEFTNS, TileFlag.CF_PUSH4WAYINS].includes(flag)) {
+    directions.push('left');
+  }
+  if ([TileFlag.CF_PUSHLR, TileFlag.CF_PUSHRIGHT, TileFlag.CF_PUSH4WAY, TileFlag.CF_PUSHRIGHTINS, TileFlag.CF_PUSHLEFTRIGHTINS, TileFlag.CF_PUSHRIGHTNS, TileFlag.CF_PUSH4WAYINS].includes(flag)) {
+    directions.push('right');
+  }
+
+  const triggerSecrets = [
+    TileFlag.CF_PUSHUPDOWN,
+    TileFlag.CF_PUSH4WAY,
+    TileFlag.CF_PUSHLR,
+    TileFlag.CF_PUSHUP,
+    TileFlag.CF_PUSHDOWN,
+    TileFlag.CF_PUSHLEFT,
+    TileFlag.CF_PUSHRIGHT,
+  ].includes(flag);
+
+  const many = [
+    TileFlag.CF_PUSHUPDOWNINS,
+    TileFlag.CF_PUSHLEFTRIGHTINS,
+    TileFlag.CF_PUSH4WAYINS,
+    TileFlag.CF_PUSHUPINS,
+    TileFlag.CF_PUSHDOWNINS,
+    TileFlag.CF_PUSHLEFTINS,
+    TileFlag.CF_PUSHRIGHTINS,
+  ].includes(flag);
+
+  return { directions, triggerSecrets, many };
+}

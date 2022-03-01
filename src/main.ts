@@ -581,12 +581,6 @@ window.debugTileFlags = () => {
     console.log(flag, TileFlag[flag]);
   }
   console.log(grid);
-
-
-  // for (const name of Object.keys(TileFlag)) {
-  //   const enabled = ScreenFlags[name as keyof typeof ScreenFlags](window.app?.state.currentScreen.flags || []);
-  //   if (enabled) console.log(name);
-  // }
 }
 
 async function selectQuest(questPath: string) {

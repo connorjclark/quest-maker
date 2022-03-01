@@ -1,5 +1,6 @@
 import { QuestMakerApp } from "./quest-maker-app";
 import { QuestMakerMode } from "./quest-maker-mode";
+import { TileFlag } from "./tile-flags";
 import { TileType } from "./tile-type";
 
 export enum EnemyType {
@@ -305,6 +306,7 @@ declare global {
       enemiesKilled: number;
       secretsTriggered: boolean;
       replacedTiles: (ScreenTile | null)[][][];
+      replacedFlags: (TileFlag | null)[][][];
       collectedItem: boolean;
     }
 

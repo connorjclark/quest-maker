@@ -63,6 +63,7 @@ export function inBounds(x: number, y: number, width: number, height: number) {
   return x >= 0 && y >= 0 && x < width && y < height;
 }
 
+// TODO remove
 export function isSolid(state: QuestMaker.State, x: number, y: number, quadrant?: number) {
   if (!inBounds(x, y, screenWidth, screenHeight)) return true;
 

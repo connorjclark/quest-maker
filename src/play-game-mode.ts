@@ -4,7 +4,7 @@ import { EnemyType, ItemType } from './types';
 import * as Utils from './utils';
 import { QuestEntity, MiscBag } from './entity';
 import 'pixi-plugin-bump';
-import { TileFlag, SecretCombo } from './tile-flags';
+import { TileFlag, SecretCombo, getPushData } from './tile-flags';
 import { getWarpIndex, TileType } from './tile-type';
 import { ScreenFlags } from './screen-flags';
 import { QuestRules } from './quest-rules';
@@ -479,9 +479,10 @@ export class PlayGameMode extends QuestMakerMode {
 
       const { tile } = this._getTile(state.currentScreen, screenState, x, y, 0);
       const tile_ = state.quest.tiles[tile]; // ... naming issue ....
-      if (tile_.type === TileType.None) continue;
+      const flag = this._getFlag(state.currentScreen, screenState, x, y, 0);
+      if (tile_.type === TileType.None && !flag) continue;
 
-      this.performTileAction(tile_.type, names);
+      this.performTileAction(tile_.type, tile, flag, names, x, y, 0);
     }
 
     // Transition screen when hero enters edge.
@@ -505,14 +506,16 @@ export class PlayGameMode extends QuestMakerMode {
    */
   _getTile(screen: QuestMaker.Screen, screenState: QuestMaker.ScreenState, x: number, y: number, layerIndex: number): QuestMaker.ScreenTile {
     // TODO: handle all layers
-    const defaultTile = screenState.replacedTiles[layerIndex][x][y] || screen.tiles[x][y];
+    const defaultTile = screenState.replacedTiles[layerIndex][x][y] ?? screen.tiles[x][y];
 
     if (screenState.secretsTriggered) {
       // @ts-expect-error TODO kinda giving up on recreating the state in QuestMaker.Quest
       const zcScreen = getZcScreen();
 
       // Flags can come from the screen or the tile.
-      let sflag = zcScreen.sflag[x + y * screenWidth];
+      // @ts-expect-error
+      let sflag = getZcScreen().sflag[x + y * screenWidth];
+      // let sflag = this._getFlag(screen, screenState, x, y, layerIndex);
       if (sflag === TileFlag.CF_NONE) {
         // TODO ignores screen state ...
         const tileId = defaultTile.tile;
@@ -616,6 +619,24 @@ export class PlayGameMode extends QuestMakerMode {
 
     return defaultTile;
   }
+
+  _getFlag(screen: QuestMaker.Screen, screenState: QuestMaker.ScreenState, x: number, y: number, layerIndex: number): TileFlag {
+    // @ts-expect-error
+    const zcScreen = getZcScreen();
+    const flag = screenState.replacedFlags[layerIndex][x][y] ?? zcScreen.sflag[x + y * screenWidth];
+    return flag;
+  }
+
+  isSolid(x: number, y: number, quadrant?: number) {
+    if (!Utils.inBounds(x, y, screenWidth, screenHeight)) return true;
+
+    const tileNumber = this._getTile(this.app.state.currentScreen, this.getCurrentScreenState(), x, y, 0).tile;
+    if (quadrant === undefined) {
+      return !this.app.state.quest.tiles[tileNumber].walkable.every(b => b);
+    } else {
+      return !this.app.state.quest.tiles[tileNumber].walkable[quadrant];
+    }
+  };
 
   _checkForTransition() {
     const state = this.app.state;
@@ -989,6 +1010,7 @@ export class PlayGameMode extends QuestMakerMode {
         enemiesKilled: 0,
         secretsTriggered: false,
         replacedTiles: Utils.create3dArray(constants.numLayers, screenWidth, screenHeight, null),
+        replacedFlags: Utils.create3dArray(constants.numLayers, screenWidth, screenHeight, null),
         collectedItem: false,
       };
       state.game.screenStates.set(screen, screenState);
@@ -1033,12 +1055,10 @@ export class PlayGameMode extends QuestMakerMode {
     enemies.splice(0, screenState.enemiesKilled);
     if (!enemies.length) return;
 
-    // @ts-expect-error TODO kinda giving up on recreating the state in QuestMaker.Quest
-    const zcScreen = getZcScreen();
     const enemyFlagLocations = [];
     for (let x = 0; x < screenWidth; x++) {
       for (let y = 0; y < screenHeight; y++) {
-        const flag = zcScreen.sflag[x + y * screenWidth];
+        const flag = this._getFlag(state.currentScreen, screenState, x, y, 0);
         if (flag >= TileFlag.CF_ENEMY0 && flag <= TileFlag.CF_ENEMY9) {
           const enemyIndex = flag - TileFlag.CF_ENEMY0;
           enemyFlagLocations[enemyIndex] = { x, y };
@@ -1270,7 +1290,7 @@ export class PlayGameMode extends QuestMakerMode {
     };
   }
 
-  performTileAction(type: TileType, names: string[]) {
+  performTileAction(type: TileType, tile: number, flag: TileFlag, names: string[], x: number, y: number, layerIndex: number) {
     const state = this.app.state;
     const warpIndex = getWarpIndex(type);
 
@@ -1293,6 +1313,35 @@ export class PlayGameMode extends QuestMakerMode {
       this.heroEntity.misc.set('conveyor.vy', -0.5);
     } else if (type === TileType['Conveyor Down']) {
       this.heroEntity.misc.set('conveyor.vy', 0.5);
+    }
+
+    const pushData = getPushData(flag);
+    if (pushData) {
+      const screenState = this.getCurrentScreenState(); // TODO: move this to property
+
+      let dx = 0;
+      let dy = 0;
+      if (this.heroEntity.vy < 0 && pushData.directions.includes('up')) {
+        dy = -1;
+      } else if (this.heroEntity.vy > 0 && pushData.directions.includes('down')) {
+        dy = 1
+      } else if (this.heroEntity.vx > 0 && pushData.directions.includes('right')) {
+        dx = 1
+      } else if (this.heroEntity.vx < 0 && pushData.directions.includes('left')) {
+        dx = -1
+      }
+
+      if ((dx || dy) && !this.isSolid(x + dx, y + dy)) {
+        screenState.replacedTiles[layerIndex][x + dx][y + dy] = { tile };
+        screenState.replacedTiles[layerIndex][x][y] = { tile: 0 };
+        if (pushData.many) {
+          screenState.replacedFlags[layerIndex][x + dx][y + dy] = TileFlag.CF_NONE;
+        } else {
+          screenState.replacedFlags[layerIndex][x][y] = TileFlag.CF_NONE;
+        }
+        screenState.secretsTriggered ||= pushData.triggerSecrets;
+        this.initDraw();
+      }
     }
   }
 
