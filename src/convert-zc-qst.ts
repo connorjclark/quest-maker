@@ -888,10 +888,10 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
         }
 
         screen.enemies = (zcScreen.enemies as number[])
-          .filter(i => {
-            return i > 0 && quest.enemies.some(e => e.id === i && e.name);
-          })
-          .map(i => ({ enemyId: i }));
+          .map(i => {
+            if (i === 0 || !quest.enemies.some(e => e.id === i && e.name)) return null;
+            return { enemyId: i };
+          });
       }
     }
   }

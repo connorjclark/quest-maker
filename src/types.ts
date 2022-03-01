@@ -33,7 +33,7 @@ declare global {
       layers: Array<{ map: number; x: number; y: number } | null>;
       enemies: Array<{
         enemyId: number;
-      }>;
+      } | null>;
       color: number;
       item?: { id: number; x: number; y: number };
       warps: {

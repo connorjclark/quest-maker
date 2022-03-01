@@ -1048,7 +1048,9 @@ export class PlayGameMode extends QuestMakerMode {
       }
     }
 
-    for (let [i, { enemyId }] of enemies) {
+    for (let [i, enemyData] of enemies) {
+      if (!enemyData) continue;
+
       const index = Number(i); // :(
 
       let pos;
@@ -1059,7 +1061,7 @@ export class PlayGameMode extends QuestMakerMode {
         [pos] = walkableAreas.splice(Utils.random(0, walkableAreas.length - 1), 1);
       }
 
-      const enemy = state.quest.enemies[enemyId];
+      const enemy = state.quest.enemies[enemyData.enemyId];
       this.spawnEnemy(enemy, pos.x, pos.y);
     }
   }
