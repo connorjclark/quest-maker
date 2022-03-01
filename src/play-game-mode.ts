@@ -112,9 +112,11 @@ export class PlayGameMode extends QuestMakerMode {
     } else if (state.currentScreen.warps.arrival) {
       startPosition = state.currentScreen.warps.arrival;
     } else {
+      const walkableLocations = this.getWalkableLocations();
+      const location = walkableLocations[Math.floor(walkableLocations.length / 2)] || { x: screenWidth / 2, y: screenWidth / 2 };
       startPosition = {
-        x: screenWidth * tileSize / 2,
-        y: screenHeight * tileSize / 2,
+        x: location.x * tileSize,
+        y: location.y * tileSize,
       };
     }
 
@@ -1044,15 +1046,7 @@ export class PlayGameMode extends QuestMakerMode {
       }
     }
 
-    const walkableAreas = [];
-    for (let x = 0; x < screenWidth; x++) {
-      for (let y = 0; y < screenHeight; y++) {
-        if (Utils.isSolid(state, x, y)) continue;
-        if (Math.abs(x - this.heroEntity.x / tileSize) <= 1 && Math.abs(y - this.heroEntity.y / tileSize) <= 1) continue;
-
-        walkableAreas.push({ x, y });
-      }
-    }
+    const walkableLocations = this.getWalkableLocations();
 
     for (let [i, enemyData] of enemies) {
       if (!enemyData) continue;
@@ -1063,13 +1057,28 @@ export class PlayGameMode extends QuestMakerMode {
       if (enemyFlagLocations[index]) {
         pos = enemyFlagLocations[index];
       } else {
-        if (walkableAreas.length === 0) break;
-        [pos] = walkableAreas.splice(Utils.random(0, walkableAreas.length - 1), 1);
+        if (walkableLocations.length === 0) break;
+        [pos] = walkableLocations.splice(Utils.random(0, walkableLocations.length - 1), 1);
       }
 
       const enemy = state.quest.enemies[enemyData.enemyId];
       this.spawnEnemy(enemy, pos.x, pos.y);
     }
+  }
+
+  getWalkableLocations() {
+    const walkableLocations = [];
+
+    for (let x = 0; x < screenWidth; x++) {
+      for (let y = 0; y < screenHeight; y++) {
+        if (Utils.isSolid(this.app.state, x, y)) continue;
+        if (Math.abs(x - this.heroEntity.x / tileSize) <= 1 && Math.abs(y - this.heroEntity.y / tileSize) <= 1) continue;
+
+        walkableLocations.push({ x, y });
+      }
+    }
+
+    return walkableLocations;
   }
 
   performSwordAttack() {
