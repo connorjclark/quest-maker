@@ -93,6 +93,7 @@ export class PlayGameMode extends QuestMakerMode {
   private hitTest = new HitTest();
 
   private secondsSinceLastTick = 0;
+  private hasMovedSinceEnteredScreen = false;
 
   init() {
     super.init();
@@ -227,6 +228,7 @@ export class PlayGameMode extends QuestMakerMode {
       heroEntity.vx = dx * heroEntity.speed * dt;
       heroEntity.vy = dy * heroEntity.speed * dt;
       this.heroEntity.moving = true;
+      this.hasMovedSinceEnteredScreen = true;
     } else {
       this.heroEntity.moving = false;
     }
@@ -1006,6 +1008,8 @@ export class PlayGameMode extends QuestMakerMode {
 
     // Update UI that lives in react, like the current dmap title.
     this.app.ui.actions.setState(state);
+
+    this.hasMovedSinceEnteredScreen = false;
   }
 
   createScreenItem() {
@@ -1259,7 +1263,7 @@ export class PlayGameMode extends QuestMakerMode {
     const state = this.app.state;
     const warpIndex = getWarpIndex(type);
 
-    if (warpIndex !== undefined) {
+    if (warpIndex !== undefined && this.hasMovedSinceEnteredScreen) {
       if ((names.includes('bottomLeft') && names.includes('bottomRight')) || (names.includes('bottom') && names.includes('top'))) {
         const warp = state.currentScreen.warps.tileWarps.find((warp) => warp.index === warpIndex);
         if (warp) {
