@@ -48,6 +48,7 @@ declare global {
       };
       flags: any;
       midi?: number;
+      string?: number;
     }
 
     type Warp = {
@@ -254,7 +255,7 @@ declare global {
         }>>;
         START_DMAP: number;
         rules: number[];
-        strings: string[];
+        strings: Array<{ string: string, nextString: number }>;
       };
     }
 

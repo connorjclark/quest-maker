@@ -808,6 +808,7 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
             zcScreen.flags10,
           ].filter(f => f !== undefined),
           midi: zcScreen.screenMidi !== undefined && zcScreen.screenMidi !== 65535 ? zcScreen.screenMidi : undefined,
+          string: zcScreen.str ? zcScreen.str : undefined,
         };
         map.screens[screenx].push(screen);
 
@@ -999,7 +1000,7 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
   }
 
   if (qstData.STR?.strings) {
-    quest.misc.strings = qstData.STR?.strings.map((s: any) => s.string);
+    quest.misc.strings = qstData.STR.strings;
   } else {
     quest.misc.strings = [];
   }

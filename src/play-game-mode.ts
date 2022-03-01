@@ -1166,7 +1166,13 @@ export class PlayGameMode extends QuestMakerMode {
         this.createEntityFromEnemy(state.quest.enemies[transition.guy], screenWidth / 2, screenHeight / 3, true);
       }
       if (transition.string !== undefined) {
-        Utils.find('.string').textContent = state.quest.misc.strings[transition.string];
+        let str = '';
+        let curStr = transition.string;
+        while (curStr) {
+          str += state.quest.misc.strings[curStr].string + ' ';
+          curStr = state.quest.misc.strings[curStr].nextString;
+        }
+        Utils.find('.string').textContent = str;
       } else {
         Utils.find('.string').textContent = '';
       }
@@ -1184,6 +1190,7 @@ export class PlayGameMode extends QuestMakerMode {
     let newPosition = undefined;
     let returnTransition = undefined;
     let item = undefined;
+    let string = undefined;
 
     if (warp && warp.type === 'direct') {
       newScreenLocation = { x: warp.screenX, y: warp.screenY };
@@ -1200,6 +1207,8 @@ export class PlayGameMode extends QuestMakerMode {
         if (!newPosition.x && !newPosition.y && newScreen.warps.arrival) {
           newPosition = newScreen.warps.arrival;
         }
+
+        string = newScreen.string;
       }
     }
 
@@ -1221,6 +1230,8 @@ export class PlayGameMode extends QuestMakerMode {
       if (warp.item !== undefined) {
         item = warp.item;
       }
+
+      string = warp.string;
     }
 
     let transitionType: QuestMaker.ScreenTransitionType;
@@ -1232,8 +1243,8 @@ export class PlayGameMode extends QuestMakerMode {
         type: transitionType,
         frames: 0,
         dmap: dmapIndex,
-        item, // TODO: model room/warp behavior better.
-        string: warp.type === 'special-room' ? warp.string : undefined,
+        item,
+        string,
         guy: warp.type === 'special-room' ? warp.guy : undefined,
         screen: newScreenLocation,
         position: newPosition,
