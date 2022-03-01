@@ -1257,6 +1257,14 @@ export class PlayGameMode extends QuestMakerMode {
       }
     } else if (type === TileType['Slow Walk']) {
       this.heroEntity.speed = DEFAULT_HERO_SPEED * 0.5;
+    } else if (type === TileType['Conveyor Left']) {
+      this.heroEntity.misc.set('conveyor.vx', -0.5);
+    } else if (type === TileType['Conveyor Right']) {
+      this.heroEntity.misc.set('conveyor.vx', 0.5);
+    } else if (type === TileType['Conveyor Up']) {
+      this.heroEntity.misc.set('conveyor.vy', -0.5);
+    } else if (type === TileType['Conveyor Down']) {
+      this.heroEntity.misc.set('conveyor.vy', 0.5);
     }
   }
 

@@ -84,9 +84,7 @@ export class QuestEntity extends EntityBase {
 
   tick(mode: PlayGameMode) {
     // TODO: common code for basic vx/vy movement?
-    if (this.misc.get('enemy.npc')) {
-
-    } else if (this.type === 'projectile') {
+    if (this.type === 'projectile') {
       this.vx = this.delta.x * this.speed;
       this.vy = this.delta.y * this.speed;
 
@@ -139,21 +137,23 @@ export class QuestEntity extends EntityBase {
 
       this.vx = dx;
       this.vy = dy;
+      this.vx += this.misc.get('conveyor.vx') || 0;
+      this.vy += this.misc.get('conveyor.vy') || 0;
 
-      if (dx !== 0 || dy !== 0) {
-        this.x += dx;
-        this.y += dy;
+      if (this.vx !== 0 || this.vy !== 0) {
+        this.x += this.vx;
+        this.y += this.vy;
 
         // Align with half-axis if moving in other direction.
         const halfSize = tileSize / 2;
         const quarterSize = tileSize / 4;
-        if (dx === 0) {
+        if (this.vx === 0) {
           let diff = this.x % halfSize;
           if (diff !== 0) {
             this.x += this.speed * Math.sign(diff - quarterSize);
             this.x = Math.round(this.x); // TODO: lil choppy.
           }
-        } else if (dy === 0) {
+        } else if (this.vy === 0) {
           let diff = this.y % halfSize;
           if (diff !== 0) {
             this.y += this.speed * Math.sign(diff - quarterSize);
@@ -193,6 +193,9 @@ export class QuestEntity extends EntityBase {
       const f = Math.floor(ticks / (16 >> (this.totalFrames - 1)));
       this.gotoAndStop(f % this.totalFrames);
     }
+
+    this.misc.set('conveyor.vx', 0);
+    this.misc.set('conveyor.vy', 0);
   }
 
   hit(direction: { x: number, y: number }) {

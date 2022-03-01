@@ -97,6 +97,8 @@ declare global {
     type EntityAttributes = EnemyAttributes & {
       'item.id': number;
       'item.isScreenItem': boolean;
+      'conveyor.vx': number;
+      'conveyor.vy': number;
     };
 
     // TODO: write comments for each.
