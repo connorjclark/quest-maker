@@ -1010,6 +1010,8 @@ export class PlayGameMode extends QuestMakerMode {
     this.app.ui.actions.setState(state);
 
     this.hasMovedSinceEnteredScreen = false;
+
+    this.heroEntity.visible = !ScreenFlags.invisibleHero(state.currentScreen.flags);
   }
 
   createScreenItem() {
