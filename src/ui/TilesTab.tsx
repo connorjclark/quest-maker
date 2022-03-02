@@ -24,6 +24,7 @@ class TilePicker extends Component<TilePickerProps> {
       const pixi = new PIXI.Application({
         view: ref.current,
       });
+      const _textureCache = new Map();
       // @ts-ignore
       pixi.loader = app.pixi.loader;
       app.addScrollHandling(pixi);
@@ -31,6 +32,7 @@ class TilePicker extends Component<TilePickerProps> {
       app = new Proxy(app, {
         get(target: QuestMaker.App, key: string) {
           if (key === 'pixi') return pixi;
+          if (key === '_textureCache') return _textureCache;
           // @ts-expect-error
           return target[key];
         },

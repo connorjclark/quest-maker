@@ -217,12 +217,16 @@ export class QuestMakerApp extends App<QuestMaker.State> {
       return sprite;
     }
 
-    // TODO: Probably not very performant?
-    // Might be cause of lag on screen transition.
+    const texture = this._getGraphicTexture(sprite, graphicId, paletteIndex, cset, extraCset);
+    if (texture) return new PIXI.Sprite(new PIXI.Texture(texture.baseTexture, texture.frame));
+    return sprite;
+  }
 
-    let key = `${graphicId},${paletteIndex},${cset},${extraCset?.offset}`;
+  _getGraphicTexture(sprite: PIXI.Sprite, graphicId: number, paletteIndex: number, cset: number, extraCset?: QuestMaker.Tile['extraCset']) {
+    let key = `${graphicId},${paletteIndex},${cset}`;
+    if (extraCset) key += `,${extraCset.offset},${extraCset.quadrants.map(q => q ? '1' : '0')}`;
     let texture = this._textureCache.get(key);
-    if (texture) return new PIXI.Sprite(texture);
+    if (texture) return texture;
 
     try {
       if (extraCset) {
@@ -230,16 +234,15 @@ export class QuestMakerApp extends App<QuestMaker.State> {
         const replacements2 = this._getColorReplacementsForCset(paletteIndex, cset + extraCset.offset);
         texture = this._multiColorReplaceTwoCsetsCreateTexture(sprite, extraCset.quadrants, replacements1, replacements2, 0.0001);
         this._textureCache.set(key, texture);
-        return new PIXI.Sprite(texture);
+        return texture;
       }
 
       texture = this._multiColorReplaceCreateTexture(sprite, this._getColorReplacementsForCset(paletteIndex, cset), 0.0001);
       this._textureCache.set(key, texture);
-      return new PIXI.Sprite(texture);
+      return texture;
     } catch (err) {
       // TODO
       console.error({ graphicId, cset }, err);
-      return sprite;
     }
   }
 
