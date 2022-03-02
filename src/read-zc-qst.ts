@@ -808,7 +808,7 @@ const sections = {
       { name: 'step', type: 'H' },
       { name: 'homing', type: 'H' },
       { name: 'grumble', type: 'H' },
-      { name: 'itemSet', type: 'H' },
+      { name: 'item_set', type: 'H' },
       { name: 'misc', arrayLength: 10, type: sversion >= 22 ? 'I' : 'H' },
       { name: 'bgsfx', type: 'H' },
       { name: 'bosspal', type: 'H' },

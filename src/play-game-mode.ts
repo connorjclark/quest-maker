@@ -8,6 +8,7 @@ import { TileFlag, SecretCombo, getPushData } from './tile-flags';
 import { getWarpIndex, TileType } from './tile-type';
 import { ScreenFlags } from './screen-flags';
 import { QuestRules } from './quest-rules';
+import { Sfx } from './zc-constants';
 
 const { screenWidth, screenHeight, tileSize } = constants;
 
@@ -372,7 +373,7 @@ export class PlayGameMode extends QuestMakerMode {
           if (collision === 'top') dir.y += 1;
           if (collision === 'bottom') dir.y -= 1;
           this.heroEntity.hit(dir);
-          this.app.soundManager.playSfx(constants.Sfx.SFX_OUCH);
+          this.app.soundManager.playSfx(Sfx.SFX_OUCH);
           if (entity.type === 'projectile') this.removeEntity(entity);
         }
       }
@@ -981,7 +982,7 @@ export class PlayGameMode extends QuestMakerMode {
       }
       if (ScreenFlags.item(this.app.state.currentScreen.flags)) {
         this.createScreenItem();
-        this.app.soundManager.playSfx(constants.Sfx.SFX_CLEARED);
+        this.app.soundManager.playSfx(Sfx.SFX_CLEARED);
       }
     }
 
@@ -1358,7 +1359,6 @@ export class PlayGameMode extends QuestMakerMode {
       state.game.equipped[1] = inventoryIndex;
     }
 
-    console.log('sfx', item.pickupSound)
-    this.app.soundManager.playSfx(item.pickupSound || constants.Sfx.SFX_PLINK);
+    this.app.soundManager.playSfx(item.pickupSound || Sfx.SFX_PLINK);
   }
 }

@@ -2,9 +2,10 @@ import * as assert from 'assert';
 import * as constants from '../src/constants';
 import makeQuest from '../src/make-quest';
 import { EnemyType, ItemType } from '../src/types';
-import struct from './third_party/struct.mjs';
-import defaultGuys from '../data/zc-default-guys.json'; // TODO this is wrong! this is just the BS Zelda custom guys data.
+import { defaultGuys } from './default-guys';
 import { QuestRules } from './quest-rules';
+import struct from './third_party/struct.mjs';
+import { EnemyFamily, Sfx, WeaponTypeGameEngine } from './zc-constants';
 
 const { tileSize, screenWidth, screenHeight } = constants;
 
@@ -65,80 +66,6 @@ const EnemyAnimationType = makeEnum([
   'ganon',
   '2frmb',
 ] as const);
-
-enum EnemyFamily {
-  eeGUY = 0, eeWALK,
-  eeSHOOT/*DEPRECATED*/,
-  eeTEK, eeLEV, eePEAHAT, eeZORA, eeROCK,
-  //8
-  eeGHINI, eeARMOS/*DEPRECATED*/, eeKEESE, eeGEL/*DEPRECATED*/, eeZOL/*DEPRECATED*/, eeROPE/*DEPRECATED*/, eeGORIYA/*DEPRECATED*/, eeTRAP,
-  //16
-  eeWALLM, eeBUBBLE/*DEPRECATED*/, eeVIRE/*DEPRECATED*/, eeLIKE/*DEPRECATED*/, eePOLSV/*DEPRECATED*/, eeWIZZ, eeAQUA, eeMOLD,
-  //24
-  eeDONGO, eeMANHAN, eeGLEEOK, eeDIG, eeGHOMA, eeLANM, eePATRA, eeGANON,
-  //32
-  eePROJECTILE, eeGELTRIB/*DEPRECATED*/, eeZOLTRIB/*DEPRECATED*/, eeVIRETRIB/*DEPRECATED*/, eeKEESETRIB/*DEPRECATED*/, eeSPINTILE, eeNONE,
-  //39
-  eeFAIRY, eeFIRE, eeOTHER, eeMAX250, //eeFire is Other (Floating), eeOther is Other in the Editor.
-  eeSCRIPT01, eeSCRIPT02, eeSCRIPT03, eeSCRIPT04, eeSCRIPT05, eeSCRIPT06, eeSCRIPT07, eeSCRIPT08, eeSCRIPT09, eeSCRIPT10,
-  eeSCRIPT11, eeSCRIPT12, eeSCRIPT13, eeSCRIPT14, eeSCRIPT15, eeSCRIPT16, eeSCRIPT17, eeSCRIPT18, eeSCRIPT19, eeSCRIPT20,
-  eeFFRIENDLY01, eeFFRIENDLY02, eeFFRIENDLY03, eeFFRIENDLY04, eeFFRIENDLY05, eeFFRIENDLY06, eeFFRIENDLY07, eeFFRIENDLY08,
-  eeFFRIENDLY09, eeFFRIENDLY10,
-  eeMAX
-}
-
-enum WeaponType {
-  weaptypeNONE, weaptypeSWORD, weaptypeSWORDBEAM, weaptypeBRANG, weaptypeBOMBBLAST,
-  weaptypeSBOMBBLAST, weaptypeBOMB, weaptypeSBOMB, weaptypeARROW, weaptypeFIRE,
-  weaptypeWHISTLE, weaptypeBAIT, weaptypeWAND, weaptypeMAGIC, weaptypeCANDLE,
-  weaptypeWIND, weaptypeREFMAGIC, weaptypeREFFIREBALL, weaptypeREFROCK, weaptypeHAMMER,
-  weaptypeHOOKSHOT, weaptype21, weaptype22, weaptypeSPARKLE, weaptype24,
-  weaptype25, weaptypeBYRNA, weaptypeREFBEAM, weaptype28, weaptype29,
-  weaptypeSCRIPT1, weaptypeSCRIPT2, weaptypeSCRIPT3, weaptypeSCRIPT4, weaptypeSCRIPT5,
-  weaptypeSCRIPT6, weaptypeSCRIPT7, weaptypeSCRIPT8, weaptypeSCRIPT9, weaptypeSCRIPT10
-};
-
-// Not sure why there are two enums for this ...
-enum WeaponTypeGameEngine {
-  // 0
-  wNone, wSword, wBeam, wBrang,
-  wBomb, wSBomb, wLitBomb, wLitSBomb,
-  // 8
-  wArrow, wFire, wWhistle, wBait,
-  wWand, wMagic, wCatching, wWind,
-  // 16
-  wRefMagic, wRefFireball, wRefRock, wHammer,
-  wHookshot, wHSHandle, wHSChain, wSSparkle,
-  // 24
-  wFSparkle, wSmack, wPhantom, wCByrna,
-  //28
-  wRefBeam, wStomp,
-  //30
-  lwMax,
-  // Dummy weapons - must be between lwMax and wEnemyWeapons!
-  //31
-  wScript1, wScript2, wScript3, wScript4,
-  //35
-  wScript5, wScript6, wScript7, wScript8,
-  //39
-  wScript9, wScript10, wIce, wFlame, //ice rod, fire rod
-  wSound, // -Z: sound + defence split == digdogger, sound + one hit kill == pols voice -Z
-  wThrowRock, wPot, //Thrown pot or rock -Z
-  wLit, //Lightning or Electric -Z
-  wBombos, wEther, wQuake,// -Z
-  wSword180, wSwordLA,
-  // Enemy weapons
-  wEnemyWeapons = 128,
-  //129
-  ewFireball, ewArrow, ewBrang, ewSword,
-  ewRock, ewMagic, ewBomb, ewSBomb,
-  //137
-  ewLitBomb, ewLitSBomb, ewFireTrail, ewFlame,
-  ewWind, ewFlame2, ewFlame2Trail,
-  //145
-  ewIce, ewFireball2,
-  wMax
-};
 
 export enum ItemFamily {
   // 0
@@ -343,6 +270,8 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
     errors.push(error);
   }
 
+  quest.misc.rules = qstData.RULE?.rules || [];
+
   // TODO skipping this part if running node script
   if (typeof window !== 'undefined') {
     for (const url of await createTileImages(qstData)) {
@@ -536,8 +465,10 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
   }
 
   const guys = qstData.GUY && qstData.GUY.guys.length ? qstData.GUY.guys : defaultGuys;
+  // const NEWENEMYTILES = QuestRules.NEWENEMYTILES(quest.misc.rules);
+  const NEWENEMYTILES = false; // TODO
   for (const guy of guys) {
-    const animationType = EnemyAnimationType(guy.anim);
+    const animationType = EnemyAnimationType(NEWENEMYTILES ? guy.e_anim : guy.anim);
 
     const tiles = Array.from(Array(guy.width)).map((_, i) => guy.tile + i);
     let frames: QuestMaker.Enemy['frames'] | undefined = undefined;
@@ -549,15 +480,15 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
     attributes['enemy.halt'] = guy.hrate / 16;
     attributes['enemy.homing'] = guy.homing / 255;
     attributes['enemy.speed'] = guy.step / 100;
-    attributes['enemy.hitSfx'] = guy.hitsfx || constants.Sfx.SFX_EHIT;
-    attributes['enemy.deathSfx'] = guy.deadsfx || constants.Sfx.SFX_EDEAD;
+    attributes['enemy.hitSfx'] = guy.hitsfx || Sfx.SFX_EHIT;
+    attributes['enemy.deathSfx'] = guy.deadsfx || Sfx.SFX_EDEAD;
 
     if (guy.cset) {
       attributes['enemy.cset'] = guy.cset;
     }
 
     attributes['enemy.animation.type'] = 'none';
-    attributes['enemy.animation.graphics'] = guy.tile;
+    attributes['enemy.animation.graphics'] = NEWENEMYTILES ? guy.e_tile : guy.tile;
     attributes['enemy.animation.numGraphics'] = guy.width;
 
     switch (animationType) {
@@ -574,7 +505,7 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
       case 'unused2':
         break;
       case 'octo':
-        assert.equal(4, tiles.length);
+        // assert.equal(4, tiles.length);
         frames = {};
         frames.down = [tiles[0], tiles[1]];
         frames.left = [tiles[2], tiles[3]];
@@ -582,13 +513,13 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
       case 'tek':
         break;
       case 'lev':
-        assert.strictEqual(5, tiles.length);
+        // assert.strictEqual(5, tiles.length);
         frames = {};
         frames.emerging = [tiles[0], tiles[1], tiles[2]];
         frames.moving = [tiles[3], tiles[4]];
         break;
       case 'walk':
-        assert.equal(4, tiles.length);
+        // assert.equal(4, tiles.length);
         frames = {};
         frames.right = [tiles[0], tiles[1]];
         frames.down = [tiles[2]];
@@ -601,7 +532,7 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
       case 'ghini':
         break;
       case 'armos':
-        assert.equal(4, tiles.length);
+        // assert.equal(4, tiles.length);
         frames = {};
         frames.down = [tiles[0], tiles[1]];
         frames.up = [tiles[2], tiles[3]];
@@ -616,7 +547,7 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
         attributes['enemy.animation.type'] = 'dwalk';
         break;
       case 'vire':
-        assert.equal(4, tiles.length);
+        // assert.equal(4, tiles.length);
         frames = {};
         frames.down = frames.right = frames.left = [tiles[0], tiles[1]];
         frames.up = [tiles[2], tiles[3]];
@@ -786,7 +717,11 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
               opacity: zcScreen.layerOpacity[i] / 255,
             };
           }),
-          enemies: [],
+          enemies: (zcScreen.enemies as number[])
+            .map(i => {
+              if (i === 0 || !quest.enemies.some(e => e.id === i && e.name)) return null;
+              return { enemyId: i };
+            }),
           color: zcScreen.color,
           item: zcScreen.hasItem ? {
             id: zcScreen.item,
@@ -891,12 +826,6 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
             });
           }
         }
-
-        screen.enemies = (zcScreen.enemies as number[])
-          .map(i => {
-            if (i === 0 || !quest.enemies.some(e => e.id === i && e.name)) return null;
-            return { enemyId: i };
-          });
       }
     }
   }
@@ -1012,7 +941,6 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
   quest.misc.SPAWN_GFX_START = 72;
   quest.misc.START_DMAP = qstData.INIT.startDmap || 0;
   quest.name = '1st';
-  quest.misc.rules = qstData.RULE?.rules || [];
 
   // @ts-expect-error
   globalThis.quest = quest;
