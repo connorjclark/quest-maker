@@ -789,7 +789,7 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
                 type: type === 2 ? ('direct' as const) : ('scroll' as const),
                 dmap,
                 screenX: warpScreenAdjusted % screenWidth,
-                screenY: Math.floor(warpScreenAdjusted / screenWidth),
+                screenY: Math.floor(warpScreenAdjusted / screenWidth) % screenHeight,
               });
             } else {
               // TODO for now just consider this a screen warp.
@@ -803,7 +803,9 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
                 type: 'direct' as const,
                 dmap,
                 screenX: warpScreenAdjusted % screenWidth,
-                screenY: Math.floor(warpScreenAdjusted / screenWidth),
+                // TODO: should need to % any of these warps...
+                // http://localhost:1234/?quest=zc_quests%2F126%2FArenaFightL.qst
+                screenY: Math.floor(warpScreenAdjusted / screenWidth) % screenHeight,
               });
             }
           }
