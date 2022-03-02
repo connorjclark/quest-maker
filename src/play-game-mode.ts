@@ -726,6 +726,7 @@ export class PlayGameMode extends QuestMakerMode {
     // const screen = this.getScreen(dmapIndex, 0, sx, sy);
     const paletteIndex = this.app.getPaletteIndex(dmap, screen);
 
+    container.alpha = screen.layers[layerIndex - 1]?.opacity ?? 1;
     const layerScreen = this.getScreenLayer(screen, layerIndex);
     if (!layerScreen) return container;
 

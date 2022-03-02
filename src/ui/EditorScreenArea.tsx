@@ -88,6 +88,7 @@ export class EditorScreenArea extends Component<Props> {
         layerMap = app.state.quest.maps[layer.map];
         layerScreens = layerMap.screens;
         layerScreen = layerMap.screens[layer.x][layer.y];
+        this.layerContainers[layerIndex].alpha = layer.opacity ?? 1;
       }
 
       // First/last row/column is from neighboring screen.

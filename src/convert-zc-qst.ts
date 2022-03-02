@@ -780,6 +780,7 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
               map: m - 1,
               x: zcScreen.layerScreen[i] % screenWidth,
               y: Math.floor(zcScreen.layerScreen[i] / screenWidth),
+              opacity: zcScreen.layerOpacity[i] / 255,
             };
           }),
           enemies: [],
