@@ -107,6 +107,7 @@ class SoundManager {
 export class QuestMakerApp extends App<QuestMaker.State> {
   public questBasePath = '';
   public soundManager = new SoundManager(this);
+  private _textureCache = new Map<string, PIXI.Texture>();
 
   constructor(pixi: PIXI.Application, state: QuestMaker.State, public ui: ReturnType<typeof makeUI>) {
     super(pixi, state);
@@ -219,14 +220,22 @@ export class QuestMakerApp extends App<QuestMaker.State> {
     // TODO: Probably not very performant?
     // Might be cause of lag on screen transition.
 
+    let key = `${graphicId},${paletteIndex},${cset},${extraCset?.offset}`;
+    let texture = this._textureCache.get(key);
+    if (texture) return new PIXI.Sprite(texture);
+
     try {
       if (extraCset) {
         const replacements1 = this._getColorReplacementsForCset(paletteIndex, cset);
         const replacements2 = this._getColorReplacementsForCset(paletteIndex, cset + extraCset.offset);
-        return this._multiColorReplaceTwoCsetsSpriteCopy(sprite, extraCset.quadrants, replacements1, replacements2, 0.0001);
+        texture = this._multiColorReplaceTwoCsetsCreateTexture(sprite, extraCset.quadrants, replacements1, replacements2, 0.0001);
+        this._textureCache.set(key, texture);
+        return new PIXI.Sprite(texture);
       }
 
-      return this._multiColorReplaceSpriteCopy(sprite, this._getColorReplacementsForCset(paletteIndex, cset), 0.0001);
+      texture = this._multiColorReplaceCreateTexture(sprite, this._getColorReplacementsForCset(paletteIndex, cset), 0.0001);
+      this._textureCache.set(key, texture);
+      return new PIXI.Sprite(texture);
     } catch (err) {
       // TODO
       console.error({ graphicId, cset }, err);
@@ -234,19 +243,18 @@ export class QuestMakerApp extends App<QuestMaker.State> {
     }
   }
 
-  _multiColorReplaceSpriteCopy(sprite: PIXI.Sprite, replacements: number[][], epsilon: number) {
+  _multiColorReplaceCreateTexture(sprite: PIXI.Sprite, replacements: number[][], epsilon: number) {
     const container = new PIXI.Container();
     const filter = new MultiColorReplaceFilter(replacements, epsilon);
     container.addChild(sprite);
     container.filters = [filter];
     const brt = new PIXI.BaseRenderTexture({ width: sprite.width, height: sprite.height });
     const rt = new PIXI.RenderTexture(brt);
-    const spriteCopy = new PIXI.Sprite(rt);
     this.pixi.renderer.render(container, rt);
-    return spriteCopy;
+    return rt;
   }
 
-  _multiColorReplaceTwoCsetsSpriteCopy(sprite: PIXI.Sprite, quadrants: boolean[], replacements1: number[][], replacements2: number[][], epsilon: number) {
+  _multiColorReplaceTwoCsetsCreateTexture(sprite: PIXI.Sprite, quadrants: boolean[], replacements1: number[][], replacements2: number[][], epsilon: number) {
     const container = new PIXI.Container();
 
     const sprite1 = new PIXI.Sprite(sprite.texture);
@@ -279,9 +287,8 @@ export class QuestMakerApp extends App<QuestMaker.State> {
 
     const brt = new PIXI.BaseRenderTexture({ width: sprite.width, height: sprite.height });
     const rt = new PIXI.RenderTexture(brt);
-    const spriteCopy = new PIXI.Sprite(rt);
     this.pixi.renderer.render(container, rt);
-    return spriteCopy;
+    return rt;
   }
 
   private replacementsCache = new Map<number, number[][]>();
