@@ -496,7 +496,7 @@ export class PlayGameMode extends QuestMakerMode {
 
     screenState.secretsTriggered = !screenState.secretsTriggered; // TODO: remove toggling
     // @ts-expect-error
-    if (screenState.secretsTriggered) this.app.soundManager.playSfx(getZcScreen().secretSfx || constants.Sfx.SFX_SECRET);
+    if (screenState.secretsTriggered) this.app.soundManager.playSfx(getZcScreen().secretSfx || Sfx.SFX_SECRET);
     if (screenState.secretsTriggered) this.createScreenItem();
 
     // TODO: update more performantly!
