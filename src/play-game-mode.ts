@@ -372,7 +372,7 @@ export class PlayGameMode extends QuestMakerMode {
           if (collision === 'top') dir.y += 1;
           if (collision === 'bottom') dir.y -= 1;
           this.heroEntity.hit(dir);
-          this.app.soundManager.playSfx(19);
+          this.app.soundManager.playSfx(constants.Sfx.SFX_OUCH);
           if (entity.type === 'projectile') this.removeEntity(entity);
         }
       }
@@ -981,7 +981,7 @@ export class PlayGameMode extends QuestMakerMode {
       }
       if (ScreenFlags.item(this.app.state.currentScreen.flags)) {
         this.createScreenItem();
-        this.app.soundManager.playSfx(7);
+        this.app.soundManager.playSfx(constants.Sfx.SFX_CLEARED);
       }
     }
 

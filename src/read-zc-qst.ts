@@ -285,7 +285,7 @@ const sections = {
           throw new Error('unexpected tile format: ' + format);
       }
 
-      tiles.push({format, pixels});
+      tiles.push({ format, pixels });
     }
 
     return { tiles };
@@ -638,6 +638,11 @@ const sections = {
       walk: readArrayFields(reader, 4, fields),
       stab: readArrayFields(reader, 4, fields),
       slash: readArrayFields(reader, 4, fields),
+      float: readArrayFields(reader, 4, fields),
+      swim: readArrayFields(reader, 4, fields),
+      dive: readArrayFields(reader, 4, fields),
+      pound: readArrayFields(reader, 4, fields),
+      casting: readArrayFields(reader, 4, fields),
     };
   },
   // https://github.com/ArmageddonGames/ZeldaClassic/blob/bdac8e682ac1eda23d775dacc5e5e34b237b82c0/src/qst.cpp#L7423
