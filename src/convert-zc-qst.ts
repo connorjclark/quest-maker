@@ -309,7 +309,10 @@ async function createTileImages(qstData: any) {
 
           imageData.data[(x + y * canvas.width) * 4 + 0] = 0;
           imageData.data[(x + y * canvas.width) * 4 + 1] = 0;
-          imageData.data[(x + y * canvas.width) * 4 + 2] = csetOffset;
+          // The blue channel refers to the cset index (0-15) in this tile.
+          // Can't just use 0-15, because not all GPUs have enough precision,
+          // so we map the values across the entire 0-255 range.
+          imageData.data[(x + y * canvas.width) * 4 + 2] = csetOffset * 17;
           imageData.data[(x + y * canvas.width) * 4 + 3] = csetOffset ? 255 : 0;
         }
       }

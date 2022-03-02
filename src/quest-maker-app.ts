@@ -314,7 +314,7 @@ export class QuestMakerApp extends App<QuestMaker.State> {
     if (!this.state.quest.color.csets[cset]) debugger;
     const { colors } = this.state.quest.color.csets[cset];
     replacements = colors.map(({ r, g, b }, i) => {
-      return [i, 65536 * r + 256 * g + b];
+      return [i * 17, 65536 * r + 256 * g + b];
     });
     this.replacementsCache.set(cset, replacements);
 
