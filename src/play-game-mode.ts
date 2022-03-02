@@ -495,7 +495,7 @@ export class PlayGameMode extends QuestMakerMode {
 
     screenState.secretsTriggered = !screenState.secretsTriggered; // TODO: remove toggling
     // @ts-expect-error
-    if (screenState.secretsTriggered) this.app.soundManager.playSfx(getZcScreen().secretSfx);
+    if (screenState.secretsTriggered) this.app.soundManager.playSfx(getZcScreen().secretSfx || constants.Sfx.SFX_SECRET);
     if (screenState.secretsTriggered) this.createScreenItem();
 
     // TODO: update more performantly!
@@ -1358,6 +1358,7 @@ export class PlayGameMode extends QuestMakerMode {
       state.game.equipped[1] = inventoryIndex;
     }
 
-    this.app.soundManager.playSfx(item.pickupSound);
+    console.log('sfx', item.pickupSound)
+    this.app.soundManager.playSfx(item.pickupSound || constants.Sfx.SFX_PLINK);
   }
 }

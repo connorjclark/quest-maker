@@ -546,8 +546,8 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
     attributes['enemy.halt'] = guy.hrate / 16;
     attributes['enemy.homing'] = guy.homing / 255;
     attributes['enemy.speed'] = guy.step / 100;
-    attributes['enemy.hitSfx'] = guy.hitsfx;
-    attributes['enemy.deathSfx'] = guy.deadsfx;
+    attributes['enemy.hitSfx'] = guy.hitsfx || constants.Sfx.SFX_EHIT;
+    attributes['enemy.deathSfx'] = guy.deadsfx || constants.Sfx.SFX_EDEAD;
 
     if (guy.cset) {
       attributes['enemy.cset'] = guy.cset;
