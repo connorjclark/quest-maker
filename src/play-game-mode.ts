@@ -111,7 +111,8 @@ export class PlayGameMode extends QuestMakerMode {
       startPosition = state.currentScreen.warps.returns[0];
     } else if (state.currentScreen.warps.arrival) {
       startPosition = state.currentScreen.warps.arrival;
-    } else {
+    }
+    if (!startPosition || (startPosition.x === 0 && startPosition.y === 0)) {
       const walkableLocations = this.getWalkableLocations();
       const location = walkableLocations[Math.floor(walkableLocations.length / 2)] || { x: screenWidth / 2, y: screenWidth / 2 };
       startPosition = {
