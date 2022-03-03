@@ -25,7 +25,7 @@ export class TileEditor extends Component<TileEditorProps> {
 
     return <div class="tile-editor">
       Tile #{props.tile.id}
-      <Tile tile={props.tile.id} scale={8}></Tile>
+      <Tile screenTile={{ tile: props.tile.id, cset: 0 }} scale={8}></Tile>
 
       <div>
         <label>Type</label>
@@ -37,7 +37,7 @@ export class TileEditor extends Component<TileEditorProps> {
       <div>
         <label>Walkable</label>
         <div class='walkable-mask-wrapper' onClick={this.onClickWalkable}>
-          <Tile tile={props.tile.id} scale={4}></Tile>
+          <Tile screenTile={{ tile: props.tile.id, cset: 0 }} scale={4}></Tile>
           <div class='walkable-mask'>
             <div class={props.tile.walkable[0] ? '' : 'red'}></div>
             <div class={props.tile.walkable[1] ? '' : 'red'}></div>

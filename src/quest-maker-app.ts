@@ -164,7 +164,7 @@ export class QuestMakerApp extends App<QuestMaker.State> {
     return this.createGraphicSprite(tile, -1, cset);
   }
 
-  createTileSprite(screenTile: QuestMaker.ScreenTile, paletteIndex = -1) {
+  createTileSprite(screenTile: QuestMaker.ScreenTile, paletteIndex: number) {
     const tile = this.state.quest.tiles[screenTile.tile];
     if (!tile) {
       console.warn('unknown tile', screenTile.tile);

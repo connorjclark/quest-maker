@@ -79,7 +79,7 @@ class TilePicker extends Component<TilePickerProps> {
           pos.y >= viewport.y &&
           pos.x <= viewport.width &&
           pos.y <= viewport.height) {
-          tileContainer.addChild(app.createTileSprite({ tile: i }));
+          tileContainer.addChild(app.createTileSprite({ tile: i }, 0));
         }
       }
     };

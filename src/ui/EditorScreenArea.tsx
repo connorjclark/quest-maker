@@ -84,12 +84,15 @@ export class EditorScreenArea extends Component<Props> {
       } else {
         const layer = currentScreen.layers[layerIndex - 1];
         if (!layer) return;
-
+        
         layerMap = app.state.quest.maps[layer.map];
         layerScreens = layerMap.screens;
         layerScreen = layerMap.screens[layer.x][layer.y];
+        
         this.layerContainers[layerIndex].alpha = layer.opacity ?? 1;
       }
+
+      const layerPalette = app.getPaletteIndex(app.state.currentDMap, layerScreen);
 
       // First/last row/column is from neighboring screen.
       for (let x = -1; x <= screenWidth; x++) {
@@ -142,7 +145,7 @@ export class EditorScreenArea extends Component<Props> {
             if (!screenTile) continue;
             if (screenTile.tile === 0 && layerIndex !== 0) continue;
 
-            sprite = app.createTileSprite(screenTile);
+            sprite = app.createTileSprite(screenTile, layerPalette);
             if (x === -1 || y === -1 || x === screenWidth || y === screenHeight) {
               sprite.tint = 0xaaaaaa;
             } else {
@@ -186,6 +189,8 @@ export class EditorScreenArea extends Component<Props> {
         selectedLayerScreen = app.state.quest.maps[selectedLayer.map].screens[selectedLayer.x][selectedLayer.y];
       }
 
+      const layerPalette = app.getPaletteIndex(app.state.currentDMap, selectedLayerScreen);
+
       const pos = e.data.getLocalPosition(e.currentTarget);
       const x = Math.floor(pos.x / tileSize) - 1;
       const y = Math.floor(pos.y / tileSize) - 1;
@@ -195,7 +200,7 @@ export class EditorScreenArea extends Component<Props> {
         selectedLayerScreen.tiles[x][y].tile = newTile.tile;
         selectedLayerScreen.tiles[x][y].cset = newTile.cset;
         spritesByLocation[selectedLayerIndex][x][y].destroy();
-        const sprite = spritesByLocation[selectedLayerIndex][x][y] = app.createTileSprite(newTile);
+        const sprite = spritesByLocation[selectedLayerIndex][x][y] = app.createTileSprite(newTile, layerPalette);
         sprite.x = (x + 1) * tileSize;
         sprite.y = (y + 1) * tileSize;
         tilesContainer.addChild(sprite);
@@ -206,7 +211,19 @@ export class EditorScreenArea extends Component<Props> {
     const setPreviewTile = (e: PIXI.InteractionEvent) => {
       app.destroyChildren(tilePreviewContainer);
 
-      const tilePreviewSprite = app.createTileSprite(app.state.editor.currentTile);
+      let selectedLayerScreen;
+      if (app.state.editor.selectedLayer === 0) {
+        selectedLayerScreen = currentScreen;
+      } else {
+        const selectedLayer = currentScreen.layers[app.state.editor.selectedLayer - 1];
+        if (!selectedLayer) return;
+
+        selectedLayerScreen = app.state.quest.maps[selectedLayer.map].screens[selectedLayer.x][selectedLayer.y];
+      }
+
+      const layerPalette = app.getPaletteIndex(app.state.currentDMap, selectedLayerScreen);
+
+      const tilePreviewSprite = app.createTileSprite(app.state.editor.currentTile, layerPalette);
       const pos = e.data.getLocalPosition(e.currentTarget);
       const x = Math.floor(pos.x / tileSize);
       const y = Math.floor(pos.y / tileSize);
