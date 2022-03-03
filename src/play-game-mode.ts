@@ -95,6 +95,7 @@ export class PlayGameMode extends QuestMakerMode {
   private hitTest = new HitTest();
 
   private secondsSinceLastTick = 0;
+  private ticksOnScreen = 0;
   private hasMovedSinceEnteredScreen = false;
 
   init() {
@@ -203,6 +204,12 @@ export class PlayGameMode extends QuestMakerMode {
     const state = this.app.state;
     const heroEntity = this.heroEntity;
     const screenState = this.getCurrentScreenState();
+
+    this.ticksOnScreen += 1;
+
+    if (!state.game.screenTransition && state.currentScreen.warps.timedWarpTicks && this.ticksOnScreen >= state.currentScreen.warps.timedWarpTicks) {
+      state.game.screenTransition = this._createScreenTransitionFromWarp(state.currentScreen.warps.sideWarps[0]).transition;
+    }
 
     if (this.app.keys.up['Space']) {
       paused = !paused;
@@ -1050,9 +1057,9 @@ export class PlayGameMode extends QuestMakerMode {
     // Update UI that lives in react, like the current dmap title.
     this.app.ui.actions.setState(state);
 
-    this.hasMovedSinceEnteredScreen = false;
-
     this.heroEntity.visible = !ScreenFlags.invisibleHero(state.currentScreen.flags);
+    this.hasMovedSinceEnteredScreen = false;
+    this.ticksOnScreen = 0;
   }
 
   createScreenItem() {
