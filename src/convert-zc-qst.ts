@@ -674,15 +674,24 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
     });
   }
 
+  function getDmapCoord(zcDmap: any, scr: number) {
+    scr += zcDmap.xoff;
+    return {
+      x: scr % screenWidth,
+      y: Math.floor(scr / screenWidth) % screenHeight,
+    };
+  }
+
   for (const zcDmap of qstData.DMAP.dmaps) {
+    const continueCoord = getDmapCoord(zcDmap, zcDmap.cont);
     const dmap = {
       name: zcDmap.name,
       title: zcDmap.title,
       map: zcDmap.map,
       color: zcDmap.color,
       song: zcDmap.midi,
-      continueScreenX: zcDmap.cont % screenWidth,
-      continueScreenY: Math.floor(zcDmap.cont / screenWidth),
+      continueScreenX: continueCoord.x,
+      continueScreenY: continueCoord.y,
       xoff: zcDmap.xoff,
     };
 
@@ -740,6 +749,7 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
             returns: (zcScreen.warpReturnX as number[]).map((x, i) => ({ x, y: zcScreen.warpReturnY[i] })),
             tileWarps: convertWarps('tile', zcScreen.tileWarpType, zcScreen.tileWarpDmap, zcScreen.tileWarpScreen),
             sideWarps: convertWarps('side', zcScreen.sideWarpType, zcScreen.sideWarpDmap, zcScreen.sideWarpScreen),
+            timedWarpTicks: zcScreen.timedWarpTics,
           },
           flags: [
             zcScreen.flags,
@@ -790,41 +800,41 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
                 item: zcScreen.catchAll,
               });
             } else if (type === 2 || type === 3) {
-              // This is weird but ok :)
               const warpScreenAdjusted = screen + xoff;
-              if (warpScreenAdjusted >= 128) continue;
+              if (warpScreenAdjusted >= 128) continue; // TODO: remove check?
 
               if (!screenExists(dmap, warpScreenAdjusted)) {
                 logError(`bad warp, screen does not exist: dmap ${dmap} dmap.xoff ${xoff} screen ${warpScreenAdjusted}`);
                 continue;
               }
 
+              const screenCoord = getDmapCoord(quest.dmaps[dmap], screen);
               warps.push({
                 index: i,
                 type: type === 2 ? ('direct' as const) : ('scroll' as const),
                 dmap,
-                screenX: warpScreenAdjusted % screenWidth,
-                screenY: Math.floor(warpScreenAdjusted / screenWidth),
+                screenX: screenCoord.x,
+                screenY: screenCoord.y,
               });
             } else {
               // TODO for now just consider this a screen warp.
               // console.log('unknown warp type', type);
 
-              // This is weird but ok :)
               const warpScreenAdjusted = screen + xoff;
-              if (warpScreenAdjusted >= 128) continue;
+              if (warpScreenAdjusted >= 128) continue; // TODO: remove check?
 
               if (!screenExists(dmap, warpScreenAdjusted)) {
                 logError(`bad warp, screen does not exist: dmap ${dmap} dmap.xoff ${xoff} screen ${warpScreenAdjusted}`);
                 continue;
               }
 
+              const screenCoord = getDmapCoord(quest.dmaps[dmap], screen);
               warps.push({
                 index: i,
                 type: 'direct' as const,
                 dmap,
-                screenX: warpScreenAdjusted % screenWidth,
-                screenY: Math.floor(warpScreenAdjusted / screenWidth),
+                screenX: screenCoord.x,
+                screenY: screenCoord.y,
               });
             }
           }
