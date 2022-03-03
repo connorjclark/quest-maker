@@ -248,7 +248,7 @@ export class QuestEntity extends EntityBase {
     const nextTile = { x: Math.floor((hitPoint.x + this.direction.x * this.speed) / tileSize), y: Math.floor((hitPoint.y + this.direction.y * this.speed) / tileSize) };
 
     // @ts-ignore
-    if (window.debug) {
+    if (window.debugDrawing) {
       const debug = mode.app.debug(`nextTile ${mode.entities.findIndex(e => e === this)}`);
       debug.alpha = 0.5;
       debug.x = nextTile.x * tileSize;

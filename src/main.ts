@@ -533,21 +533,31 @@ function tick(app: QuestMaker.App, dt: number) {
   app.tick(dt);
 }
 
-// @ts-ignore
+// @ts-expect-error
+window.debug = () => {
+  if (!window.app) return;
+
+  // @ts-expect-error
+  window.debugQuestRules();
+  // @ts-expect-error
+  window.debugScreen();
+};
+
+// @ts-expect-error
 window.debugScreen = () => {
   if (!window.app) return;
 
-  const app = window.app;
-  const state = app.state;
-  console.log({ map: state.mapIndex, x: state.screenX, y: state.screenY });
-  console.log({
-    ...state.currentScreen,
-    enemies: state.currentScreen.enemies.map(e => e !== null && state.quest.enemies[e.enemyId]),
-  });
+  // @ts-expect-error
+  window.debugScreenFlags();
+  // @ts-expect-error
+  window.debugTileFlags();
+  // @ts-expect-error
+  console.log(window.getZcScreen());
 };
 
 // @ts-expect-error
 window.debugQuestRules = () => {
+  console.log('===== Quest rules =====');
   for (const name of Object.keys(QuestRules)) {
     const enabled = QuestRules[name as keyof typeof QuestRules](window.app?.state.quest.misc.rules || []);
     if (enabled) console.log(name);
@@ -556,6 +566,7 @@ window.debugQuestRules = () => {
 
 // @ts-expect-error
 window.debugScreenFlags = () => {
+  console.log('===== Screen flags =====');
   for (const name of Object.keys(ScreenFlags)) {
     const enabled = ScreenFlags[name as keyof typeof ScreenFlags](window.app?.state.currentScreen.flags || []);
     if (enabled) console.log(name);
@@ -577,6 +588,8 @@ window.debugTileFlags = () => {
     }
     grid += '\n';
   }
+
+  console.log('===== Tile flags =====');
   for (const flag of [...seen].sort((a, b) => a - b)) {
     console.log(flag, TileFlag[flag]);
   }

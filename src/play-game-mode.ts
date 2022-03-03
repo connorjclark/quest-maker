@@ -187,7 +187,7 @@ export class PlayGameMode extends QuestMakerMode {
     this.hitTest.clear();
     this.createScreenHitAreas();
     // @ts-ignore
-    if (window.debug) {
+    if (window.debugDrawing) {
       this.layers[4].addChild(this.hitTest.container);
     }
   }
@@ -436,7 +436,7 @@ export class PlayGameMode extends QuestMakerMode {
     }
 
     // @ts-ignore
-    if (window.debug) {
+    if (window.debugDrawing) {
       for (const name of Object.keys(sidePoints)) {
         const sideTile = sideTiles[name];
         const debug = this.app.debug(`sideTile ${name}`);
