@@ -407,7 +407,7 @@ const sections = {
       const dmap_1 = readFields(reader, [
         { name: 'map', type: 'B' },
         { name: 'level', type: sversion >= 5 ? 'H' : 'B' },
-        { name: 'xoff', type: 'B' },
+        { name: 'xoff', type: 'b' },
         { name: 'compass', type: 'B' },
         { name: 'color', type: sversion >= 9 ? 'H' : 'B' },
         { name: 'midi', type: 'B' },

@@ -772,6 +772,7 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
           for (let i = 0; i < warpTypes.length; i++) {
             const type = warpTypes[i];
             const dmap = warpDmaps[i];
+            const xoff = quest.dmaps[dmap].xoff;
             const screen = warpScreens[i];
 
             // ???
@@ -789,11 +790,11 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
               });
             } else if (type === 2 || type === 3) {
               // This is weird but ok :)
-              const warpScreenAdjusted = screen + quest.dmaps[dmap].xoff;
+              const warpScreenAdjusted = screen + xoff;
               if (warpScreenAdjusted >= 128) continue;
 
               if (!screenExists(dmap, warpScreenAdjusted)) {
-                logError(`bad warp, screen does not exist: dmap ${dmap} dmap.xoff ${quest.dmaps[dmap].xoff} screen ${warpScreenAdjusted}`);
+                logError(`bad warp, screen does not exist: dmap ${dmap} dmap.xoff ${xoff} screen ${warpScreenAdjusted}`);
                 continue;
               }
 
@@ -809,11 +810,11 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
               // console.log('unknown warp type', type);
 
               // This is weird but ok :)
-              const warpScreenAdjusted = screen + quest.dmaps[dmap].xoff;
+              const warpScreenAdjusted = screen + xoff;
               if (warpScreenAdjusted >= 128) continue;
 
               if (!screenExists(dmap, warpScreenAdjusted)) {
-                logError(`bad warp, screen does not exist: dmap ${dmap} dmap.xoff ${quest.dmaps[dmap].xoff} screen ${warpScreenAdjusted}`);
+                logError(`bad warp, screen does not exist: dmap ${dmap} dmap.xoff ${xoff} screen ${warpScreenAdjusted}`);
                 continue;
               }
 

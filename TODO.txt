@@ -52,6 +52,7 @@ http://localhost:1234/?quest=zc_quests%2F26%2Flttf-fixed.qst&dmap=7&x=7&y=7
 http://localhost:1234/?quest=zc_quests%2F122%2FLinks_Retirement.qst&dmap=0&x=8&y=7
 http://localhost:1234/?quest=zc_quests%2F126%2FArenaFightL.qst
 http://localhost:1234/?quest=zc_quests%2F27%2FLink%27s+Birthday+250.qst&dmap=28&x=15&y=0&play
+http://localhost:1234/?quest=zc_quests%2F107%2Fvargen_improved.qst&dmap=0&x=5&y=4
 
 This was kinda creepy (go down). Music stutters, game freezes up and suddenly you are in a creepy environment.
 Warning: will probably freeze browser.
