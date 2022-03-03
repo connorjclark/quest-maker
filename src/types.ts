@@ -35,6 +35,7 @@ declare global {
       enemies: Array<{
         enemyId: number;
       } | null>;
+      enemyFlags: number;
       color: number;
       item?: { id: number; x: number; y: number };
       warps: {
@@ -167,6 +168,8 @@ declare global {
       'enemy.directionChange': number;
       'enemy.halt': number;
       'enemy.homing': number;
+      'enemy.item': number;
+      'enemy.hidden': boolean;
       /** Pixels per frame. */
       'enemy.speed': number;
       'enemy.leever.emergedState': 'submerged' | 'emerged' | 'submerging';

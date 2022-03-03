@@ -729,6 +729,7 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
               if (i === 0 || !quest.enemies.some(e => e.id === i && e.name)) return null;
               return { enemyId: i };
             }),
+          enemyFlags: zcScreen.enemyFlags,
           color: zcScreen.color,
           item: zcScreen.hasItem ? {
             id: zcScreen.item,

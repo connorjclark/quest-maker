@@ -40,6 +40,7 @@ class Screen {
   public secretTiles: { tile: number }[] = [];
   public layers = [];
   public enemies: QuestMaker.Screen['enemies'] = [];
+  public enemyFlags = 0;
   public color = 0;
   public warps: any = {};
   public flags = [];
@@ -580,8 +581,7 @@ window.debugScreenFlags = () => {
 window.debugEnemyFlags = () => {
   console.log('===== Enemy flags =====');
   for (const name of Object.keys(EnemyFlags)) {
-    // @ts-expect-error
-    const enabled = EnemyFlags[name as keyof typeof EnemyFlags](getZcScreen().enemyFlags);
+    const enabled = EnemyFlags[name as keyof typeof EnemyFlags](window.app?.state.currentScreen.enemyFlags || 0);
     if (enabled) console.log(name);
   }
 }

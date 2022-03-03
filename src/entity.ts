@@ -57,6 +57,7 @@ export class QuestEntity extends EntityBase {
   public moving = true;
   public misc = new MiscBag<QuestMaker.EntityAttributes>();
 
+  // TODO: remove
   public isHero = false;
   public attackTicks = 0;
 
@@ -94,6 +95,8 @@ export class QuestEntity extends EntityBase {
       const shouldRemove = !Utils.inBounds(this.x + this.width / 2, this.y + this.height / 2, (screenWidth + 1) * tileSize, (screenHeight + 1) * tileSize);
       if (shouldRemove) mode.removeEntity(this);
     } else if (this.type === 'enemy') {
+      if (this.misc.get('enemy.hidden')) return;
+
       if (this.invulnerableTimer) {
         this.alpha = Math.floor(this.invulnerableTimer * 1.5) % 2;
 
@@ -196,6 +199,10 @@ export class QuestEntity extends EntityBase {
 
     this.misc.set('conveyor.vx', 0);
     this.misc.set('conveyor.vy', 0);
+
+    if (this.misc.has('enemy.item') && this.children.length === 0) {
+      this.addChild(mode.app.createItemSprite(this.misc.get('enemy.item')));
+    }
   }
 
   hit(direction: { x: number, y: number }) {
@@ -523,8 +530,12 @@ export class MiscBag<A extends Record<string, any>> {
   private data: Partial<A> = {};
 
   get<T extends keyof A>(id: T): A[T] {
-    // @ts-ignore
+    // @ts-expect-error
     return this.data[id];
+  }
+
+  has<T extends keyof A>(id: T): boolean {
+    return this.data[id] !== undefined;
   }
 
   set<T extends keyof A>(id: T, value: A[T]) {

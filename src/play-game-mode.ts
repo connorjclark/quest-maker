@@ -9,6 +9,7 @@ import { getWarpIndex, TileType } from './tile-type';
 import { ScreenFlags } from './screen-flags';
 import { QuestRules } from './quest-rules';
 import { Sfx } from './zc-constants';
+import { EnemyFlags } from './enemy-flags';
 
 const { screenWidth, screenHeight, tileSize } = constants;
 
@@ -255,6 +256,7 @@ export class PlayGameMode extends QuestMakerMode {
       heroEntity.attackTicks = 10;
 
       for (const entity of this.entities) {
+        if (entity.misc.get('enemy.hidden')) continue;
         if (entity === this.heroEntity) continue;
         if (!isIntersecting(entity.getBounds(), this.swordSprite.getBounds())) continue;
 
@@ -826,34 +828,34 @@ export class PlayGameMode extends QuestMakerMode {
   }
 
   spawnEnemy(enemy: QuestMaker.Enemy, x: number, y: number) {
+    const entity = this.createEntityFromEnemy(enemy, x, y);
     const shouldSpawnWithCloud = enemy.type !== EnemyType.LEEVER;
-    if (shouldSpawnWithCloud) {
-      const spawnEntity = new QuestEntity('enemy');
-      spawnEntity.x = x * tileSize;
-      spawnEntity.y = y * tileSize;
+    if (!shouldSpawnWithCloud) return;
 
-      const textures = [
-        this.app.state.quest.misc.SPAWN_GFX_START,
-        this.app.state.quest.misc.SPAWN_GFX_START + 1,
-        this.app.state.quest.misc.SPAWN_GFX_START + 2,
-      ].map(f => this.app.createGraphicSprite(f).texture);
-      spawnEntity.addFrame('default', textures);
-      spawnEntity.setFrame('default');
-      spawnEntity.loop = false;
+    entity.misc.set('enemy.hidden', true);
+    const spawnEntity = new QuestEntity('enemy');
+    spawnEntity.x = x * tileSize;
+    spawnEntity.y = y * tileSize;
 
-      // TODO ticks.
-      spawnEntity.animationSpeed = 0.15;
-      spawnEntity.play();
-      spawnEntity.onComplete = () => {
-        this.removeEntity(spawnEntity);
-        this.createEntityFromEnemy(enemy, x, y);
-      };
+    const textures = [
+      this.app.state.quest.misc.SPAWN_GFX_START,
+      this.app.state.quest.misc.SPAWN_GFX_START + 1,
+      this.app.state.quest.misc.SPAWN_GFX_START + 2,
+    ].map(f => this.app.createGraphicSprite(f).texture);
+    spawnEntity.addFrame('default', textures);
+    spawnEntity.setFrame('default');
+    spawnEntity.loop = false;
 
-      // There's no tick needed, so don't add to this.entities.
-      this.entityLayer.addChild(spawnEntity);
-    } else {
-      this.createEntityFromEnemy(enemy, x, y);
-    }
+    // TODO ticks.
+    spawnEntity.animationSpeed = 0.15;
+    spawnEntity.play();
+    spawnEntity.onComplete = () => {
+      this.removeEntity(spawnEntity);
+      entity.misc.set('enemy.hidden', false);
+    };
+
+    // There's no tick needed, so don't add to this.entities.
+    this.entityLayer.addChild(spawnEntity);
   }
 
   createEntityFromEnemy(enemy: QuestMaker.Enemy, x: number, y: number, npc = false) {
@@ -971,10 +973,21 @@ export class PlayGameMode extends QuestMakerMode {
   }
 
   killEntity(entity: QuestEntity) {
+    let itemToDrop;
+    if (entity.misc.has('enemy.item')) {
+      itemToDrop = entity.misc.get('enemy.item');
+    } else {
+      const items = this.app.state.quest.items.filter(item => item.tile && item.name.match(/rupee|heart/i));
+      itemToDrop = items[Utils.random(0, items.length - 1)].id;
+    }
+    if (itemToDrop !== undefined) {
+      this.createItem(itemToDrop, entity.x / tileSize, entity.y / tileSize);
+    }
+
     this.removeEntity(entity);
     this.getCurrentScreenState().enemiesKilled += 1;
 
-    if (this.getCurrentScreenState().enemiesKilled === this.app.state.currentScreen.enemies.filter(Boolean).length) {
+    if (!this.getAliveEnemies().length) {
       if (ScreenFlags.killAllEnemiesForSecrets(this.app.state.currentScreen.flags)) {
         this.triggerSecrets();
       }
@@ -982,12 +995,6 @@ export class PlayGameMode extends QuestMakerMode {
         this.createScreenItem();
         this.app.soundManager.playSfx(Sfx.SFX_CLEARED);
       }
-    }
-
-    const items = this.app.state.quest.items.filter(item => item.tile && item.name.match(/rupee|heart/i))
-    if (items.length) {
-      const item = items[Utils.random(0, items.length - 1)];
-      this.createItem(item.id, entity.x / tileSize, entity.y / tileSize);
     }
 
     this.app.soundManager.playSfx(entity.misc.get('enemy.deathSfx'));
@@ -1027,9 +1034,18 @@ export class PlayGameMode extends QuestMakerMode {
       this.app.soundManager.playSong(song);
     }
 
-    if (!ScreenFlags.item(state.currentScreen.flags)) this.createScreenItem();
-
     this.spawnEnemies();
+
+    if (state.currentScreen.item) {
+      if (ScreenFlags.item(state.currentScreen.flags)) {
+        // Handled elsewhere.
+      } else if (EnemyFlags.carryItem(state.currentScreen.enemyFlags) && this.getAliveEnemies().length) {
+        const enemy = this.getAliveEnemies()[0];
+        enemy.misc.set('enemy.item', state.currentScreen.item.id);
+      } else {
+        this.createScreenItem();
+      }
+    }
 
     // Update UI that lives in react, like the current dmap title.
     this.app.ui.actions.setState(state);
@@ -1085,6 +1101,10 @@ export class PlayGameMode extends QuestMakerMode {
       const enemy = state.quest.enemies[enemyData.enemyId];
       this.spawnEnemy(enemy, pos.x, pos.y);
     }
+  }
+
+  getAliveEnemies() {
+    return this.entities.filter((e) => e.type === 'enemy' && !e.isHero);
   }
 
   getWalkableLocations() {
