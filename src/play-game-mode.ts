@@ -974,7 +974,7 @@ export class PlayGameMode extends QuestMakerMode {
     this.removeEntity(entity);
     this.getCurrentScreenState().enemiesKilled += 1;
 
-    if (this.getCurrentScreenState().enemiesKilled === this.app.state.currentScreen.enemies.length) {
+    if (this.getCurrentScreenState().enemiesKilled === this.app.state.currentScreen.enemies.filter(Boolean).length) {
       if (ScreenFlags.killAllEnemiesForSecrets(this.app.state.currentScreen.flags)) {
         this.triggerSecrets();
       }

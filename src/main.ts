@@ -14,6 +14,7 @@ import { TileType } from './tile-type';
 import { QuestRules } from './quest-rules';
 import { ScreenFlags } from './screen-flags';
 import { TileFlag } from './tile-flags';
+import { EnemyFlags } from './enemy-flags';
 
 const { screenWidth, screenHeight, tileSize } = constants;
 
@@ -550,6 +551,8 @@ window.debugScreen = () => {
   // @ts-expect-error
   window.debugScreenFlags();
   // @ts-expect-error
+  window.debugEnemyFlags();
+  // @ts-expect-error
   window.debugTileFlags();
   // @ts-expect-error
   console.log(window.getZcScreen());
@@ -569,6 +572,16 @@ window.debugScreenFlags = () => {
   console.log('===== Screen flags =====');
   for (const name of Object.keys(ScreenFlags)) {
     const enabled = ScreenFlags[name as keyof typeof ScreenFlags](window.app?.state.currentScreen.flags || []);
+    if (enabled) console.log(name);
+  }
+}
+
+// @ts-expect-error
+window.debugEnemyFlags = () => {
+  console.log('===== Enemy flags =====');
+  for (const name of Object.keys(EnemyFlags)) {
+    // @ts-expect-error
+    const enabled = EnemyFlags[name as keyof typeof EnemyFlags](getZcScreen().enemyFlags);
     if (enabled) console.log(name);
   }
 }
