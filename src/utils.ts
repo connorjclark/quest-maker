@@ -75,6 +75,19 @@ export function isSolid(state: QuestMaker.State, x: number, y: number, quadrant?
   }
 };
 
+export function getScreenLayer(state: QuestMaker.State, map: QuestMaker.Map_, x: number, y: number, layerIndex: number) {
+  const screen = map.screens[x][y];
+  if (layerIndex === 0) {
+    return screen;
+  } else {
+    const layer = screen.layers[layerIndex - 1];
+    if (!layer) return;
+
+    const layerMap = state.quest.maps[layer.map];
+    return  layerMap.screens[layer.x][layer.y];
+  }
+};
+
 export function create2dArray<T>(rows: number, columns: number, defaultValue: T): T[][] {
   const arr: T[][] = [];
   for (var i = 0; i < rows; i++) {

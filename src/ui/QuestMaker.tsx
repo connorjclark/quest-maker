@@ -129,9 +129,9 @@ const actions = () => ({
       mapIndex,
     }
   },
-  setCurrentTile(state: QuestMakerState, id: number): Partial<QuestMakerState> {
+  setCurrentTile(state: QuestMakerState, screenTile: QuestMaker.ScreenTile): Partial<QuestMakerState> {
     return {
-      editor: { ...state.editor, currentTile: id },
+      editor: { ...state.editor, currentTile: screenTile },
     }
   },
   setSelectedLayer(state: QuestMakerState, selectedLayer: number): Partial<QuestMakerState> {
@@ -185,7 +185,7 @@ class QuestMaker extends Component<QuestMakerProps> {
       skills: {
         label: 'Tiles',
         content: <TilesTab
-          selectedTile={props.quest.tiles[props.editor.currentTile]}
+          selectedTile={props.editor.currentTile}
           tiles={props.quest?.tiles || []}>
         </TilesTab>,
       },

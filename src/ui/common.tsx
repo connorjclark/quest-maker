@@ -41,24 +41,24 @@ export function createSubApp<S, A>(component: any, initialState: S, actions: () 
   return { SubApp, exportedActions, subscribe };
 }
 
-type TileProps = {tile: number, scale: number};
+type TileProps = { screenTile: QuestMaker.ScreenTile, scale: number };
 export class Tile extends Component<TileProps> {
   render(props: TileProps) {
     const app = window.app;
     if (!app) return;
 
     const bgImg = useMemo(() => {
-      const sprite = app.createTileSprite({tile: props.tile});
+      const sprite = app.createTileSprite(props.screenTile);
       sprite.scale.set(props.scale);
       const container = new PIXI.Container();
       container.addChild(sprite);
       const url = app.pixi.renderer.extract.canvas(container).toDataURL();
       app.destroyChildren(container);
       return url;
-    }, [props.tile]);
+    }, [props.screenTile]);
 
     const width = tileSize * props.scale + 'px';
     const height = tileSize * props.scale + 'px';
-    return <div class="tile" style={{backgroundImage: `url(${bgImg})`, width, height}}></div>
+    return <div class="tile" style={{ backgroundImage: `url(${bgImg})`, width, height }}></div>
   }
 }

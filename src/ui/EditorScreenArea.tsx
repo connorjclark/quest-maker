@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import { useEffect, useRef } from 'preact/hooks';
 import { screenHeight, screenWidth, tileSize } from '../constants';
-import { inBounds } from '../utils';
+import { getScreenLayer, inBounds } from '../utils';
 
 type Props = {
   canvas: HTMLCanvasElement;
@@ -191,10 +191,11 @@ export class EditorScreenArea extends Component<Props> {
       const y = Math.floor(pos.y / tileSize) - 1;
       if (!inBounds(x, y, screenWidth, screenHeight)) return;
 
-      if (selectedLayerScreen.tiles[x][y].tile !== newTile) {
-        selectedLayerScreen.tiles[x][y].tile = newTile;
+      if (selectedLayerScreen.tiles[x][y].tile !== newTile.tile || selectedLayerScreen.tiles[x][y].cset !== newTile.cset) {
+        selectedLayerScreen.tiles[x][y].tile = newTile.tile;
+        selectedLayerScreen.tiles[x][y].cset = newTile.cset;
         spritesByLocation[selectedLayerIndex][x][y].destroy();
-        const sprite = spritesByLocation[selectedLayerIndex][x][y] = app.createTileSprite({ tile: newTile });
+        const sprite = spritesByLocation[selectedLayerIndex][x][y] = app.createTileSprite(newTile);
         sprite.x = (x + 1) * tileSize;
         sprite.y = (y + 1) * tileSize;
         tilesContainer.addChild(sprite);
@@ -205,7 +206,7 @@ export class EditorScreenArea extends Component<Props> {
     const setPreviewTile = (e: PIXI.InteractionEvent) => {
       app.destroyChildren(tilePreviewContainer);
 
-      const tilePreviewSprite = app.createTileSprite({ tile: app.state.editor.currentTile });
+      const tilePreviewSprite = app.createTileSprite(app.state.editor.currentTile);
       const pos = e.data.getLocalPosition(e.currentTarget);
       const x = Math.floor(pos.x / tileSize);
       const y = Math.floor(pos.y / tileSize);
@@ -221,7 +222,10 @@ export class EditorScreenArea extends Component<Props> {
         const pos = e.data.getLocalPosition(e.currentTarget);
         const x = Math.floor(pos.x / tileSize) - 1;
         const y = Math.floor(pos.y / tileSize) - 1;
-        app.ui.actions.setCurrentTile(currentScreen.tiles[x][y].tile);
+
+        const state = app.state;
+        const screenLayer = getScreenLayer(state, map, screenX, screenY, state.editor.selectedLayer);
+        if (screenLayer) app.ui.actions.setCurrentTile(screenLayer.tiles[x][y]);
       } else {
         container.addListener('mousemove', setTile);
         setTile(e);

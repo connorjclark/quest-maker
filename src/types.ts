@@ -284,7 +284,7 @@ declare global {
       currentMap: Map_;
       currentScreen: Screen;
       editor: {
-        currentTile: number;
+        currentTile: ScreenTile;
         selectedLayer: number;
         visibleLayers: boolean[];
       };

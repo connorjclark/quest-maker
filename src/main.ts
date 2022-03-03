@@ -413,7 +413,7 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
     mode: searchParamsObj.play ? 'play' : 'edit',
     quest,
     editor: {
-      currentTile: 0,
+      currentTile: { tile: 0 },
       selectedLayer: 0,
       visibleLayers: [true, true, true, true, true, true, true],
     },

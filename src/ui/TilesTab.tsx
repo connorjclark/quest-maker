@@ -106,7 +106,7 @@ class TilePicker extends Component<TilePickerProps> {
       const sprite = e.target as PIXI.Sprite;
       const tileNumber = spriteToTileNumber.get(sprite);
       if (tileNumber !== undefined) {
-        context.setCurrentTile(tileNumber);
+        context.setCurrentTile({ tile: tileNumber });
       }
     });
 
@@ -117,7 +117,7 @@ class TilePicker extends Component<TilePickerProps> {
 }
 
 type TilesTabProps = {
-  selectedTile?: QuestMaker.Tile;
+  selectedTile?: QuestMaker.ScreenTile;
   tiles: QuestMaker.Tile[];
 };
 export class TilesTab extends Component<TilesTabProps> {
@@ -125,8 +125,8 @@ export class TilesTab extends Component<TilesTabProps> {
     const context = useContext(AppContext);
 
     return <div class="tiles-tab">
-      <div onClick={() => props.selectedTile && context.setWindow(<TileEditor tile={props.selectedTile||1}></TileEditor>)}>
-        <Tile tile={props.selectedTile?.id || 0} scale={4}></Tile>
+      <div onClick={() => props.selectedTile && context.setWindow(<TileEditor tile={props.tiles[props.selectedTile.tile]}></TileEditor>)}>
+        <Tile screenTile={props.selectedTile || { tile: 0 }} scale={4}></Tile>
       </div>
       <div class="tile-pickers">
         <TilePicker tiles={props.tiles}></TilePicker>
