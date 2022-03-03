@@ -270,6 +270,13 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
     errors.push(error);
   }
 
+  const screenExists = (dmapIndex: number, screenIndex: number) => {
+    const mapIndex = qstData.DMAP.dmaps[dmapIndex]?.map;
+    if (mapIndex === undefined) return false;
+
+    return qstData.MAP.maps[mapIndex]?.screens[screenIndex];
+  };
+
   quest.misc.rules = qstData.RULE?.rules || [];
 
   // TODO skipping this part if running node script
@@ -783,13 +790,19 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
             } else if (type === 2 || type === 3) {
               // This is weird but ok :)
               const warpScreenAdjusted = screen + quest.dmaps[dmap].xoff;
+              if (warpScreenAdjusted >= 128) continue;
+
+              if (!screenExists(dmap, warpScreenAdjusted)) {
+                logError(`bad warp, screen does not exist: dmap ${dmap} dmap.xoff ${quest.dmaps[dmap].xoff} screen ${warpScreenAdjusted}`);
+                continue;
+              }
 
               warps.push({
                 index: i,
                 type: type === 2 ? ('direct' as const) : ('scroll' as const),
                 dmap,
                 screenX: warpScreenAdjusted % screenWidth,
-                screenY: Math.floor(warpScreenAdjusted / screenWidth) % screenHeight,
+                screenY: Math.floor(warpScreenAdjusted / screenWidth),
               });
             } else {
               // TODO for now just consider this a screen warp.
@@ -797,15 +810,19 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
 
               // This is weird but ok :)
               const warpScreenAdjusted = screen + quest.dmaps[dmap].xoff;
+              if (warpScreenAdjusted >= 128) continue;
+
+              if (!screenExists(dmap, warpScreenAdjusted)) {
+                logError(`bad warp, screen does not exist: dmap ${dmap} dmap.xoff ${quest.dmaps[dmap].xoff} screen ${warpScreenAdjusted}`);
+                continue;
+              }
 
               warps.push({
                 index: i,
                 type: 'direct' as const,
                 dmap,
                 screenX: warpScreenAdjusted % screenWidth,
-                // TODO: should need to % any of these warps...
-                // http://localhost:1234/?quest=zc_quests%2F126%2FArenaFightL.qst
-                screenY: Math.floor(warpScreenAdjusted / screenWidth) % screenHeight,
+                screenY: Math.floor(warpScreenAdjusted / screenWidth),
               });
             }
           }

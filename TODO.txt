@@ -50,6 +50,7 @@ http://localhost:1234/?quest=zc_quests%2F559%2FThe+Land+of+Anarchy.qst&dmap=65&x
 warps 
 http://localhost:1234/?quest=zc_quests%2F26%2Flttf-fixed.qst&dmap=7&x=7&y=7
 http://localhost:1234/?quest=zc_quests%2F122%2FLinks_Retirement.qst&dmap=0&x=8&y=7
+http://localhost:1234/?quest=zc_quests%2F126%2FArenaFightL.qst
 
 This was kinda creepy (go down). Music stutters, game freezes up and suddenly you are in a creepy environment.
 Warning: will probably freeze browser.
