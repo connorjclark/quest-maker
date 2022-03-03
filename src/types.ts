@@ -63,7 +63,8 @@ declare global {
       item?: number;
     } | {
       index: number;
-      type: 'direct' | 'scroll',
+      type: 'direct' | 'scroll';
+      instant: boolean;
       dmap: number;
       screenX: number;
       screenY: number;
@@ -271,6 +272,7 @@ declare global {
     interface ScreenTransition {
       type: ScreenTransitionType;
       frames: number;
+      instant: boolean;
       dmap?: number;
       item?: number;
       string?: number;

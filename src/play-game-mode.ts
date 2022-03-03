@@ -709,6 +709,7 @@ export class PlayGameMode extends QuestMakerMode {
     state.game.screenTransition = {
       type: 'scroll',
       frames: 0,
+      instant: false,
       dmap: targetDmapIndex, // TODO: fold into screen property
       screen: targetScreen,
       screenDelta: { x: transitionX, y: transitionY },
@@ -1159,6 +1160,7 @@ export class PlayGameMode extends QuestMakerMode {
     } else if (transition.type === 'direct') {
       const durations = [50, 50, 50];
       duration = durations.reduce((cur, acc) => cur + acc);
+      if (transition.instant) duration = 0;
       let step = 0;
       let stepFrames = transition.frames;
       while (stepFrames > durations[step]) {
@@ -1220,6 +1222,7 @@ export class PlayGameMode extends QuestMakerMode {
         else if (Math.sign(transition.screenDelta.y) === -1) this.heroEntity.y = (tileSize - 1) * screenHeight - 5; // ?
       }
 
+      console.log('SHOW');
       this.show();
 
       if (transition.item) {
@@ -1280,6 +1283,7 @@ export class PlayGameMode extends QuestMakerMode {
       returnTransition = this._createScreenTransitionFromWarp({
         index: warp.index,
         type: 'direct',
+        instant: false,
         dmap: state.dmapIndex,
         screenX: state.screenX,
         screenY: state.screenY,
@@ -1305,6 +1309,7 @@ export class PlayGameMode extends QuestMakerMode {
       transition: {
         type: transitionType,
         frames: 0,
+        instant: warp.type === 'special-room' ? false : warp.instant,
         dmap: dmapIndex,
         item,
         string,

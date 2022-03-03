@@ -5,7 +5,7 @@ import { EnemyType, ItemType } from '../src/types';
 import { defaultGuys } from './default-guys';
 import { QuestRules } from './quest-rules';
 import struct from './third_party/struct.mjs';
-import { EnemyFamily, Sfx, WeaponTypeGameEngine } from './zc-constants';
+import { EnemyFamily, Sfx, WarpType, WeaponTypeGameEngine } from './zc-constants';
 
 const { tileSize, screenWidth, screenHeight } = constants;
 
@@ -799,27 +799,7 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
                 string: zcScreen.str,
                 item: zcScreen.catchAll,
               });
-            } else if (type === 2 || type === 3) {
-              const warpScreenAdjusted = screen + xoff;
-              if (warpScreenAdjusted >= 128) continue; // TODO: remove check?
-
-              if (!screenExists(dmap, warpScreenAdjusted)) {
-                logError(`bad warp, screen does not exist: dmap ${dmap} dmap.xoff ${xoff} screen ${warpScreenAdjusted}`);
-                continue;
-              }
-
-              const screenCoord = getDmapCoord(quest.dmaps[dmap], screen);
-              warps.push({
-                index: i,
-                type: type === 2 ? ('direct' as const) : ('scroll' as const),
-                dmap,
-                screenX: screenCoord.x,
-                screenY: screenCoord.y,
-              });
             } else {
-              // TODO for now just consider this a screen warp.
-              // console.log('unknown warp type', type);
-
               const warpScreenAdjusted = screen + xoff;
               if (warpScreenAdjusted >= 128) continue; // TODO: remove check?
 
@@ -831,7 +811,8 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
               const screenCoord = getDmapCoord(quest.dmaps[dmap], screen);
               warps.push({
                 index: i,
-                type: 'direct' as const,
+                type: type === 3 ? ('scroll' as const) : ('direct' as const),
+                instant: [WarpType.wtIWARP, WarpType.wtIWARPBLK, WarpType.wtIWARPOPEN, WarpType.wtIWARPWAVE].includes(type),
                 dmap,
                 screenX: screenCoord.x,
                 screenY: screenCoord.y,
