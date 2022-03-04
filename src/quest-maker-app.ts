@@ -1,8 +1,9 @@
 import { App } from "./engine/app";
-import { MultiColorReplaceFilter } from "@pixi/filter-multi-color-replace";
 // @ts-ignore
 import Timidity from 'timidity';
 import { makeUI } from "./ui/QuestMaker";
+import { MIPMAP_MODES } from "pixi.js";
+import { tileSize } from "./constants";
 
 const audioBufferCache = new Map<string, AudioBuffer>();
 
@@ -212,17 +213,12 @@ export class QuestMakerApp extends App<QuestMaker.State> {
       return new PIXI.Sprite();
     }
 
-    const sprite = this.createSprite(graphic.file, graphic.x, graphic.y, graphic.width, graphic.height);
-    if (!this.state.quest.color) {
-      return sprite;
-    }
-
-    const texture = this._getGraphicTexture(sprite, graphicId, paletteIndex, cset, extraCset);
+    const texture = this._getGraphicTexture(graphicId, paletteIndex, cset, extraCset);
     if (texture) return new PIXI.Sprite(new PIXI.Texture(texture.baseTexture, texture.frame));
-    return sprite;
+    return new PIXI.Sprite();
   }
 
-  _getGraphicTexture(sprite: PIXI.Sprite, graphicId: number, paletteIndex: number, cset: number, extraCset?: QuestMaker.Tile['extraCset']) {
+  _getGraphicTexture(graphicId: number, paletteIndex: number, cset: number, extraCset?: QuestMaker.Tile['extraCset']) {
     // @ts-expect-error
     const format = window.qstData.TILE.tiles[graphicId].format;
 
@@ -231,43 +227,80 @@ export class QuestMakerApp extends App<QuestMaker.State> {
     let texture = this._textureCache.get(key);
     if (texture) return texture;
 
-    try {
-      if (extraCset) {
-        const replacements1 = this._getColorReplacementsForCset(format, paletteIndex, cset);
-        const replacements2 = this._getColorReplacementsForCset(format, paletteIndex, cset + extraCset.offset);
-        texture = this._multiColorReplaceTwoCsetsCreateTexture(sprite, extraCset.quadrants, replacements1, replacements2, 0.0001);
-        this._textureCache.set(key, texture);
-        return texture;
+    // @ts-expect-error
+    const pixels: number[] = window.qstData.TILE.tiles[graphicId].pixels;
+    const tileData = new Uint8Array(pixels.length);
+    const tileValDivisor = format === 2 ? 255 : 15;
+    for (let x = 0; x < tileSize; x++) {
+      for (let y = 0; y < tileSize; y++) {
+        const i = x + y * tileSize;
+        tileData[i] = pixels[i] * (255 / tileValDivisor);
       }
-
-      texture = this._multiColorReplaceCreateTexture(sprite, this._getColorReplacementsForCset(format, paletteIndex, cset), 0.0001);
-      this._textureCache.set(key, texture);
-      return texture;
-    } catch (err) {
-      // TODO
-      console.error({ graphicId, cset }, err);
     }
-  }
+    const tileTexture = PIXI.Texture.fromBuffer(tileData, tileSize, tileSize, { format: PIXI.FORMATS.ALPHA });
 
-  _multiColorReplaceCreateTexture(sprite: PIXI.Sprite, replacements: number[][], epsilon: number) {
-    const container = new PIXI.Container();
-    const filter = new MultiColorReplaceFilter(replacements, epsilon);
-    container.addChild(sprite);
-    container.filters = [filter];
-    const brt = new PIXI.BaseRenderTexture({ width: sprite.width, height: sprite.height });
+    const makeSprite = (csetToUse: number) => {
+      const myfilter = new PIXI.Filter('', `
+      varying vec2 vTextureCoord;
+      uniform sampler2D uSampler;
+      uniform sampler2D Palette;
+      void main()
+      {
+          float index = texture2D(uSampler, vTextureCoord).a;
+          if (index == 0.0) discard;
+          vec2 coord = vec2(index, 0);
+          gl_FragColor = vec4(texture2D(Palette, coord).rgb, 1.0);
+      }
+      `);
+
+      const colors = this._getColorsForCset(format, paletteIndex, csetToUse);
+      const colorData = new Uint8Array(colors.length * 3);
+      for (let i = 0; i < colors.length; i++) {
+        colorData[i * 3 + 0] = colors[i].r;
+        colorData[i * 3 + 1] = colors[i].g;
+        colorData[i * 3 + 2] = colors[i].b;
+      }
+      const colorTexture = PIXI.Texture.fromBuffer(colorData, colors.length, 1, { format: PIXI.FORMATS.RGB });
+      colorTexture.baseTexture.mipmap = MIPMAP_MODES.OFF;
+      myfilter.uniforms.Palette = colorTexture;
+
+      const sprite = new PIXI.Sprite(tileTexture);
+      sprite.filters = [myfilter];
+      return sprite;
+    };
+
+    let displayObject;
+    let spritesToCleanUp = [];
+    if (extraCset) {
+      const sprite1 = makeSprite(cset);
+      const sprite2 = makeSprite(cset + extraCset.offset);
+      spritesToCleanUp.push(sprite1);
+      spritesToCleanUp.push(sprite2);
+      displayObject = this._maskSpritesWithQuadrants(sprite1, sprite2, extraCset.quadrants);
+    } else {
+      displayObject = makeSprite(cset);
+      spritesToCleanUp.push(displayObject);
+    }
+
+    // After all that work, the result is cached into a texture.
+    const brt = new PIXI.BaseRenderTexture({ width: displayObject.width, height: displayObject.height });
     const rt = new PIXI.RenderTexture(brt);
-    this.pixi.renderer.render(container, rt);
+    rt.baseTexture.mipmap = MIPMAP_MODES.OFF;
+    this.pixi.renderer.render(displayObject, rt);
+    this._textureCache.set(key, rt);
+
+    // Maybe not necessary...
+    for (const sprite of spritesToCleanUp) {
+      sprite.filters = [];
+    }
+
     return rt;
   }
 
-  _multiColorReplaceTwoCsetsCreateTexture(sprite: PIXI.Sprite, quadrants: boolean[], replacements1: number[][], replacements2: number[][], epsilon: number) {
+  _maskSpritesWithQuadrants(sprite1: PIXI.Sprite, sprite2: PIXI.Sprite, quadrants: boolean[]) {
     const container = new PIXI.Container();
 
-    const sprite1 = new PIXI.Sprite(sprite.texture);
     container.addChild(sprite1);
-    sprite1.filters = [
-      new MultiColorReplaceFilter(replacements1, epsilon),
-    ];
     const mask1 = new PIXI.Graphics();
     sprite1.mask = mask1;
     mask1.beginFill(0);
@@ -277,11 +310,7 @@ export class QuestMakerApp extends App<QuestMaker.State> {
     }
     mask1.endFill();
 
-    const sprite2 = new PIXI.Sprite(sprite.texture);
     container.addChild(sprite2);
-    sprite2.filters = [
-      new MultiColorReplaceFilter(replacements2, epsilon),
-    ];
     const mask2 = new PIXI.Graphics();
     sprite2.mask = mask2;
     mask2.beginFill(0);
@@ -291,13 +320,10 @@ export class QuestMakerApp extends App<QuestMaker.State> {
     }
     mask2.endFill();
 
-    const brt = new PIXI.BaseRenderTexture({ width: sprite.width, height: sprite.height });
-    const rt = new PIXI.RenderTexture(brt);
-    this.pixi.renderer.render(container, rt);
-    return rt;
+    return container;
   }
 
-  _getColorReplacementsForCset(format: number, paletteIndex: number, cset: number) {
+  _getColorsForCset(format: number, paletteIndex: number, cset: number) {
     if (!this.state.quest.color) {
       throw new Error('quest has no color data');
     }
@@ -315,6 +341,11 @@ export class QuestMakerApp extends App<QuestMaker.State> {
       for (let c = 0; c < 15; c++) {
         colors.push(...this.state.quest.color.csets[palette.csets[c]].colors);
       }
+      // I don't know why... but I need 16 more colors here to make the shader work.
+      // Randomly picking the first cset.
+      // I haven't seen an 8bit tile use a higher index than 240 yet... but if there is
+      // on then this will have the wrong colors.
+      colors.push(...this.state.quest.color.csets[palette.csets[0]].colors);
     } else {
       // 4 bit.
       if (cset < 0 || cset > 15) {
@@ -325,13 +356,6 @@ export class QuestMakerApp extends App<QuestMaker.State> {
       colors = this.state.quest.color.csets[cset].colors;
     }
 
-    const replacements = colors.map(({ r, g, b }, i) => {
-      const half1 = i & 0xF;
-      const half2 = i >> 4;
-      const index_g = (half2 * 17) << 8;
-      const index_b = half1 * 17;
-      return [index_g + index_b, 65536 * r + 256 * g + b];
-    });
-    return replacements;
+    return colors;
   }
 };

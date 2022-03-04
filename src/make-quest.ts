@@ -1,8 +1,4 @@
-import * as constants from './constants';
-import { TileType } from './tile-type';
 import { EnemyType } from './types';
-
-const { tileSize } = constants;
 
 export default function () {
   const graphics: QuestMaker.Graphic[] = [];
@@ -11,11 +7,8 @@ export default function () {
   function makeGraphic(opts: Omit<QuestMaker.Graphic, 'id'>) {
     const graphic = {
       id: graphics.length,
-      file: opts.file,
-      x: opts.x,
-      y: opts.y,
-      width: opts.width,
-      height: opts.height,
+      format: opts.format,
+      pixels: opts.pixels,
     };
     graphics.push(graphic);
     return graphic;
@@ -30,80 +23,6 @@ export default function () {
     tiles.push(tile);
 
     return tile;
-  }
-
-  function make(opts: { tile: boolean, file: string, n: number, tilesInRow?: number, startX?: number, startY?: number, spacing?: number, width?: number, height?: number }) {
-    const graphics: QuestMaker.Graphic[] = [];
-    const tiles: QuestMaker.Tile[] = [];
-
-    if (!opts.width) opts.width = tileSize;
-    if (!opts.height) opts.height = tileSize;
-    if (!opts.startX) opts.startX = 0;
-    if (!opts.startY) opts.startY = 0;
-    if (!opts.spacing) opts.spacing = 0;
-    if (!opts.tilesInRow) opts.tilesInRow = opts.n;
-
-    for (let i = 0; i < opts.n; i++) {
-      const x = (i % opts.tilesInRow) * (opts.width + opts.spacing) + opts.startX;
-      const y = Math.floor(i / opts.tilesInRow) * (opts.height + opts.spacing) + opts.startY;
-
-      const graphic = makeGraphic({
-        file: opts.file,
-        x,
-        y,
-        width: opts.width,
-        height: opts.height,
-      });
-      graphics.push(graphic);
-
-      if (opts.tile) {
-        const tile = makeTile({
-          type: TileType.None,
-          graphicId: graphic.id,
-          flag: 0,
-        });
-        tiles.push(tile);
-      }
-    }
-
-    return { graphics, tiles };
-  }
-
-  function makeAdvanced(opts: { tile: boolean, file: string, n: number, startX?: number, startY?: number, spacing?: number, width?: number[], height?: number[] }) {
-    const graphics: QuestMaker.Graphic[] = [];
-    const tiles: QuestMaker.Tile[] = [];
-
-    if (!opts.startX) opts.startX = 0;
-    if (!opts.startY) opts.startY = 0;
-    if (!opts.spacing) opts.spacing = 0;
-
-    let x = opts.startX;
-    let y = opts.startY;
-    for (let i = 0; i < opts.n; i++) {
-      const width = opts.width ? opts.width[i % opts.width.length] : tileSize;
-      const height = opts.height ? opts.height[i % opts.height.length] : tileSize;
-      const graphic = makeGraphic({
-        file: opts.file,
-        x,
-        y,
-        width,
-        height,
-      });
-      graphics.push(graphic);
-
-      if (opts.tile) {
-        const tile = makeTile({
-          type: TileType.None,
-          graphicId: graphic.id,
-          flag: 0,
-        });
-        tiles.push(tile);
-      }
-
-      x += width + opts.spacing;
-    }
-
-    return { graphics, tiles };
   }
 
   const weapons: QuestMaker.Weapon[] = [];
@@ -139,15 +58,15 @@ export default function () {
       SPAWN_GFX_START: 0,
       HERO_FRAMES: {},
       START_DMAP: 0,
+      rules: [],
+      strings: [],
     }
   };
 
   return {
     quest,
-    make,
     makeGraphic,
     makeTile,
-    makeAdvanced,
     makeWeapon,
     makeEnemy,
   }

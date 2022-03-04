@@ -4,19 +4,17 @@ import * as constants from './constants';
 import { EditorMode } from './editor-mode';
 import { PlayGameMode } from './play-game-mode';
 import { QuestMakerApp } from './quest-maker-app';
-import { EnemyType, ItemType } from './types';
-import makeQuest from './make-quest';
+import { ItemType } from './types';
 import { makeUI } from './ui/QuestMaker';
 import { readZCQst } from './read-zc-qst';
 import { convertZCQst } from './convert-zc-qst';
 import { createLandingPage } from './ui/LandingPage';
-import { TileType } from './tile-type';
 import { QuestRules } from './quest-rules';
 import { ScreenFlags } from './screen-flags';
 import { TileFlag } from './tile-flags';
 import { EnemyFlags } from './enemy-flags';
 
-const { screenWidth, screenHeight, tileSize } = constants;
+const { screenWidth, screenHeight } = constants;
 
 const searchParams = new URLSearchParams(location.search);
 const searchParamsObj = {
@@ -65,253 +63,6 @@ class Screen {
   }
 }
 
-function createQuest(): QuestMaker.Quest {
-  const { make, makeAdvanced, makeEnemy, makeGraphic, makeTile, makeWeapon, quest } = makeQuest();
-
-  const basicTiles = make({
-    tile: true,
-    file: 'tiles.png',
-    n: 48,
-    tilesInRow: 6,
-    startX: 1,
-    startY: 1,
-    spacing: 1,
-  }).tiles;
-  for (const tile of basicTiles) {
-    if ([1, 3, 4, 5, 7, 8].includes(basicTiles.indexOf(tile))) {
-      tile.walkable = [false, false, false, false];
-    } else {
-      tile.walkable = [true, true, true, true];
-    }
-  }
-
-  const HERO_BASIC_GFX = make({
-    tile: false,
-    file: 'link.png',
-    n: 6,
-    startX: 1,
-    startY: 11,
-    spacing: 1,
-  }).graphics;
-  const HERO_USE_ITEM_GFX = make({
-    tile: false,
-    file: 'link.png',
-    n: 3,
-    startX: 107,
-    startY: 11,
-    spacing: 1,
-  }).graphics;
-
-  const swordGraphics = makeAdvanced({
-    tile: false,
-    file: 'link.png',
-    n: 3 * 4,
-    width: [tileSize / 2, tileSize, tileSize / 2],
-    height: [tileSize],
-    startX: 1,
-    startY: 154,
-    spacing: 1,
-  }).graphics;
-
-  makeWeapon({
-    name: 'Sword',
-    graphic: swordGraphics[0].id,
-  });
-  quest.items.push({
-    id: 1,
-    cset: 0,
-    type: ItemType.SWORD,
-    tile: swordGraphics[0].id,
-    name: 'Sword',
-    pickupSound: 0,
-    useSound: 0,
-  });
-
-  const spawnGraphics = make({
-    tile: false,
-    file: 'link.png',
-    n: 3,
-    startX: 138,
-    startY: 185,
-    spacing: 1,
-  }).graphics;
-
-  const enemyGraphics = make({
-    tile: false,
-    file: 'enemies.png',
-    n: 19 * 13,
-    tilesInRow: 19,
-  }).graphics;
-
-  enemyGraphics[4].width = tileSize / 2;
-  const rockWeapon = makeWeapon({
-    name: 'Rock',
-    graphic: enemyGraphics[4].id,
-  });
-
-  const arrowWeapon = makeWeapon({
-    name: 'Arrow',
-    graphic: enemyGraphics[9].id,
-    rotate: true,
-  });
-
-  const subarray = <T>(arr: T[], start: number, num: number) => arr.slice(start, start + num);
-
-  let gfx = subarray(enemyGraphics, 0, 4);
-  makeEnemy({
-    name: 'Octorok (Red)',
-    attributes: {
-      'enemy.halt': 3 / 16,
-      'enemy.weapon': rockWeapon.id,
-    },
-    frames: {
-      down: [gfx[0].id, gfx[1].id],
-      left: [gfx[2].id, gfx[3].id],
-    },
-  });
-
-  gfx = subarray(enemyGraphics, 19, 4);
-  makeEnemy({
-    name: 'Octorok (Blue)',
-    attributes: {
-      'enemy.halt': 5 / 16,
-      'enemy.directionChange': 6 / 16,
-      'enemy.homing': 128 / 255,
-      'enemy.speed': 1,
-      'enemy.weapon': rockWeapon.id,
-    },
-    frames: {
-      down: [gfx[0].id, gfx[1].id],
-      left: [gfx[2].id, gfx[3].id],
-    },
-  });
-
-  gfx = subarray(enemyGraphics, 5, 4);
-  makeEnemy({
-    name: 'Moblin',
-    attributes: {
-      'enemy.halt': 3 / 16,
-      'enemy.weapon': arrowWeapon.id,
-    },
-    frames: {
-      down: [gfx[0].id],
-      up: [gfx[1].id],
-      right: [gfx[2].id, gfx[3].id],
-    },
-  });
-
-  gfx = subarray(enemyGraphics, 3 * 19, 5);
-  makeEnemy({
-    name: 'Leever',
-    type: EnemyType.LEEVER,
-    attributes: {
-      'enemy.homing': 0,
-      'enemy.directionChange': 0,
-      'enemy.leever.emergeStyle': 'in-place',
-    },
-    frames: {
-      moving: [gfx[3].id, gfx[4].id],
-      emerging: [gfx[0].id, gfx[1].id, gfx[2].id],
-    },
-  });
-
-  gfx = subarray(enemyGraphics, 4 * 19, 5);
-  const prevEmerging = quest.enemies[quest.enemies.length - 1].frames?.emerging || [];
-  makeEnemy({
-    name: 'Blue Leever',
-    type: EnemyType.LEEVER,
-    attributes: {
-      'enemy.homing': 0,
-      'enemy.directionChange': 0,
-      'enemy.leever.emergeStyle': 'in-place',
-    },
-    frames: {
-      moving: [gfx[3].id, gfx[4].id],
-      emerging: [prevEmerging[0], prevEmerging[1], gfx[2].id],
-    },
-  });
-
-  quest.maps.push({ screens: [] });
-  for (let x = 0; x < 16; x++) {
-    quest.maps[0].screens[x] = [];
-    for (let y = 0; y < 9; y++) {
-      quest.maps[0].screens[x].push(new Screen());
-    }
-  }
-
-  // Make ground tile first.
-  let temp = quest.tiles[0];
-  quest.tiles[0] = quest.tiles[2];
-  quest.tiles[2] = temp;
-
-  // Set ids manually (fixes manually swapped tile ids)
-  for (let i = 0; i < quest.tiles.length; i++) quest.tiles[i].id = i;
-
-  // Stairs.
-  quest.tiles[2].type = TileType['Stairs [A]'];
-
-  quest.maps[0].screens[0][0].tiles[9][7].tile = 2;
-
-  quest.tiles = [...quest.tiles, ...quest.tiles, ...quest.tiles, ...quest.tiles];
-
-  quest.misc.SPAWN_GFX_START = spawnGraphics[0].id;
-  const heroGraphicId = HERO_BASIC_GFX[0].id;
-
-  // TODO: handle directions better?
-  quest.misc.HERO_FRAMES = {
-    walk: [
-      {
-        gfxs: [heroGraphicId + 4, heroGraphicId + 5],
-        flip: 0,
-      },
-      {
-        gfxs: [heroGraphicId, heroGraphicId + 1],
-        flip: 0,
-      },
-      {
-        gfxs: [heroGraphicId + 2, heroGraphicId + 3],
-        flip: 1,
-      },
-      {
-        gfxs: [heroGraphicId + 2, heroGraphicId + 3],
-        flip: 0,
-      },
-    ],
-    stab: [
-      {
-        gfxs: [heroGraphicId + 8],
-        flip: 0,
-      },
-      {
-        gfxs: [heroGraphicId + 6],
-        flip: 0,
-      },
-      {
-        gfxs: [heroGraphicId + 7],
-        flip: 1,
-      },
-      {
-        gfxs: [heroGraphicId + 7],
-        flip: 0,
-      },
-    ],
-    // down: { graphicIds: [heroGraphicId, heroGraphicId + 1] },
-    // up: { graphicIds: [heroGraphicId + 4, heroGraphicId + 5] },
-    // right: { graphicIds: [heroGraphicId + 2, heroGraphicId + 3] },
-    // left: { graphicIds: [heroGraphicId + 2, heroGraphicId + 3], flip: true },
-    // 'useItem-down': { graphicIds: [heroGraphicId + 6] },
-    // 'useItem-right': { graphicIds: [heroGraphicId + 7] },
-    // 'useItem-left': { graphicIds: [heroGraphicId + 7], flip: true },
-    // 'useItem-up': { graphicIds: [heroGraphicId + 8], flip: true },
-  };
-
-  quest.dmaps = [
-    { name: 'Overworld', title: 'Overworld', map: 0, color: 0, song: 0, continueScreenX: 7, continueScreenY: 7, xoff: 0 },
-  ];
-
-  return quest;
-}
-
 // TODO: real quest loading/saving.
 async function loadQuest(path: string): Promise<QuestMaker.Quest> {
   if (path.endsWith('.qst')) {
@@ -319,11 +70,7 @@ async function loadQuest(path: string): Promise<QuestMaker.Quest> {
     return result.quest;
   }
 
-  if (path === 'quests/debug') return createQuest();
-
-  const questResp = await fetch(`${path}/quest.json`);
-  const quest = await questResp.json();
-  return quest;
+  throw new Error('invalid quest path');
 
   // Disabled until there is UI.
   // const json = localStorage.getItem('quest');
@@ -387,21 +134,6 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
   pixi.view.addEventListener('contextmenu', (e) => {
     e.preventDefault();
   });
-
-  // Find images to load.
-  const images = new Set<string>();
-  for (const graphic of quest.graphics) {
-    images.add(graphic.file);
-  }
-
-  for (const image of images) {
-    if (image.startsWith('blob:') || image.startsWith('data:')) {
-      pixi.loader.add(image, image);
-    } else {
-      pixi.loader.add(image, `${questBasePath}/${image}`);
-    }
-  }
-  await new Promise(resolve => pixi.loader.load(resolve));
 
   const initialDmap = searchParamsObj.dmap ?? quest.misc.START_DMAP;
   const initialMap = searchParamsObj.map ?? quest.dmaps[initialDmap].map;

@@ -18,6 +18,9 @@ http://localhost:1234/?quest=zc_quests%2F27%2FLink%27s+Birthday+250.qst&dmap=0&x
 http://localhost:1234/?quest=zc_quests%2Fbs3.1%2FNewBS+3.1+-+1st+Quest.qst&dmap=0&x=9&y=8 color error
 http://localhost:1234/?quest=zc_quests%2F152%2Fcashaunt2.qst&dmap=0&x=7&y=4
 
+8-bit colors
+http://localhost:1234/?quest=zc_quests%2F585%2FToL.qst&dmap=0&x=0&y=7
+
 bad item gfx. I think the default tile gfx exist in qst.dat
 http://localhost:1234/?quest=zc_quests%2Fbs3.1%2FNewBS+3.1+-+1st+Quest.qst&dmap=0&x=15&y=0
 

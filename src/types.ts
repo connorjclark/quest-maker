@@ -72,11 +72,8 @@ declare global {
 
     interface Graphic {
       id: number;
-      file: string;
-      x: number;
-      y: number;
-      width: number;
-      height: number;
+      format: number;
+      pixels: number[];
     }
 
     interface Tile {

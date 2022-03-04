@@ -8,7 +8,6 @@
     "watch": "parcel src/index.html"
   },
   "dependencies": {
-    "@pixi/filter-multi-color-replace": "^3.1.1",
     "glob": "^7.1.6",
     "pixi-plugin-bump": "^1.1.8",
     "pixi.js": "^5.3.3",

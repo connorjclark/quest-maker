@@ -931,8 +931,8 @@ export class PlayGameMode extends QuestMakerMode {
     const weapon = this.app.state.quest.weapons[weaponId - 1];
     const entity = new QuestEntity('projectile');
     const graphic = this.app.state.quest.graphics[weaponSpriteOverride || weapon.graphic];
-    entity.x = x * tileSize + (tileSize - graphic.width) / 2;
-    entity.y = y * tileSize + (tileSize - graphic.height) / 2;
+    entity.x = x * tileSize + tileSize / 2;
+    entity.y = y * tileSize + tileSize / 2;
     entity.delta = delta;
     entity.speed = speed;
 

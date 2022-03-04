@@ -202,71 +202,8 @@ function getDefaultWeaponSprite(guy: any) {
   return wpnsprite;
 }
 
-// Save 260 at a time.
-const tilesPerRow = 20;
-const rowsPerPage = 13;
-const tilesPerPage = tilesPerRow * rowsPerPage;
-const spriteSize = 16;
-
-async function createTileImages(qstData: any) {
-  const canvas = document.createElement('canvas');
-  const context = canvas.getContext('2d');
-  if (!context) throw new Error();
-
-  canvas.width = tilesPerRow * spriteSize;
-  canvas.height = rowsPerPage * spriteSize;
-
-  const tiles = qstData.TILE.tiles;
-  const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-  const images = [];
-
-  let tileIndex = 0;
-  while (tileIndex < tiles.length) {
-    for (let indexInPage = 0; indexInPage < tilesPerPage && tileIndex < tiles.length; indexInPage++) {
-      const tile = tiles[tileIndex].pixels;
-      const spritesheet_x = (indexInPage % tilesPerRow) * spriteSize;
-      const spritesheet_y = Math.floor(indexInPage / tilesPerRow) * spriteSize;
-
-      for (let tx = 0; tx < spriteSize; tx++) {
-        for (let ty = 0; ty < spriteSize; ty++) {
-          const tileOffset = tx + ty * spriteSize
-          const csetOffset = tile[tileOffset]; // 0-15 (4 bit) or 0-255 (8 bit)
-          const half1 = csetOffset & 0xF;
-          const half2 = csetOffset >> 4;
-          const x = spritesheet_x + tx;
-          const y = spritesheet_y + ty;
-
-          // The green and blue channels store the cset index (0-255) of this tile.
-          // Can't store the value directly, because not all GPUs have enough precision
-          // and need each possible cset value to map to a unique color.
-          // So we map the values across the entire 0-255 range of both channels.
-          // See '_getColorReplacementsForCset' for where this is used.
-          imageData.data[(x + y * canvas.width) * 4 + 0] = 0;
-          imageData.data[(x + y * canvas.width) * 4 + 1] = half2 * 17;
-          imageData.data[(x + y * canvas.width) * 4 + 2] = half1 * 17;
-          imageData.data[(x + y * canvas.width) * 4 + 3] = csetOffset ? 255 : 0;
-        }
-      }
-
-      tileIndex += 1;
-    }
-
-    context.putImageData(imageData, 0, 0);
-
-    // https://github.com/pixijs/pixijs/issues/2985
-    // const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
-    // if (!blob) throw new Error('failed making tile image');
-
-    // const url = URL.createObjectURL(blob);
-    const url = canvas.toDataURL('image/png', 100);
-    images.push(url);
-  }
-
-  return images;
-}
-
 export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Quest, errors: string[] }> {
-  const { make, makeAdvanced, makeEnemy, makeGraphic, makeTile, makeWeapon, quest } = makeQuest();
+  const { makeEnemy, makeGraphic, makeTile, makeWeapon, quest } = makeQuest();
   const errors: string[] = [];
 
   function logError(error: string) {
@@ -283,21 +220,8 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
 
   quest.misc.rules = qstData.RULE?.rules || [];
 
-  // TODO skipping this part if running node script
-  if (typeof window !== 'undefined') {
-    for (const url of await createTileImages(qstData)) {
-      for (let y = 0; y < rowsPerPage; y++) {
-        for (let x = 0; x < tilesPerRow; x++) {
-          makeGraphic({
-            file: url,
-            x: x * tileSize,
-            y: y * tileSize,
-            width: tileSize,
-            height: tileSize,
-          });
-        }
-      }
-    }
+  for (const tile of qstData.TILE.tiles) {
+    makeGraphic(tile);
   }
 
   function concatenate(resultConstructor: any, ...arrays: any[]) {
