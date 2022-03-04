@@ -223,21 +223,24 @@ export class QuestMakerApp extends App<QuestMaker.State> {
   }
 
   _getGraphicTexture(sprite: PIXI.Sprite, graphicId: number, paletteIndex: number, cset: number, extraCset?: QuestMaker.Tile['extraCset']) {
-    let key = `${graphicId},${paletteIndex},${cset}`;
+    // @ts-expect-error
+    const format = window.qstData.TILE.tiles[graphicId].format;
+
+    let key = `${graphicId},${paletteIndex},${cset},${format}`;
     if (extraCset) key += `,${extraCset.offset},${extraCset.quadrants.map(q => q ? '1' : '0')}`;
     let texture = this._textureCache.get(key);
     if (texture) return texture;
 
     try {
       if (extraCset) {
-        const replacements1 = this._getColorReplacementsForCset(paletteIndex, cset);
-        const replacements2 = this._getColorReplacementsForCset(paletteIndex, cset + extraCset.offset);
+        const replacements1 = this._getColorReplacementsForCset(format, paletteIndex, cset);
+        const replacements2 = this._getColorReplacementsForCset(format, paletteIndex, cset + extraCset.offset);
         texture = this._multiColorReplaceTwoCsetsCreateTexture(sprite, extraCset.quadrants, replacements1, replacements2, 0.0001);
         this._textureCache.set(key, texture);
         return texture;
       }
 
-      texture = this._multiColorReplaceCreateTexture(sprite, this._getColorReplacementsForCset(paletteIndex, cset), 0.0001);
+      texture = this._multiColorReplaceCreateTexture(sprite, this._getColorReplacementsForCset(format, paletteIndex, cset), 0.0001);
       this._textureCache.set(key, texture);
       return texture;
     } catch (err) {
@@ -294,30 +297,41 @@ export class QuestMakerApp extends App<QuestMaker.State> {
     return rt;
   }
 
-  private replacementsCache = new Map<number, number[][]>();
-  _getColorReplacementsForCset(paletteIndex: number, cset: number) {
+  _getColorReplacementsForCset(format: number, paletteIndex: number, cset: number) {
     if (!this.state.quest.color) {
       throw new Error('quest has no color data');
     }
 
-    if (cset < 0 || cset > 15) {
-      console.error('got bad cset, resetting to 0', cset);
-      cset = 0;
+    const palette = this.state.quest.color.palettes[paletteIndex];
+
+    let colors;
+    if (format === 2) {
+      // 8 bit. `cset` will do nothing.
+      if (cset < 0 || cset > 255) {
+        console.error('got bad cset, resetting to 0', cset);
+        cset = 0;
+      }
+      colors = [];
+      for (let c = 0; c < 15; c++) {
+        colors.push(...this.state.quest.color.csets[palette.csets[c]].colors);
+      }
+    } else {
+      // 4 bit.
+      if (cset < 0 || cset > 15) {
+        console.error('got bad cset, resetting to 0', cset);
+        cset = 0;
+      }
+      cset = palette.csets[cset];
+      colors = this.state.quest.color.csets[cset].colors;
     }
 
-    const palette = this.state.quest.color.palettes[paletteIndex];
-    cset = palette.csets[cset];
-
-    let replacements = this.replacementsCache.get(cset);
-    if (replacements) return replacements;
-
-    if (!this.state.quest.color.csets[cset]) debugger;
-    const { colors } = this.state.quest.color.csets[cset];
-    replacements = colors.map(({ r, g, b }, i) => {
-      return [i * 17, 65536 * r + 256 * g + b];
+    const replacements = colors.map(({ r, g, b }, i) => {
+      const half1 = i & 0xF;
+      const half2 = i >> 4;
+      const index_g = (half2 * 17) << 8;
+      const index_b = half1 * 17;
+      return [index_g + index_b, 65536 * r + 256 * g + b];
     });
-    this.replacementsCache.set(cset, replacements);
-
     return replacements;
   }
 };

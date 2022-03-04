@@ -67,3 +67,6 @@ http://localhost:1234/?quest=zc_quests%2F559%2FThe+Land+of+Anarchy.qst&dmap=64&x
 really messed up
 http://localhost:1234/?quest=zc_quests%2F705%2FA+Link+to+the+West.qst&dmap=0&x=11&y=4
 http://localhost:1234/?quest=zc_quests%2F764%2FBowser%27s+Quest.qst
+
+blocks
+http://localhost:1234/?quest=zc_quests%2F585%2FToL.qst&dmap=11&x=2&y=6

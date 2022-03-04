@@ -35,6 +35,7 @@ export class App<S> {
 
   createSprite(file: string, x: number, y: number, width: number, height: number) {
     const baseTexture = this.pixi.loader.resources[file].texture.baseTexture;
+    baseTexture.mipmap = PIXI.MIPMAP_MODES.OFF;
     const rect = new PIXI.Rectangle(x, y, width, height);
     const texture = new PIXI.Texture(baseTexture, rect);
     return new PIXI.Sprite(texture);

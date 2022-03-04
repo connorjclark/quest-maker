@@ -230,16 +230,20 @@ async function createTileImages(qstData: any) {
       for (let tx = 0; tx < spriteSize; tx++) {
         for (let ty = 0; ty < spriteSize; ty++) {
           const tileOffset = tx + ty * spriteSize
-          const csetOffset = tile[tileOffset]; // 0-15
+          const csetOffset = tile[tileOffset]; // 0-15 (4 bit) or 0-255 (8 bit)
+          const half1 = csetOffset & 0xF;
+          const half2 = csetOffset >> 4;
           const x = spritesheet_x + tx;
           const y = spritesheet_y + ty;
 
+          // The green and blue channels store the cset index (0-255) of this tile.
+          // Can't store the value directly, because not all GPUs have enough precision
+          // and need each possible cset value to map to a unique color.
+          // So we map the values across the entire 0-255 range of both channels.
+          // See '_getColorReplacementsForCset' for where this is used.
           imageData.data[(x + y * canvas.width) * 4 + 0] = 0;
-          imageData.data[(x + y * canvas.width) * 4 + 1] = 0;
-          // The blue channel refers to the cset index (0-15) in this tile.
-          // Can't just use 0-15, because not all GPUs have enough precision,
-          // so we map the values across the entire 0-255 range.
-          imageData.data[(x + y * canvas.width) * 4 + 2] = csetOffset * 17;
+          imageData.data[(x + y * canvas.width) * 4 + 1] = half2 * 17;
+          imageData.data[(x + y * canvas.width) * 4 + 2] = half1 * 17;
           imageData.data[(x + y * canvas.width) * 4 + 3] = csetOffset ? 255 : 0;
         }
       }
