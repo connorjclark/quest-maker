@@ -207,7 +207,7 @@ class QuestMaker extends Component<QuestMakerProps> {
           <div class="title mobile-hidden">{props.currentDMap.title}</div>
           <div class="string mobile-hidden"></div>
         </div>
-        <div ref={ref} class="flex justify-center" style={{height: '100%'}}></div>
+        <div ref={ref} class="flex justify-center" style={{ height: '100%' }}></div>
         <div class="mobile-hidden">
           <div>Arrow keys to move</div>
           <div>X to swing sword</div>
@@ -261,9 +261,9 @@ class QuestMaker extends Component<QuestMakerProps> {
     else if (e.key === 'ArrowDown') dy += 1;
 
     if (dx !== 0 || dy !== 0) {
-      const x = Utils.clamp(0, this.props.screenX + dx, currentMap.screens.length - 1)
-      const y = Utils.clamp(0, this.props.screenY + dy, currentMap.screens[0].length - 1)
-      this.props.setCurrentScreen(x, y);
+      const x = Utils.clamp(0, this.props.screenX + dx, currentMap.screens.length - 1);
+      const y = Utils.clamp(0, this.props.screenY + dy, currentMap.screens[0].length - 1);
+      if (currentMap.screens[x][y]) this.props.setCurrentScreen(x, y);
     }
   }
 }
