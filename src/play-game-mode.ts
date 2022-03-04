@@ -207,7 +207,7 @@ export class PlayGameMode extends QuestMakerMode {
 
     this.ticksOnScreen += 1;
 
-    if (!state.game.screenTransition && state.currentScreen.warps.timedWarpTicks && this.ticksOnScreen >= state.currentScreen.warps.timedWarpTicks) {
+    if (!state.game.screenTransition && state.currentScreen.warps.timedWarpTicks && this.ticksOnScreen >= state.currentScreen.warps.timedWarpTicks/2) {
       state.game.screenTransition = this._createScreenTransitionFromWarp(state.currentScreen.warps.sideWarps[0]).transition;
     }
 
@@ -223,7 +223,7 @@ export class PlayGameMode extends QuestMakerMode {
     }
 
     if (this.app.keys.up['KeyR']) {
-      this.triggerSecrets();
+      this.triggerSecrets(!screenState.secretsTriggered);
     }
 
     let dx = 0, dy = 0;
@@ -323,6 +323,11 @@ export class PlayGameMode extends QuestMakerMode {
           const newTile = { tile: getZcScreen().underCombo, cset: getZcScreen().underCset };
           screenState.replacedTiles[0][location.tx][location.ty] = newTile;
           dirty = true;
+        }
+
+        const tileFlag = this._getFlag(state.currentScreen, screenState, location.tx, location.ty, 0);
+        if ([TileFlag.CF_SWORD1, TileFlag.CF_SWORD2, TileFlag.CF_SWORD1BEAM, , TileFlag.CF_SWORD2BEAM].includes(tileFlag)) {
+          this.triggerSecrets();
         }
       }
       if (dirty) this.initDraw();
@@ -500,10 +505,10 @@ export class PlayGameMode extends QuestMakerMode {
     this._checkForTransition();
   }
 
-  triggerSecrets() {
+  triggerSecrets(force = true) {
     const screenState = this.getCurrentScreenState();
 
-    screenState.secretsTriggered = !screenState.secretsTriggered; // TODO: remove toggling
+    screenState.secretsTriggered = force;
     // @ts-expect-error
     if (screenState.secretsTriggered) this.app.soundManager.playSfx(getZcScreen().secretSfx || Sfx.SFX_SECRET);
     if (screenState.secretsTriggered) this.createScreenItem();
@@ -1146,6 +1151,20 @@ export class PlayGameMode extends QuestMakerMode {
     const targetMapIndex = transition.dmap === undefined ? state.mapIndex : state.quest.dmaps[transition.dmap].map;
     const targetScreen = state.quest.maps[targetMapIndex].screens[transition.screen.x][transition.screen.y];
 
+    const setHeroPos =() => {
+      if (transition.type === 'direct') {
+        if (transition.position) {
+          this.heroEntity.x = transition.position.x;
+          this.heroEntity.y = transition.position.y;
+        } else {
+          if (targetScreen.warps.arrival) {
+            this.heroEntity.x = targetScreen.warps.arrival.x;
+            this.heroEntity.y = targetScreen.warps.arrival.y;
+          }
+        }
+      }
+    };
+
     let duration;
     if (transition.type === 'scroll') {
       if (transition.frames === 0) {
@@ -1160,7 +1179,10 @@ export class PlayGameMode extends QuestMakerMode {
     } else if (transition.type === 'direct') {
       const durations = [50, 50, 50];
       duration = durations.reduce((cur, acc) => cur + acc);
-      if (transition.instant) duration = 0;
+      if (transition.instant) {
+        duration = 0;
+        setHeroPos();
+      }
       let step = 0;
       let stepFrames = transition.frames;
       while (stepFrames > durations[step]) {
@@ -1180,18 +1202,7 @@ export class PlayGameMode extends QuestMakerMode {
             if (entity !== this.heroEntity) this.removeEntity(entity);
           }
           this.tileLayer.addChild(transition.newScreenContainer);
-
-          if (transition.type === 'direct') {
-            if (transition.position) {
-              this.heroEntity.x = transition.position.x;
-              this.heroEntity.y = transition.position.y;
-            } else {
-              if (targetScreen.warps.arrival) {
-                this.heroEntity.x = targetScreen.warps.arrival.x;
-                this.heroEntity.y = targetScreen.warps.arrival.y;
-              }
-            }
-          }
+          setHeroPos();
         }
       } else if (step === 2) {
         // Fading in.
