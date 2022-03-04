@@ -40,7 +40,7 @@ export class EditorScreenArea extends Component<Props> {
       }
     }, [props.visibleLayers]);
 
-    return <div class="canvas-wrapper" ref={ref}></div>;
+    return <div ref={ref} class="canvas-wrapper" style={{height: '100%'}}></div>;
   }
 
   private createScreenArea(app: QuestMaker.App, map: QuestMaker.Map_, screenX: number, screenY: number) {

@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Quest Maker</title>
   <style>
+    @media only screen and (max-width: 1000px) {
+      .mobile-hidden {
+        display: none;
+      }
+    }
+
     body {
       margin: 0;
       color: white;
@@ -23,6 +29,9 @@
     }
     .items-center {
       align-items: center;
+    }
+    .justify-center {
+      justify-content: center;
     }
     .md-5 {
       margin: 5px;
@@ -59,8 +68,8 @@
     .editor-ui {
       height: 100vh;
       display: grid;
-      grid-template-columns: 1.5fr 0.5fr;
-      grid-template-rows: 0.1fr 2.3fr 0.6fr;
+      grid-template-columns: auto 1fr;
+      grid-template-rows: auto 1fr auto;
       gap: 0px 0px;
       grid-template-areas:
         "header header"
@@ -72,13 +81,18 @@
     .tiles { grid-area: tiles; }
     .bottom { grid-area: bottom; }
 
-    .canvas-wrapper {
-      display: flex;
-      justify-content: center;
+    .play-ui .main-canvas {
       height: 100%;
     }
-    .play-ui .canvas-wrapper {
+
+    .editor-ui .main-canvas {
+      height: 100%;
+    }
+
+    .play-ui {
+      display: flex;
       align-items: center;
+      justify-content: center;
       height: 100vh;
     }
 
@@ -170,6 +184,7 @@
       opacity: 0.6;
     }
   </style>
+  <link rel="manifest" href='data:application/manifest+json,{ "name": "Quest Maker", "short_name": "Quest Maker", "description": "Quest Maker", "display": "fullscreen", "orientation": "landscape"}' />
 </head>
 <body>
   <script src=pixi.ts></script>

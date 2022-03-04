@@ -202,19 +202,17 @@ class QuestMaker extends Component<QuestMakerProps> {
     let ref = useRef<HTMLDivElement>();
     let playUI;
     if (props.mode === 'play') {
-      playUI = <div class="play-ui">
-        <div class="canvas-wrapper flex flex-column">
-          <div>
-            <div class="title">{props.currentDMap.title}</div>
-            <div class="string"></div>
-          </div>
-          <div ref={ref}></div>
-          <div>
-            <div>Arrow keys to move</div>
-            <div>X to swing sword</div>
-            <div>R to trigger secrets</div>
-            <div>Shift to return to editor</div>
-          </div>
+      playUI = <div class="play-ui flex flex-column">
+        <div>
+          <div class="title mobile-hidden">{props.currentDMap.title}</div>
+          <div class="string mobile-hidden"></div>
+        </div>
+        <div ref={ref} class="flex justify-center" style={{height: '100%'}}></div>
+        <div class="mobile-hidden">
+          <div>Arrow keys to move</div>
+          <div>X to swing sword</div>
+          <div>R to trigger secrets</div>
+          <div>Shift to return to editor</div>
         </div>
       </div>
     }

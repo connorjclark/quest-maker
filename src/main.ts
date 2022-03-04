@@ -373,7 +373,10 @@ function saveLocalStorage(data: any) {
 async function load(quest: QuestMaker.Quest, questBasePath: string) {
   const pixi = new PIXI.Application({
     transparent: true,
+    width: 800,
+    height: 600,
   });
+  pixi.view.classList.add('main-canvas');
   // @ts-expect-error
   window.pixi = pixi;
 
@@ -483,7 +486,9 @@ async function load(quest: QuestMaker.Quest, questBasePath: string) {
     app.updateUrl();
   });
 
-  window.addEventListener('resize', () => app.resize());
+  window.addEventListener('resize', () => {
+    app.resize()
+  });
   app.resize();
 
   if (searchParamsObj.play) {
