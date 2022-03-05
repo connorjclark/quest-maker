@@ -369,10 +369,15 @@ const sections = {
       { name: 'speed', arrayLength: 3, type: 'B' },
     ]);
 
+    const allZeros = [];
+    for (let i = 0; i < 16; i++) {
+      allZeros.push([0, 0, 0, 0]);
+    }
+
     let i = 0;
     const csetColors = [];
     while (i < colorData.length) {
-      const colors = [];
+      let colors = [];
       for (let j = 0; j < 16; j++) {
         const r = colorData[i] * 4;
         i++;
@@ -384,11 +389,12 @@ const sections = {
         colors.push([r, g, b, a]);
       }
 
+      // Try to save _some_ memory.
       if (colors.every(([r, g, b]) => r + g + b === 0)) {
-        csetColors.push([]);
-      } else {
-        csetColors.push(colors);
+        colors = allZeros;
       }
+
+      csetColors.push(colors);
     }
 
     return {

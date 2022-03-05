@@ -8,6 +8,7 @@ interface KeysState {
 
 export class App<S> {
   public keys: KeysState;
+  // @ts-expect-error
   private currentMode: Mode<App<S>, S>; // TODO: could this be done better?
   private debugs: Record<string, PIXI.Graphics> = {};
 
