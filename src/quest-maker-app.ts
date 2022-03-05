@@ -171,6 +171,11 @@ export class QuestMakerApp extends App<QuestMaker.State> {
   }
 
   createItemSprite(id: number) {
+    if (!this.state.quest.items[id]) {
+      // http://localhost:1234/?quest=zc_quests%2F740%2F6thQuest+v121.qst&dmap=0&x=0&y=8
+      console.error('invalid item:', id);
+      return new PIXI.Sprite;
+    }
     const { tile, cset } = this.state.quest.items[id];
     return this.createGraphicSprite(tile, -1, cset);
   }
