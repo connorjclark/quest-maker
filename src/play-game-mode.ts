@@ -3,7 +3,6 @@ import { QuestMakerMode } from './quest-maker-mode.js';
 import { EnemyType, ItemType } from './types.js';
 import * as Utils from './utils.js';
 import { QuestEntity, MiscBag } from './entity.js';
-import 'pixi-plugin-bump';
 import { TileFlag, SecretCombo, getPushData } from './tile-flags.js';
 import { getWarpIndex, TileType } from './tile-type.js';
 import { ScreenFlags } from './screen-flags.js';
