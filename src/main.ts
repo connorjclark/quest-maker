@@ -11,6 +11,7 @@ import { QuestRules } from './quest-rules.js';
 import { ScreenFlags } from './screen-flags.js';
 import { TileFlag } from './tile-flags.js';
 import { EnemyFlags } from './enemy-flags.js';
+import { dmapContainsCoord } from './utils.js';
 
 const { screenWidth, screenHeight } = constants;
 
@@ -268,17 +269,10 @@ function tick(app: QuestMaker.App, dt: number) {
         // It's possible that multiple dmaps apply to this map.
         if (dmap.type === 1) return true;
 
-        function containsCoord(dmap: any, x: number, y: number) {
-          if (!(x >= dmap.xoff && x <= dmap.xoff + 8)) return false;
-          const row = dmap.grid[y];
-          x = x - dmap.xoff;
-          return (row & (1 << (7 - x))) > 0;
-        }
-
         // It's possible that multiple dmaps would pass this condition.
         // Example: http://localhost:1234/?quest=zc_quests%2F25%2FLandsofSerenity.qst&dmap=2&x=4&y=6&play 
         // has a dmap for the level and also for the level's boss.
-        return containsCoord(dmap, app.state.screenX, app.state.screenY);
+        return dmapContainsCoord(dmap, app.state.screenX, app.state.screenY);
       });
       if (matchingDmapIndex !== -1) {
         app.state.dmapIndex = matchingDmapIndex;

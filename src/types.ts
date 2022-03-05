@@ -213,6 +213,7 @@ declare global {
     interface DMap {
       name: string;
       type: number;
+      level: number;
       title: string;
       map: number;
       color: number;

@@ -1,4 +1,5 @@
 import * as constants from './constants.js';
+import { DmapType } from './zc-constants.js';
 
 const { screenWidth, screenHeight } = constants;
 
@@ -84,9 +85,17 @@ export function getScreenLayer(state: QuestMaker.State, map: QuestMaker.Map_, x:
     if (!layer) return;
 
     const layerMap = state.quest.maps[layer.map];
-    return  layerMap.screens[layer.x][layer.y];
+    return layerMap.screens[layer.x][layer.y];
   }
 };
+
+export function dmapContainsCoord(dmap: QuestMaker.DMap, x: number, y: number) {
+  if (dmap.type === DmapType.dmOVERW) return true;
+  if (!(x >= dmap.xoff && x <= dmap.xoff + 8)) return false;
+  const row = dmap.grid[y];
+  x = x - dmap.xoff;
+  return (row & (1 << (7 - x))) > 0;
+}
 
 export function create2dArray<T>(rows: number, columns: number, defaultValue: T): T[][] {
   const arr: T[][] = [];

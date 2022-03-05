@@ -5,6 +5,7 @@ import * as Utils from '../utils.js';
 import { TabbedPane, TabbedPaneProps } from './TabbedPane.js';
 import { EditorScreenArea } from './EditorScreenArea.js';
 import { TilesTab } from './TilesTab.js';
+import { DmapType } from '../zc-constants.js';
 
 class Header extends Component {
   render() {
@@ -29,6 +30,7 @@ type BottomProps = {
   screenY: number;
   currentMapIndex: number;
   maps: QuestMaker.Map_[];
+  dmaps: QuestMaker.DMap[];
 }
 class Bottom extends Component<BottomProps> {
   render() {
@@ -38,6 +40,25 @@ class Bottom extends Component<BottomProps> {
     const ref = useRef<HTMLCanvasElement>(null);
     const currentMap = this.props.maps[this.props.currentMapIndex];
 
+    const dmapScreenColors = Utils.create2dArray(16, 9, '');
+    const dmaps = this.props.dmaps
+      .filter((dmap) => dmap.map === this.props.currentMapIndex)
+      // TODO: figure out when a dmap is invalid ...
+      .filter((dmap) => dmap.type !== DmapType.dmCAVE || dmap.level || dmap.color || dmap.name);
+    const colors = ['green', 'fuchsia', 'gray',
+      'lime', 'maroon', 'navy', 'olive', 'orange', 'purple', 'red', 'aqua',
+      'silver', 'teal', 'blue', 'yellow'];
+    for (let i = 0; i < dmaps.length; i++) {
+      const dmap = dmaps[i];
+      for (let x = 0; x < 16; x++) {
+        for (let y = 0; y < 8; y++) {
+          if (!dmapScreenColors[x][y] && Utils.dmapContainsCoord(dmap, x, y)) {
+            dmapScreenColors[x][y] = colors[i % colors.length];
+          }
+        }
+      }
+    }
+
     useEffect(() => {
       if (!ref.current) return;
       if (!currentMap) return;
@@ -46,17 +67,23 @@ class Bottom extends Component<BottomProps> {
       const context = canvas.getContext('2d');
       if (!context) return;
 
-      const size = 10;
+      const size = 16;
+      const gap = size / 5;
 
       for (let x = 0; x < 16; x++) {
         for (let y = 0; y < 9; y++) {
           const screen = x < currentMap.screens.length && currentMap.screens[x][y];
-          let color = 'black';
-          if (screen) color = '#0000ff';
-          if (x === this.props.screenX && y === this.props.screenY) color = '#00ff00';
+          let color;
+          if (screen) {
+            color = dmapScreenColors[x][y] || 'white';
+          } else {
+            color = 'black';
+          }
 
-          context.fillStyle = color;
+          context.fillStyle = x === this.props.screenX && y === this.props.screenY ? '#00ff00' : 'black';
           context.fillRect(x * size, y * size, size, size);
+          context.fillStyle = color;
+          context.fillRect(x * size + gap, y * size + gap, size - gap * 2, size - gap * 2);
         }
       }
     }, [currentMap, this.props.screenX, this.props.screenY]);
@@ -239,7 +266,7 @@ class QuestMaker extends Component<QuestMakerProps> {
           <TabbedPane tabs={tabs} background={true} childProps={{}}></TabbedPane> :
           null}
       </div>
-      <Bottom maps={props.quest?.maps || []} currentMapIndex={props.mapIndex} screenX={props.screenX} screenY={props.screenY}></Bottom>
+      <Bottom maps={props.quest?.maps || []} dmaps={props.quest?.dmaps || []} currentMapIndex={props.mapIndex} screenX={props.screenX} screenY={props.screenY}></Bottom>
     </div>;
 
     return <AppContext.Provider value={props}>

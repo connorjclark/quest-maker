@@ -335,3 +335,7 @@ export enum WarpType {
   wtCAVE, wtPASS, wtEXIT, wtSCROLL, wtIWARP, wtIWARPBLK, wtIWARPOPEN,
   wtIWARPZAP, wtIWARPWAVE, wtNOWARP, wtWHISTLE, wtMAX
 }
+
+export enum DmapType {
+  dmDNGN, dmOVERW, dmCAVE, dmBSOVERW, dmMAX
+}
