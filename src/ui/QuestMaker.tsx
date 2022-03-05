@@ -100,7 +100,6 @@ class Bottom extends Component<BottomProps> {
           Use arrow keys to move screens.
           <br></br>Ctrl+Click on screen to select tile
           <br></br>Press Shift to toggle play test.
-          <br></br>WARNING: MIDI music will play, but it is quite loud, so turn down your speakers to 25% max. Sorry!
         </div>
       </div>
     </div>;

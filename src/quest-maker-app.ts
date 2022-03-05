@@ -7,6 +7,9 @@ import { tileSize } from "./constants";
 
 const audioBufferCache = new Map<string, AudioBuffer>();
 
+const SONG_VOLUME = 0.4;
+const SFX_VOLUME = 0.6;
+
 // This is for Safari.
 function unlockAudioContext(audioContext: AudioContext) {
   if (audioContext.state !== 'suspended') return audioContext;
@@ -27,13 +30,21 @@ class SoundManager {
   private audioContext = unlockAudioContext(this.midiPlayer._audioContext);
 
   constructor(private app: QuestMakerApp) {
+    // The songs are quite loud, so turn down the volume.
+    const gainNode = this.audioContext.createGain();
+    gainNode.gain.value = SONG_VOLUME;
+    gainNode.connect(this.audioContext.destination);
+    this.midiPlayer._node.disconnect(this.audioContext.destination)
+    this.midiPlayer._node.connect(gainNode);
+
+    // Loop.
     this.midiPlayer.on('ended', () => {
       this.midiPlayer.seek(0);
       this.midiPlayer.play();
     });
   }
 
-  playSfx(id: number, volume = 1) {
+  playSfx(id: number) {
     if (!id) return;
     if (this.audioContext.state === 'suspended') this.audioContext.resume();
 
@@ -57,7 +68,7 @@ class SoundManager {
       // sourceNode.connect(this.audioContext.destination);
 
       const gainNode = this.audioContext.createGain();
-      gainNode.gain.value = volume;
+      gainNode.gain.value = SFX_VOLUME;
       sourceNode.connect(gainNode);
       gainNode.connect(this.audioContext.destination);
 
