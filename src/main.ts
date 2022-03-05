@@ -238,14 +238,6 @@ function enterEditorMode(app: QuestMaker.App) {
 }
 
 function enterPlayGameMode(app: QuestMaker.App) {
-  // Bit of a hack.
-  // TODO This is acually quite wrong because multiple dmaps can be on the same map.
-  const matchingDmapIndex = app.state.quest.dmaps.findIndex(dmap => dmap.map === app.state.mapIndex);
-  if (matchingDmapIndex !== -1) {
-    app.state.dmapIndex = matchingDmapIndex;
-    app.state.mapIndex = app.state.quest.dmaps[matchingDmapIndex].map;
-  }
-
   const mode = new PlayGameMode(app);
   if (window.IS_DEV) {
     const swordId = app.state.quest.items.findIndex(item => item.type === ItemType.SWORD);
@@ -264,6 +256,46 @@ function tick(app: QuestMaker.App, dt: number) {
     } else {
       app.destroyChildren(app.pixi.stage);
       app.state.game.screenTransition = app.state.game.warpReturnTransition = undefined;
+
+      // Bit of a hack.
+      // Dmaps apply to possibly any screen of a map, or a subset of a map, but even then
+      // a screen could have multiple dmaps attainable.
+      // Should remove this, but it prevents play testing on a wrong dmap with really wrong colors ...
+      // Is there a better option?
+      const matchingDmapIndex = app.state.quest.dmaps.findIndex((dmap, i) => {
+        if (dmap.map !== app.state.mapIndex) return false;
+
+        // Overworld can use the entire map.
+        // It's possible that multiple dmaps apply to this map.
+        if (dmap.type === 1) return true;
+
+        function containsCoord(dmap: any, x: number, y: number) {
+          if (!(x >= dmap.xoff && x <= dmap.xoff + 8)) return false;
+          const row = dmap.grid[y];
+          x = x - dmap.xoff;
+          return (row & (1 << (7 - x))) > 0;
+        }
+
+        // It's possible that multiple dmaps would pass this condition.
+        // Example: http://localhost:1234/?quest=zc_quests%2F25%2FLandsofSerenity.qst&dmap=2&x=4&y=6&play 
+        // has a dmap for the level and also for the level's boss.
+        return containsCoord(dmap, app.state.screenX, app.state.screenY);
+      });
+      if (matchingDmapIndex !== -1) {
+        app.state.dmapIndex = matchingDmapIndex;
+        app.state.mapIndex = app.state.quest.dmaps[matchingDmapIndex].map;
+
+        // TODO: show dmap colors in map subscreen.
+        // let s = '';
+        // for (const row of app.state.quest.dmaps[matchingDmapIndex].grid) {
+        //   for (let x = 0; x < 8; x++) {
+        //     s += (row & (1 << (7 - x))) > 0 ? 'X' : '.';
+        //   }
+        //   s += '\n';
+        // }
+        // console.log(s);
+      }
+
       enterPlayGameMode(app);
     }
   }

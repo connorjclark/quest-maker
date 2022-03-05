@@ -163,10 +163,25 @@ export class QuestMakerApp extends App<QuestMaker.State> {
     return this.getPaletteIndex(this.state.currentDMap, this.state.currentScreen);
   }
 
-  getPaletteIndex(dmap: QuestMaker.DMap | undefined, screen: QuestMaker.Screen) {
+  getPaletteIndex(dmap: QuestMaker.DMap | undefined, screen: QuestMaker.Screen, layerIndex = 0) {
     let paletteIndex = 0;
-    if (dmap) paletteIndex = dmap.color + 1;
-    if (screen.color) paletteIndex = screen.color + 1;
+
+    // TODO: figure this out.
+    // http://localhost:1234/?quest=zc_quests%2F27%2FLink%27s+Birthday+250.qst&dmap=6&x=0&y=5
+    // http://localhost:1234/?quest=zc_quests%2F27%2FLink%27s+Birthday+250.qst&dmap=14&x=4&y=1
+    // if (screen.color) {
+    //   paletteIndex = screen.color + 1;
+    // } else if (dmap && layerIndex === 0) {
+    //   paletteIndex = dmap.color + 1;
+    // }
+
+    // This is what would make sense to me...
+    if (screen.color && this.state.mode === 'edit') {
+      paletteIndex = screen.color + 1;
+    } else if (dmap) {
+      paletteIndex = dmap.color + 1;
+    }
+
     return paletteIndex;
   }
 

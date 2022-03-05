@@ -92,7 +92,7 @@ export class EditorScreenArea extends Component<Props> {
         this.layerContainers[layerIndex].alpha = layer.opacity ?? 1;
       }
 
-      const layerPalette = app.getPaletteIndex(app.state.currentDMap, layerScreen);
+      const layerPalette = app.getPaletteIndex(app.state.currentDMap, layerScreen, layerIndex);
 
       // First/last row/column is from neighboring screen.
       for (let x = -1; x <= screenWidth; x++) {
@@ -189,7 +189,7 @@ export class EditorScreenArea extends Component<Props> {
         selectedLayerScreen = app.state.quest.maps[selectedLayer.map].screens[selectedLayer.x][selectedLayer.y];
       }
 
-      const layerPalette = app.getPaletteIndex(app.state.currentDMap, selectedLayerScreen);
+      const layerPalette = app.getPaletteIndex(app.state.currentDMap, selectedLayerScreen, app.state.editor.selectedLayer);
 
       const pos = e.data.getLocalPosition(e.currentTarget);
       const x = Math.floor(pos.x / tileSize) - 1;
@@ -221,7 +221,7 @@ export class EditorScreenArea extends Component<Props> {
         selectedLayerScreen = app.state.quest.maps[selectedLayer.map].screens[selectedLayer.x][selectedLayer.y];
       }
 
-      const layerPalette = app.getPaletteIndex(app.state.currentDMap, selectedLayerScreen);
+      const layerPalette = app.getPaletteIndex(app.state.currentDMap, selectedLayerScreen, app.state.editor.selectedLayer);
 
       const tilePreviewSprite = app.createTileSprite(app.state.editor.currentTile, layerPalette);
       const pos = e.data.getLocalPosition(e.currentTarget);

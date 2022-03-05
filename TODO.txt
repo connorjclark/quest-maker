@@ -12,11 +12,12 @@ beautiful
 http://localhost:1234/?quest=zc_quests%2F203%2FOrigin+-+DarkFlameWolf.qst&dmap=1&x=6&y=4
 
 bad colors
-http://localhost:1234/?quest=zc_quests%2F27%2FLink%27s+Birthday+250.qst&dmap=0&x=3&y=6
-http://localhost:1234/?quest=zc_quests%2F27%2FLink%27s+Birthday+250.qst&dmap=0&x=2&y=5
-http://localhost:1234/?quest=zc_quests%2F27%2FLink%27s+Birthday+250.qst&dmap=0&x=1&y=4
+http://localhost:1234/?quest=zc_quests%2F27%2FLink%27s+Birthday+250.qst&dmap=32&x=3&y=6
+http://localhost:1234/?quest=zc_quests%2F27%2FLink%27s+Birthday+250.qst&dmap=5&x=2&y=5
+http://localhost:1234/?quest=zc_quests%2F27%2FLink%27s+Birthday+250.qst&dmap=2&x=3&y=0
+http://localhost:1234/?quest=zc_quests%2F27%2FLink%27s+Birthday+250.qst&dmap=14&x=1&y=4
 http://localhost:1234/?quest=zc_quests%2Fbs3.1%2FNewBS+3.1+-+1st+Quest.qst&dmap=0&x=9&y=8 color error
-http://localhost:1234/?quest=zc_quests%2F152%2Fcashaunt2.qst&dmap=0&x=7&y=4
+http://localhost:1234/?quest=zc_quests%2F26%2Flttf-fixed.qst&dmap=1&x=4&y=7
 
 8-bit colors
 http://localhost:1234/?quest=zc_quests%2F585%2FToL.qst&dmap=0&x=0&y=7
@@ -76,3 +77,6 @@ http://localhost:1234/?quest=zc_quests%2F585%2FToL.qst&dmap=11&x=2&y=6
 
 bad enemy animations
 http://localhost:1234/?quest=zc_quests%2F204%2FLost_Isle.qst&dmap=1&x=6&y=7
+
+Going to editor mode resets dmap, to the wrong value. should work out how to really handle this
+http://localhost:1234/?quest=zc_quests%2F27%2FLink%27s+Birthday+250.qst&dmap=14&x=1&y=4&play

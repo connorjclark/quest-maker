@@ -212,6 +212,7 @@ declare global {
     // TODO: Better name for Map / DMap ?
     interface DMap {
       name: string;
+      type: number;
       title: string;
       map: number;
       color: number;
@@ -219,6 +220,7 @@ declare global {
       continueScreenX: number;
       continueScreenY: number;
       xoff: number;
+      grid: number[];
     }
 
     interface Map_ {

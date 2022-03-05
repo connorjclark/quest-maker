@@ -738,7 +738,7 @@ export class PlayGameMode extends QuestMakerMode {
   createScreenLayerContainer(dmapIndex: number, screen: QuestMaker.Screen, layerIndex: number) {
     const container = new PIXI.Container();
     const state = this.app.state;
-    const dmap = state.quest.dmaps[dmapIndex] || { map: 0 };
+    const dmap = state.quest.dmaps[dmapIndex] || undefined;
     const layerScreen = this.getScreenLayer(screen, layerIndex);
     if (!layerScreen) return container;
 
@@ -746,7 +746,7 @@ export class PlayGameMode extends QuestMakerMode {
       container.alpha = screen.layers[layerIndex - 1]?.opacity ?? 1;
     }
 
-    const paletteIndex = this.app.getPaletteIndex(dmap, layerScreen);
+    const paletteIndex = this.app.getPaletteIndex(dmap, layerScreen, layerIndex);
     const screenState = this.getScreenState(screen);
 
     for (let x = 0; x < screenWidth; x++) {

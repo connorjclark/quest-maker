@@ -614,6 +614,7 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
     const continueCoord = getDmapCoord(zcDmap, zcDmap.cont);
     const dmap = {
       name: zcDmap.name,
+      type: zcDmap.type,
       title: zcDmap.title,
       map: zcDmap.map,
       color: zcDmap.color,
@@ -621,6 +622,7 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
       continueScreenX: continueCoord.x,
       continueScreenY: continueCoord.y,
       xoff: zcDmap.xoff,
+      grid: zcDmap.grid,
     };
 
     if (dmap.name === '' && dmap.title === '') break;
@@ -787,6 +789,7 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
   quest.color.palettes.push(mainPalette);
 
   // Each level palette is the same as the main palette, except for csets 2, 3, 4, 9.
+  // https://www.purezc.net/forums/index.php?showtopic=75811
   for (let i = 0; i < qstData.CSET.palnames.length; i++) {
     if (!qstData.CSET.palnames[i]) {
       // Alot of wasted space here for palettes that may not even be used. potential for savings here, but may break things.
