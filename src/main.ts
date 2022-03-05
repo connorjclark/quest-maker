@@ -1,5 +1,3 @@
-import 'regenerator-runtime/runtime' // ??? why is this needed now?
-
 import * as constants from './constants';
 import { EditorMode } from './editor-mode';
 import { PlayGameMode } from './play-game-mode';

@@ -1,6 +1,13 @@
 #!/bin/bash
 set -e
 
+if ! [ -f "decode_zc/dist/zc.wasm" ]; then
+  echo "Go to decode_zc and build that first."
+  exit 1
+fi
+
+yarn ts-node scripts/build.ts
+
 mkdir -p dist/quests
 cp -r data/debug dist/quests
 
@@ -13,7 +20,7 @@ mv node_modules/timidity/index.js.tmp node_modules/timidity/index.js
 cp node_modules/timidity/libtimidity.wasm dist
 cp -r node_modules/freepats/* dist
 
-cp decode_zc/dist/zc.wasm dist/zc.wasm
+cp decode_zc/dist/zc.wasm dist/iife/zc.wasm
 
 rsync --ignore-existing $PWD/data/zc_quests/ $PWD/tmp/zc_quests/
 

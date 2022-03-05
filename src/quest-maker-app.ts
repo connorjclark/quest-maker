@@ -2,7 +2,6 @@ import { App } from "./engine/app";
 // @ts-ignore
 import Timidity from 'timidity';
 import { makeUI } from "./ui/QuestMaker";
-import { MIPMAP_MODES } from "pixi.js";
 import { tileSize } from "./constants";
 
 const audioBufferCache = new Map<string, AudioBuffer>();
@@ -272,7 +271,7 @@ export class QuestMakerApp extends App<QuestMaker.State> {
         colorData[i * 3 + 2] = colors[i].b;
       }
       const colorTexture = PIXI.Texture.fromBuffer(colorData, colors.length, 1, { format: PIXI.FORMATS.RGB });
-      colorTexture.baseTexture.mipmap = MIPMAP_MODES.OFF;
+      colorTexture.baseTexture.mipmap = PIXI.MIPMAP_MODES.OFF;
       myfilter.uniforms.Palette = colorTexture;
 
       const sprite = new PIXI.Sprite(tileTexture);
@@ -296,7 +295,7 @@ export class QuestMakerApp extends App<QuestMaker.State> {
     // After all that work, the result is cached into a texture.
     const brt = new PIXI.BaseRenderTexture({ width: displayObject.width, height: displayObject.height });
     const rt = new PIXI.RenderTexture(brt);
-    rt.baseTexture.mipmap = MIPMAP_MODES.OFF;
+    rt.baseTexture.mipmap = PIXI.MIPMAP_MODES.OFF;
     this.pixi.renderer.render(displayObject, rt);
     this._textureCache.set(key, rt);
 

@@ -1233,7 +1233,6 @@ export class PlayGameMode extends QuestMakerMode {
         else if (Math.sign(transition.screenDelta.y) === -1) this.heroEntity.y = (tileSize - 1) * screenHeight - 5; // ?
       }
 
-      console.log('SHOW');
       this.show();
 
       if (transition.item) {
