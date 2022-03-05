@@ -1267,7 +1267,7 @@ export class PlayGameMode extends QuestMakerMode {
     let item = undefined;
     let string = undefined;
 
-    if (warp && warp.type === 'direct') {
+    if (warp && (warp.type === 'direct' || warp.type === 'scroll')) {
       newScreenLocation = { x: warp.screenX, y: warp.screenY };
       dmapIndex = warp.dmap;
 

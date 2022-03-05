@@ -73,3 +73,6 @@ http://localhost:1234/?quest=zc_quests%2F764%2FBowser%27s+Quest.qst
 
 blocks
 http://localhost:1234/?quest=zc_quests%2F585%2FToL.qst&dmap=11&x=2&y=6
+
+bad enemy animations
+http://localhost:1234/?quest=zc_quests%2F204%2FLost_Isle.qst&dmap=1&x=6&y=7
