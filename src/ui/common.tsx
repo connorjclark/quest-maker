@@ -48,7 +48,7 @@ export class Tile extends Component<TileProps> {
     if (!app) return;
 
     const bgImg = useMemo(() => {
-      const sprite = app.createTileSprite(props.screenTile);
+      const sprite = app.createTileSprite(props.screenTile, app.getCurrentPaletteIndex());
       sprite.scale.set(props.scale);
       const container = new PIXI.Container();
       container.addChild(sprite);
