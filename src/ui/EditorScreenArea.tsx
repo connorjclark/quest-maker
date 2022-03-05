@@ -40,7 +40,7 @@ export class EditorScreenArea extends Component<Props> {
       }
     }, [props.visibleLayers]);
 
-    return <div ref={ref} class="canvas-wrapper" style={{height: '100%'}}></div>;
+    return <div ref={ref} class="canvas-wrapper" style={{ height: '100%' }}></div>;
   }
 
   private createScreenArea(app: QuestMaker.App, map: QuestMaker.Map_, screenX: number, screenY: number) {
@@ -48,12 +48,6 @@ export class EditorScreenArea extends Component<Props> {
 
     const container = new PIXI.Container();
     container.interactive = true;
-
-    const bg = new PIXI.Graphics();
-    bg.beginFill(0);
-    bg.drawRect(0, 0, screenWidth * tileSize, screenHeight * tileSize);
-    bg.endFill();
-    container.addChild(bg);
 
     const tilesContainer = new PIXI.Container();
     tilesContainer.interactive = true;
@@ -84,11 +78,11 @@ export class EditorScreenArea extends Component<Props> {
       } else {
         const layer = currentScreen.layers[layerIndex - 1];
         if (!layer) return;
-        
+
         layerMap = app.state.quest.maps[layer.map];
         layerScreens = layerMap.screens;
         layerScreen = layerMap.screens[layer.x][layer.y];
-        
+
         this.layerContainers[layerIndex].alpha = layer.opacity ?? 1;
       }
 

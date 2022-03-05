@@ -159,6 +159,7 @@ export class PlayGameMode extends QuestMakerMode {
 
     this.layers[2].addChild(this.swordSprite);
 
+    // This crops out the transitioning screen.
     const mask = new PIXI.Graphics();
     mask.beginFill(0);
     mask.drawRect(0, 0, tileSize * screenWidth * this.app.pixi.stage.scale.x, tileSize * screenHeight * this.app.pixi.stage.scale.y);
@@ -206,7 +207,7 @@ export class PlayGameMode extends QuestMakerMode {
 
     this.ticksOnScreen += 1;
 
-    if (!state.game.screenTransition && state.currentScreen.warps.timedWarpTicks && this.ticksOnScreen >= state.currentScreen.warps.timedWarpTicks/2) {
+    if (!state.game.screenTransition && state.currentScreen.warps.timedWarpTicks && this.ticksOnScreen >= state.currentScreen.warps.timedWarpTicks / 2) {
       state.game.screenTransition = this._createScreenTransitionFromWarp(state.currentScreen.warps.sideWarps[0]).transition;
     }
 
@@ -1150,7 +1151,7 @@ export class PlayGameMode extends QuestMakerMode {
     const targetMapIndex = transition.dmap === undefined ? state.mapIndex : state.quest.dmaps[transition.dmap].map;
     const targetScreen = state.quest.maps[targetMapIndex].screens[transition.screen.x][transition.screen.y];
 
-    const setHeroPos =() => {
+    const setHeroPos = () => {
       if (transition.type === 'direct') {
         if (transition.position) {
           this.heroEntity.x = transition.position.x;

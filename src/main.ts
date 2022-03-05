@@ -118,7 +118,6 @@ function saveLocalStorage(data: any) {
 async function load(quest: QuestMaker.Quest, questBasePath: string) {
   PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
   const pixi = new PIXI.Application({
-    transparent: true,
     width: 800,
     height: 600,
   });
