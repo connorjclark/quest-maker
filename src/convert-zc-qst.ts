@@ -1,11 +1,11 @@
 import * as assert from 'assert';
-import * as constants from '../src/constants';
-import makeQuest from '../src/make-quest';
-import { EnemyType, ItemType } from '../src/types';
-import { defaultGuys } from './default-guys';
-import { QuestRules } from './quest-rules';
+import * as constants from '../src/constants.js';
+import makeQuest from '../src/make-quest.js';
+import { EnemyType, ItemType } from '../src/types.js';
+import { defaultGuys } from './default-guys.js';
+import { QuestRules } from './quest-rules.js';
 import struct from './third_party/struct.mjs';
-import { EnemyFamily, Sfx, WarpType, WeaponTypeGameEngine } from './zc-constants';
+import { EnemyFamily, Sfx, WarpType, WeaponTypeGameEngine } from './zc-constants.js';
 
 const { tileSize, screenWidth, screenHeight } = constants;
 

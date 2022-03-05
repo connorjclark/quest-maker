@@ -1,7 +1,7 @@
-import * as constants from './constants';
-import { PlayGameMode } from './play-game-mode';
-import { EnemyType } from './types';
-import * as Utils from './utils';
+import * as constants from './constants.js';
+import { PlayGameMode } from './play-game-mode.js';
+import { EnemyType } from './types.js';
+import * as Utils from './utils.js';
 
 const { screenWidth, screenHeight, tileSize } = constants;
 

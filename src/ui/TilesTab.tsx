@@ -1,10 +1,10 @@
 import { h, Component } from 'preact';
 import { useContext, useEffect, useRef } from 'preact/hooks';
-import { Tile } from './common';
-import * as Utils from '../utils';
-import { tileSize } from '../constants';
-import { AppContext, QuestMakerProps } from './QuestMaker';
-import { TileEditor } from './TileEditor';
+import { Tile } from './common.js';
+import * as Utils from '../utils.js';
+import { tileSize } from '../constants.js';
+import { AppContext, QuestMakerProps } from './QuestMaker.js';
+import { TileEditor } from './TileEditor.js';
 
 type TilePickerProps = {
   tiles: QuestMaker.Tile[];

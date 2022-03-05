@@ -3,7 +3,7 @@ import { useMemo } from 'preact/hooks';
 import createStore from 'redux-zero';
 import { Provider, connect } from 'redux-zero/preact';
 import { Actions, BoundActions } from 'redux-zero/types/Actions';
-import { tileSize } from '../constants';
+import { tileSize } from '../constants.js';
 
 export type ComponentProps<S, T extends Actions<S>> = S & BoundActions<S, T>;
 type OmitFirstArg<F> = F extends (x: any, ...args: infer P) => infer R ? (...args: P) => R : never;

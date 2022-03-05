@@ -1,4 +1,4 @@
-import { EnemyType } from './types';
+import { EnemyType } from './types.js';
 
 export default function () {
   const graphics: QuestMaker.Graphic[] = [];

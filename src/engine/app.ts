@@ -1,4 +1,4 @@
-import { Mode } from "./mode";
+import { Mode } from './mode.js';
 
 interface KeysState {
   down: Record<string, boolean>;

@@ -1,16 +1,16 @@
-import * as constants from './constants';
-import { EditorMode } from './editor-mode';
-import { PlayGameMode } from './play-game-mode';
-import { QuestMakerApp } from './quest-maker-app';
-import { ItemType } from './types';
-import { makeUI } from './ui/QuestMaker';
-import { readZCQst } from './read-zc-qst';
-import { convertZCQst } from './convert-zc-qst';
-import { createLandingPage } from './ui/LandingPage';
-import { QuestRules } from './quest-rules';
-import { ScreenFlags } from './screen-flags';
-import { TileFlag } from './tile-flags';
-import { EnemyFlags } from './enemy-flags';
+import * as constants from './constants.js';
+import { EditorMode } from './editor-mode.js';
+import { PlayGameMode } from './play-game-mode.js';
+import { QuestMakerApp } from './quest-maker-app.js';
+import { ItemType } from './types.js';
+import { makeUI } from './ui/QuestMaker.js';
+import { readZCQst } from './read-zc-qst.js';
+import { convertZCQst } from './convert-zc-qst.js';
+import { createLandingPage } from './ui/LandingPage.js';
+import { QuestRules } from './quest-rules.js';
+import { ScreenFlags } from './screen-flags.js';
+import { TileFlag } from './tile-flags.js';
+import { EnemyFlags } from './enemy-flags.js';
 
 const { screenWidth, screenHeight } = constants;
 

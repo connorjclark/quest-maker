@@ -1,4 +1,4 @@
-import { App } from "./app";
+import { App } from './app.js';
 
 export class Mode<A extends App<S>, S> {
   protected container = new PIXI.Container();

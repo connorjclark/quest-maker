@@ -1,8 +1,8 @@
-import { App } from "./engine/app";
+import { App } from "./engine/app.js";
 // @ts-ignore
 import Timidity from 'timidity';
-import { makeUI } from "./ui/QuestMaker";
-import { tileSize } from "./constants";
+import { makeUI } from "./ui/QuestMaker.js";
+import { tileSize } from "./constants.js";
 
 const audioBufferCache = new Map<string, AudioBuffer>();
 

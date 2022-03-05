@@ -1,10 +1,10 @@
 import { render, h, Component, createContext, JSX } from 'preact';
 import { useContext, useEffect, useRef, useState } from 'preact/hooks';
-import { ComponentProps, createSubApp } from './common';
-import * as Utils from '../utils';
-import { TabbedPane, TabbedPaneProps } from './TabbedPane';
-import { EditorScreenArea } from './EditorScreenArea';
-import { TilesTab } from './TilesTab';
+import { ComponentProps, createSubApp } from './common.js';
+import * as Utils from '../utils.js';
+import { TabbedPane, TabbedPaneProps } from './TabbedPane.js';
+import { EditorScreenArea } from './EditorScreenArea.js';
+import { TilesTab } from './TilesTab.js';
 
 class Header extends Component {
   render() {

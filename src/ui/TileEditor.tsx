@@ -1,6 +1,6 @@
 import { h, Component } from 'preact';
-import { TileType } from '../tile-type';
-import { Tile } from './common';
+import { TileType } from '../tile-type.js';
+import { Tile } from './common.js';
 
 type TileEditorProps = {
   tile: QuestMaker.Tile;

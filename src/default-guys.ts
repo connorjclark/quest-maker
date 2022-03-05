@@ -1,4 +1,4 @@
-import { EnemyAnim, EnemyDefense, EnemyFamily, EnemyGuyType, EnemyMisc1, EnemyMisc2, EnemyMisc7, EnemyMisc8, EnemyMisc9, ItemSet, Sfx, SpritePalette, WeaponTypeGameEngine } from "./zc-constants";
+import { EnemyAnim, EnemyDefense, EnemyFamily, EnemyGuyType, EnemyMisc1, EnemyMisc2, EnemyMisc7, EnemyMisc8, EnemyMisc9, ItemSet, Sfx, SpritePalette, WeaponTypeGameEngine } from "./zc-constants.js";
 
 const fields = [
   'flags', 'flags2', 'tile', 'width',

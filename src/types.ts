@@ -1,7 +1,7 @@
-import { QuestMakerApp } from "./quest-maker-app";
-import { QuestMakerMode } from "./quest-maker-mode";
-import { TileFlag } from "./tile-flags";
-import { TileType } from "./tile-type";
+import { QuestMakerApp } from "./quest-maker-app.js";
+import { QuestMakerMode } from "./quest-maker-mode.js";
+import { TileFlag } from "./tile-flags.js";
+import { TileType } from "./tile-type.js";
 
 export enum EnemyType {
   NORMAL = 'normal',

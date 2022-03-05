@@ -1,15 +1,15 @@
-import * as constants from './constants';
-import { QuestMakerMode } from "./quest-maker-mode";
-import { EnemyType, ItemType } from './types';
-import * as Utils from './utils';
-import { QuestEntity, MiscBag } from './entity';
+import * as constants from './constants.js';
+import { QuestMakerMode } from './quest-maker-mode.js';
+import { EnemyType, ItemType } from './types.js';
+import * as Utils from './utils.js';
+import { QuestEntity, MiscBag } from './entity.js';
 import 'pixi-plugin-bump';
-import { TileFlag, SecretCombo, getPushData } from './tile-flags';
-import { getWarpIndex, TileType } from './tile-type';
-import { ScreenFlags } from './screen-flags';
-import { QuestRules } from './quest-rules';
-import { Sfx } from './zc-constants';
-import { EnemyFlags } from './enemy-flags';
+import { TileFlag, SecretCombo, getPushData } from './tile-flags.js';
+import { getWarpIndex, TileType } from './tile-type.js';
+import { ScreenFlags } from './screen-flags.js';
+import { QuestRules } from './quest-rules.js';
+import { Sfx } from './zc-constants.js';
+import { EnemyFlags } from './enemy-flags.js';
 
 const { screenWidth, screenHeight, tileSize } = constants;
 
