@@ -13,7 +13,7 @@ for (let i = 0; i < questManifest.length; i++) {
 
   if (questMeta.urls.length === 0) {
     questMeta.playable = false;
-    questMeta.error = 'no valid qst files';
+    questMeta.errors = ['no valid qst files'];
     continue;
   }
 

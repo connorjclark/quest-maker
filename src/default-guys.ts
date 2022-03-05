@@ -359,6 +359,3 @@ export const defaultGuys = [
   guy.misc = [guy.m1, guy.m2, guy.m3, guy.m4, guy.m5, guy.m6, guy.m7, guy.m8, guy.m9, guy.m10, guy.m11, guy.m12, guy.m13, guy.m14, guy.m15];
   return guy;
 });
-
-
-console.log(defaultGuys[10]);

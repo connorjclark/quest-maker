@@ -30,7 +30,9 @@
     "tipsAndCheats": "- Use the Lens of Truth everywhere once you get it! There's many secrets to be found.\n- There's a level 1 cheat code that somebody will tell you, but you won't know when you learn it.\n- Play the Money Making Game! It's located in Kakariko Village, where you start the game, so earning money fast can be easy with it.",
     "credits": "I used some tiles that are related to some of the tiles from PrinceMSC's The Revenge quest.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Fall uh de Honky Pig",
@@ -52,7 +54,9 @@
     "tipsAndCheats": "None.",
     "credits": "- KJAZZ for beta testing.\n- DarkFlameWolf for beta testing and taking it upon herself to fix the bugs.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "The Revenge",
@@ -74,7 +78,9 @@
     "tipsAndCheats": "None.",
     "credits": "None.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "The Revenge 2nd Quest",
@@ -94,7 +100,9 @@
     "tipsAndCheats": "None.",
     "credits": "None.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Unification",
@@ -117,7 +125,9 @@
     "tipsAndCheats": "Look at everything! This quest can get confusing at times, but simply think and you can get through alive!This quest has a lot of backtracking where you will have to come back to a dungeon later when you have more items.",
     "credits": "Quest Name: QaleBeta Testers (Thanks for the help!):Jaye (JayeM on the AGN forums)Ben_Sim123mander07Truls RohkNerdWarriorTiles: Some from me and the rest from various tilesets.Palatte Work: Custom palattes from me . The original BS Palattes were NOT from me!",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Turnabout",
@@ -134,7 +144,9 @@
     "tipsAndCheats": "None.",
     "credits": "None.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Puzzle Quest",
@@ -158,7 +170,9 @@
     "tipsAndCheats": "- Level 2 has some crazy puzzles... One has a ladder-problem as the solution to finish it! So stay half on the water and on the block to push it up!\n- Level 3 is very hard... and something isn't as it looks...\n- The cheat code is sold in Level 2.",
     "credits": "None.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "CGBZ First Quest",
@@ -181,7 +195,9 @@
     "tipsAndCheats": "None.",
     "credits": "None.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Triforce of Courage",
@@ -203,7 +219,9 @@
     "tipsAndCheats": "Use bombs thoroughly.",
     "credits": "Teclis and ImHoney for beta testing.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Eckland",
@@ -229,7 +247,9 @@
     "tipsAndCheats": "None.",
     "credits": "None.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Pure Quest",
@@ -253,7 +273,9 @@
     "tipsAndCheats": "None.",
     "credits": "Everyone who made the Pure Tileset.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Idiot In Another Dimension",
@@ -275,7 +297,9 @@
     "tipsAndCheats": "None. >=)",
     "credits": "PrinceMSC for his tileset.\nAnd everybody else for the ideas.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Shadow of Evil",
@@ -297,7 +321,9 @@
     "tipsAndCheats": "None.",
     "credits": "Beta tester- ImHoney7",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Death Mountain",
@@ -319,7 +345,9 @@
     "tipsAndCheats": "There is no password on my quest so feel free to look around.",
     "credits": "None.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "The Legend of Zelda: Triforce's Curse",
@@ -340,7 +368,9 @@
     "tipsAndCheats": "There are no cheat codes.\n\nYou may e-mail me if you are stuck.",
     "credits": "Justin for testing my game.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Doublevision",
@@ -361,7 +391,9 @@
     "tipsAndCheats": "None.",
     "credits": "Mr. Z and the editors of the Pure Tileset.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Fragments of Power",
@@ -385,7 +417,9 @@
     "tipsAndCheats": "There is a secret golden arrow cave that is available to you after snagging the flippers, see if you can find it! The master dungeon is also available after snagging the flippers. Super bombs are a must in this quest, so find the mushroom to give to the silent lady as quickly as possible to buy super bombs and potions! (hint: try checking near level 3)\n\nVideo Walkthrough of Fragments of Power",
     "credits": "None.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "The Legend Of Zelda: Ganon's Reign",
@@ -402,7 +436,9 @@
     "tipsAndCheats": "Level 1: cottonball\nLevel 2: ilikecheese\nLevel 3: fuzzybellybutton\nLevel 4: zestyarmpits",
     "credits": "phil the author of Ganon's Reign.\nSPECIAL THANKS TO : PHANTOM MENACE \nfor making my game possible.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Lands of Serenity",
@@ -490,7 +526,9 @@
     "tipsAndCheats": "You'll have to learn to be a good rock climber in level *. The clue is in the orange simbles, look closely at them 3 tiles to a simble.",
     "credits": "Me and Zelda Classic ZQuest editor.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Geepa's First Quest (Beta182 version)",
@@ -512,7 +550,9 @@
     "tipsAndCheats": "The 2nd dungeon has a room with a bat ringleader in it which is very useful early on.\n\nDo explore very carefully after getting a Triforce piece.\n\nThe level 1 cheat can be found by beating the quest.",
     "credits": "None.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Maze",
@@ -532,7 +572,9 @@
     "tipsAndCheats": "Don´t give up. It´s completely correct, but it can be difficult. (especially the third dungeon that is a great maze)",
     "credits": "None.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Jimmy Beat World",
@@ -556,7 +598,9 @@
     "tipsAndCheats": "None.",
     "credits": "None.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Hero of Time",
@@ -580,7 +624,9 @@
     "tipsAndCheats": "Just because you've finished the game doesn't mean the fun's over. Go exploring with your new found treasure.",
     "credits": "This was pretty much my own work, but thanks to anyone who made the quests from which some of the music was stolen. Also thanks to The Games Factory for additional music. Thanks to Mike Curry for being my inspiration. I loved his \"Revenge\" series and wanted to try and outdo him. Cheers Mike!",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Link's Treasure Hunt",
@@ -601,7 +647,9 @@
     "tipsAndCheats": "None.",
     "credits": "None.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "The New2nd Quest",
@@ -618,7 +666,9 @@
     "tipsAndCheats": "None.",
     "credits": "Warlock for the New1st tileset.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "The 8 Medallions",
@@ -645,7 +695,9 @@
     "tipsAndCheats": "No cheats\nDon't worry about not having a sword. You\\'ll find it in the first dungeon.",
     "credits": "Game by Hannah Langston",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Zelda 3000",
@@ -665,7 +717,9 @@
     "tipsAndCheats": "Read the .doc file - no cheats though.",
     "credits": "Music by various artists\nGame by me\nAdditional graphic assistance by Hannah Langston",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "First Quest",
@@ -682,7 +736,9 @@
     "tipsAndCheats": "None.",
     "credits": "Music by various artists\nGame by Nintendo\nGraphics by me\nAdditional Graphics by Hannah Langston",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "King Quest",
@@ -699,7 +755,9 @@
     "tipsAndCheats": "Some tips:\n\n-Cheats are for chumps. \n-Bombs hurt, so handle with care\n-I'm not sure how often the Death Knight Darknuts are used, but I used them!  Don't worry, I was careful in using them.",
     "credits": "None.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "The Hidden Duality: Director's Cut",
@@ -727,7 +785,9 @@
     "tipsAndCheats": "Be mindful of the tips and hints that the info givers give you. They do not lie about what they say!\n\nVideo Walkthrough of Hidden Duality",
     "credits": "My testers: Synbios, Blonde, and anyone else I forgot to mention.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "MegaMan Data Quest",
@@ -750,7 +810,9 @@
     "tipsAndCheats": "Try to have a potion with you at all times just in case things get a little tough. Make sure to always check walls and grounds very closely because you'll just about always find a difference in the tiles placed around.  One great tip is to take your time and pace yourself or you can get killed very quickly. You earn all 24 hearts so just watch your moves. One thing is the ending. Make sure to try your best to live the impossible.",
     "credits": "Credits for this game are givin to the followin:\n\n  Spade: as in me for makin it\n  PolygonX8: provided alot of help with lots of items and \n                   making\n   Ace: My brother who helped me plan out some of the items\n            and such\n  \n   and a few others who played, tested and gave me props to keep it going.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "The Legend of Zelda",
@@ -772,7 +834,9 @@
     "tipsAndCheats": "Read the \"Zelda-Ages.txt\" for more instructions.",
     "credits": "None.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "MegaMan Turbo Drive",
@@ -795,7 +859,9 @@
     "tipsAndCheats": "Tips: Don't rely on one weapon. I made sure that you have to use all of your weapons a lot in this game in different ways, from fighting a foe with a weakness, to getting to the next erea.\n\nTo progress in the game is easy, it's hard to get lost or puzzled. The true secret is finding the items that make your journey easier, such as the shield shield, rings and so on. Some of these items are hidden in levels and some are just given to you.\n\nYou also get all 24 hearts, so you must find these in the overworld and in the stages, so keep a sharp eye for weird ground or walls that don't seem to match with other ones. \n\nNote: Some colors are messed up purposely because you can either walk through this wall or it has some secret to it.\n\nAnother tip: Things in this game are practically free, so when you find zero make sure to get the free red potions and go back for refills too.\n\nNeed help? Add me or email me @ spade_03@hotmail.com.",
     "credits": "PolygonX8 for sharing his metroid tiles to put more feel of future in this game in the dugeons. Missiles, pipes, ect...\n\nAce whos the only person I can depend on in real life, \n\nPureZC for letting me post my quest here for you to try out.\n\nYou for giving my quest a chance to play it and enjoy it.\n\nAnd me for making it.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "King Quest the 2nd",
@@ -821,7 +887,9 @@
     "tipsAndCheats": "-Always have a potion handy!\n\n-You can get a lot of money in the game if you search well.  You will need a large amount of rupees late in the game, so be careful how you spend them. \n\n-If you found the secret dungeon in King Quest 1, don't bother looking for one in King Quest 2.",
     "credits": "I should probably thank the people who allow everyone to use their MIDIs.  They do good work!  If you hear your MIDI in my game, be proud that I've used it. ",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Dead Land",
@@ -838,7 +906,9 @@
     "tipsAndCheats": "Listen to what the people say; many of them will give you hints and advice.  If you get really stuck and can't find a key, or you lose your shield to a like-like, there is a special shop on a special island where you can buy them.\n\nDungeons\n(WARNING!  Do not read if you want to find the dungeons yourself!!!)\n\nBecause there are three overworlds I'll tell you where all of the dungeons are.\n\n1-Bottom left in Tenn\n2-Bottom right in Tenn\n3-Upper left in Tenn\n4-Upper left in the Dead Land\n5-Upper left of Montar\n6-Upper right of Montar\n7-Upper right of Frellan (a whistle warp)\n8-Middle of Montar\n9-In the heart of Hyrule (Dead Land) castle",
     "credits": "None.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "The Legend Of Zelda: Thug In Hyrule",
@@ -861,7 +931,9 @@
     "tipsAndCheats": "1.) Press Up when you are on the raft to get to the heart container piece.\n2.) Play the ocarina at the fairy fountain to better your sword.",
     "credits": "Ray T. and Leon B. of L.B. Mixed Productions,\nWarlock and PerfectGreg for the tilesets.\nWild Bill for inspiration.\n---------\nFull Credits displayed once you finish the game.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "LoZ: The Quest Through Time",
@@ -880,7 +952,9 @@
     "tipsAndCheats": "\"If there are any wall bugs, the L4 cheat is 'future'\"\n\nUnlike 13 years ago (where I'm pretty sure I just wanted the quest [i]over[i] with), I've actually taken the time to squish all these random bugs. Still, if any persist, I've left the cheat in there. Just let me know, and I'll fix them!",
     "credits": "\"Warlock for making Newfirst anyway.DarkDragoonX for making the tileset I used for thisPrettyBoy (PrinceMSC)for making the Revenge2 tileset.(I got some tiles from that.)\"Additional thanks to anyone who's given me advice over the years since I released this, and Rambly for bug testing. You've all been a great help!",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "HowHigh",
@@ -906,7 +980,9 @@
     "tipsAndCheats": "Almost all of the overworld screens have an item and a cave/warp, so be VERY thorough in your explorations. Be careful with limited items, as they are, well, limited. There are no cheat codes for this game. If someone is inspired to add/change/export content I may release to them the edit code upon receipt of a detailed request. Here's a chapter summary (the titles really do say a lot about the content of each chapter) listing all items received except the map, compass, key and completion symbol from each chapter (each has each) of the game:1 – SandBox:Wooden BoomerangHerb Jar And SpoonWooden SwordBombsGlass BowlKiefWooden Arrows2 – SplashDown:Blue Lighter3 – FireWall:LadderAbsorbing ShieldMedium WalletBlue CapCold Metal BoomerangSunglasses4 – BullsEye:CrossbowStone SwordCellphone5 – TimeBomb:DynamiteMedium Bomb BeltRaftLarge Bomb BeltPurple LighterCold Metal Arrows6 – WhirlWind:Right Turquoise Glove7 – HeatStroke:ShockerBootsRed CapLeft Ruby GloveFlamethrower FuelDeflecting ShieldHot Metal Boomerang8 – HighHead:HammerCold Metal SwordGameboyLarge WalletGrappling HookSnorkel And MaskHot Metal SwordNeed more help? What follows are some tips based on questions I have received from people playing the game.-Look for a prize and a door on each overworld screen-Pay attention to what people tell you; many messages won't be repeated-Seek alternate entrances-Progress West-Hotstepping moonwalking agility may be required-The chapter titles and the name of the game are relevant to your progress-Don't be scared of high level numbers (nor anything related to being high, like heights, as an example)If, after considering the above tips, you are still struggling in lower levels, I have an old walkthrough that probably is still relevant enough to give the coordinates to whichever item you mindburstingly can't locate. Holler at your boy. I can be reached at: trudatman [AT] gmail [DOT] com if you need me.",
     "credits": "Deserving of the most thanks is my major coconspirator in this endeavor, Wolfo, the composer of all of the music in the game. I want to extend an honest thanking to everyone who has tested/played/reviewed this quest in any of it's many (this thing is thirteen years old and still alive) past/current/future (?) incarnations. Thank you, also, to those who regularly test quests and/or answer questions for questmakers. Thank you to whomever ported the tileset that I modified. Additionally, thank you to the people of the sites that host these files.If none of the above describes you, I invite you to go thank yourself.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Vargen's First Quest",
@@ -928,7 +1004,9 @@
     "tipsAndCheats": "None.",
     "credits": "Aphid & Kurthunter (betatesters)\nAlphaDawg's awesome tutorial",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Escape from Hyrule",
@@ -945,7 +1023,9 @@
     "tipsAndCheats": "*Get a magic shield before heading into Level 3.\n*Do NOT use your whistle and jump into the whirlwind until you have beat all 8 levels. You'll have to restart.\n*Read the read-me?",
     "credits": "Paul, ImHoney, Rockhard, AlexMad",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "4th",
@@ -962,7 +1042,9 @@
     "tipsAndCheats": "None.",
     "credits": "None.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "5th",
@@ -981,7 +1063,9 @@
     "tipsAndCheats": "Look carefully, explore everything.  Never give up.  You never know when you find something you weren't expecting.",
     "credits": "To all those who have beta tested, played through and found certain mistakes, and to everyone who has tried the quest.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Orion's LightWorld",
@@ -1003,7 +1087,9 @@
     "tipsAndCheats": "None.",
     "credits": "None.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "The Quest",
@@ -1024,7 +1110,9 @@
     "tipsAndCheats": "None really.",
     "credits": "Myself.",
     "playable": false,
-    "error": "error: 1"
+    "errors": [
+      "error: 1"
+    ]
   },
   {
     "name": "The Realm of Shamanock",
@@ -1047,7 +1135,9 @@
     "tipsAndCheats": "You get a free game tip after you download this quest. It worth the download if you just want to know what the game tip is.UPDATE: The game tip has been edited at your convenience",
     "credits": "I made this quest myself.\n\n-crackasize-\n\nLike me on FaceBook",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Zelda Chronicles: Chapter1",
@@ -1069,7 +1159,9 @@
     "tipsAndCheats": "Unpassworded",
     "credits": "10% percent goes to JayeM for sending me the bugs and beta testing.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Zelda Chronicles: Chapter 2",
@@ -1091,7 +1183,9 @@
     "tipsAndCheats": "none",
     "credits": "To Phantom Menace for making Zelda Classic.\nTo Dark Nation and Fatcan for programming it afterwards.\nTo the player for playing the game.\nTo PureZC for giving me a place to release it.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Zelda Chronicles: Chapter 3",
@@ -1114,7 +1208,9 @@
     "tipsAndCheats": "The password is hydra.",
     "credits": "None.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Unofficial 6th",
@@ -1153,7 +1249,9 @@
     "tipsAndCheats": "Don't give up.  The items you find in each dungeon should help you out, but only one item seems to be useless cause I thought I needed it and I didn't, but it's there just in case I do an update to make use of it.",
     "credits": "Snort, ms_zelda_lady",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "New Quest",
@@ -1177,7 +1275,9 @@
     "tipsAndCheats": "Lens of Truth is now in the 10th Dungeon, but don't think of it until you beat Ganon....Bugfix in Lv. 8 so it now works flawlessly in 2.50",
     "credits": "Meta and JayeM: Beta TestingAll credit otherwise retroactive to old releases",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Isle of the Winds",
@@ -1205,7 +1305,9 @@
     "tipsAndCheats": "Read the .doc file that comes with it for semi-spoilers.\n\nVideo Walkthrough of Isle of the Winds",
     "credits": "Testers: Paul_doo, Synbios and Hero Link.\nSpecial thanks to BH4 for giving me the new Link tiles.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "The Legend of Zelda: Origins",
@@ -1228,7 +1330,9 @@
     "tipsAndCheats": "Try a lot of things, there are more push blocks and a lot more to do.",
     "credits": "None.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "The Realm of Shamanock",
@@ -1253,7 +1357,9 @@
     "tipsAndCheats": "You get a free game tip after you download this quest. It worth the download if you just want to know what the game tip is.The secret Link is different for this one:wink:UPDATE: The game tip has been updated for your convenience",
     "credits": "I made this quest myself. I would like to thank all those who took the time to get this software to where you can go 16-bit.\n\n-crackasize-\n\nLike me on FaceBook",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "James Quest",
@@ -1272,7 +1378,9 @@
     "tipsAndCheats": "Darknut tip: Stand sideways and slash. It will go through their shields",
     "credits": "AlphaDawg: TestingZoriaRPG: Getting 2.53 to work with all old stuff nearly flawlesslyOthers, can't remember",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Unofficial 5th Master Quest",
@@ -1289,7 +1397,9 @@
     "tipsAndCheats": "Same as Unofficial 5th",
     "credits": "Those that played and enjoyed Unofficial 5th, myself for creating it, the person who made the New 1st tile set, Snort, ms_zelda_lady, and everyone else I forgot.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Gina's Journey",
@@ -1309,7 +1419,9 @@
     "tipsAndCheats": "You need a superbomb to get into Level 4 which you find in Level 3. Also you can get the Levels 1 & 2 cheat codes buy paying for them. Look for a cave hidden behind a wall of ice.",
     "credits": "My fiance Gina for letting me use her as the heroine for this quest.\n\nPolygon X8 who told me not to be shy in posting my first ever quest submission.\n\nAll of the members who posted tilesets for me to use (I'm sorry for the fact that I forgot to write down your names but you all rock).\n\nArmageddon Games for releasing Zelda Classic to use on the PC.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "The Legend of Zelda: Ganon's Return",
@@ -1332,7 +1444,9 @@
     "tipsAndCheats": "None.",
     "credits": "None.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "HADHAD's First Adventure",
@@ -1355,7 +1469,9 @@
     "tipsAndCheats": "If you must use cheats, the level 1 and level 2 cheats are given within the game, but you must pick them up from what people say. It may not be clear that they are giving you a cheat. Make sure to check every screen for secrets.",
     "credits": "I had a lot of help from Jish, who also made a few quests.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Bikdip's Adventure",
@@ -1383,7 +1499,9 @@
     "tipsAndCheats": "There are some hidden areas throughout the game - 6 in total. You will find information on these after level 2. They shouldn't be terribly hard to find if you just keep your eyes open. Well, except the last one. It will require searching with the Lens of Truth. There is a level 1 cheat that you can fine as well. Also, the best speed run time as of now is 43:55. Try and get close to it! I bet you can't beat it...",
     "credits": "Game created completely by Jish. Game hosted, posted, and Bikdip character by me, Green Lantern. Music from vgmusic.com - all midis belong to their respective creators.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Mitch",
@@ -1411,7 +1529,9 @@
     "tipsAndCheats": "Tips: Try to find the battle screen on most overworld screens so you can make money. Also keep track of what Heart Pieces you get - there are a lot of them.\n\nCheats: You will be told a cheat of sorts if you beat the game once. There is also a small glitch you can take advantage of to get lots of extra money.",
     "credits": "Game by Jish. Game hosted and posted by Green Lantern. Music from vgmusic.com - all midis belong to their respective creators.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Gina's Journey 2",
@@ -1432,7 +1552,9 @@
     "tipsAndCheats": "The Levels 3 & 4 cheats can be found in a hidden cave. Use the Lens of Truth to find all hidden caves and rooms. Levels 1, 4, 5, and 9 are in the same place but Levels 2, 3, 6, 7, and 8 are switched around.   ",
     "credits": "My fiance Gina who's the main character in the quest.\n\nPureZC for posting it.\n\nEveryone who made the tilesets that are used in this quest.\n\nArmageddon Games for releasing Zelda Classic for the PC.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Origins 2nd Quest",
@@ -1455,7 +1577,9 @@
     "tipsAndCheats": "You have to complete each dungeon in order.\nYou'll need an item from a prior dungeon to complete and/ or enter the next. Basically like the newer Zelda games",
     "credits": "None.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "The Legend of Zelda: Master Quest",
@@ -1479,7 +1603,9 @@
     "tipsAndCheats": "- When in doubt, remember back to the original Zelda games to determine what should and shouldn't be possible.\n- Bomb every wall.\n- Burn every bush.\n- Play your ocarina on occasion.\n- Press against dungeons walls often. Some of them are false walls.\n- If there are items you *know* you will need eventually, try to buy or find them as early as you can. MQ GREATLY rewards foresight.\n- Refer to the subscreen map often in dungeons. Mark unexplored areas, and remember where you need to go.  Backtrack often!\n- If you're stuck, search the overworld for hint-giving old men.  In MQ they really are helpful!\n\nIf all else fails, check the FAQ included in the zip file for hint-a-licious assistance.",
     "credits": "* MQ Beta Testers: *\n\nplith\nCrystalBlade\nLinkman90\nHero Link\nIan\nCodelinker\n\n* Other thanks: *\n\nBH4\nTeilyr\nStarfox\nms_zelda_lady\nThe PureZC Forums\n\nCheck the Readme for more detailed credits!",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "MegaMan: Dr.Wily's Revenge",
@@ -1504,7 +1630,9 @@
     "tipsAndCheats": "Read the MMDWR DC Readme file for tips and important info about the gameplay mechanisms.",
     "credits": "That's a big list! Beat the quest to see the ending credits.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "The Wrath and Longing of Nemel",
@@ -1532,7 +1660,9 @@
     "tipsAndCheats": "None, just use the 184 player.",
     "credits": "Tiles: plith, NoeL, rexlaninetales, Marcus, Radien, Ccc, Wild Bill, BH4, PrinceMSC, Teilyr, Mr. Z, and probably some more people I forgot. \nMusic: sequencers and composers from www.vgmusic.com \nA special credit to André who composed The End music. \nOther: All the people on the www.purezc.net forums.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Hyrule in Chaos",
@@ -1558,7 +1688,9 @@
     "tipsAndCheats": "Read the HIC document for tips & useful information.\nThere's a HIC walkthrough available on my website.",
     "credits": "Everyone else who enjoy playing Zelda Classic quests. Special thanks to Elise for beta testing the quest.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "The Tao of Link",
@@ -1586,7 +1718,9 @@
     "tipsAndCheats": "Just your usual Link rescue Zelda from Ganon quest \nI hope you enjoy the oriental music & gameplay in the quest \nThere is a SFX sound file which is available on my Website.",
     "credits": "Elise for inspiration,\nFreedom for his sprites.\nJoe for good quest review,\nBH4 for his floating bridge,\nDarkFlameWolf for her unique trees,\nBanjooie for the 8 color tree,\nDart Zaidyer for the Link sprites,\nSystem Error for the dungeon entrances,\nLinkTheMaster for his 3D pagoda,\nNoel for his Japanese Oriental Houses,\nFlippedupmonkey for the Black Chests,\nPolygonx8 for his spinning heart container and pieces.\nThe Pure Tileset Makers especially Wild Bill & Teilyr.\nAnyone else I may have forgotten to give credit to.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Demo Quest EX",
@@ -1635,7 +1769,9 @@
     "tipsAndCheats": "Revisit the floating islands after getting the hookshot, hammer and 2nd bracelet.",
     "credits": "Testers:\nHero Link. Darkflamewolf, Xenafan8304, Masterlink3000, Ben, Codelinker\n\nGraphics:\nRadien, NoeL, BH4, PolygonX8, Teilyr, Raptorscyther, Dart Zaidyer.\nEveryone who worked on the Pure Tilesets.\nAnyone I forgot!",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Vargen's First Quest Improved",
@@ -1711,7 +1847,9 @@
     "tipsAndCheats": "-Molka's Forts are chalk full of secret passages. Try getting the Map as soon as possible so you can find these passages better. Even without the Map, once you've gotten far enough in the Quest, you'll just know where things are.\n\n -Ganon's right about tougher enemies. In the later levels, you may be fighting a whole room of Blue Darknuts, or even 4 Manhandlas! There are Potion shops about, MAKE GOOD USE OF 'EM.\n\n -Statues are everywhere on the mountain. Use an item on them that they relate to, to clear a path. Memorize the paths on this mountain, learn 'em well. As you collect items from the Forts, you'll definitely need to move backward in order to move forward.\n\n -You can carry a maximum of 20 Bombs, once you find the shops. Some items are extremely rare and not required to win. The Magic Key can be bought for 980 Rupees. See, you weren't meant to have it! Try the Gold Ring instead. It's only about 700 Rupees.  \n\n-Like I said above, I made a \"workaround\" for the continue bug if you're using 2.10 instead of 1.92, but this still starts you out in the Boss Room. If you want to stop fighting the Boss over and over and get a potion or whatever, you still have to Quit->Save. It's the best I could manage to be compatible with both 1.92b and 2.10. Nothing major though.",
     "credits": "I'd like to thank the creators of Zelda Classic for, well, making Zelda Classic. My debuggers are Andrew Caris, myself and this other guy named Frank Zenner who e-mailed me and told me it was a good Quest; I thank them too. Lastly, I thank the whole ZC community for the constant uplifting comments about Molka I've received in the past! You guys make me glow! \n\nschwawarrior@yahoo.com is my e-mail address, by the way.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Armageddon Quest",
@@ -1739,7 +1877,9 @@
     "tipsAndCheats": "I give you the hint of dungeon.  \ndungeon name--------obtained important item----------item necessary to clear\nArmos temple---------bow,arrow--------------------------none\nB button pyramid-----wand,mirror shield-----------------red lantern or bow&arrow\nCastle of Ganon------cross,magic sword-----------------silver arrow\nForest restaurant-----big wallet,fire boomerang---------letter\nGamble dungeon-----red lantern,white sword-----------none\nHouse of Link---------wood sword,wood boomerang----none\nIce palace-------------bait,letter,whistle------------------bow and arrow\nRobber mansion------ladder-------------------------------none\n\nspecial rule\nNon-bubble medicine(The potion doesn't work for a red bubble)",
     "credits": "Japan:Nameless and many test players \nPureZC:The editors of the Pure Tileset",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "ABITHF (A Battle in the Hyrulian Fields)",
@@ -1808,7 +1948,9 @@
     "tipsAndCheats": "-=Cheats=-\nLevel 1 - Hyrule\nLevel 2 - Labbryna\nLevel 3 - Termina\nLevel 4 - Holodrum\n\n-=Hints=-\n1. To easily beat levels 1-2, bomb the cave on the east side of Mabe Village and enter. Finish it to get the Fire Boomerang, then go to the store and buy the level 2 sheild (Magic Sheild) and some bombs. Then go get the ladder and voila! \n2. Bomb every wall that dosen't have a door and try to walk through every wall without a door.\n3.Play the minigame Hazard Havoc as soon as you find it. This will make the game much easier to buy bombs for level 4. Try both hard and easy.\n4. The location of the HC pieces are as follows:\n\n\n1. Next to Link's house in the stakes. (You will need to go back to Hyrule once you get the candle to burn it. It's a long journey but it's worth it.)\n\n2. One in each dungeon from mini-bosses.\n\n3. One in Mabe village inside of the HC Piece lover's house.\n\n4. A couple inside of Icy Caves. (Heart Containers.)\n\n5. One in hard mode Hazard Havoc.\n\n6. Once in the middle of a patch of bushes in Mabe Village.\n\n7. One in the graveyard south of Ruby City in Hero's Crypt. (The maze path is left, up, right, up.)",
     "credits": "Phantom Menace and Dark Nation - For creating Zelda Classic\n\nGlenn The Great - For making the tileset that I used\n\nMe (Zelda Warrior) - For making the quest\n\nNintendo - For making Zelda",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Legend of Zelda Ganon's Revenge",
@@ -1865,7 +2007,9 @@
     "tipsAndCheats": "N/A",
     "credits": "VEL (Valerie Little)bigjoe for Lanmola scriptConn for help with the gigaleak assetsNintendo",
     "playable": false,
-    "error": "no valid qst files"
+    "errors": [
+      "no valid qst files"
+    ]
   },
   {
     "name": "Zero Quest",
@@ -2120,7 +2264,9 @@
     "tipsAndCheats": "Check out the readme for information on the layout of Hyrule and some extra hints.",
     "credits": "- Radien's New BS tileset for the \"vine-less\" dungeon walls and non-palette-cycling dungeon water\n\n- PrinceMSC's Revenge 2nd Quest, for inspiring the green dungeon water in Level 7.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Destiny Fullfilled",
@@ -2194,7 +2340,9 @@
     "tipsAndCheats": "Don't die... lol Seriously, try to get the Blue Tunic early, and be prepared for anything.",
     "credits": "The Pure Tileset creator(s). Everyone who made ZC. And my beta tester A guy and his game.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "The Legend of Link: and His Return To Snortsia",
@@ -2216,7 +2364,9 @@
     "tipsAndCheats": "Not too many hints, but here the are, 1 for each dungeon.\nDungeon in the Tree: Look for your boomerang, it will prove to be useful.\nSand Shrine: Leevers give you a headache, with the hammer, you can give them a headache!\nWarp Twisted Dungeon: The multiple sidewarps take you to the enterance,upon the addition of the boss key, you must fight through the dungeon again.\ntrap Dungeon: Watch for arrows on the walls! They point out hidden traps!\nNose Dungeon: This dungeon would be easier if you came in with the Red Shield.\nForest Temple: Grab the map, This dungeon has multiple enterances and exits!\nBig Wallet's Dungeon: The multiple paths will give you a headache. Try to remember which ways you have gone.\nWater Ruin: Try not to fall to your death. Mwahahahaha!\nDungeon of Ice and Lava: The first floor is very chilly, but the basement's hot like an oven. Be sure to bring your hammer with you!\nSiezure Temple: Try to play this one in fullscreen! The flashing colors may give you a seizure!\nGiant's Wallet Cave: Only one way to go! and that's not good.",
     "credits": "Dechipher: For composing a few MIDIs that are used in:\n\t\tOverworld (Transformed a MP3 to MIDI (which saved space)) <- Request from Snort: Please do not rip this.\n\t\tBig Wallet's Cave\n\t\tGanon's Tower: F1\n\t\t\tNOTE: These MIDIS are NOT to be used unless you contact Dechipher on AGN. Thank you.\n\nBH4 for the Gothic/Disco Style Dungeon Walls used in:\n\t\tBig Wallet's Cave\n\nMr. Z for making a few of the block puzzles used in various dungeons.\n\nMasterlink3000 for contributing Aganihm sprites for my first ever Custom Boss! ^_^\n\nMagi_Hero for donating a lightning bolt sprite for the lightning dungeon in ganon's realm.\n\nDJvenom for contributing armos statues seen in area 4 of Ganon's Realm.\n\nCodelinker & Link3505 for contributing some railroad track tiles for use in the Thunder Realm in Ganon's Realm.\n\nCodelinker for contributing a block puzzle to the Lightning Realm.\n\nDark Nation/Fat Cat Fan for creating the program we all love:\n\t\tZelda Classic\n\nNintendo for creating Zelda 1 for which Zelda Classic was a clone of.\n\nMe, Myself, and I for creating this tileset/quest\n\nVarious other people whom I missed from the above.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "The Legend of Link: and His Adventure To Snortsia",
@@ -2238,7 +2388,9 @@
     "tipsAndCheats": "None.",
     "credits": "BH4 for making such a wonderful tileset.\nOni_Link for comming up with the name of the \"Town of Abelia\" for me.\nSuperstrider for comming up with some of the MIDIS I should use in Ganon's Tower\nAnd all of my Testers who tested my quest for me.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Hyrule's Darkness",
@@ -2376,7 +2528,9 @@
     "tipsAndCheats": "Buy an extra key before proceeding to Level 4 Dungeon!\n\nThe very top of the map, there are three rocks in a v formation from the left side to the right side of the map. Get the Power Bracelet first and move a rock. One screen would be a walk through wall that you will be warped to a side-scrolling area. Something good lies ahead if you keep on going.\n\nBoth Parts I & II apply to the hints above.",
     "credits": "Myself only.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Spikes of Doom",
@@ -2537,7 +2691,9 @@
     "tipsAndCheats": "Use version 192b183\nThe spooky sound file makes the quest, move yours to another folder or rename it before grabbing this one. The sfx.dat is included in the zip.",
     "credits": "Special thanks to Elise, Joe, and Ielen for beta testing, and to Polygon8 for releasing his grim reaper sprites which were used in several frames.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Swansong",
@@ -2559,7 +2715,9 @@
     "tipsAndCheats": "The sfx.dat is included in the zip, move yours to another folder or rename it before grabbing this one.",
     "credits": "Everyone that came before me.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Search for Elise",
@@ -2581,7 +2739,9 @@
     "tipsAndCheats": "built and tested in 1.92 beta 184, so use the 184 player with it. You need the sfx file (included in zip) with \"The Search for Elise\" for it to sound right, rename or move yours to another folder.",
     "credits": "Everyone who came before me.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Quest for Freedom I",
@@ -2603,7 +2763,9 @@
     "tipsAndCheats": "Level maps and htm included in Zip file.\nVisit the graveyard before going to level 1",
     "credits": "The Zelda Classic community.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Quest for Freedom II",
@@ -2625,7 +2787,9 @@
     "tipsAndCheats": "Notes on game play.\n\nThe game is set up to follow the clues given at the end of each level in the \"exit message\".\nThe exit messages will tell you what area (usually dungeon levels) to go to next.\nThe red tile in the triforce room will allow you to go back and visit the exit messages again, should you need to.\nIn addition to the above, you should get to know the overworld well, several items that \nyou must have in the dungeons are in the overworld areas, so you should walk the whole \noverworld areas before becoming dependant on the warp chamber which might cause\nyou to overlook needed items and information.\nPeople in the overworld will also often give you good tips, if you just stop and talk to them.\n\nOnce you complete a level and grab the triforce piece you can blow your whistle, and\nyou will be picked up and flown back to the levels you've completed.\nThere are eight dungeon levels with eight triforce pieces, and the ninth level is where\nGanon is, if you have the courage to make it that far.",
     "credits": "credits;\nPrinceMSC for Rev.2 and old ML tiles, Orion for his LTTP tileset, plith for the Descendant Tileset of which this quest was started, and what the pallettes are, \nand many tiles collected from all over as well as many I made. \nThe info shop in the game is a salute to Prince for all his hard work with ZC, \nand because he released the Rev.2 unpassworded to help folks see how things work.\nThe guy's winking at Prince  :O)\nand thanks to IDK for the tutorial and a block puzzle in level 3.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Link To Tortuga",
@@ -2786,7 +2950,9 @@
     "tipsAndCheats": "You can use the sword beam more than 80%HP",
     "credits": "The editors of the Pure Tileset and many test players in Japan",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "How To:Make Multiple Switches",
@@ -3007,7 +3173,9 @@
     "tipsAndCheats": "The info guy hidden in the quest gives you pricey tips on special secrets found in the upcoming quest Lost Isle, not Wolfstyle DX. Just think of it as a teaser for Lost Isle and to give you a leg up on the quest when you finally do get your hands on it! \n\nVideo Walkthrough of Wolfstyle DX",
     "credits": "Kudos to my Testers:\nPetoe\nMs Zelda Lady\nSynbios1978\nKoopa\nNathaniel\nOuch!\nLove for Fire\nHero Link",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Death of Link",
@@ -3098,7 +3266,10 @@
     "story": "Basic Story.",
     "tipsAndCheats": "If your stuck in a dungeon, try walking through the walls.\n\nBuy as many superbombs as you can. Your gonna need 'em.\n\nIf you're stuck, try to find the next dungeon by using the item you got in the previous one. It doesn't always work, but usually it does.",
     "credits": "Me, MisterMarioMan.\nGod, for, well, existence.\nZelda Classic for the engine.\nAlphadawg for both the ZQuest Tutorial, which ended up giving me several screens and the first dungeon.",
-    "playable": true
+    "playable": false,
+    "errors": [
+      "bad warp, screen does not exist: dmap 2 dmap.xoff -2 screen -2"
+    ]
   },
   {
     "name": "Chibi Moon & Star",
@@ -3142,7 +3313,9 @@
     "tipsAndCheats": "None.",
     "credits": "None.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Easy Quest :D",
@@ -3326,7 +3499,9 @@
     "tipsAndCheats": "My original advice still stands, so let's review it, shall we?\n\n- When in doubt, remember back to the original Zelda games to decide your approach.\n- Bomb every wall.\n- Burn every bush.\n- Play your ocarina on occasion.\n- Press against dungeons walls often. Some of them are false walls.\n- If there are items you *know* you will need eventually, try to buy or find them as early as you can. MQ GREATLY rewards foresight.\n- Refer to the subscreen map often in dungeons. Mark unexplored areas, and remember where you need to go. Backtrack often!\n- If you're stuck, search the overworld for hint-giving old men.  In MQ they really are helpful!\n\nIf you need more help, check the FAQ included in the zip file for hint-a-licious assistance.\n\n\nAnd last but not least, if you want to cheat like crazy, open up the quest file in ZQuest and mess around to your hearts content. Since the quest is unpassworded, it uses the four standard cheat codes: 1, 2, 3, and 4. But remember, true Zelda gamers try to finish the game without cheats. ",
     "credits": "* MQ Remake Beta Testers: *\n\nrocksfan13\nMoonwhisper\n\n* Original MQ Beta Testers: *\n\nplith\nCrystalBlade\nLinkman90\nHero Link\nIan\nCodelinker\n\n* Other thanks: *\n\nShadowTiger (previously known as BH4)\nTeilyr\nFox (previously known as Starfox)\nms_zelda_lady\nThe PureZC Forums\n\nCheck the Readme for further credits!",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "LOZ: the Hyrule Legend",
@@ -3503,8 +3678,7 @@
     "story": "You (as Link) have crash-landed on a seemingly deserted island out in the middle of the ocean. With no real reference point to indicate where exactly you are in the world, you have no choice but to explore the island and find some way of getting off of it and back to the mainland.  \n\nThough it appears that there was once a civilization here that was thriving, all that has turned to dust and dead bodies.  Undead and foul creatures fill the villages and take shelter in the woods and creep through the dark corners of the island.  What could have caused this great catastrophe and is this great evil still alive and well as you explore the very land that it destroyed?\n\nWelcome to Lost Isle...",
     "tipsAndCheats": "Read the readme pdf file, it has more info than you can shake a stick at and more than likely has the most obvious answers to your general questions about the quest.\n\nMay no longer work in the Lost Isle Build.",
     "credits": "Lost Isle Map Painting:\nNoeL\n\nGraphics:\nPeteo\nGashin\nPrinceMSC\nMr. Z\nRadien\nWildBill\nPureSet Crew\n\nMusic:\nLee Jackson\nRobert Prince\n\nTesters:\n/M/\nelise\nkoopa\nNate\nSephiroth\nShadowTiger\nsynbios1978\nSystem Error\nSpecial Thanks:\nDark Nation\nFreedom, Ian & Jish",
-    "playable": false,
-    "error": "Expected values to be strictly equal:\n\n5 !== 0\n"
+    "playable": true
   },
   {
     "name": "Dark Link's Temple Tour",
@@ -3602,7 +3776,9 @@
     "tipsAndCheats": "None.",
     "credits": "None.",
     "playable": false,
-    "error": "Structure larger than remaining buffer"
+    "errors": [
+      "Structure larger than remaining buffer"
+    ]
   },
   {
     "name": "Hyrules Big Flood",
@@ -3770,7 +3946,10 @@
     "story": "Ganon has kidnapped Santa Clause - Link must get the Three Keys of Christmas and take down Ganon to get Santa back, or there won't be a Christmas!",
     "tipsAndCheats": "There is no Level 4 cheat code in this game. However, if you really are a cheater, the level 3 code is \"igiveup.\"  \n\nVisit the Heart Cave once after every dungeon, and once at the beginning of the game. Every time you beat a dungeon, a new heart is accessible to you there. Also, every time you beat a dungeon, another heart in the overworld will be available to you. There are 14 total.\n\nIf you need help, you can ask me on the forums.",
     "credits": "Russadwan - Support and Intended Beta Testing. \nEvile - Santa Clause Sprite\nPeople of 1337 D3s1gn P4d for hosting the contest that motivated me.",
-    "playable": true
+    "playable": false,
+    "errors": [
+      "bad warp, screen does not exist: dmap 2 dmap.xoff -1 screen -1"
+    ]
   },
   {
     "name": "Hyrule's Christmas DX",
@@ -3790,7 +3969,16 @@
     "story": "The Christmas feeling fades in Hyrule from year to year but this time an entity contacts Myra claiming that it's the Spirit of Christmas and sends her on an adventure to destroy three ward items that keep the Christmas feeling out from Hyrule.",
     "tipsAndCheats": "One HCP is hidden in each dungeon.\nThere is a sword upgrade in the game.\nYou need almost all items for the good ending and almost 100% room coverage.\nSpeak with every NPC, listening to them helps finding your way or the secrets. But watch out, some of them might lie...\nUsing the secret items you can interact with the environment and make your adventure easier.",
     "credits": "Tileset:\nDoR - Radien\naLttp - Marcus/Orion\nTNA 2nd preview - NoeL\n\nTiles:\nGamecube - Comix\nHuge fairy - xXVolvagiaXx\nAqua Slug - The Shyguy Kingdom\n\nIdea:\nUltima series - Origin Systems",
-    "playable": true
+    "playable": false,
+    "errors": [
+      "bad warp, screen does not exist: dmap 24 dmap.xoff 0 screen 32",
+      "bad warp, screen does not exist: dmap 24 dmap.xoff 0 screen 33",
+      "bad warp, screen does not exist: dmap 28 dmap.xoff 8 screen 123",
+      "bad warp, screen does not exist: dmap 37 dmap.xoff 0 screen 62",
+      "bad warp, screen does not exist: dmap 29 dmap.xoff 0 screen 101",
+      "bad warp, screen does not exist: dmap 29 dmap.xoff 0 screen 120",
+      "bad warp, screen does not exist: dmap 38 dmap.xoff 0 screen 112"
+    ]
   },
   {
     "name": "Link to the Heavens",
@@ -4047,7 +4235,11 @@
     "story": "A remix of the original Legend of Zelda.",
     "tipsAndCheats": "-The Eyeball Statues are not only activated by arrows...\n-A door/lock block or bush with a heart in front of it means miniboss time; be ready!!\n-A lock block or bush with a Bubble tile in front of it means boss time; be even more ready!!!\n-All the dungeons except for #1 have a secret in them...\n-Explore!!!\n-If you really really really need help with anything else message me in AGN (or, like I said, here).\n\nUPDATE: the Key some people might be missing in level 5 is in the room with the Dustpile, just touch one of the statues and it'll become an Armos with the key under it.",
     "credits": "-To Zelda Classic and Armageddon Games for introducing this to me \n-To AlphaDawg for his excellent tutorial.\n-To the contributors of www.purezc.net (and PureZC overall) for their great MIDIs and tilesets.\n-To my brother for beta testing the quest.\n-And of course, to Nintendo.",
-    "playable": true
+    "playable": false,
+    "errors": [
+      "bad warp, screen does not exist: dmap 2 dmap.xoff -2 screen -2",
+      "bad warp, screen does not exist: dmap 9 dmap.xoff -2 screen -2"
+    ]
   },
   {
     "name": "TLoZ: Ballad of a Bloodline",
@@ -4219,7 +4411,9 @@
     "tipsAndCheats": "The readme covers this pretty well. Please consult it for tips and hints.\n\nThere is a Level 1 Cheat hidden in the quest. If you find it, you can use it in the last level or throughout the whole quest if you ever play it again.\n\nThere is also a complex series of secrets stemming from the Bonus Level. If you finish the game 100%, you will be rewarded for your efforts. (Getting 100% does not necessarily mean finding all the Heart Pieces, or even the cheat code)\n\nLevel 5 is a large maze. It is possible to view the in-game map there, but some versions of ZC will crash if you open the map twice in one playthrough. Because of this, you may want to create your own map out of screenshots while playing it.",
     "credits": "Me, Jish, for creating the bulk of the quest\nMy friend, Green Lantern, for assisting me with much of the quest - specifically, creating large chunks of Levels 7-9, making a few cutscenes, providing advice, and other general work.\nVGMusic.com and various Midi composers for the music in the quest\nPureZC, obviously, for hosting this\n\nAnd more... beat the game to see the full credits",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Donkey Kong (1981 Classic)",
@@ -4410,7 +4604,9 @@
     "tipsAndCheats": "Read the readme.\n\nIt contains some useful information.",
     "credits": "-Me: For making the quest\n-Radien: For the tileset.\n-Nintendo: For creating the legend of zelda series and making most of the music used.\n-Capcom: For making the music used during the final battle.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Zelda: Allstars BS Edition Extreme",
@@ -4427,7 +4623,9 @@
     "tipsAndCheats": "most tricks such as the \"Darknut sidestab\" and \"Dodongo bomb stun\" are required to beat the quest.",
     "credits": "-Me: For making the quest.\n-Radien: For the NewBS tileset.\n-Nintendo: For creating TheLegend Of Zelda and most of the music.\n-Capcom: For creating the music used in Arena 9.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "A Quest With Stuff in It",
@@ -4563,7 +4761,9 @@
     "tipsAndCheats": "Never ditch a level once you begin. There ARE two key shops just as a fail-safe, in case... but it is completely possible to complete the quest without even touching them.",
     "credits": "I've included credits at the end of the quest.Thanks go out to Exate, Rambly, SNN, Nathaniel, Ironfist, Eppy, Sephiroth, Dustminion, Lithium, Dr. Mutagen, and anyone else I might have missed for beta testing. This quest would've bombed if not for you.Additional thanks to Setzer and TK8305 for their playthroughs and additional testing, and Rambly for musical input.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "New Beginnings",
@@ -4619,7 +4819,9 @@
     "tipsAndCheats": "Each and every dungeon has two secret rooms (sans the item dungeon, which contains one). Both of these rooms are 10-rupee rooms and one that contains an optional item, respectively. There are no blatant hints on-screen as how to obtain these, but that's not an issue if you keep this in mind: The secret rooms in conjunction with the displayed map make the dungeon shape symmetrical. All of these items are completely optional, but they will make the game much easier. And for clarification, there is a secret room in the optional dungeon before the final, but the rule of symmetry does not apply in this case.If a concealed entrance on the overworld looks a bit too simple to uncover, you probably shouldn't go inside.There are a total of 12 hearts in this quest.Every B-button item slot can be filled. There is no blue candle, or regular arrows.The Lens of Truth drains rupees.Equipment obtainable includes: White/magic/master swords, magic book, flippers, blue/red/gold rings, magic/mirror shields, power bracelet, ladder, and boots. You begin with the small wallet and the \"letter\".The level 1 cheat is hidden in the quest. I will not disclose what it is, or where it is located.And for those whom didn't know already, if the quest author has enabled the Z3-styled boomerang/hookshot rule, the magic boomerang blocks magic, and the fire boomerang reflects it. To tell if this rule is enabled, items will be \"pulled\" back to you when they make contact with the boomerang or hookshot. If they're instantly acquired, the rule is off. The rule is enabled in this quest. Please don't forget it!",
     "credits": "TESTERS\nskateboarder11\nRambly\nDustminion\nAslion\nRydia\nDr. Mutagen\nSephiroth\n\nGRAPHICS\nWild Bill\nMr. Z\nWarlock\n\nMUSIC\nVGMusic\nMicrosoft",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "An Ordinary Quest 2: The Ordinarying",
@@ -4656,7 +4858,9 @@
     "tipsAndCheats": "- 7 Heart Containers (3 found in dungeons, the other 4 found in rather obvious places.)",
     "credits": "Lithium - For the 2nd three hour quest contest.\nVG Music - Providing the Midis\nMyself - Why do you think? ",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Simple Link's Awakening",
@@ -5056,7 +5260,9 @@
     "tipsAndCheats": "Well I guess I can't be Evil well when you play the game the granny will tell you everything you need to know but the Cheat is DARKUS ",
     "credits": "None.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Ganonco 2: Work Is Death",
@@ -5370,7 +5576,9 @@
     "tipsAndCheats": "Not passworded\nLook at editor cheats standard",
     "credits": "pure creator",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "The Legend of Zelda: the God of Power",
@@ -5471,7 +5679,9 @@
     "tipsAndCheats": "Go find them yourself.",
     "credits": "Me and only me. ( and my testers who I've forgotten who now )",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Aloha From Hyrule",
@@ -5703,7 +5913,9 @@
     "tipsAndCheats": "Extra HCs can be hidden underwater - don't ignore the fact that they're there!",
     "credits": "Many thanks to Lithium for the 3-hour contest idea, and Exate, again, for graphical help (and the base tileset I started on LTTS with back in 2005).",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Twitch TV Invasion Lunatic",
@@ -5742,7 +5954,9 @@
     "tipsAndCheats": "None.",
     "credits": "Lithium/Alison - game, graphics\nTaco_Chopper - graphics",
     "playable": false,
-    "error": "Cannot read properties of undefined (reading 'length')"
+    "errors": [
+      "Cannot read properties of undefined (reading 'length')"
+    ]
   },
   {
     "name": "Link's Treasure Hunt",
@@ -5770,7 +5984,9 @@
     "tipsAndCheats": "You might need help so PM me or start a thread to get my attention.",
     "credits": "This quest was created by me. Graphics and Sound are originally created by Nintendo and redone by AGN. Music is from Super Adventure Island 2, Crystalis, Lufia, and Adventure Island 2.",
     "playable": false,
-    "error": "Cannot read properties of undefined (reading 'length')"
+    "errors": [
+      "Cannot read properties of undefined (reading 'length')"
+    ]
   },
   {
     "name": "My First Quest",
@@ -5792,7 +6008,9 @@
     "tipsAndCheats": "If you get stuck start a thread or PM me.",
     "credits": "blackbishop89",
     "playable": false,
-    "error": "Cannot read properties of undefined (reading 'length')"
+    "errors": [
+      "Cannot read properties of undefined (reading 'length')"
+    ]
   },
   {
     "name": "Requiem for Hyrule",
@@ -5813,8 +6031,7 @@
     "story": "Same story. Beat Ganon, save Zelda.",
     "tipsAndCheats": "Try everything!! Including pushing walls and pots.\nCan't find the sword? Get the lamp first then use it just outside the village.",
     "credits": "Credits to elise, Crackers, and Dafeedil for beta testing.\n\nVGMusic for the midis.\n\nPureZC for the tileset.",
-    "playable": false,
-    "error": "4 == 0"
+    "playable": true
   },
   {
     "name": "Bowl America",
@@ -5863,7 +6080,9 @@
     "tipsAndCheats": "The following items are obtainable in the quest:- Raft, blue ring, red ring, ladder, power bracelet L1, magical shield, mirror shield, wooden boomerang, magical boomerang, fire boomerang, bombs, wooden arrow, silver arrow, bow, long bow, red candle, hookshot, hammer, wooden sword, white sword, magical swordThere's a hint guy in the evil land. You'd do well to pay attention to what he says.The password to the quest is \"7&7&7&7\", without quotes. Feel free to look around/modify the cheats if you want.",
     "credits": "3-hour quest contest:Alison/LithiumTileset:Bloodstar/Exate/4matsy/Phantom Menace, and everyone else who contributed to the A Link to the Shadows graphics.I think that's it. If you helped with the quest and I'm forgetting your name, feel free to PM me or leave a comment here (PMing me is your best bet) and I'll correct these credits ASAP.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "I Hate Mayonnaise 2: Depressive Donuts",
@@ -5936,8 +6155,7 @@
     "story": "Stories are for chumps.No really. There is no story.",
     "tipsAndCheats": "There's really no need for tips here. All the tips that I'd like you to know of are going to be in the quest you're playing, so just look around there.\n\nActually, there is one I want to make sure you know. Press F6 to end the game and continue without suffering a death. Do this a lot. This quest demands it.\n\nOh, and do not ask me for cheats. I'm not letting people cheat through this quest.\n\nThe tips are in the game. Also, you start with no shield and you should press F6 often.\n\nTry not to cheat in this quest. It's not that hard.",
     "credits": "Myself built this from the ground up. 4matsy, Cobra1, and maybe a couple others I can't remember, playtested this quest before 1.0 was released. Everyone in the first thread for this quest helped play it and squashed any lingering bugs that were still in the game.All of the music included in this quest is hosted by vgmusic. (With the exception of one track, which is from the jukebox of the game it's from.) This is all (sort of haphazardly) sourced in the readme file, so give that a look for more details.",
-    "playable": false,
-    "error": "4 == 0"
+    "playable": true
   },
   {
     "name": "The Journey of Link",
@@ -5962,8 +6180,7 @@
     "story": "You know the same old same old, Link goes on a journey, Etc.",
     "tipsAndCheats": "Remeber If you think, a boss is too hard. go out and fight and buy more upgrades, and If you any more help just PM, me Or start a topic in the \"Quest Players' Discussion and Help\" area, of the forums okay ",
     "credits": "Nintendo for making the Legend of Zelda, \nPureZC for hosting,\n\n~BB89: for scripting the the upgradeable sword , and boss's, And for helping me build level 4. \n~Isdrakthü: For making the side-view ladder Script, and for helping me to get it in my game.\n~Pokemonmaster64: For notifying me of a bug in level 2.\n~Jared: For testing some more, and helping me find and get rid of some more annoyance's and some string help.\n~kurt91: for Typo help\n\nAnd To all the people that made all the Midi's I used, and The ZC developers.",
-    "playable": false,
-    "error": "4 == 0"
+    "playable": true
   },
   {
     "name": "Legend of Mario",
@@ -5987,7 +6204,9 @@
     "tipsAndCheats": "None.",
     "credits": "Big Joe, who gave me the idea for the hammer weapon. Old-skool and Cepat for helping me get a copy of the quest again after my computer stopped working.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Mario's Insane Rampage",
@@ -6009,7 +6228,9 @@
     "tipsAndCheats": "None.",
     "credits": "None.",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Zelda: A New Dawn",
@@ -6075,8 +6296,7 @@
     "story": "There is no story. It is too short, to have a one.",
     "tipsAndCheats": "No tips here. If you really need help on this simple quest. Just PM me ok?",
     "credits": "~PureZC for hosting~\n~Me for being bored~\n~ZC developers~",
-    "playable": false,
-    "error": "4 == 0"
+    "playable": true
   },
   {
     "name": "EA: Leisure Stroll",
@@ -6098,8 +6318,7 @@
     "story": "The time is the 600000th year of the Tyrant, the location is planet Ellivenia. An adventurer decides to take a leisure stroll in the biggest country's north region, at Levedia Northlands (between the north hills and the centerland lakes). However, what is a leisure stroll in Ellivenia, that very well could be called a bloody adventure with other worlds' standards...",
     "tipsAndCheats": "-almost all screens have a secret\n-all dungeons have walk through and bombable walls, as well as some secret items\n-tricky dungeons are explained by NPCs almost nearby\n-secrets aren't terribly hard to find, the trickier ones have NPCs subtly hint at them",
     "credits": "Schwa - Item Eater script",
-    "playable": false,
-    "error": "4 == 0"
+    "playable": true
   },
   {
     "name": "I Like Chicken... in HELL!!1: Gray's Adventure",
@@ -6121,7 +6340,9 @@
     "tipsAndCheats": "Don't die.\n\nThere are several large patches of tall grass in the game, use those spots for Rupee farming.\n\nIt's highly recommended to buy all the items in the shops, this isn't a requirement to beat the game however.\n\nPay attention to the markings on the big dungeon map, it may reveal a secret.",
     "credits": "Exate: Inspiration\nHubydweyer: Beta Testing\nLithium: Inspiration/Beta Testing\nSephiroth: Beta Testing\nTaco Chopper: Beta Testing",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Somewhere in Between",
@@ -6144,8 +6365,7 @@
     "story": "A young man finds himself trapped in a strange new place and must find his way back home.  Starts out nice and simple, and gradually builds up to something a little less simple.",
     "tipsAndCheats": "The game is fundamentally exploration driven, so be sure to explore.  If you can't find what to do in an area, head to the opposite area and look around there.  And since you need a heart half from each area to make a new heart container, be sure to collect them from both areas.",
     "credits": "Music: All the creators of the songs in the Original Midi Pack, and Alestance for compiling them all into one easy package.\nGraphics: Mr. Z for PTUX, Peteo and DFW for the Lost Isle Set, and Prospekt for his edited sprites, which I edited some more.\nScripting: Schwa and SpacemanDan for support and help, Blackbiship and Joe123 for downloaded scripts.\nInspiration: Pokemonmaster64 (AKA Moosh), who encouraged me (both knowingly and unknowingly) to be a bit more script-heavy.\nSupport and criticism: TS, SC, Schwa, and William, who all gave me support, as well as critique on various things.\nPost-release bugfinders: Octorockoncrack",
-    "playable": false,
-    "error": "Expected values to be strictly equal:\n\n5 !== 4\n"
+    "playable": true
   },
   {
     "name": "Path of Shadows",
@@ -6168,8 +6388,7 @@
     "story": "The story here is pretty simple: Zelda worries about the Triforce and decides to go check it out.  Obviously, she wants to have Link along as a precaution.  When Link finally arrives at the temple, though, he is faced with a difficult choice.  What choice is this?  Well, you'll find out.",
     "tipsAndCheats": "* There are very few hidden bombable walls.  Although you won't run in to many, it's a good idea to stay stocked up on bombs.\n\n* Stock up on potions, especially in the Dark world.  The enemies there are significantly tougher than those in the Light world.\n\n* Try to use every possible item for combat.  The Roc's Feather, the hammer, and even the candle can be used to aid you in fights.",
     "credits": "Jesus Christ, the source of all inspiration\n\nNintendo, the ZC Devs, and everyone else who gets credited for these things\n\nThe PZC community for the bug-fixing help I've gotten along the way",
-    "playable": false,
-    "error": "4 == 12"
+    "playable": true
   },
   {
     "name": "Engage To Zeldawock",
@@ -6295,8 +6514,7 @@
     "story": "No story.",
     "tipsAndCheats": "No cheats. If you need any help on a certain level, just ask on this page here or in the help thread\nYou have to set up the Ex1-4 buttons, to control the raft. Set these up in the ZC player!\nTry not to stand on the edge of a raft, before moving it or it might float off without you. This is due to a bug with a script.",
     "credits": "aaa2 - Controllable Raft Scriptblackbishop89 - Blue/Red Block ScriptMoscowModder - Various important ScriptsBjorn Lynne - Various midisRadien - Some tiles from his DoR tilesetI made the palette and many of the tiles in this quest myself.",
-    "playable": false,
-    "error": "Expected values to be strictly equal:\n\n5 !== 0\n"
+    "playable": true
   },
   {
     "name": "Zelda Hero of Courage",
@@ -6317,8 +6535,7 @@
     "story": "none",
     "tipsAndCheats": "none",
     "credits": "VGMusic for midis and PureZC for letting me upload this quest!",
-    "playable": false,
-    "error": "4 == 0"
+    "playable": true
   },
   {
     "name": "A Very Confusing Quest",
@@ -6340,8 +6557,7 @@
     "story": "After Ganon's Defeat, the monsters of Hyrule got angry. they got so angy that their master was defeated, they rearranged Hyrule, so it bacame more difficult for link to trek through. One Moblin shot an arrow at Link;s back, spilling blood that he collacted and carried to Ganon. he was then Resurrected.\nZelda quickly took the Triforce of Power, split it into eight pieces, and his them in dungeons and haunted houses around Hyrule. She trusted Link into collecting them once Ganon took her.\nIn order to obtain the triforce peices, Link must first defeat the guardians of the Dungeons, then Defeat the Dungeon Masters. Along the way, link must obtain many heart containers.",
     "tipsAndCheats": "Level 1: Riddle: What's Big, mean, and Green?\n\nLevel 2: Riddle: I like my surroundings nice and cool. i don't like Wizzrobes or Octoroks.\n\nLevel 3: Riddle: I am the guardian of the seventh item of the oracle.\n\nLevel 4: Riddle: I don't Appear  in many games! Especially Ocarina of Time!\n\nAll of the above are Characters or Bosses in the Zelda Series.\n\nThey are cheat levels.",
     "credits": "BikdipOnABus, for Tutorials\nAlphadog, for Tutorials",
-    "playable": false,
-    "error": "4 == 0"
+    "playable": true
   },
   {
     "name": "Royaldarkness",
@@ -6364,8 +6580,7 @@
     "story": "this quest takes place after link defeated Ganon and went back 7 years after the battle,after the battle link took the time to live around Hyrule before leaving to go to Termina link hears that Ganon escaped?  it was a evil Guardian spirit the prince of darkness; link gathered his sword and shield and went to fight the Prince of Darkness ",
     "tipsAndCheats": "many secrets now and you can get 16 or more hearts  you can now get the L3 blade and the Master sword(big secret) have as many hearts before going to level 9 for its more challenging than it was before and plus have a lot of equipment before going into the dark world ",
     "credits": "Creators of ZeldaClassic and ZQuest.\nNintendo and bringing Zelda into games.\nall who inspired me to start ZeldaClassic (Bikdiponabus, Teamudf and OhLookNoNumbers)",
-    "playable": false,
-    "error": "4 == 0"
+    "playable": true
   },
   {
     "name": "Hero's Legend",
@@ -6501,7 +6716,9 @@
     "tipsAndCheats": "Bomb everything, Look for walk-though wall's and mountains.\nBurn everything. (you can never tell what you might find)\nIf you need any more help post in  Quest Players' Discussion and Help,\nOr PM me.",
     "credits": "Shallow Water Splash script: MoscowModder\nHeart Piece Message script: MoscowModder\nSignpost script: Joe123\nItem Pick Up Message script: Joe123\nUpgradable sword: Blackbishop89\nVarious Tiles: AgentLym, Anthus\nMany people that made the midi's\n\nPureZC for hosting, and Me for being bored.",
     "playable": false,
-    "error": "Cannot read properties of undefined (reading 'length')"
+    "errors": [
+      "Cannot read properties of undefined (reading 'length')"
+    ]
   },
   {
     "name": "First Quest Layered",
@@ -6569,7 +6786,9 @@
     "tipsAndCheats": "Just use the knowledge of the first quest to get you through this confusing game >_<",
     "credits": "Talon he's the one who made the game\nVentus (hey that's me!) I beta tested and fixed bugs!!!\n\nPureZC They are hosting this quest\nAND all the players who reported bugs.\n\nAND ONE MORE!!!\nNintendo for making Zelda and you know...stuff yeah... stuff.",
     "playable": false,
-    "error": "Cannot read properties of undefined (reading 'length')"
+    "errors": [
+      "Cannot read properties of undefined (reading 'length')"
+    ]
   },
   {
     "name": "Hero of Lowrule 2",
@@ -6910,7 +7129,9 @@
     "tipsAndCheats": "Not passworded look at the editor. E is L4 cheat pur are others",
     "credits": "Pure Creator",
     "playable": false,
-    "error": "Cannot read properties of undefined (reading 'length')"
+    "errors": [
+      "Cannot read properties of undefined (reading 'length')"
+    ]
   },
   {
     "name": "The Hero's Memory",
@@ -7011,8 +7232,7 @@
     "story": "After his adventures in Link's Quest for the Hookshot, Link and Zelda find themselves in another alternate dimension where Zelda gets kidnapped again and Link finds himself facing against a new set of foes to save her. Link's mission is to defeat the Seven Sins, beings that each hold something called a Moral Compass. Only when Link has all seven Moral Compasses can he defeat the being known as Sin. But things are not a they seem and a familiar foe is working from the shadows...",
     "tipsAndCheats": "As with Link's Quest for the Hookshot, you can always leave the dungeons and come back with more stuff you got with the dungeon items if you run into trouble. If you get stuck you can always ask in Quest Players' Discussion. Also if you find a crippling bug, shoot me a PM with a screenshot and I'll give you cheats.\n\nWhen creating a file, you can use these filename cheats to start with an LPer weapon:\n\"LetsPlay\" / \"LQftH2LP\": Will let you start the game with a leveled down LPer weapon. It will grow along with your normal sword.\n\"Custom\": Will let you start the game with a leveled down LPer weapon and will let you pick and choose between individual Standard and Legacy mode dungeons.",
     "credits": "Graphics from:Various Zelda games, Classic Tileset, Dance of Remembrance Tileset, Pure Tileset, Alundra, SpacemanDan, Shane, XMuppetSB, AnthusMusic from:VGMusic, Josh's Anime Sheet Music CollectionScripts from:Joe123, LordVolcanonInspiration from:Evan20000, SpacemanDan, Russ, The Binding of Isaac, Romancing SaGa 2Beta testing by:Russ, Obituary1992, Schwa, Twinblake, Jared, Shane, Aevin, Evan20000, Zaxarone, DimentioSpecial thanks to:The PureZC community, the IoR testing Skype group, all the ZC LPersFull credits covering MIDI creators, cameo appearances, and other stuff found in the quest. If you weren't listed and should have been, shoot me a PM telling what you did and I'll see what we can do.",
-    "playable": false,
-    "error": "4 == 0"
+    "playable": true
   },
   {
     "name": "The Darkness Within",
@@ -8121,8 +8341,7 @@
     "story": "One Day link was looking around for people to troll... He found zelda. so he planned a troll for her, Suddenly Links inner Troll escaped and captured zelda... The only way to save zelda was That link had to find the troll and Marry it.",
     "tipsAndCheats": "There is no password... GO CRAZY!",
     "credits": "Thanks To:Atrus W0nderHolidaygolightEddyTheOliveiraThe Creator (Joelmacool)",
-    "playable": false,
-    "error": "4 == 0"
+    "playable": true
   },
   {
     "name": "Master Quest Chapter 2",
@@ -8164,8 +8383,7 @@
     "story": "Are you familiar with the story of Metroid? If so, I think you know what the story of this quest is already.",
     "tipsAndCheats": "Bombs and \"Power\" Bombs are unlimited, you can use bombs forever and never run out, abuse them if you wish.Think Super Metroid, the order of bosses and where you're going next is exactly the same as Super Metroid, just with 2 added areas (Kraid and Ridley's areas)Backtracking is key, it's like this for every Metroid game.",
     "credits": "Nintendo for making the Metroid series.ZC developers for making ZC 2.5.KenMeister for making the Metroid Remix TilesetAnd Ska Glampunk for making the original incomplete Metroid Tileset.",
-    "playable": false,
-    "error": "4 == 1"
+    "playable": true
   },
   {
     "name": "James Quest: Remastered",
@@ -8188,8 +8406,7 @@
     "story": "James is searching for the Triforce that Link was unable to find. Along the way he will meet up with the Zenretsu Clan along with other arch-enemies, along with Necrosaro possibly still existing. Take James around Hyrule and eventually a section of his ancestor's homeland, battling monsters and overcoming evil.",
     "tipsAndCheats": "N/A",
     "credits": "Gleeok - conversion credit, Version 2.1 updateAll the old James Quest staff - original version testing",
-    "playable": false,
-    "error": "4 == 0"
+    "playable": true
   },
   {
     "name": "The legend of Zelda 5th quest entry by Travster",
@@ -8593,8 +8810,7 @@
     "story": "Princess Zelda has been abducted by Ganon and broke up the Triforce of Wisdom to keep it safe. You, Link, must collect these pieces to reassemble the Triforce of Wisdom as ransom for Zelda, so that you might have the opportunity to defeat Ganon and his terrible Triforce of Power.(It's an Nth quest, what did you expect?!)",
     "tipsAndCheats": "Always enter a dungeon with full health and at least four bombs.You will be given the choice to be courageous or powerful. Whichever you choose, I recommend being consistent.You CAN purchase potions without the letter, but it will be painful. Many dungeons have potions hidden in certain rooms, it is better to use these.Cheats are disabled in this quest.Let's Play Video courtesy of Nightmare.",
     "credits": "Besides myself and Nintendo, in alphabetical order:Anthus (Big Tree w/ foliage)CatsRule (FishDungeon : Unused)DragonSword (Interior Tiles : Unused)FYS (Many Enemy Sprites, particularly bosses and non-humanoids)King_Aquamentus (Link Sprites and Weaponry)SUCCESSOR (Link Tools, Scripts)Ventus (Base Palette)Nightmare (Let's Play Footage and Bug Testing)",
-    "playable": false,
-    "error": "4 == 5"
+    "playable": true
   },
   {
     "name": "Tower of Shadows 2.5",
@@ -9392,8 +9608,7 @@
     "story": "After delivering the last Metroid to Ceres Station, Samus Aran chases the space pirates under Mother Brain to the planet Zebes and must plunge into its depths to defeat her enemies.",
     "tipsAndCheats": "Item Substitutions as follow:Morph Ball= FlippersSpring Ball= Magic BoomerangVaria Suit= BootsMissile= ArrowSuper Missile Launcher= Wand (Uses Rupees for Ammo)X-Ray Visor= Lens of TruthCharge Beam= Candle 1Spazer Beam= Candle 2Speed Boost= Whistle (Stand on tiles marked with Speed Boost icon to use)Jump & Hi-Jump Boots= Roc's Feather. Press Ex1 to jump.Map Room= Key Repository (All keys needed to complete game)When using the Space Jump, you must fall for a few seconds before you can jump again. Some jumps can be tricky, but they are possible. You cannot jump on the edge of a screen, on unless standing on top of a flat unwalkable platform. To enter Maridia, you must exit the right side of the Wrecked Ship and follow the path there.",
     "credits": "Tileset by ToaofgamecubeCountdown, Quakebuster Script- GleeokSpace Jump Script- LejesJump with Ex1, Moving Platform Script- MooshBig Enemy Dx, Bossmaker Script by Alucard648Screw Attack Script based on work by MoscowModder, justinSpecial Thanks- Nintendo",
-    "playable": false,
-    "error": "4 == 2"
+    "playable": true
   },
   {
     "name": "The Islands of Zelda",
@@ -9721,7 +9936,9 @@
     "tipsAndCheats": "No cheats!  It's not THAT difficult people!  lol..",
     "credits": "N/A",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Legend of Zelda",
@@ -10017,7 +10234,9 @@
     "tipsAndCheats": "There's plenty of things hidden in the \"hub\" dungeon.",
     "credits": "Thanks go to Rambly for testing, and Exate for assisting me with the ALTTS tileset (and the original tileset which it was based upon).",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "Cheval",
@@ -10124,8 +10343,7 @@
     "story": "Emperor Gogol, a despotic ruler, is searching for siblings Link and Zelda. According to a prophecy, they are the chosen ones who will one day open the gates of the Forbidden City. But Gogol's supposed allies also have plans of their own. Can Link escape his many enemies, save his sister, and protect Hyrule?",
     "tipsAndCheats": "Ask for hints on the forums if you get stuck.For people who want to use cheats: the quest is script-heavy and by using cheats you will most likely break it. I recommend you instead post a message asking for help, or lower the difficulty setting if needed.",
     "credits": "Quest design: JamianTileset: Instrumentality (Moosh)Extra tiles: www.spriters-resource.com, EZGBC tileset, DoR tileset, ArtisticScripts: JamianAdditional scripts by: Colossal, Evan20000, Mero, Moosh, MoscowModder, Mr Z, SogaBeta testing: Arieltap, Evan20000, Mister Snooze, Moosh, NewJourneysFire",
-    "playable": false,
-    "error": "4 == 16"
+    "playable": true
   },
   {
     "name": "DayDayHD",
@@ -10263,7 +10481,9 @@
     "tipsAndCheats": "N/A",
     "credits": "N/A",
     "playable": false,
-    "error": "TODO: handle AG Zelda Classic Quest File"
+    "errors": [
+      "TODO: handle AG Zelda Classic Quest File"
+    ]
   },
   {
     "name": "The Greatest Rescue",
@@ -10355,8 +10575,7 @@
     "story": "Standard Zelda Storyline",
     "tipsAndCheats": "N/A",
     "credits": "Gleeok: GraphicsMischaPetya: Testing and Let's Plays",
-    "playable": false,
-    "error": "4 == 0"
+    "playable": true
   },
   {
     "name": "Demo Quest",
@@ -11239,8 +11458,7 @@
     "story": "It has been one year since the events of Metroid: Fusion and bounty hunter Samus Aran has received a distress signal from the mysterious uncharted planet designated Galactic Federation #8791. Upon landing, she finds traces of Federation soldiers along with Chozo technology that tells the story of a previously unknown chapter in their history.",
     "tipsAndCheats": "N/A",
     "credits": "Tileset- ToaofgamecubeMessage More Tiles- supertails2001Various Tiles- MoscowModderMoving Platform- MooshVariable & Space Jump Script- LejesQhakebuster, Countdown Script- GleeokSideview Enemies- Moosh, Alucard648Other Tiles- Bob, DarkSB24, Recker, Tommy LeeScrew Attack Script- MoscowModder, justin, meTesters- Eppy, Dimentio, Lejes, Obderhode, Epsalon ZX, chocobothief12Save/Warp Script- ZoriaRPG-Special Thanks-ZoriaRPG- For motivating me to try things I didn't think I could do.Moosh- For making the sideview enemy pack and publicly releasing the script that runs the grapple beam.C-Dawg- For creating Zodiac: Story of the Guardian and inspiring much of this.MeleeWizard- For doing an LP of Zodiac, which gave me lots of ideas.The ZC Scripting Skype Group.All other scripters, Nintendo, Spriter's Resource, Zelda Sounds.",
-    "playable": false,
-    "error": "4 == 2"
+    "playable": true
   },
   {
     "name": "4 Temples 2: Fate of The Triforce",
@@ -11556,8 +11774,7 @@
     "story": "Please see the Instruction Manual booklet for the full story and artwork!\n\nTwo years after the events of Zelda II, Link and Zelda travel to Calatia to rescue King Harkinian of Hyrule and Queen Seline of Calatia, who have been taken hostage by the Fire Warrior Militron.\n\nThere are a few cutscenes, but they are short and NES-styled, with more actions than words. Many NPCs give clues in the form of simplistic single-line dialogue.",
     "tipsAndCheats": "General-purpose, non-cheaty advice can be found in the Instruction Booklet. More extensive FAQ-style advice can be found in the Secrets and Guides.\n\nZC / Game Design Stuff:You can complete the dungeons in any order. Generally, if you got inside and you have bombs, you have what you need for it.Eight way movementFast (but not super fast) scrollingYour own bombs hurt, your own fire doesn'tArmos & graves are safe from the southSlash is available semi-early in the questSwordbeams are available immediately (once you get the sword), but work differently; free arrows are availableThe raft always branches, it's not just a pathThere are many different types of puzzles, and not very many standard block puzzlesThere are no true \"enemy gauntlets\" or \"boss gauntlets\" (no long sets of rooms full of monsters to kill without other features)Most dungeon rooms have a special trick or puzzle to them, trying to avoid repetition\nIf for some reason you don't have a mouse, you can bypass the Sprite fairy portions by activating level 1 cheats, then holding L and R in places where you'd need sprite. The level 1 cheat code is:\n\n\tSpoiler \n\tSPRITE\n\n\nThis quest is not passworded, and the entirety of it's scripts are included in the Support Pack. You are free to alter it and even make a new or variant quest out of it's components... but good luck making sense of any of it, because my own scripting is an amateurish mess with almost no labels (I self-taught zscript as I made this quest), and I probably won't be around to consistently provide any help deciphering it (sorry). Moosh has also stated that anyone may freely use or alter the map system and bonus boss.\n\nFull level 4 cheats/debug tools can be activated by entering:\n\n\tSpoiler \n\t4\n",
     "credits": "- Miscellaneous -\n\nScrolling subscreen minimap script and final bonus boss: Moosh\n\nCertain ideas and feedback: Dimentio, ywkls, & Grayswandir76\n\nZelda's overhead sprites based on \"Super Mario Bros Crossover\" by Jay Pavlina/Exploding Rabbit\n\nGirubokku enemy editor technique, and inspiration for related editor monsters (deadrock, etc): Aevin (from \"The Hero's Memory\" quest)\n\nRupy Ring item idea: from various \"Randomizer\" quests by Hero of Fire\n\n- Beta Testers -\n(in order of sign-up)\nEddy\nywkls\nMoosh\nArkia\nSFS IceVk4\nEpsalon ZX\nZCBeadnik\nDimentio\njudasrising\nZaxarone\n\n- Sounds -\nHelpthewretched\nAudacity software, for editing\nJeffrey Nelson as Militron\n\n- Scripting info & advice -\nstd_constants.zh authors\npurezc.net/zsdocs\nZCWiki\nJustin\nMoosh\n_|ZoriaRPG|_\nGrayswandir76\n\n- Special Thanks -\nMeleeWizard (Resparked my interest in ZC in 2012; thanks for the Let's Play!)\nTeamUDF (General inspiration)\nNewJourneysFire (Thanks for the Expo coverage and Let's Play / Streams!)\nEins (Thanks for the Expo coverage)\nKewlio from LowBiasGaming on Youtube (Thanks for the Let's Play!)\nOld-Skool / WillPlayIt (Thanks for the Let's Play!)\nEppy / Electrometer Prime (Thanks for the Stream!)\nSCKnuckles (Thanks for the Let's Play!)\nPixcalibur123 (General inspiration)\nTopKirby8305 (General inspiration)\nJubbz (General inspiration)\nVinny from Vinesauce (Helped inspire Error Mode and discovered a piece of the music via corruptions)\nSarria22 (Early feedback)\nMy husband (General support)\nAll original \"Legend of Zelda\" series creators and staff.\n\n- Zelda Classic Creator -\nPhantom Menace\n\n- Zelda Classic Developers -\nDark Nation\nDarkDragon\nGleeok\n_L_\nSaffith\nJoe123\nTamamo\n_|ZoriaRPG|_\nJMan\nPKMNFrk\nWolfman2000\nSean\nTakuya\n...and anyone I missed.\n\n- Enhanced Music -\"Zelda II: The Adventure of Link\" composed by 'Tsukasan' Akito Nakatsuka\"The Legend of Zelda\" composed by 'Konchan' Koji Kondo\"Link's Awakening DX\" composed by Kazumi Totaka, Minako Hamano, Kozue Ishikawa, Yuichi Ozaki\"Oracle of Seasons\" and \"Oracle of Ages\" composed by Kiyohiro Sada, Minako Adachi\"Legend of Zelda NSF\" custom remix by Klopp422 & Klopp422's brother (on PureZC)\"Legend of Zelda 5th quest\" custom NSF by BigJoe\"Zelda II: TRANCE REMIX!\" custom by Rushjet1, Danooct1Corrupted Zelda II music used in minigames made with the Vinesauce Corruptor, based on the \"Adventure of Oink\" youtube videoDeepened/slowed Zelda II music made in Famitracker by MitsukaraZelda II Overworld remix MIDI by Mary (on VGMusic Archive); edited in GXSCC and Audacity by Mitsukara\"Legacy of the Wizard\" composed by Yuzo Koshiro, Mieko Ishikawa\"Knightmare II: The Maze of Galious\" composed by Hideno Maezawa, Shinya Sakamoto, Atsushi Fujio, Kiyohirio Sada, Kinuya Yamashita\"Mickey Mousecapade\" composed by Takeaki Kunimoto\"Mickey Mouse III: Dream Balloon\" / \"Kid Klown in Night Mayor World\" composed by M.Takenaka, Hiyoruki Masuno\"Dragon Quest IV\" / \"Dragon Warrior IV\" composed by Koichi Sugiyama\"Conquest of the Crystal Palace\" composed by Masaharu 'Rezon' Iwata\"Captain Tsubasa\" composed by Keiji Yamagishi\"Rambo\" composed by Tohru Hasabe, Minky Motoyama\"Friday the 13th\" composed by Hirohiko Takayama\"Adventures of Lolo\" & \"Adventures of Lolo 2\" composed by Hideki Kanazashi\"Triforce of the Gods\" bootleg composed by unknown staff from Waixing\"Ys III: Wanderers from Ys\" composed by Mieko Ishikawa\"Akumajou Dracula\" / \"Castlevania\" composed by Kinuyo Yamashita, Satoe Terashima\"Dracula II: Noroi no Fuin\" / \"Castlevania II: Simon's Quest\" composed by Kenichi Matsubara, Satoe Terashima, Kouji Murata\"Metroid\" composed by Hiro 'Hip' Tanaka\"Donkey Kong Land 2\" composed by Grant Kirkhope, David Wise\"Super Mario Land\" composed by Hiro 'Hip' Tanaka\"Super Mario Land Mix\" & \"Super Mario Bros Mix\" custom by PhD, RTC\"Dragon Roost Island 8-Bit\" version by Charlosplz (pitch slightly lowered by me for audio balance)\"The Great Sea 8 Bit Famitracker\" version by AtomicMelodies",
-    "playable": false,
-    "error": "4 == 2"
+    "playable": true
   },
   {
     "name": "Zelda 1 BossRush",
@@ -13048,7 +13265,10 @@
     "story": "Ganon has taken Zelda to his Tower, you need to rescue her. However, you don't know what to expect along the way. Not even the world you come from stays the same. Perhaps by overcoming countless monsters, rupee stealing Old Men, hungry Goriyas, lazy toll-keeping minions, and Ganon's best minions, will you reach your goal.",
     "tipsAndCheats": "A lot of the clues given by NPCs can be useful. On a first play, you may want to keep those hints normal, and read them all.The Ex 3 and 4 buttons bring up some special menus. The map shows where all the caves in the current overworld go, and you can use A and B to change the color of them, for a personalized tracking system. The weapon menu lets you pick which 18 items can be cycled between in the normal inventory, and some special weapons come in multiple variations that you can switch between in this menu. You can also do a sort to pick the 18 highest leveled weapons owned, and even choose to sort based on their type.If you choose to play with multiple overworlds, pay attention to which one you start in. Not only will you restart here if you save in quit in any overworld, but a lot of useful early items, plus something else important, will appear in this world. You will need to explore other worlds, and sooner depending on the difficulty chosen.Enemies get more difficult as the level number increases. It is worth sticking to the early levels for a while until you have a lot of useful exploration items, a decent weapon, and some more life before doing the late ones.Once you know where the true Final Dungeon is, note you can get there really early, without completing a single level 9.In the starting cave, you can toggle if items have a description when picked up. You can also use the training dummy to test the strength of the weapons you've got.All Pols Voice have a secret weakness. It is never the Sword or Sword Beams, those just do normal damage.Every overworld has a cave where you can get one of those major shop items for free. You may want to find this before buying out every shop.In very long lengths, you may encounter P Bags. These just give you rupees and ammo, as there are more locations for items to appear than the total items.I totally wouldn't drop multiple hints about bonus content. Not at all.",
     "credits": "Nintendo for the 1st and 2nd quests, as well as BS ZeldaDragonDePlato for the original Koten TilesetGameMakr24 for the Outlands hackVG Music for all the various midisThe beta testers who found bugs and gave feedback across all Randomizer quests, leading up to this",
-    "playable": true
+    "playable": false,
+    "errors": [
+      "bad warp, screen does not exist: dmap 188 dmap.xoff -1 screen -1"
+    ]
   },
   {
     "name": "Legend of Zelda: Forgotten Hero",
@@ -13094,8 +13314,7 @@
     "story": "Mike is a sadistic person who enjoys watching people suffer though his traps. Link is just another victim of his games.",
     "tipsAndCheats": "Please don't skip any texts or signs, they give you very valuable information.\nSecrets are clearly marked such as: this tree is a different color, these flowers are a different color, etc...\nEvery screen with an armos in it has something hidden behind one of them.",
     "credits": "Beta Testers: Stike, Dimentio, James24, TheRock, NewJourneysFire, Moosh, phatjak69",
-    "playable": false,
-    "error": "4 == 0"
+    "playable": true
   },
   {
     "name": "Wizzrobe's Big Day Out",
@@ -13322,8 +13541,7 @@
     "story": "Two hundred years have passed since the ocean waters entombed Hyrule, the final victim of the mad Gerudo king. Distrust spreads through the public, as rumors of the rise of a new Gerudo king spread. A curse rises from the ocean waters, with thick smoke choking any who would seek to dive to the ruins of Hyrule below and strange creatures stalking the towns at night. After receiving a call for help intended for his late mother, the young Zora prince Kell travels to the Northern Sea to help. With the Zora's Sapphire to protect him, he descends below the waves, seeking answers and a means to dispel the curse. But things are not as they seem, and he quickly finds himself entangled in an ancient conflict far different from what he was expecting.",
     "tipsAndCheats": "Bombable walls are a fairly frequent occurrence. Their locations are often hinted by the map, room layout, or general dungeon flow.There are no walk-through walls, and you are never expected to bomb off the map.Explore the world carefully; each dungeon item opens the way to least two heart containers and one magical alloy.Sneaking past Lynels, or just running, may be more viable than fighting them early on. If you decided to fight, there's no shame in kiting them into a more manageable arena.",
     "credits": "A full list of credits can be viewed upon clearing the quest.However, I wish to recognize a few people who greatly contributed here. Moosh's help cannot be understated. He provided the Hookshot 2 tileset upon which this quest was built and created all the dungeon palettes and several overworld palettes for me, based off my sometimes difficult descriptions. He also made sprites for the main characters and offered several ideas which ended up becoming incorporated into the quest. In a similar vein, Aevin contributed several ideas to the quest, as well as the subscreen and underwater overlay effects. At several points along the way, he also served as a well of emotional support to help pull me through this process. Finally, I'd like to thank Zoria for running the contest which spawned this quest in the first place, as well as all the other contest entrants, whose work helped inspire and motivate me these last few months.",
-    "playable": false,
-    "error": "4 == 0"
+    "playable": true
   },
   {
     "name": "Nyroxland",
@@ -13369,8 +13587,7 @@
     "story": "See Super Metroid for SNESExplore the planet Zebes, find items and destroy huge bosses.",
     "tipsAndCheats": "To activate Shine Spark, press and hold Dash after getting Speed Boost.Upon achieving a charge, press down, then press and hold Dash and the direction you wish to goA secret room can be found after entering Tourian, somewhere else in the quest.",
     "credits": "Tileset by ToaofGamecubeMessage More tiles by supertails2001Various Tiles, Shoryuken script by MoscowModderMoving Platform, L to Jump and Grabber script by MooshVariable and Space Jump script by LejesQuakebuster, Countdown script by GleeokSideview Enmies by Moosh, Alucard648Various Tiles by Bob, DarkSB24, ReckerScrew Attack script by justin, meSave Station script by ZoriaRPGTesters- EpsalonZX, judasrising, Eppy, chocobothief12Special Thanks:ZoriaRPG- For motivating me to try things I didn't think I could doMoosh- For making the Sideview enemy pack and releasing the code that runs the Grapple BeamC-Dawg- For making Zodiac: Story of the Guardian and inspiring much of thisMeleeWizard- For doing an LP of Zodiac, which gave me lots of ideas.EpsalonZX- For helping me finish and refine this quest.Nintendo- For making the Metroid SeriesAll ZC developersSpriter's ResourceAll ZC Scripters",
-    "playable": false,
-    "error": "4 == 2"
+    "playable": true
   },
   {
     "name": "6th Quest Entry",
@@ -13397,8 +13614,7 @@
     "story": "Moments after the events in \"The Legend of Zelda\", Link is captured by Mirror Gannon and taken to Mirror Hyrule, along with the Triforce of Power which has been broken into eight large pieces.\n\nIn Mirror Hyrule, everything is familiar, but nothing is quite the same. Princess Zelda must seek the help of strange creatures and unfamiliar items to navigate this reversed world and it's mysteriously intertwined underworld. Is Zelda's wisdom enough to overcome these strange puzzles and save Link... or is she headed straight into a fiendish trap?",
     "tipsAndCheats": "Each time you continue the game on the overworld, Impa will tell you a hint in the Debug Console window. These hints cycle through 11 possible hints (before cycling back to the first), and those 11 each update if you've obtained certain items or made certain progress. If you're stuck, you can try F6ing a few times to see what all her current hints are. This isn't required, but can help if you have no idea what to do.\n\nAlthough knowledge of Zelda 1 is not required to beat this game, it is helpful, since there is a Z1-style minimum of explanatory text within the game, and many patterns may look more familiar if you know Z1 well. While this quest has item and puzzle elements more akin to the Gameboy Zelda games, this is overall very much a Zelda 1 fangame.\n\nDead ends are almost never just dead ends, especially if you had to use a key or do something special to get into them. Explore in detail before you backtrack.\n\nZelda 1 pushblock logic is in effect. You may need to kill enemies in the room to push a block. You may need to push any block on the screen, although this generally only happens on screens with a few blocks. A certain item you get early on may make it easier to determine which blocks you DON'T need to push, and find the ones you do.\n\nNothing in the Mode Menu is required, although it can be helpful. Think of the Mode Menu as a sort of breaking of the fourth wall, to adjust the game to your own comfort and enjoyment- whatever makes the game more enjoyable for you is what you should pick.\n\nYou can save a lot of time by using the \"Save Here\" option on the mode menu very often, and thinking about where you want to continue from when you're at the overworld's continue screen since it can take you to dungeon entrances you've visited.\n\nIf there are strange spots on the ground, there's a good chance something is hidden in that area.\n\nThere are 9 dungeons in this quest. The first three are \"Level A\", and can completed in any order. You must complete all three Level As to get through levels 4-6, which are \"Level B\". After that comes two dungeons of \"Level C\", and the final dungeon is \"Level D\". If you are absolutely stuck finding these dungeons and can't figure out a way in, it might be helpful to...\n\n\tSpoiler \n\t...look up a map of where dungeon entrances are in Zelda 1's first quest, then consider the shapes of the dungeons you've been to.\n\n\nTo play the Randomizer mode (this code is also revealed at the end of the quest):\n\n\tSpoiler \n\tHold EX2, R, and Start during the beginning intro scenes.\n",
     "credits": "Mitsukara\n- Quest Creator\n\nDimi:\n- MASSIVE post-production improvements / 11th hour collab designer. Work includes Final Boss rewrite, massive help with dungeon design on level 9 (and suggestions for 7 and 8 ), implementing the Z3 Scrolling mode, creating the entirety of the Randomizer, and more. Also one of the first beta testers.\n--------------------------------------------------------------\n---------- Scripts, design advice, and beta testing::\n--------------------------------------------------------------\n\nMoosh\n- 4 way movement simulation script from BrockLesnar.qst, one of the first beta testers, design feedback, encouragement, being cool about it when we had some of the same ideas, and inspiration for the Impa Hints system.\n\nZoriaRPG\n- \"Magic Map\" and \"Magic Compass\" scripts. Thanks for your patience and flexibility about how the contest was run, it improved the experience a lot in the end!\n\nVenrob\n- Made an All-Caps zscript function for my enemy names.\n\nLinkTheMaster\n- FFC Shooter Script used by Dimi.\n\nHeroOfFire\n- Extensive beta testing, design feedback, Randomizer design advice, and help making a location list.\n\nRuss\n- Beta testing, design feedback Randomize design advice, and encouragement.\n\nAevin\n- Encouragement and design feedback (watched other testers).\n\nGreat Glass\n- Beta tester, design feedback, and recommended Z1remade.nsf, by IsabelleChiming.\n\nZaxarone\n- Beta tester, design feedback\n\nShane\n- Beta tester, design feedback\n\nAvaro\n- Beta tester, design feedback\n\nAnthus\n- Beta tester\n\nywkls\n- Beta tester\n\n-------------------------------------\n---------- Music and graphics::\n-------------------------------------\n\nInfidelity\n\"Legend of Link\" NSF music, used for default Overworld, intro sequence, and \"Dodgy Game\" tracks.\n\nIsabelleChiming\n\"z1remade\" and \"z2remade\" NSF music, used for the default Dungeon themes and Randomizer Menu.\n\nBigJoe\n\"5thmusic\" NSF music from ZC's 5th Quest, used for Gannon's music. Also requested Duke Onkled and created the Xenogears BigJoe costume.\n\nKlopp422 & Klopp422's brother\n\"Klopp422.nsf\" NSF music, used for default Cave Music and for Boss Music (when World Redecorate Mode is on).\n\nP-Tux\n- Provided certain optional MIDIs and costumes (where credited), plus the \"DarkNaga\" enemy tiles.\n\nOther optional music and sounds from:\nKoji \"Konchan\" Kondo: \"The Legend of Zelda\", \"Super Mario Bros\", \"A Link to the Past\", \"BS The Legend of Zelda\"\nAkito \"Tsukasan\" Nakatsuka: \"Zelda II: The Adventure of Link\"\nYuzo Koshiro: \"Legacy of the Wizard\", \"Ys\" I-II\nMieko Ishikawa: \"Legacy of the Wizard\", \"Ys\" I-III\nHideya Nagata: \"Ys\" II-III\nOsamu Kasai: \"Ys\" II-III\nMasaaki Harada: \"Ys\" II-III\nShinji Nakayama: \"Ys\" II-III\nHideno Maezawa: \"Knightmare II: The Maze of Galious\"\nShinya Sakamoto: \"Knightmare II: The Maze of Galious\"\nAtsushi Fujio: \"Knightmare II: The Maze of Galious\"\nKiyohirio Sada: \"Knightmare II: The Maze of Galious\"\nKinuya Yamashita: \"Knightmare II: The Maze of Galious\"\nHideki Kanazashi: \"Adventures of Lolo\" 1 - 3\nMichiharu Hasuya: \"Solomon's Key\"\nHiro \"Hip\" Tanaka: Super Mario Land\nKoichi Sugiyama: \"Dragon Quest\" I-IV\nSatoe Terashima: \"Castlevania,\" \"Castlevania II: Simon's Quest\"\nKinuyo Yamashita: \"Castlevania\"\nKenichi Matsubara: \"Castlevania II: Simon's Quest\"\nKouji Murata: \"Castlevania II: Simon's Quest\"\n\nAnd additional unknown MIDI authors.\n\n-------------------------------------------\n---------- Zelda Classic developers::\n-------------------------------------------\n\nPhantom Menace\n- ZC Creator -\n\nWar Lord\nDarknation\nDarkDragon\nGleeok\njman2050\nJoe123\nKoopa\n_L_\nPKMNFRK\nSaffith\nSean\nTakuya\nVenrob\nWolfman2000\nZoriaRPG\n\n\n-------------------------------\n---------- Special thanks::\n-------------------------------\nMeleeWizard\nFor helping me get back into ZC through Let's Play videos\n\nMoosh\n\nHeroOfFire\n\nRuss\n\nAevin\n\n\n\nNOTE: If I have missed crediting someon, please feel free to let me know what they made and I'll edit this description to include the credit! (Assuming the credit seems legitimate.)\n\nAll submitted costumes are credited on costume banner in-game, and in the costume list in the description above; all others drawn by Mitsukara (though often based on sprites from the games the characters originate from).",
-    "playable": false,
-    "error": "4 == 0"
+    "playable": true
   },
   {
     "name": "Giggle: The Adventure",
@@ -13710,8 +13926,7 @@
     "story": "N/A",
     "tipsAndCheats": "Ex1 : MapCopy your save",
     "credits": "AlucardZoriaRpgYouSaffith",
-    "playable": false,
-    "error": "4 == 0"
+    "playable": true
   },
   {
     "name": "The Legend of Sirknight: Definitive Edition",
@@ -13729,8 +13944,7 @@
     "story": "Play to find out!",
     "tipsAndCheats": "Dungeons are possible in any order, and with just the Level one weapon. That said if you can manage to beat the harder ones first you could open other things early!Also I'm curious who can beat this in the fastest time.",
     "credits": "Shane-testingespalonzx- testing(sorry i forgot you buddy)Shoshon-testingMoosh-testing + scriptsSpriters resource - graphicsKHinsider-midisanyone else im forgetting",
-    "playable": false,
-    "error": "Cannot read properties of undefined (reading 'map')"
+    "playable": true
   },
   {
     "name": "Fragments of Power: Reimagined",
@@ -13749,7 +13963,9 @@
     "tipsAndCheats": "Use your 4 button items to traverse dungeons.Update (09-03-21):Fixed a minorly major sequence error where you could get through level 8.5 without first finding an item you were supposed to need.Update (09-04-21):Nerfed the final boss to be a challenge, but not ridiculous.Update (09-06-21):Fixed a couple potential minor sequence break issues in levels 4 and 5.Hopefully made the kid pre-level 4 appear correctly.Added Compass Beeps to every room in dungeons with a key, or the dungeon item.Update (10-04-21):Nerfed late game bosses and enemies.Buffed early game bosses.Nerfed the first three sword beams.Added a new area before level 5.Added Moosh maps for every dungeon.Customized the subscreen, both active and passive.Turned off the ability to stunlock.Replaced quick switching items with having 4 button items.Other small fixes, and possibly big ones that I forgot.Update (11-17-2021):Added a title screenUpdate (12-10-2021):Fixed F6.",
     "credits": "I did everything. Bagu made the title sequence.Got scripts from some people, mainly Moosh.Zaxarone, Shane and this other guy pointed out a few issues.",
     "playable": false,
-    "error": "Cannot read properties of undefined (reading 'xoff')"
+    "errors": [
+      "Cannot read properties of undefined (reading 'xoff')"
+    ]
   },
   {
     "name": "The Bounds of Waterford",
@@ -13776,8 +13992,7 @@
     "story": "Ganon has kidnapped the princess and taken her to the once peaceful and beautiful land of Waterford. Link must find the eight triforce fragments, save Zelda and stop Ganon from the further destruction of the realm. (Real original)",
     "tipsAndCheats": "There are three different pay for info rooms and a few other info guys that will point you in the right direction. I suggest you use them.There is little wasted space in the dungeons. Every room either leads to important room or is important itself. If you feel like you're lost, check out your map and make sure you didn't miss anything. Sometimes you will have to backtrack and take look closer.As you will find out, there are eight keys hidden throughout the overworld guarded by. You need these to complete the final dungeon. You will not be able to get them all at the beginning of the game.",
     "credits": "Beta tests by James24 and XanadudeInitial Tileset by Avaro (Zelda XD)VGMusic Midi Contributors: King Meteor, Tsu Ryu, Daniel, C. Luigi_Drummer, Michael Martin, Teck, Jonah Fall, Joe Cortez, tdkim, GiGaHeRTZEverything else by ME! (Expect for the things I forgot).",
-    "playable": false,
-    "error": "Cannot read properties of undefined (reading 'map')"
+    "playable": true
   },
   {
     "name": "IcyZelda3rd.qst",
@@ -13893,8 +14108,7 @@
     "story": "The end of the line! Link must face off against the decapitated head of Ganondorf, one final time, armed only with a fragile Deku Stick.",
     "tipsAndCheats": "You can only miss once.",
     "credits": "TheCup93: Original design that I used to make the sprited Ganon head.FireSeraphim: Tileset.Whisky: The source of all inspiration.This Quest Bears the Unofficial Greeeeeeok Seal of Kwalitee.",
-    "playable": false,
-    "error": "Cannot read properties of undefined (reading 'map')"
+    "playable": true
   },
   {
     "name": "Project Storm",
@@ -13964,8 +14178,7 @@
     "story": "N/A",
     "tipsAndCheats": "N/A",
     "credits": "This carries the Timelord Seal of Approval",
-    "playable": false,
-    "error": "Cannot read properties of undefined (reading 'map')"
+    "playable": true
   },
   {
     "name": "Fortressvania",
@@ -14062,8 +14275,7 @@
     "story": "N/A",
     "tipsAndCheats": "N/A",
     "credits": "N/A",
-    "playable": false,
-    "error": "Cannot read properties of undefined (reading 'map')"
+    "playable": true
   },
   {
     "name": "New Quest",
@@ -14208,7 +14420,9 @@
     "tipsAndCheats": "N/A",
     "credits": "Quest designed by: JamianTileset: InstrumentalityExtra tiles: www.spriters-resource.com, EZGBC tilesetScripts: Jamian, with additional scripts by Emily, Mero, Moosh, SaffithMidis: www.vgmusic.com and a custom midi by BaguBeta testing: Moosh, bti182, phatjak69",
     "playable": false,
-    "error": "Cannot read properties of undefined (reading 'xoff')"
+    "errors": [
+      "Cannot read properties of undefined (reading 'xoff')"
+    ]
   },
   {
     "name": "Nayru's Odyssey: Definitive Edition",
@@ -14363,8 +14577,7 @@
     "story": "Ganon is up to no good again.Kill him with death!",
     "tipsAndCheats": "You can burn bushes and bomb walls, just like the original!There is a spacebar map... on the overworld.Update:Fixed a staircase/block trigger issue in levels 8 and 9.Removed Slash (apparently I had this removed but I forgot to update).Made it to where rooms can't be cheesed in doorways.",
     "credits": "I just used the base Z1 tileset, and created my own overworld with it with unique dungeons.So it's nothing more than the bare minimum.",
-    "playable": false,
-    "error": "Cannot read properties of undefined (reading 'map')"
+    "playable": true
   },
   {
     "name": "Shadowblazer's Tiny Quest",
@@ -14383,7 +14596,9 @@
     "tipsAndCheats": "N/A",
     "credits": "Shadowblazer - Original quest4matsy - Testing",
     "playable": false,
-    "error": "Cannot read properties of undefined (reading 'xoff')"
+    "errors": [
+      "Cannot read properties of undefined (reading 'xoff')"
+    ]
   },
   {
     "name": "Imzogelmo's 5th Quest Candidate",
@@ -14428,7 +14643,9 @@
     "tipsAndCheats": "Generally speaking, most dead ends are kill all enemy rooms. Most other enemies are intended to either be ignored or avoided.LEARN YOUR HITBOXES AND EXPLOITS. For example: The Hammer extends ever so slightly farther to the right than it does the left when aiming to hammer pegs down. 0 damage weapons stun enemies, etc..As opposed to the usual type B quest, F6ing is not only allowed, but should be actively used as a tool you, the player, have under your belt.Death Knights have a high heart drop rate. If you are next to a room with one, consider using them to heal up.If you wish to figure out the gimmick for level 2 yourself, don't read this spoiler, but if you can't be bothered by my vague design, go ahead and read here:\n\tSpoiler \n\tMaze paths are visually indicated, and you're supposed to be able to figure them out by looking around carefully. If you cannot figure out the visual indicators, they are as follows:Grave = UpArmos: LeftSign: RightFence: Down\n",
     "credits": "- My closest friends for encouraging me to keep at it.- Z-Zone for hosting the Type B quest contest.- TheBlueTophat for hosting the contest.- \"Britany\" (You know who you are.) for pressing me into making a unique palette for Level 1.- Moosh for playing my entry through to the end, encouraging me to make tweaks for the database release, and recommending some as well.- The current ZC devs for their continued work on the program, which gave me the inspiration to work on this in the first place.- Ironically James24 since he inspired the contest.",
     "playable": false,
-    "error": "Cannot read properties of undefined (reading 'xoff')"
+    "errors": [
+      "Cannot read properties of undefined (reading 'xoff')"
+    ]
   },
   {
     "name": "The Zelda Legend (1984 Arcade)",
@@ -14481,7 +14698,9 @@
     "tipsAndCheats": "N/A",
     "credits": "Moosh - ScriptingZoriaRPG - ContributionsPrevious Staff - Prevous Contributions",
     "playable": false,
-    "error": "Cannot read properties of undefined (reading 'xoff')"
+    "errors": [
+      "Cannot read properties of undefined (reading 'xoff')"
+    ]
   },
   {
     "name": "Wanderlust",
@@ -14531,8 +14750,7 @@
     "story": "N/A",
     "tipsAndCheats": "Inertia stopped by Link sword, direction change, Link shield down position",
     "credits": "N/A",
-    "playable": false,
-    "error": "Cannot read properties of undefined (reading 'map')"
+    "playable": true
   },
   {
     "name": "Remembrance of Shadows",
