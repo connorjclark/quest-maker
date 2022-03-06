@@ -1,0 +1,177 @@
+@media only screen and (max-width: 1000px) {
+  .mobile-hidden {
+    display: none;
+  }
+}
+
+body {
+  margin: 0;
+  color: white;
+  background-color: rgb(44, 37, 37);
+  overflow: hidden;
+}
+a {
+  color: white;
+}
+
+.flex {
+  display: flex;
+}
+.flex-column {
+  flex-direction: column;
+}
+.items-center {
+  align-items: center;
+}
+.justify-center {
+  justify-content: center;
+}
+.md-5 {
+  margin: 5px;
+}
+
+.what-is-this {
+  padding: 15px;
+  cursor: pointer;
+}
+
+.string, .title {
+  margin: 0 5vw;
+}
+
+.selected {
+  color: gold;
+}
+
+.quest-select__pane {
+  height: 100vh;
+  overflow-y: scroll;
+}
+.quest-select__pane--left {
+  min-width: max-content;
+}
+.quest-select__entry {
+  cursor: pointer;
+}
+.quest-select img {
+  max-width: 400px;
+}
+
+.editor-ui {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr auto;
+  gap: 0px 0px;
+  grid-template-areas:
+    "header header"
+    "canvas tiles"
+    "bottom tiles";
+}
+.header { grid-area: header; }
+.canvas { grid-area: canvas; }
+.tiles { grid-area: tiles; }
+.bottom { grid-area: bottom; }
+
+.play-ui .main-canvas {
+  height: 100%;
+}
+
+.editor-ui .main-canvas {
+  height: 100%;
+}
+
+.play-ui {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.header {
+  display: flex;
+}
+
+.window {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: #00000055;
+}
+.window__content {
+  background-color: black;
+  padding: 20%;
+  border: 2px solid antiquewhite;
+}
+
+.tile-editor .tile {
+  width: 100%;
+  height: 100%;
+}
+
+.tabbed-pane__tabs {
+  display: flex;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #80753c;
+}
+.tabbed-pane__tab {
+  flex-grow: 1;
+  background-color: transparent;
+  margin: 0;
+  border: none;
+  color: white;
+  font-size: 16px;
+}
+.tabbed-pane__tab:focus-visible {
+  outline: 1px solid gold;
+}
+.tabbed-pane__tab:hover {
+  background-color: transparent;
+  border: none;
+  color: unset;
+  box-shadow: none;
+}
+.tabbed-pane__tab.selected {
+  color: gold;
+}
+
+.tile-pickers {
+  display: flex;
+  justify-content: space-around;
+  height: 1000px;
+}
+.tile-picker {
+  display: flex;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  overflow-y: scroll;
+}
+.tile {
+  width: 24px;
+  height: 24px;
+  background-size: contain;
+}
+
+.walkable-mask-wrapper {
+  position: relative;
+}
+.walkable-mask {
+  display: flex;
+  flex-wrap: wrap;
+  position: absolute;
+  top: 0;
+  width: 64px;
+  height: 64px;
+}
+.walkable-mask div {
+  width: 50%;
+  height: 50%;
+  pointer-events: none;
+}
+.walkable-mask .red {
+  background-color: red;
+  opacity: 0.6;
+}
