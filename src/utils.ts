@@ -90,7 +90,7 @@ export function getScreenLayer(state: QuestMaker.State, map: QuestMaker.Map_, x:
 };
 
 export function dmapContainsCoord(dmap: QuestMaker.DMap, x: number, y: number) {
-  if (dmap.type === DmapType.dmOVERW) return true;
+  if (dmap.type !== DmapType.dmDNGN) return true;
   if (!(x >= dmap.xoff && x <= dmap.xoff + 8)) return false;
   const row = dmap.grid[y];
   x = x - dmap.xoff;

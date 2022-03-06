@@ -211,6 +211,7 @@ declare global {
 
     // TODO: Better name for Map / DMap ?
     interface DMap {
+      id: number;
       name: string;
       type: number;
       level: number;

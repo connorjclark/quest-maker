@@ -262,18 +262,21 @@ function tick(app: QuestMaker.App, dt: number) {
       // a screen could have multiple dmaps attainable.
       // Should remove this, but it prevents play testing on a wrong dmap with really wrong colors ...
       // Is there a better option?
-      const matchingDmapIndex = app.state.quest.dmaps.findIndex((dmap, i) => {
-        if (dmap.map !== app.state.mapIndex) return false;
+      const matchingDmapIndex = app.state.quest.dmaps
+        // Put dungeon dmaps first.
+        // .sort((a, b) => a.type - b.type)
+        .findIndex((dmap, i) => {
+          if (dmap.map !== app.state.mapIndex) return false;
 
-        // Overworld can use the entire map.
-        // It's possible that multiple dmaps apply to this map.
-        if (dmap.type === 1) return true;
+          // Overworld can use the entire map.
+          // It's possible that multiple dmaps apply to this map.
+          if (dmap.type === 1) return true;
 
-        // It's possible that multiple dmaps would pass this condition.
-        // Example: http://localhost:1234/?quest=zc_quests%2F25%2FLandsofSerenity.qst&dmap=2&x=4&y=6&play 
-        // has a dmap for the level and also for the level's boss.
-        return dmapContainsCoord(dmap, app.state.screenX, app.state.screenY);
-      });
+          // It's possible that multiple dmaps would pass this condition.
+          // Example: http://localhost:1234/?quest=zc_quests%2F25%2FLandsofSerenity.qst&dmap=2&x=4&y=6&play 
+          // has a dmap for the level and also for the level's boss.
+          return dmapContainsCoord(dmap, app.state.screenX, app.state.screenY);
+        });
       if (matchingDmapIndex !== -1) {
         app.state.dmapIndex = matchingDmapIndex;
         app.state.mapIndex = app.state.quest.dmaps[matchingDmapIndex].map;

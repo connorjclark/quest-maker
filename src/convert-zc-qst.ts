@@ -613,6 +613,7 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
   for (const zcDmap of qstData.DMAP.dmaps) {
     const continueCoord = getDmapCoord(zcDmap, zcDmap.cont);
     const dmap = {
+      id: quest.dmaps.length,
       name: zcDmap.name,
       type: zcDmap.type,
       level: zcDmap.level,
