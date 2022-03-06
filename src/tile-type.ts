@@ -184,3 +184,17 @@ export function getWarpIndex(type: TileType): number | undefined {
   result = [TileType["Cave (Walk Up) [A]"], TileType["Cave (Walk Up) [B]"], TileType["Cave (Walk Up) [C]"], TileType["Cave (Walk Up) [D]"]].indexOf(type);
   if (result !== -1) return result;
 }
+
+export function getDamage(type: TileType) {
+  const index = [
+    TileType['Damage (1/2 Heart)'],
+    TileType['Damage (1 Heart)'],
+    TileType['Damage (2 hearts)'],
+    TileType['Damage (4 Hearts)'],
+    TileType['Damage (8 hearts)'],
+    TileType['Damage (16 hearts)'],
+    TileType['Damage (32 hearts)'],
+  ].indexOf(type);
+  if (index === -1) return 0;
+  return 2 ** (index - 1);
+}

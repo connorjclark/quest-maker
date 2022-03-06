@@ -4,7 +4,7 @@ import { EnemyType, ItemType } from './types.js';
 import * as Utils from './utils.js';
 import { QuestEntity, MiscBag } from './entity.js';
 import { TileFlag, SecretCombo, getPushData } from './tile-flags.js';
-import { getWarpIndex, TileType } from './tile-type.js';
+import { getDamage, getWarpIndex, TileType } from './tile-type.js';
 import { ScreenFlags } from './screen-flags.js';
 import { QuestRules } from './quest-rules.js';
 import { Sfx } from './zc-constants.js';
@@ -1336,6 +1336,7 @@ export class PlayGameMode extends QuestMakerMode {
   performTileAction(type: TileType, tile: number, flag: TileFlag, names: string[], x: number, y: number, layerIndex: number) {
     const state = this.app.state;
     const warpIndex = getWarpIndex(type);
+    const damage = getDamage(type);
 
     if (warpIndex !== undefined && this.hasMovedSinceEnteredScreen) {
       if ((names.includes('bottomLeft') && names.includes('bottomRight')) || (names.includes('bottom') && names.includes('top'))) {
@@ -1356,6 +1357,11 @@ export class PlayGameMode extends QuestMakerMode {
       this.heroEntity.misc.set('conveyor.vy', -0.5);
     } else if (type === TileType['Conveyor Down']) {
       this.heroEntity.misc.set('conveyor.vy', 0.5);
+    } else if (damage && names.length > 2) {
+      const dir = { ...this.heroEntity.direction };
+      dir.x *= -1;
+      dir.y *= -1;
+      this._hurtHero(dir);
     }
 
     const pushData = getPushData(flag);
@@ -1400,5 +1406,11 @@ export class PlayGameMode extends QuestMakerMode {
     }
 
     this.app.soundManager.playSfx(item.pickupSound || Sfx.SFX_PLINK);
+  }
+
+  _hurtHero(dir: { x: number, y: number }) {
+    if (this.heroEntity.invulnerableTimer) return;
+    this.heroEntity.hit(dir);
+    this.app.soundManager.playSfx(Sfx.SFX_OUCH);
   }
 }

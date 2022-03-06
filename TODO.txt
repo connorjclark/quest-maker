@@ -80,3 +80,6 @@ http://localhost:1234/?quest=zc_quests%2F204%2FLost_Isle.qst&dmap=1&x=6&y=7
 
 Going to editor mode resets dmap, to the wrong value. should work out how to really handle this
 http://localhost:1234/?quest=zc_quests%2F27%2FLink%27s+Birthday+250.qst&dmap=14&x=1&y=4&play
+
+eyeballs
+http://localhost:1234/?quest=zc_quests%2F139%2FHeroOfDreams.qst&dmap=159&x=4&y=4
