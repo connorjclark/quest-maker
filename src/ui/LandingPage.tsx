@@ -78,11 +78,12 @@ const LandingPage = () => {
     questManifest;
 
   return <div>
-    <div class="what-is-this">
-      <a href="https://github.com/connorjclark/quest-maker/blob/master/README.md" target="_blank">What is this?</a>
-    </div>
     <div class="quest-select flex">
       <div class="quest-select__pane quest-select__pane--left">
+        <div class="what-is-this">
+          <a href="https://github.com/connorjclark/quest-maker/blob/master/README.md" target="_blank">What is this?</a>
+        </div>
+
         Hide unplayable quests <input type="checkbox" onChange={(e: any) => setHideUnplayableQuests(e.target.checked)} checked={hideUnplayableQuests}></input>
 
         {quests.map((quest, i) => {
