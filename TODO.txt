@@ -18,6 +18,7 @@ http://localhost:1234/?quest=zc_quests%2F27%2FLink%27s+Birthday+250.qst&dmap=2&x
 http://localhost:1234/?quest=zc_quests%2F27%2FLink%27s+Birthday+250.qst&dmap=14&x=1&y=4
 http://localhost:1234/?quest=zc_quests%2Fbs3.1%2FNewBS+3.1+-+1st+Quest.qst&dmap=0&x=9&y=8 color error
 http://localhost:1234/?quest=zc_quests%2F26%2Flttf-fixed.qst&dmap=1&x=4&y=7
+http://localhost:1234/?quest=zc_quests%2F27%2FLink%27s+Birthday+250.qst&dmap=10&x=3&y=6
 
 8-bit colors
 http://localhost:1234/?quest=zc_quests%2F585%2FToL.qst&dmap=0&x=0&y=7

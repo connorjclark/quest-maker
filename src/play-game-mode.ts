@@ -1398,6 +1398,11 @@ export class PlayGameMode extends QuestMakerMode {
     const state = this.app.state;
 
     const item = state.quest.items[itemId];
+    if (!item) {
+      console.error('bad item', itemId);
+      return;
+    }
+
     const inventoryIndex = state.game.inventory.length;
     state.game.inventory.push({ item: itemId });
 
