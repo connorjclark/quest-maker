@@ -44,16 +44,14 @@ class Bottom extends Component<BottomProps> {
       .filter((dmap) => dmap.map === this.props.currentMapIndex)
       // TODO: figure out when a dmap is invalid ...
       .filter((dmap) => dmap.type !== DmapType.dmCAVE || dmap.level || dmap.color || dmap.name);
+
     // See rSCRMAP
-    const colors = ['fuchsia', 'green', 'gray',
-      'lime', 'maroon', 'navy', 'olive', 'orange', 'purple', 'red', 'aqua',
-      'silver', 'teal', 'blue', 'yellow'];
 
     // @ts-expect-error
     const color = window.app.state.quest.color as Exclude<QuestMaker.Quest['color'], undefined>;
 
-    function rgbToHex(red: number, green: number, blue: number) {
-      const rgb = (red << 16) | (green << 8) | (blue << 0);
+    function rgbToHex({ r, g, b }: { r: number, g: number, b: number }) {
+      const rgb = (r << 16) | (g << 8) | (b << 0);
       return '#' + (0x1000000 + rgb).toString(16).slice(1);
     }
 
@@ -74,33 +72,30 @@ class Bottom extends Component<BottomProps> {
       }
     }
 
-    // WIP
-    const screenColors = Utils.create2dArray(16, 9, '');
+    function getColor(paletteIndex: number, cset: number, index: number) {
+      const palette = color.palettes[paletteIndex & 15];
+      const colorIndex = cset * 16 + index;
+      const csetIndex = Math.floor(colorIndex / 16);
+      return color.csets[palette.csets[csetIndex]].colors[colorIndex % 16];
+    }
+
+    const screenBgColors = Utils.create2dArray(16, 9, '');
+    const screenFgColors = Utils.create2dArray(16, 9, '');
     for (let x = 0; x < 16; x++) {
       for (let y = 0; y < 8; y++) {
         // Plus 1 because palette 0 is the main palette.
-        const paletteIndex = (currentMap.screens[x][y].color || screenPalettesAccordingToDmaps[x][y]) + 1;
-        // const palette = color.palettes[paletteIndex];
-        // const colorIndex = 2*16 + 1;
-        // const csetIndex = Math.floor(colorIndex / 16);
-        // const { r, g, b } = color.csets[palette.csets[csetIndex]].colors[colorIndex % 16];
-
-        // const colorIndex = (paletteIndex * 13 + 15) + 2;
-        // const colorIndex = (paletteIndex * 13 + 15) + 16 + 1;
-        // const csetIndex = Math.floor(colorIndex / 16);
-        // const { r, g, b } = color.csets[csetIndex].colors[colorIndex % 16];
-
+        let paletteIndex = (currentMap.screens[x][y].color || screenPalettesAccordingToDmaps[x][y]) + 1;
+        paletteIndex = paletteIndex & 15;
+        const bg = rgbToHex(getColor(paletteIndex, 2, 2));
+        const fg = rgbToHex(getColor(paletteIndex, 3, 2));
+        screenBgColors[x][y] = bg;
+        screenFgColors[x][y] = fg;
 
         // Really neat palette viewer.
         // const paletteIndex = window.pi ?? this.props.currentMapIndex;
         // const palette = color.palettes[paletteIndex];
         // const cset = [2,3,4,9];
-        // const { r, g, b } = color.csets[palette.csets[cset[y] ?? 0]].colors[x];
-
-        // const rgbStr = rgbToHex(r, g, b);
-
-        screenColors[x][y] = colors[paletteIndex % colors.length];
-        // screenColors[x][y] = rgbStr;
+        // const { r, g, b } = color.csets[palette.csets[cset[y] ?? 0]].colors[x]
       }
     }
 
@@ -113,14 +108,14 @@ class Bottom extends Component<BottomProps> {
       if (!context) return;
 
       const size = 16;
-      const gap = size / 5;
+      const gap = size / 8;
 
       for (let x = 0; x < 16; x++) {
         for (let y = 0; y < 9; y++) {
           const screen = x < currentMap.screens.length && currentMap.screens[x][y];
           let color;
           if (screen) {
-            color = screenColors[x][y] || 'white';
+            color = screenBgColors[x][y] || 'white';
           } else {
             color = 'black';
           }
