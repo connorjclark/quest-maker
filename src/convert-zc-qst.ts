@@ -651,6 +651,7 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
 
         const layerMap: number[] = zcScreen.layerMap; // TODO: should type zcData just a bit ...
         const screen: QuestMaker.Screen = {
+          valid: zcScreen.valid !== 128,
           tiles: [],
           secretTiles: (zcScreen.secretCombos as any[]).map((combo, i) => {
             return { tile: combo, cset: zcScreen.secretCsets[i] };

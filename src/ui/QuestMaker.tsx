@@ -83,6 +83,13 @@ class Bottom extends Component<BottomProps> {
     const screenFgColors = Utils.create2dArray(16, 9, '');
     for (let x = 0; x < 16; x++) {
       for (let y = 0; y < 8; y++) {
+        const screen = x < currentMap.screens.length && currentMap.screens[x][y];
+        if (!screen || !screen.valid) {
+          screenBgColors[x][y] = 'black';
+          screenFgColors[x][y] = 'black';
+          continue;
+        }
+
         // Plus 1 because palette 0 is the main palette.
         let paletteIndex = (currentMap.screens[x][y].color || screenPalettesAccordingToDmaps[x][y]) + 1;
         paletteIndex = paletteIndex & 15;
@@ -107,14 +114,16 @@ class Bottom extends Component<BottomProps> {
       const context = canvas.getContext('2d');
       if (!context) return;
 
-      const size = 16;
-      const gap = size / 8;
+      const gap = 2;
+      const bgSize = 12;
+      const fgSize = 5;
+      const size = bgSize + gap * 2;
 
       for (let x = 0; x < 16; x++) {
         for (let y = 0; y < 9; y++) {
           const screen = x < currentMap.screens.length && currentMap.screens[x][y];
           let color;
-          if (screen) {
+          if (screen && screen.valid) {
             color = screenBgColors[x][y] || 'white';
           } else {
             color = 'black';
@@ -122,8 +131,12 @@ class Bottom extends Component<BottomProps> {
 
           context.fillStyle = x === this.props.screenX && y === this.props.screenY ? '#00ff00' : 'black';
           context.fillRect(x * size, y * size, size, size);
-          context.fillStyle = color;
-          context.fillRect(x * size + gap, y * size + gap, size - gap * 2, size - gap * 2);
+
+          context.fillStyle = screenBgColors[x][y];
+          context.fillRect(x * size + gap, y * size + gap, bgSize, bgSize);
+
+          context.fillStyle = screenFgColors[x][y];
+          context.fillRect(x * size + (size - fgSize) / 2, y * size + (size - fgSize) / 2, fgSize, fgSize);
         }
       }
     }, [currentMap, this.props.screenX, this.props.screenY]);

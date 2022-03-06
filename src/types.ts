@@ -29,6 +29,7 @@ declare global {
     }
 
     interface Screen {
+      valid: boolean;
       tiles: ScreenTile[][];
       secretTiles: ScreenTile[];
       layers: Array<{ map: number; x: number; y: number; opacity: number } | null>;
