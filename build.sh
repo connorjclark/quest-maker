@@ -22,6 +22,9 @@ cp -r node_modules/freepats/* dist
 
 cp decode_zc/dist/zc.wasm dist/iife/zc.wasm
 
+# This is just for Zelda Classic on the web. Quest Maker bundles this during build.
+cp data/quest-manifest.json dist/
+
 rsync --ignore-existing $PWD/data/zc_quests/ $PWD/tmp/zc_quests/
 
 ln -nfs $PWD/tmp/zc_quests $PWD/dist/zc_quests
