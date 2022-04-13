@@ -5,10 +5,10 @@ DIR=$(dirname "${BASH_SOURCE[0]}")
 cd $DIR
 
 cd ..
-mkdir -p tmp/zc_quests
-cd tmp/zc_quests
+mkdir -p zc_quests
+cd zc_quests
 
-for i in {1..768}
+for i in {1..771}
 do
   if [ ! -d "$i" ]
   then

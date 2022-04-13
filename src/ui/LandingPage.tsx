@@ -51,15 +51,17 @@ const Quest = (props: typeof questManifest[number]) => {
         <div>Author: {props.author}</div>
         <div>Genre: {props.genre}</div>
         {props.projectUrl && <div><a href={props.projectUrl} target="_blank">Project URL</a></div>}
+        <br></br>
 
+        <div dangerouslySetInnerHTML={{__html: props.informationHtml}}></div>
         <h3>Description</h3>
-        <div>{props.description}</div>
+        <div dangerouslySetInnerHTML={{__html: props.descriptionHtml}}></div>
         <h3>Story</h3>
-        <div>{props.story}</div>
+        <div dangerouslySetInnerHTML={{__html: props.storyHtml}}></div>
         <h3>Tips and Cheats</h3>
-        <div>{props.tipsAndCheats}</div>
+        <div dangerouslySetInnerHTML={{__html: props.tipsAndCheatsHtml}}></div>
         <h3>Credits</h3>
-        <div>{props.credits}</div>
+        <div dangerouslySetInnerHTML={{__html: props.creditsHtml}}></div>
       </div>
     </div>
   </div>;

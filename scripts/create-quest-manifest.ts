@@ -9,14 +9,20 @@ interface QuestManifest {
   author: string;
   urls: string[];
   projectUrl: string;
+  videoUrl?: string;
   imageUrls: string[];
   genre: string;
   zcVersion: string;
-  description: string;
-  story: string;
-  tipsAndCheats: string;
-  credits: string;
+  informationHtml: string;
+  descriptionHtml: string;
+  storyHtml: string;
+  tipsAndCheatsHtml: string;
+  creditsHtml: string;
   extraResources?: string[];
+  rating: {
+    score: number;
+    distribution: number[];
+  };
 }
 
 let questsMap: Map<string, QuestManifest>;
@@ -58,25 +64,90 @@ async function processId(page: puppeteer.Page, id: number) {
     return;
   }
 
-  const name = (await page.title()).split('-')[0].trim();
+  const nameRaw = (await page.title()).split('-')[0];
   const metadataRaw1 = await page.evaluate(() => {
     return [...document.querySelectorAll('.ipsBox_container span')].map((e) => e.textContent || '');
   });
-  const metadataRaw2 = await page.evaluate(() => {
-    return [...document.querySelectorAll('#item_contentBox .table_row')].map((e) => e.textContent || '');
+  const html = await page.evaluate(() => {
+    function clean(el: Element) {
+      for (const childEl of el.querySelectorAll('*')) {
+        childEl.removeAttribute('style');
+
+        if (childEl.classList.contains('bbc_emoticon') || childEl.classList.contains('bbc_img')) {
+          // https://www.purezc.net/forums/public/style_emoticons/default/icon_smile.gif
+          let newText = childEl.getAttribute('alt');
+          if (!newText) {
+            newText = {
+              'https://www.purezc.net/forums/public/style_emoticons/default/icon_smile.gif': ':)',
+              'https://www.purezc.net/forums/public/style_emoticons/default/icon_frown.gif': ':(',
+              'https://www.purezc.net/forums/public/style_emoticons/default/icon_wink.gif': ';)',
+              'https://www.purezc.net/forums/public/style_emoticons/default/icon_biggrin.gif': ':D',
+              'https://www.purezc.net/forums/public/style_emoticons/default/icon_sweat.gif': ':/',
+              'https://www.purezc.net/forums/public/style_emoticons/default/icon_sorry.gif': ':/',
+              'https://www.purezc.net/forums/public/style_emoticons/default/icon_lol.gif': ':p',
+              'https://www.purezc.net/forums/public/style_emoticons/default/icon_razz.gif': ':p',
+              'https://www.purezc.net/forums/public/style_emoticons/default/icon_thumbsup.gif': '👍',
+            }[childEl.getAttribute('src') || ''] || '';
+          }
+          childEl.replaceWith(newText || '');
+        }
+      }
+    }
+
+    function collect(el: Element) {
+      clean(el);
+      return el.innerHTML;
+    }
+
+    return {
+      tableRows: [...document.querySelectorAll('#item_contentBox .table_row')].map(collect),
+      // @ts-expect-error
+      entryInfo: collect(document.querySelector('.entryInfo')),
+    };
   });
 
   const imagesRaw = await page.evaluate(() => {
-    return [...document.querySelectorAll('#imagelist2 img')].map((e: any) => e.src);
+    return [...document.querySelectorAll('#imagelist2 img')]
+      .map((e: any) => e.src)
+      .filter(url => !url.includes('youtube'));
   });
 
-  const author = (metadataRaw1[1].match(/Creator: (.*)/ms) || [])[1].trim();
-  const genre = (metadataRaw1[2].match(/Genre: (.*)/ms) || [])[1].trim();
-  const zcVersion = (metadataRaw1[4].match(/ZC Version: (.*)/ms) || [])[1].trim();
-  const description = metadataRaw2[1];
-  const story = metadataRaw2[3];
-  const tipsAndCheats = metadataRaw2[5];
-  const credits = metadataRaw2[7];
+  const videoUrl = await page.evaluate(() => {
+    const el = document.querySelector('#videoPreviewBox iframe');
+    if (!el) return;
+
+    // @ts-expect-error
+    return el.src;
+  });
+
+  const rating = await page.evaluate(() => {
+    const el = document.querySelector('*[data-rating]');
+    if (!el) {
+      return {
+        score: 0,
+        distribution: [],
+      };
+    }
+
+    return {
+      score: Number(el.getAttribute('data-rating')),
+      distribution: eval(el.getAttribute('data-distribution') || '').map(Number),
+    };
+  });
+
+  const trim = (str: string) => str.replace(/\s+/g, ' ').trim();
+
+  let name = trim(nameRaw);
+  if (name[0] === '"' && name[name.length - 1] === '"') name = name.substring(1, name.length - 1);
+
+  const author = trim((metadataRaw1[1].match(/Creator: (.*)/ms) || [])[1]);
+  const genre = trim((metadataRaw1[2].match(/Genre: (.*)/ms) || [])[1]);
+  const zcVersion = trim((metadataRaw1[4].match(/ZC Version: (.*)/ms) || [])[1]);
+  const informationHtml = trim(html.entryInfo);
+  const descriptionHtml = trim(html.tableRows[1]);
+  const storyHtml = trim(html.tableRows[3]);
+  const tipsAndCheatsHtml = trim(html.tableRows[5]);
+  const creditsHtml = trim(html.tableRows[7]);
 
   const imageUrls = [];
   for (let i = 0; i < imagesRaw.length; i++) {
@@ -85,31 +156,46 @@ async function processId(page: puppeteer.Page, id: number) {
 
     const ext = imagesRaw[i].match(/\.(\w+)$/)[1];
     const imageUrl = `${questDir}/image${i}.${ext}`;
-    fs.writeFileSync(imageUrl, await resp.buffer());
+    fs.writeFileSync(`${imageUrl}`, await resp.buffer());
     imageUrls.push(imageUrl);
   }
 
-  const qstFiles = glob.sync(`${questDir}/*.qst`);
+  // Fix file names like "zc_quests/435/Eddy&#39;s Troll Day.qst"
+  for (const file of glob.sync(`${questDir}/**/*.qst`, { nocase: false })) {
+    const sanitized = file.replace(/&#39;|[#&;]/g, '');
+    if (file !== sanitized) {
+      fs.renameSync(file, sanitized);
+    }
+  }
+
+  const extraResources = [];
+  for (const file of glob.sync(`${questDir}/**/*.{mp3,ogg,mod}`, { nocase: false })) {
+    extraResources.push(file);
+  }
+
+  const qstFiles = glob.sync(`${questDir}/**/*.qst`, { nocase: false });
   const quest: QuestManifest = {
     name,
     author,
     urls: qstFiles,
     projectUrl,
+    videoUrl,
     imageUrls,
     genre,
     zcVersion,
-    description,
-    story,
-    tipsAndCheats,
-    credits,
+    informationHtml,
+    descriptionHtml,
+    storyHtml,
+    tipsAndCheatsHtml,
+    creditsHtml,
+    rating,
+    extraResources: extraResources.length ? extraResources : undefined,
   };
   questsMap.set(quest.urls[0], quest);
 }
 
 async function main() {
   loadQuests();
-
-  // TODO: fix qst files names like "zc_quests/435/Eddy&#39;s Troll Day.qst"
 
   // Process the quests stored in source control.
   for (const questFile of glob.sync('data/zc_quests/*/quest.json')) {
@@ -120,7 +206,7 @@ async function main() {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
-  const max = 768;
+  const max = 771;
   for (let i = 1; i <= max; i++) {
     console.log(`processing ${i} of ${max}`);
     try {
@@ -128,7 +214,7 @@ async function main() {
     } catch (e) {
       console.error(e);
     }
-    if (questsMap.size % 10 === 0) saveQuests();
+    if (i % 10 === 0) saveQuests();
   }
 
   addExtraResources();

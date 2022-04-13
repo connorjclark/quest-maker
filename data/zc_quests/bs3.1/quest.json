@@ -3,5 +3,10 @@
   "author": "By Radien - original rip by Phantom Menace, 1st update by VEL",
   "imageUrls": ["zc_quests/bs3.1/image1.png"],
   "urls": ["zc_quests/bs3.1/NewBS 3.1 - 1st Quest.qst"],
-  "playable": true
+  "playable": true,
+  "informationHtml": "BS The Legend of Zelda is a remake of the original The Legend of Zelda, which was released on the Nintendo Entertainment System, available only via the Satellaview add-on for the Super Nintendo Entertainment System.",
+  "descriptionHtml": "",
+  "storyHtml": "",
+  "tipsAndCheatsHtml": "",
+  "creditsHtml": ""
 }
