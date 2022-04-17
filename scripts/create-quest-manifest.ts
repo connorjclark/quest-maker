@@ -2,6 +2,7 @@
 
 import glob from 'glob';
 import fs from 'fs';
+import path from 'path';
 import puppeteer from 'puppeteer';
 
 interface QuestManifest {
@@ -168,11 +169,6 @@ async function processId(page: puppeteer.Page, id: number) {
     }
   }
 
-  const extraResources = [];
-  for (const file of glob.sync(`${questDir}/**/*.{mp3,ogg,mod}`, { nocase: false })) {
-    extraResources.push(file);
-  }
-
   const qstFiles = glob.sync(`${questDir}/**/*.qst`, { nocase: false });
   const quest: QuestManifest = {
     name,
@@ -189,7 +185,6 @@ async function processId(page: puppeteer.Page, id: number) {
     tipsAndCheatsHtml,
     creditsHtml,
     rating,
-    extraResources: extraResources.length ? extraResources : undefined,
   };
   questsMap.set(quest.urls[0], quest);
 }
@@ -217,126 +212,18 @@ async function main() {
     if (i % 10 === 0) saveQuests();
   }
 
-  addExtraResources();
+  for (const quest of questsMap.values()) {
+    const questDir = quest.urls[0].split('/', 2).join('/');
+    const extraResources = [];
+    for (const file of glob.sync(`${questDir}/**/*.{mp3,ogg,mod,gbs}`, { nocase: false })) {
+      extraResources.push(file);
+    }
+    extraResources.sort();
+    if (extraResources.length) quest.extraResources = extraResources;
+  }
 
   saveQuests();
   await browser.close();
-}
-
-function addExtraResources() {
-  // https://www.purezc.net/index.php?page=quests&id=731
-  const ggQuest = questsMap.get('zc_quests/731/GoGollab_1_FunnyEdition.qst');
-  if (!ggQuest) throw new Error();
-
-  // https://drive.google.com/file/d/1h73PdVrcy0XQX403AlLDIMrHrMBVPMfd/view
-  ggQuest.extraResources = [
-    'GG_AGNBattle.ogg',
-    'GG_Dimentio.ogg',
-    'GG_LondomHouse.ogg',
-    'GG_ToramCave.ogg',
-    'GG_TrainLWT.ogg',
-    'GG_TrainWMB1.ogg',
-    'GG_Archipelago.ogg',
-    'GG_EdgelordLabs.ogg',
-    'GG_MansionTheme.ogg',
-    'GG_ToramValley.ogg',
-    'GG_TrainMindGap.ogg',
-    'GG_TrainWMB2.ogg',
-    'GG_Asteroid.ogg',
-    'GG_Elysium.ogg',
-    'GG_MathsHell.ogg',
-    'GG_TrainBFT1.ogg',
-    'GG_TrainPlatform1.ogg',
-    'GG_TrainWOK1.ogg',
-    'GG_Australia.ogg',
-    'GG_FinalA.ogg',
-    'GG_Necropolis.ogg',
-    'GG_TrainBFT2.ogg',
-    'GG_TrainPlatform2.ogg',
-    'GG_TrainWOK2.ogg',
-    'GG_BasiliskIsle.ogg',
-    'GG_FinalFinalDungeon.ogg',
-    'GG_Nostalgia.ogg',
-    'GG_TrainBMR1.ogg',
-    'GG_TrainSLH1.ogg',
-    'GG_TrainWYB1.ogg',
-    'GG_BooDance.ogg',
-    'GG_FrostFlameFire.ogg',
-    'GG_PathOfFailures.ogg',
-    'GG_TrainBMR2.ogg',
-    'GG_TrainSLH2.ogg',
-    'GG_TrainWYB2.ogg',
-    'GG_Boss.ogg',
-    'GG_FrostFlameIce.ogg',
-    'GG_PotumVillage.ogg',
-    'GG_TrainCJT1.ogg',
-    'GG_TrainSRB1.ogg',
-    'GG_Underwater.ogg',
-    'GG_Boss1.ogg',
-    'GG_GeneralKahrin.ogg',
-    'GG_Prison.ogg',
-    'GG_TrainCJT2.ogg',
-    'GG_TrainSRB2.ogg',
-    'GG_UniExterior.ogg',
-    'GG_Boss2.ogg',
-    'GG_GhostBoss.ogg',
-    'GG_Rescue.ogg',
-    'GG_TrainDest1.ogg',
-    'GG_TrainSSI1.ogg',
-    'GG_ViridiBoss.ogg',
-    'GG_Cancella.ogg',
-    'GG_InsidetheShip.ogg',
-    'GG_Rouxls.ogg',
-    'GG_TrainDest2.ogg',
-    'GG_TrainSSI2.ogg',
-    'GG_ViridiCaves.ogg',
-    'GG_Card.ogg',
-    'GG_Intro.ogg',
-    'GG_Rouxls2.ogg',
-    'GG_TrainERL1.ogg',
-    'GG_TrainStepDown.ogg',
-    'GG_ViridiForest.ogg',
-    'GG_Casino.ogg',
-    'GG_ItsShowtime.ogg',
-    'GG_ShadowBattle.ogg',
-    'GG_TrainERL2.ogg',
-    'GG_TrainVDT.ogg',
-    'GG_ViridiTown.ogg',
-    'GG_Caves.ogg',
-    'GG_KahrinKeep.ogg',
-    'GG_Shane.ogg',
-    'GG_TrainESH1.ogg',
-    'GG_TrainVXH1.ogg',
-    'GG_Wisp.ogg',
-    'GG_CursedKnees.ogg',
-    'GG_Keese.ogg',
-    'GG_SkyTower.ogg',
-    'GG_TrainESH2.ogg',
-    'GG_TrainVXH2.ogg',
-    'GG_Wisp2.ogg',
-    'GG_Darkest.ogg',
-    'GG_Khroslands.ogg',
-    'GG_SpiderNest.ogg',
-    'GG_TrainFor1.ogg',
-    'GG_TrainWBF1.ogg',
-    'GG_WitheredLeaf.ogg',
-    'GG_DeimonCorpGo!.ogg',
-    'GG_LabExterior.ogg',
-    'GG_Starlight.ogg',
-    'GG_TrainFor2.ogg',
-    'GG_TrainWBF2.ogg',
-    'GG_WyvernVillage.ogg',
-    'GG_DeimonLabs.ogg',
-    'GG_Lobby.ogg',
-    'GG_TBT_Final.ogg',
-    'GG_TrainHER1.ogg',
-    'GG_TrainWLT1.ogg',
-    'GG_Desert.ogg',
-    'GG_Londom.ogg',
-    'GG_ToramCastle.ogg',
-    'GG_TrainHER2.ogg',
-    'GG_TrainWLT2.ogg',
-  ].map(r => `zc_quests/731/${r}`);
 }
 
 main();
