@@ -215,7 +215,7 @@ async function main() {
   for (const quest of questsMap.values()) {
     const questDir = quest.urls[0].split('/', 2).join('/');
     const extraResources = [];
-    for (const file of glob.sync(`${questDir}/**/*.{mp3,ogg,mod,gbs}`, { nocase: false })) {
+    for (const file of glob.sync(`${questDir}/**/*.{gbs,gym,it_format,mod,mp3,nsf,ogg,s3m,spc,vgm,xm}`, { nocase: false })) {
       extraResources.push(file);
     }
     extraResources.sort();

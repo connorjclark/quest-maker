@@ -7182,11 +7182,22 @@
       ]
     },
     "extraResources": [
+      "zc_quests/254/LTTS-B.xm",
       "zc_quests/254/LTTS-C.mod",
+      "zc_quests/254/LTTS-Cave.xm",
       "zc_quests/254/LTTS-DWF.mp3",
+      "zc_quests/254/LTTS-L1.xm",
+      "zc_quests/254/LTTS-L2.s3m",
       "zc_quests/254/LTTS-L3.mod",
+      "zc_quests/254/LTTS-L4.xm",
+      "zc_quests/254/LTTS-L5 (old).s3m",
       "zc_quests/254/LTTS-L5.mod",
-      "zc_quests/254/LTTS-L6.mod"
+      "zc_quests/254/LTTS-L6.mod",
+      "zc_quests/254/LTTS-L8.xm",
+      "zc_quests/254/LTTS-LB.xm",
+      "zc_quests/254/LTTS-OW.xm",
+      "zc_quests/254/LTTS-OWA.s3m",
+      "zc_quests/254/LTTS-OWS.xm"
     ],
     "playable": false,
     "errors": [
@@ -10139,7 +10150,10 @@
         2
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/348/zelda.nsf"
+    ]
   },
   {
     "name": "This Might Be Good",
@@ -10281,6 +10295,9 @@
     "playable": false,
     "errors": [
       "Cannot read property 'length' of undefined"
+    ],
+    "extraResources": [
+      "zc_quests/352/zelda.nsf"
     ]
   },
   {
@@ -11229,7 +11246,10 @@
         11
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/385/Antiquity.nsf"
+    ]
   },
   {
     "name": "The Trouble With Exiled Warriors 2",
@@ -11509,15 +11529,23 @@
       ]
     },
     "extraResources": [
+      "zc_quests/400/Bon us/UnusedTrack.xm",
       "zc_quests/400/SotFMU10.mod",
       "zc_quests/400/SotFMU11.mod",
       "zc_quests/400/SotFMU12.mod",
+      "zc_quests/400/SotFMU13.xm",
+      "zc_quests/400/SotFMU14.xm",
       "zc_quests/400/SotFMU15.mod",
+      "zc_quests/400/SotFMU16.xm",
+      "zc_quests/400/SotFMU17.xm",
       "zc_quests/400/SotFMUS1.mod",
       "zc_quests/400/SotFMUS2.mod",
+      "zc_quests/400/SotFMUS3.s3m",
       "zc_quests/400/SotFMUS4.mod",
       "zc_quests/400/SotFMUS5.mod",
-      "zc_quests/400/SotFMUS7.mod"
+      "zc_quests/400/SotFMUS7.mod",
+      "zc_quests/400/SotFMUS8.xm",
+      "zc_quests/400/SotFMUS9.xm"
     ],
     "playable": true
   },
@@ -13959,7 +13987,12 @@
         3
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/487/5thmusic.nsf",
+      "zc_quests/487/5thmusic_3.nsf",
+      "zc_quests/487/new_5thmusic.nsf"
+    ]
   },
   {
     "name": "Randomizer Super Version",
@@ -15333,7 +15366,10 @@
         0
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/529/Fudge's Quest Music/Legend of Zelda, The.nsf"
+    ]
   },
   {
     "name": "Lyrics of Death",
@@ -15852,7 +15888,10 @@
         4
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/545/stonetowertemple.nsf"
+    ]
   },
   {
     "name": "Legend of Lana",
@@ -16161,7 +16200,19 @@
         1
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/555/01-MainTheme.spc",
+      "zc_quests/555/02-Overworld.spc",
+      "zc_quests/555/03-Dungeon.spc",
+      "zc_quests/555/04-Triforce.spc",
+      "zc_quests/555/05-Ganon.spc",
+      "zc_quests/555/06-Zelda-Rescued.spc",
+      "zc_quests/555/07-End-of-Week.spc",
+      "zc_quests/555/08-Confronting-Ganon.spc",
+      "zc_quests/555/09-Triforce-of-Power.spc",
+      "zc_quests/555/10-Ganon-Wins.spc"
+    ]
   },
   {
     "name": "JMC's Troll Day ~2~",
@@ -16927,7 +16978,10 @@
         2
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/591/zelda.nsf"
+    ]
   },
   {
     "name": "Umbral Cloud",
@@ -19153,7 +19207,46 @@
         3
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/666/08-Confronting-Ganon.spc",
+      "zc_quests/666/09-Triforce-of-Power.spc",
+      "zc_quests/666/19 Unsealing the Master Sword.spc",
+      "zc_quests/666/27 Ganon's Message.spc",
+      "zc_quests/666/Battle3.spc",
+      "zc_quests/666/The Lost World.spc",
+      "zc_quests/666/VoidIsland.spc",
+      "zc_quests/666/WatchoftheSeal.spc",
+      "zc_quests/666/bdh2-32.spc",
+      "zc_quests/666/ct-201.spc",
+      "zc_quests/666/ct-304.spc",
+      "zc_quests/666/ct-305.spc",
+      "zc_quests/666/ct-307.spc",
+      "zc_quests/666/ct-308.spc",
+      "zc_quests/666/ff4-02.spc",
+      "zc_quests/666/ff4-05.spc",
+      "zc_quests/666/ff4-13.spc",
+      "zc_quests/666/ff4-42.spc",
+      "zc_quests/666/ff5-2-02.spc",
+      "zc_quests/666/ff5-2-03.spc",
+      "zc_quests/666/ff6-110.spc",
+      "zc_quests/666/ff6-114.spc",
+      "zc_quests/666/ff6-120.spc",
+      "zc_quests/666/ff6-306.spc",
+      "zc_quests/666/ff6-307.spc",
+      "zc_quests/666/ff6-s03.spc",
+      "zc_quests/666/lal-36.spc",
+      "zc_quests/666/rnh-24.spc",
+      "zc_quests/666/rs-31.spc",
+      "zc_quests/666/rs2-08.spc",
+      "zc_quests/666/rs2-23.spc",
+      "zc_quests/666/sd2-40.spc",
+      "zc_quests/666/sm-s05.spc",
+      "zc_quests/666/sm-s07.spc",
+      "zc_quests/666/smr-217.spc",
+      "zc_quests/666/yi-23.spc",
+      "zc_quests/666/yi-s04.spc"
+    ]
   },
   {
     "name": "Yuurand: Tales of the Labyrinth",
@@ -19228,7 +19321,14 @@
         1
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/668/Beatrix.nsf",
+      "zc_quests/668/Blue Bell Knoll.nsf",
+      "zc_quests/668/Galliard.nsf",
+      "zc_quests/668/Shallow then Halo.nsf",
+      "zc_quests/668/The Itchy Glowbo Blow.nsf"
+    ]
   },
   {
     "name": "Red Rabbit",
@@ -19826,7 +19926,10 @@
         0
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/687/5thmusic.nsf"
+    ]
   },
   {
     "name": "Link stuck in Experimental Arsenal",
@@ -20101,7 +20204,11 @@
         7
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/698/Solstice.nsf",
+      "zc_quests/698/crystal.nsf"
+    ]
   },
   {
     "name": "The Slipstream",
@@ -20308,7 +20415,10 @@
         1
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/704/tloz9gb.nsf"
+    ]
   },
   {
     "name": "A Link to the West",
@@ -20344,7 +20454,14 @@
         1
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/705/Bright Starre - Madame, for You.nsf",
+      "zc_quests/705/Otterley.nsf",
+      "zc_quests/705/Pepper Tree.nsf",
+      "zc_quests/705/Shallow then Halo.nsf",
+      "zc_quests/705/Throughout the Dark Months of April and May.nsf"
+    ]
   },
   {
     "name": "OverHead",
@@ -20417,7 +20534,27 @@
     },
     "playable": true,
     "extraResources": [
-      "zc_quests/707/R6 - Lynel.gbs"
+      "zc_quests/707/Final Fantasy III (1990-04-27)(Square).nsf",
+      "zc_quests/707/Mega Man 10.nsf",
+      "zc_quests/707/R6 - Boss.nsf",
+      "zc_quests/707/R6 - Final Boss 1.nsf",
+      "zc_quests/707/R6 - Final Boss 2.nsf",
+      "zc_quests/707/R6 - Final Boss 3 NoIntro.nsf",
+      "zc_quests/707/R6 - Final Boss 3.nsf",
+      "zc_quests/707/R6 - Hyrule.nsf",
+      "zc_quests/707/R6 - Ice.nsf",
+      "zc_quests/707/R6 - Jungle.nsf",
+      "zc_quests/707/R6 - Level 1.nsf",
+      "zc_quests/707/R6 - Level 3.nsf",
+      "zc_quests/707/R6 - Level 4.nsf",
+      "zc_quests/707/R6 - Level 5.nsf",
+      "zc_quests/707/R6 - Level 6.nsf",
+      "zc_quests/707/R6 - Level 7.nsf",
+      "zc_quests/707/R6 - Level 8.nsf",
+      "zc_quests/707/R6 - Level 9.nsf",
+      "zc_quests/707/R6 - Lynel.gbs",
+      "zc_quests/707/R6 - ShipGrave.nsf",
+      "zc_quests/707/R6 - Z1.nsf"
     ]
   },
   {
@@ -20529,8 +20666,33 @@
     },
     "playable": true,
     "extraResources": [
+      "zc_quests/710/5thmusic.nsf",
+      "zc_quests/710/Castlevania.nsf",
+      "zc_quests/710/Castlevania2.nsf",
+      "zc_quests/710/Classic.nsf",
+      "zc_quests/710/DragonQuest1.nsf",
+      "zc_quests/710/DragonQuest2.nsf",
+      "zc_quests/710/DragonQuest3.nsf",
+      "zc_quests/710/DragonQuest4.nsf",
+      "zc_quests/710/Klopp422.nsf",
+      "zc_quests/710/LegacyOfWizard.nsf",
+      "zc_quests/710/LegendOfLink.nsf",
+      "zc_quests/710/Lolo1.nsf",
+      "zc_quests/710/Lolo2.nsf",
+      "zc_quests/710/Lolo3.nsf",
+      "zc_quests/710/MazeOfGalious.nsf",
       "zc_quests/710/OracleofAges.gbs",
-      "zc_quests/710/OracleofSeasons.gbs"
+      "zc_quests/710/OracleofSeasons.gbs",
+      "zc_quests/710/SMB PhD RTC.nsf",
+      "zc_quests/710/SML PhD RTC.nsf",
+      "zc_quests/710/Solomon's Key.nsf",
+      "zc_quests/710/Ys1.nsf",
+      "zc_quests/710/Ys2.nsf",
+      "zc_quests/710/Ys3.nsf",
+      "zc_quests/710/z1remade.nsf",
+      "zc_quests/710/z2remade.nsf",
+      "zc_quests/710/zelda.nsf",
+      "zc_quests/710/zelda2.nsf"
     ]
   },
   {
@@ -20635,7 +20797,21 @@
         2
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/713/Dungeon 1.nsf",
+      "zc_quests/713/Dungeon 2.nsf",
+      "zc_quests/713/Dungeon 3.nsf",
+      "zc_quests/713/Dungeon 4.nsf",
+      "zc_quests/713/Dungeon 5.nsf",
+      "zc_quests/713/Dungeon 6.nsf",
+      "zc_quests/713/Dungeon 7.nsf",
+      "zc_quests/713/Dungeon 8.nsf",
+      "zc_quests/713/Dungeon 9.nsf",
+      "zc_quests/713/Ganon.nsf",
+      "zc_quests/713/Overworld 1.nsf",
+      "zc_quests/713/Overworld 2.nsf"
+    ]
   },
   {
     "name": "Ruins of Myths",
@@ -21386,7 +21562,10 @@
         1
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/733/botw3.spc"
+    ]
   },
   {
     "name": "Project Storm",
@@ -21557,7 +21736,37 @@
         2
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/740/6th Quest OST 1.nsf",
+      "zc_quests/740/6th Quest OST 2.nsf",
+      "zc_quests/740/6th Quest OST 3.nsf",
+      "zc_quests/740/6th Quest OST 4.nsf",
+      "zc_quests/740/6th Quest OST 5.nsf",
+      "zc_quests/740/6th Quest OST 6.nsf",
+      "zc_quests/740/6th Quest OST 8.nsf",
+      "zc_quests/740/6th Quest OST 9.nsf",
+      "zc_quests/740/6th Quest OST Cocoron.nsf",
+      "zc_quests/740/6th Quest OST FF3.nsf",
+      "zc_quests/740/6th Quest OST L-Boss.nsf",
+      "zc_quests/740/6th Quest OST L-Boss8.nsf",
+      "zc_quests/740/6th Quest OST L1.nsf",
+      "zc_quests/740/6th Quest OST L2.nsf",
+      "zc_quests/740/6th Quest OST L3.nsf",
+      "zc_quests/740/6th Quest OST L4.nsf",
+      "zc_quests/740/6th Quest OST L5.nsf",
+      "zc_quests/740/6th Quest OST L6-.nsf",
+      "zc_quests/740/6th Quest OST L6.nsf",
+      "zc_quests/740/6th Quest OST L7.nsf",
+      "zc_quests/740/6th Quest OST L8.nsf",
+      "zc_quests/740/6th Quest OST L9.nsf",
+      "zc_quests/740/6th Quest OST MM10.nsf",
+      "zc_quests/740/6th Quest OST Over Horizon.nsf",
+      "zc_quests/740/6th Quest OST SMT 2.nsf",
+      "zc_quests/740/6th Quest OST SMT.nsf",
+      "zc_quests/740/6th Quest OST old L-Boss.nsf",
+      "zc_quests/740/zelda.nsf"
+    ]
   },
   {
     "name": "The Legend of Zelda: Heir to the Hero",
@@ -23190,7 +23399,18 @@
         12
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/659/ZScript Havoc/ZSHavoc_BlasterMaster.nsf",
+      "zc_quests/659/ZScript Havoc/ZSHavoc_GoldenKTV.nsf",
+      "zc_quests/659/ZScript Havoc/ZSHavoc_Labyrinth.nsf",
+      "zc_quests/659/ZScript Havoc/ZSHavoc_OhFlip.nsf",
+      "zc_quests/659/ZScript Havoc/ZSHavoc_SuperOffRoad.nsf",
+      "zc_quests/659/ZScript Havoc/ZSHavoc_TheLostEmotion.nsf",
+      "zc_quests/659/ZScript Havoc/ZSHavoc_Willpower.nsf",
+      "zc_quests/659/ZScript Havoc/ZSHavoc_Ys.nsf",
+      "zc_quests/659/ZScript Havoc/ZSHavoc_YsII.nsf"
+    ]
   },
   {
     "name": "Avataro's Contest Quest Mix",
@@ -23327,7 +23547,12 @@
     "rating": {
       "score": 0,
       "distribution": []
-    }
+    },
+    "extraResources": [
+      "zc_quests/738/Zelda Classic/VELbsproto1st/BSDungeon.spc",
+      "zc_quests/738/Zelda Classic/VELbsproto1st/BSGanon.spc",
+      "zc_quests/738/Zelda Classic/VELbsproto1st/BSOverworld.spc"
+    ]
   },
   {
     "name": "Language. Sex. Violence. Other? (Exate Edition)",
