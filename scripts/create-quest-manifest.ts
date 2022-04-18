@@ -193,9 +193,15 @@ async function main() {
   loadQuests();
 
   // Process the quests stored in source control.
-  for (const questFile of glob.sync('data/zc_quests/*/quest.json')) {
+  for (const questFile of glob.sync('data/zc_quests/**/quest.json')) {
     const quest = JSON.parse(fs.readFileSync(questFile, 'utf-8'));
     questsMap.set(quest.urls[0], quest);
+  }
+  for (const questFile of glob.sync('data/zc_quests/**/quests.json')) {
+    const quests = JSON.parse(fs.readFileSync(questFile, 'utf-8'));
+    for (const quest of quests) {
+      questsMap.set(quest.urls[0], quest);
+    }
   }
 
   const browser = await puppeteer.launch();
