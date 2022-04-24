@@ -22,7 +22,7 @@
       "zc_quests/classic/classic.png"
     ],
     "urls": [
-      "zc_quests/classic/classic_1st.qst"
+      "zc_quests/classic/1st.qst"
     ],
     "playable": true,
     "informationHtml": "The original Legend of Zelda was released on February 21, 1986",
@@ -38,7 +38,7 @@
       "zc_quests/classic/classic.png"
     ],
     "urls": [
-      "zc_quests/classic/classic_2nd.qst"
+      "zc_quests/classic/2nd.qst"
     ],
     "playable": true,
     "informationHtml": "The original Legend of Zelda included a bonus second quest, and has more difficult dungeons",
@@ -54,7 +54,7 @@
       "zc_quests/classic/classic.png"
     ],
     "urls": [
-      "zc_quests/classic/classic_3rd.qst"
+      "zc_quests/classic/3rd.qst"
     ],
     "playable": true,
     "informationHtml": "",
@@ -70,7 +70,7 @@
       "zc_quests/classic/classic.png"
     ],
     "urls": [
-      "zc_quests/classic/classic_4th.qst"
+      "zc_quests/classic/4th.qst"
     ],
     "playable": true,
     "informationHtml": "",
@@ -86,10 +86,10 @@
       "zc_quests/classic/classic.png"
     ],
     "urls": [
-      "zc_quests/classic/classic_5th.qst"
+      "zc_quests/classic/5th.qst"
     ],
     "playable": true,
-    "informationHtml": "<a href=https://www.armageddongames.net/forumdisplay.php?211-5th-Quest-Contest>The 5th Quest Contest</a> was held in 2014 and had 19 entries.",
+    "informationHtml": "<a href=https://www.armageddongames.net/forumdisplay.php?211-5th-Quest-Contest target=_blank>The 5th Quest Contest</a> was held in 2014 and had 19 entries.",
     "descriptionHtml": "Don't let the difficulty of Level 1 fool you. The quest is very difficult. I figured that for a quest to be numbered 5, it shouldn't slack in this regard. A minimal equipment run is probably not a good idea, you'll want to find items as early as you can get them. The levels are large. I guess I felt it necessary to mention this.",
     "storyHtml": "",
     "tipsAndCheatsHtml": "",
