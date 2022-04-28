@@ -4,6 +4,7 @@ import glob from 'glob';
 import fs from 'fs';
 import path from 'path';
 import puppeteer from 'puppeteer';
+import { execFileSync } from 'child_process';
 
 interface QuestManifest {
   name: string;
@@ -216,6 +217,63 @@ async function main() {
       console.error(e);
     }
     if (i % 10 === 0) saveQuests();
+  }
+
+  for (const quest of questsMap.values()) {
+    const questDir = quest.urls[0].split('/', 2).join('/');
+    const text = quest.descriptionHtml + quest.informationHtml;
+    const match = text.match(/(https?:\/\/([^\s]*?)\.zip)/);
+    if (!match) continue;
+
+    let url = match[1];
+
+    if (url === 'https://www.dropbox.com/s/31kdsjdd1n8mxt4/TLoZ%20Beginnings%20Music.zip') {
+      // 404
+      continue;
+    }
+
+    // Some people link directly to the mediafire zip file... and those links tend to die.
+    url = {
+      'http://download1855.mediafire.com/yfbcefc4vulg/641lva6riprra7j/Music.zip': 'http://www.mediafire.com/file/641lva6riprra7j/Music.zip',
+      'http://download1688.mediafire.com/5nccux8bvp3g/2llbdzzq8heiuqk/Mayath+Music.zip': 'http://www.mediafire.com/file/2llbdzzq8heiuqk/Mayath+Music.zip',
+    }[url] || url;
+
+    const destZip = `tmp/music-zips/${quest.name.replace(/[^a-zA-Z\d]/g, '')}-${path.basename(url)}`;
+    if (fs.existsSync(destZip)) continue;
+
+    const host = new URL(url).host;
+    const directAccessHosts = [
+      'cdn.discordapp.com',
+      'bloodstar.rustedlogic.net',
+    ];
+
+    if (host === 'www.mediafire.com') {
+      await page.goto(url);
+      url = await page.evaluate(() => {
+        // @ts-expect-error
+        return document.querySelector('*[aria-label="Download file"]')?.href;
+      });
+      if (!url) throw new Error('...');
+    } else if (directAccessHosts.includes(host)) {
+      // OK!
+    } else if (host === 'www.dropbox.com') {
+      url += '?dl=1'
+    } else {
+      console.log('skip', url);
+      continue;
+    }
+
+    console.log('downloading:', url);
+    execFileSync('bash', [
+      '-c',
+      `curl -L '${url}' > '${destZip}'`,
+    ]);
+
+    console.log('unzipping:', destZip, 'to:', questDir);
+    execFileSync('bash', [
+      '-c',
+      `unzip -o -j '${destZip}' -d '${questDir}'`,
+    ]);
   }
 
   for (const quest of questsMap.values()) {

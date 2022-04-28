@@ -7765,7 +7765,49 @@
         3
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/269/rog Boss Defeated.mp3",
+      "zc_quests/269/rog Boss Fight.mp3",
+      "zc_quests/269/rog Cave.mp3",
+      "zc_quests/269/rog Credits.mp3",
+      "zc_quests/269/rog Dark Realm.mp3",
+      "zc_quests/269/rog Death Mountain.mp3",
+      "zc_quests/269/rog Final Boss 1.mp3",
+      "zc_quests/269/rog Final Boss 2.mp3",
+      "zc_quests/269/rog Gerudo Valley.mp3",
+      "zc_quests/269/rog Graveyard.mp3",
+      "zc_quests/269/rog House.mp3",
+      "zc_quests/269/rog Hyrule Castle.mp3",
+      "zc_quests/269/rog Hyrule Field.mp3",
+      "zc_quests/269/rog Kakariko.mp3",
+      "zc_quests/269/rog KenMeister.mp3",
+      "zc_quests/269/rog Lake Hylia.mp3",
+      "zc_quests/269/rog Level 1.mp3",
+      "zc_quests/269/rog Level 2.mp3",
+      "zc_quests/269/rog Level 3.mp3",
+      "zc_quests/269/rog Level 4.mp3",
+      "zc_quests/269/rog Level 5.mp3",
+      "zc_quests/269/rog Level 6.mp3",
+      "zc_quests/269/rog Level 7.mp3",
+      "zc_quests/269/rog Level 8.mp3",
+      "zc_quests/269/rog Level 9.mp3",
+      "zc_quests/269/rog Link's House.mp3",
+      "zc_quests/269/rog Lost Woods.mp3",
+      "zc_quests/269/rog Secret Boss.mp3",
+      "zc_quests/269/rog Secret Level 1.mp3",
+      "zc_quests/269/rog Secret Level 2.mp3",
+      "zc_quests/269/rog Shop.mp3",
+      "zc_quests/269/rog Silly.mp3",
+      "zc_quests/269/rog Synrilla.mp3",
+      "zc_quests/269/rog Tatl Village.mp3",
+      "zc_quests/269/rog Tatl Woods.mp3",
+      "zc_quests/269/rog Temple of Time.mp3",
+      "zc_quests/269/rog Title.mp3",
+      "zc_quests/269/rog Triforce Get.mp3",
+      "zc_quests/269/rog Triforce.mp3",
+      "zc_quests/269/rog Zelda.mp3"
+    ]
   },
   {
     "name": "The Legend of Zelda, the New Beginning",
@@ -8461,7 +8503,60 @@
         3
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/291/Approaching Ganon.mp3",
+      "zc_quests/291/Boss.mp3",
+      "zc_quests/291/Cave.mp3",
+      "zc_quests/291/Cave2.mp3",
+      "zc_quests/291/Cave3.mp3",
+      "zc_quests/291/City in the Sky.mp3",
+      "zc_quests/291/Credits.mp3",
+      "zc_quests/291/Desert Island.mp3",
+      "zc_quests/291/Desert Town.mp3",
+      "zc_quests/291/Destroyed Castle.mp3",
+      "zc_quests/291/Ending.mp3",
+      "zc_quests/291/Escape.mp3",
+      "zc_quests/291/Exposition.mp3",
+      "zc_quests/291/Fiend's Island.mp3",
+      "zc_quests/291/Fighting Minigame.mp3",
+      "zc_quests/291/Final Boss 1.mp3",
+      "zc_quests/291/Final Boss 2.mp3",
+      "zc_quests/291/Final Boss 3.mp3",
+      "zc_quests/291/Final Boss.mp3",
+      "zc_quests/291/Fortune Teller.mp3",
+      "zc_quests/291/Ganon Battle.mp3",
+      "zc_quests/291/Goron Island.mp3",
+      "zc_quests/291/Haunted Island.mp3",
+      "zc_quests/291/Hope.mp3",
+      "zc_quests/291/Isle of Secrets.mp3",
+      "zc_quests/291/King's Island.mp3",
+      "zc_quests/291/Level 1.mp3",
+      "zc_quests/291/Level 2.mp3",
+      "zc_quests/291/Level 3.mp3",
+      "zc_quests/291/Level 4.mp3",
+      "zc_quests/291/Level 5.mp3",
+      "zc_quests/291/Level 6.mp3",
+      "zc_quests/291/Level 7.mp3",
+      "zc_quests/291/Level 8 Boss.mp3",
+      "zc_quests/291/Level 8.mp3",
+      "zc_quests/291/Level 9.mp3",
+      "zc_quests/291/Level Complete.mp3",
+      "zc_quests/291/Minigame.mp3",
+      "zc_quests/291/New King's Island.mp3",
+      "zc_quests/291/Overworld.mp3",
+      "zc_quests/291/Prelude.mp3",
+      "zc_quests/291/Secret Boss.mp3",
+      "zc_quests/291/Secret Level.mp3",
+      "zc_quests/291/Shiroy's Island.mp3",
+      "zc_quests/291/Silly Theme.mp3",
+      "zc_quests/291/Sunken Isle of Secrets.mp3",
+      "zc_quests/291/Sunset Island.mp3",
+      "zc_quests/291/Temple of Secrets.mp3",
+      "zc_quests/291/Thieve's Island.mp3",
+      "zc_quests/291/Title Screen.mp3",
+      "zc_quests/291/Yarnoch.mp3"
+    ]
   },
   {
     "name": "Link in the Lost Sky",
@@ -14312,7 +14407,29 @@
         19
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/494/HitoNoMura.ogg",
+      "zc_quests/494/LordoftheLost.ogg",
+      "zc_quests/494/Lost Desert.ogg",
+      "zc_quests/494/OGAcheron.ogg",
+      "zc_quests/494/OGAsphodel.ogg",
+      "zc_quests/494/OGCocytus.ogg",
+      "zc_quests/494/OGCorridor.ogg",
+      "zc_quests/494/OGGranite.ogg",
+      "zc_quests/494/OGJackland.ogg",
+      "zc_quests/494/OGLethe.ogg",
+      "zc_quests/494/OGLyll.ogg",
+      "zc_quests/494/OGMasquerade.ogg",
+      "zc_quests/494/OGPhlegethon.ogg",
+      "zc_quests/494/OGStyx.ogg",
+      "zc_quests/494/OGToyBox.ogg",
+      "zc_quests/494/Prismia.ogg",
+      "zc_quests/494/TartarusChallenge.ogg",
+      "zc_quests/494/Willville.ogg",
+      "zc_quests/494/WispBattle.ogg",
+      "zc_quests/494/Wisps.ogg"
+    ]
   },
   {
     "name": "One More Journey",
@@ -14342,7 +14459,50 @@
         2
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/495/029_-_hyrule_field_(night).mp3",
+      "zc_quests/495/04._overworld.mp3",
+      "zc_quests/495/05_house.mp3",
+      "zc_quests/495/07 - Boss Battle.mp3",
+      "zc_quests/495/070_-_midna's_desperation.mp3",
+      "zc_quests/495/075_-_sacred_grove.mp3",
+      "zc_quests/495/12._dark_world.mp3",
+      "zc_quests/495/125 - Boss  Ganondorf (Swordfight).mp3",
+      "zc_quests/495/12_inside_the_deku_tree.mp3",
+      "zc_quests/495/13._dark_mountain_forest.mp3",
+      "zc_quests/495/13_boss_battle.mp3",
+      "zc_quests/495/14._hyrule_castle.mp3",
+      "zc_quests/495/15._sanctuary_dungeon.mp3",
+      "zc_quests/495/16._cave.mp3",
+      "zc_quests/495/18._boss_bgm.mp3",
+      "zc_quests/495/2-17 Boss Battle 2.mp3",
+      "zc_quests/495/20._dark_world_dungeon.mp3",
+      "zc_quests/495/21._fortune_teller.mp3",
+      "zc_quests/495/21_market.mp3",
+      "zc_quests/495/24 - Last End.mp3",
+      "zc_quests/495/24 - Pirate Fortress.mp3",
+      "zc_quests/495/26 - Terra.mp3",
+      "zc_quests/495/28 - The Dreadful Fight.mp3",
+      "zc_quests/495/29 - Song of Healing Demo.mp3",
+      "zc_quests/495/30_kakariko_village.mp3",
+      "zc_quests/495/36 - Ikana Valley.mp3",
+      "zc_quests/495/39_zora's_domain.mp3",
+      "zc_quests/495/40 - Ikana's Ancient Castle.mp3",
+      "zc_quests/495/44_Stone_Tower_Temple.mp3",
+      "zc_quests/495/45 - Deku Nut's Palace.mp3",
+      "zc_quests/495/48 - The Fierce Battle.mp3",
+      "zc_quests/495/57_windmill_hut.mp3",
+      "zc_quests/495/59_forest_temple.mp3",
+      "zc_quests/495/62_ice_cavern.mp3",
+      "zc_quests/495/64_water_temple.mp3",
+      "zc_quests/495/67 - Fragments of Sorrow.mp3",
+      "zc_quests/495/67_shadow_temple.mp3",
+      "zc_quests/495/68_gerudo_valley.mp3",
+      "zc_quests/495/71_kotake_&_koume's_theme.mp3",
+      "zc_quests/495/Deku Palace REMIX.mp3",
+      "zc_quests/495/Fated Battle.mp3"
+    ]
   },
   {
     "name": "Maze of Hyrule 2",
@@ -15585,7 +15745,15 @@
         1
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/533/colordungeon.mp3",
+      "zc_quests/533/lalev1.mp3",
+      "zc_quests/533/z2dgn.mp3",
+      "zc_quests/533/z3castl1.mp3",
+      "zc_quests/533/z3cave.mp3",
+      "zc_quests/533/zowm.mp3"
+    ]
   },
   {
     "name": "JMC's Troll Day",
@@ -16392,7 +16560,11 @@
         1
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/559/Labyrinth.mp3",
+      "zc_quests/559/Third mini.mp3"
+    ]
   },
   {
     "name": ">LINK<: Rank 9",
@@ -16884,7 +17056,21 @@
         1
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/583/1 Slow Tem.ogg",
+      "zc_quests/583/10 Gannon Fight old.ogg",
+      "zc_quests/583/10 Gannon Fight.ogg",
+      "zc_quests/583/11 Nice adds.ogg",
+      "zc_quests/583/2 The theme of rad.ogg",
+      "zc_quests/583/3 The first dungeon.ogg",
+      "zc_quests/583/4 Yay fairies.ogg",
+      "zc_quests/583/5 Rupees.ogg",
+      "zc_quests/583/6 Open crawl.ogg",
+      "zc_quests/583/7 Reverse star.ogg",
+      "zc_quests/583/8 Tank.ogg",
+      "zc_quests/583/9 Gannon intro.ogg"
+    ]
   },
   {
     "name": "Tale of Lyria",
@@ -17277,7 +17463,58 @@
         5
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/598/Lana_10_Jazz.nsf",
+      "zc_quests/598/Lana_11_Angles Old.mp3",
+      "zc_quests/598/Lana_11_Angles.mp3",
+      "zc_quests/598/Lana_12_MM6.nsf",
+      "zc_quests/598/Lana_13_Candy.nsf",
+      "zc_quests/598/Lana_14_OMFG.nsf",
+      "zc_quests/598/Lana_15_Necro2.nsf",
+      "zc_quests/598/Lana_16_SMB3.nsf",
+      "zc_quests/598/Lana_17_WholeNewWorld.nsf",
+      "zc_quests/598/Lana_18_RubySapphire.nsf",
+      "zc_quests/598/Lana_19_NotThatGuy....nsf",
+      "zc_quests/598/Lana_1_LunaTower.mp3",
+      "zc_quests/598/Lana_20_Quest.gbs",
+      "zc_quests/598/Lana_21_Katana.gbs",
+      "zc_quests/598/Lana_22_Giant.nsf",
+      "zc_quests/598/Lana_23_It'sdead.nsf",
+      "zc_quests/598/Lana_24_WrongHouse.nsf",
+      "zc_quests/598/Lana_25_FAKER!.nsf",
+      "zc_quests/598/Lana_26_^^^^^^.nsf",
+      "zc_quests/598/Lana_27_RoboPlanet.nsf",
+      "zc_quests/598/Lana_28_Tome.nsf",
+      "zc_quests/598/Lana_29_Frisk.nsf",
+      "zc_quests/598/Lana_2_HisNameIsFear.mp3",
+      "zc_quests/598/Lana_30_NeverLetUp.mp3",
+      "zc_quests/598/Lana_31_Pig.nsf",
+      "zc_quests/598/Lana_32_Thesongthatmightplaywhenyoufightsomeone.nsf",
+      "zc_quests/598/Lana_33_GrottoTale.nsf",
+      "zc_quests/598/Lana_34_BattleWithEvilFamily.mp3",
+      "zc_quests/598/Lana_35_FirceFight.mp3",
+      "zc_quests/598/Lana_36_EO3.nsf",
+      "zc_quests/598/Lana_37_Z3Boss.mp3",
+      "zc_quests/598/Lana_38_Z1Dungeon.nsf",
+      "zc_quests/598/Lana_39_^^^^^^2.nsf",
+      "zc_quests/598/Lana_3_AllOurMight.mp3",
+      "zc_quests/598/Lana_40_Cybernoid 2.mp3",
+      "zc_quests/598/Lana_41_RainFact.nsf",
+      "zc_quests/598/Lana_42_RnF.nsf",
+      "zc_quests/598/Lana_43_Fairy.nsf",
+      "zc_quests/598/Lana_44_PMDTestHQ.mp3",
+      "zc_quests/598/Lana_45_AllOurMight2.ogg",
+      "zc_quests/598/Lana_46_Z2.nsf",
+      "zc_quests/598/Lana_47_FearIsHisName.nsf",
+      "zc_quests/598/Lana_48_EpicMaymayLouder.ogg",
+      "zc_quests/598/Lana_4_Dino.gbs",
+      "zc_quests/598/Lana_5_Getinthefuckingrobot.gbs",
+      "zc_quests/598/Lana_6_Gianna.nsf",
+      "zc_quests/598/Lana_7_Kraid.nsf",
+      "zc_quests/598/Lana_8_LushForest.nsf",
+      "zc_quests/598/Lana_9_Swim.nsf"
+    ]
   },
   {
     "name": "Brock Lesnar.qst",
@@ -17777,7 +18014,15 @@
         1
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/614/Q447L9.mp3",
+      "zc_quests/614/Q745Hyrule.mp3",
+      "zc_quests/614/Q745P1.mp3",
+      "zc_quests/614/Q745P2.mp3",
+      "zc_quests/614/Q745P3.mp3",
+      "zc_quests/614/Q745P4.mp3"
+    ]
   },
   {
     "name": "Yuurei",
@@ -17814,7 +18059,71 @@
         20
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/616/AssassinBattle.ogg",
+      "zc_quests/616/Assassins.ogg",
+      "zc_quests/616/AudioThatMightEnsueWhenYouEncounterEuphoria.ogg",
+      "zc_quests/616/Beach 2.ogg",
+      "zc_quests/616/Beach.ogg",
+      "zc_quests/616/BlackHills.ogg",
+      "zc_quests/616/Castle.ogg",
+      "zc_quests/616/Caverns.ogg",
+      "zc_quests/616/Drowned.ogg",
+      "zc_quests/616/DrownedFinal.ogg",
+      "zc_quests/616/EXBoss1.ogg",
+      "zc_quests/616/EXBoss2.ogg",
+      "zc_quests/616/EXBoss5.ogg",
+      "zc_quests/616/ExBoss10.ogg",
+      "zc_quests/616/ExBoss11.ogg",
+      "zc_quests/616/ExBoss12.ogg",
+      "zc_quests/616/ExBoss13.ogg",
+      "zc_quests/616/ExBoss15.ogg",
+      "zc_quests/616/ExBoss16.ogg",
+      "zc_quests/616/ExBoss17.ogg",
+      "zc_quests/616/ExBoss3.ogg",
+      "zc_quests/616/ExBoss6.ogg",
+      "zc_quests/616/ExBoss7.ogg",
+      "zc_quests/616/ExBoss8.ogg",
+      "zc_quests/616/ExBoss9.ogg",
+      "zc_quests/616/FloodedTemple.ogg",
+      "zc_quests/616/ForestGlade.ogg",
+      "zc_quests/616/Forzen Fortress.ogg",
+      "zc_quests/616/Hikaridoki.ogg",
+      "zc_quests/616/JandraFinal.ogg",
+      "zc_quests/616/Jungle.ogg",
+      "zc_quests/616/JupiterDesert.ogg",
+      "zc_quests/616/LakeOfLightning.ogg",
+      "zc_quests/616/Lethe.ogg",
+      "zc_quests/616/Memories.ogg",
+      "zc_quests/616/Phlegethon.ogg",
+      "zc_quests/616/PoisonousCorridor.ogg",
+      "zc_quests/616/RoseGarden.ogg",
+      "zc_quests/616/RoyalGardens.ogg",
+      "zc_quests/616/Sakura.ogg",
+      "zc_quests/616/SilicateSands.ogg",
+      "zc_quests/616/SixthArea.ogg",
+      "zc_quests/616/Sky.ogg",
+      "zc_quests/616/Sky2.ogg",
+      "zc_quests/616/SneakPeak.ogg",
+      "zc_quests/616/Stomach.ogg",
+      "zc_quests/616/Storm.ogg",
+      "zc_quests/616/Styx.ogg",
+      "zc_quests/616/Swamp.ogg",
+      "zc_quests/616/TechnoZone.ogg",
+      "zc_quests/616/Title.ogg",
+      "zc_quests/616/Train.ogg",
+      "zc_quests/616/Tyre.ogg",
+      "zc_quests/616/TyreFinal.ogg",
+      "zc_quests/616/VenterMortis.ogg",
+      "zc_quests/616/Volcano.ogg",
+      "zc_quests/616/Watchers.ogg",
+      "zc_quests/616/WhataTwist.ogg",
+      "zc_quests/616/WispBattle.ogg",
+      "zc_quests/616/WispFinal.ogg",
+      "zc_quests/616/Wisps.ogg",
+      "zc_quests/616/YuureiBattle.ogg"
+    ]
   },
   {
     "name": "Zelda NES Remastered",
@@ -17887,7 +18196,52 @@
         26
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/618/5thmusic improved.nsf",
+      "zc_quests/618/5thmusic.nsf",
+      "zc_quests/618/AtomicMelodies-TheGreatSea.ogg",
+      "zc_quests/618/Castlevania2.nsf",
+      "zc_quests/618/CharlosPlz-DragonRoostIsland-LowPitch.ogg",
+      "zc_quests/618/Conquest of the Crystal Palace [Matendouji].nsf",
+      "zc_quests/618/Crazybus.ogg",
+      "zc_quests/618/DKL2.gbs",
+      "zc_quests/618/DKLBoss.ogg",
+      "zc_quests/618/DS4MSX - Maia.ogg",
+      "zc_quests/618/DragonRoost8BitbyCharlosPlz.ogg",
+      "zc_quests/618/FDS_Zelda_II_battle.ogg",
+      "zc_quests/618/FengYinDao.nsf",
+      "zc_quests/618/Friday the 13th.nsf",
+      "zc_quests/618/InTheGoodOldSummertime.ogg",
+      "zc_quests/618/Knightmare II - The Maze of Galious.nsf",
+      "zc_quests/618/Legacy of the Wizard.nsf",
+      "zc_quests/618/Legend of Zelda, The - Link's Awakening DX.gbs",
+      "zc_quests/618/Lolo1.nsf",
+      "zc_quests/618/Lolo2.nsf",
+      "zc_quests/618/Mickey Mouse 3 - Yume Fuusen.nsf",
+      "zc_quests/618/Mickey Mousecapades.nsf",
+      "zc_quests/618/Rambo.nsf",
+      "zc_quests/618/Smb_mix.nsf",
+      "zc_quests/618/Sml_mix.nsf",
+      "zc_quests/618/Solomon's Key [Solomon no Kagi].nsf",
+      "zc_quests/618/Ys 3 - Wanderers from Ys.nsf",
+      "zc_quests/618/Z2corrupt.ogg",
+      "zc_quests/618/ZII Palace deep.nsf",
+      "zc_quests/618/ZII cave deep.nsf",
+      "zc_quests/618/Zelda II - The Adventure of Link.nsf",
+      "zc_quests/618/Zelda II Palace TRANCE REMIX!.nsf",
+      "zc_quests/618/ZeldaIIbyMary.ogg",
+      "zc_quests/618/ZeldaIIbyMarySlow.ogg",
+      "zc_quests/618/ZeldaOOA.gbs",
+      "zc_quests/618/ZeldaOOS.gbs",
+      "zc_quests/618/castlevania.nsf",
+      "zc_quests/618/ctsubasa.nsf",
+      "zc_quests/618/dq4.nsf",
+      "zc_quests/618/metroid.nsf",
+      "zc_quests/618/zelda.nsf",
+      "zc_quests/618/zeldansf-1.nsf",
+      "zc_quests/618/zeldansf-2.nsf"
+    ]
   },
   {
     "name": "Zelda 1 BossRush",
@@ -18066,7 +18420,23 @@
         0
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/625/Absolution.ogg",
+      "zc_quests/625/Extra Boss.mp3",
+      "zc_quests/625/Final Boss.ogg",
+      "zc_quests/625/Forsaken_Castle.ogg",
+      "zc_quests/625/Legend of Zelda - Oracle of Ages.gbs",
+      "zc_quests/625/NGAHHH!!.ogg",
+      "zc_quests/625/Paradise.ogg",
+      "zc_quests/625/Pre Final Boss.ogg",
+      "zc_quests/625/Sea of Storms.ogg",
+      "zc_quests/625/Shangan.ogg",
+      "zc_quests/625/Sub Boss.ogg",
+      "zc_quests/625/Twieves Hideout.ogg",
+      "zc_quests/625/m_stage5b.ogg",
+      "zc_quests/625/unknown.ogg"
+    ]
   },
   {
     "name": "Zeltris",
@@ -18242,7 +18612,11 @@
         5
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/631/Chocolate Shadow Temple.mp3",
+      "zc_quests/631/The Great Oubliette.mp3"
+    ]
   },
   {
     "name": "Hyrule Remastered",
@@ -19211,7 +19585,39 @@
         6
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/664/AR3 Angel Island.vgm",
+      "zc_quests/664/AR3 Attack!.mp3",
+      "zc_quests/664/AR3 Black Tower Museum.mp3",
+      "zc_quests/664/AR3 Cave.mp3",
+      "zc_quests/664/AR3 Credits.mp3",
+      "zc_quests/664/AR3 Endless Sea.mp3",
+      "zc_quests/664/AR3 Final Boss.mp3",
+      "zc_quests/664/AR3 Game Cave.mp3",
+      "zc_quests/664/AR3 Goron Falls.mp3",
+      "zc_quests/664/AR3 Keh Nomeej Shrine.mp3",
+      "zc_quests/664/AR3 Level 9 OFF.mp3",
+      "zc_quests/664/AR3 Level 9 ON.mp3",
+      "zc_quests/664/AR3 Mega Man 4.nsf",
+      "zc_quests/664/AR3 Mushroom Hill.vgm",
+      "zc_quests/664/AR3 Oracle of Ages OST.gbs",
+      "zc_quests/664/AR3 Oracle of Seasons OST.gbs",
+      "zc_quests/664/AR3 Pokemon GSC.gbs",
+      "zc_quests/664/AR3 Quiz.mp3",
+      "zc_quests/664/AR3 Rolling Ridge.mp3",
+      "zc_quests/664/AR3 Secret Dungeon 1.mp3",
+      "zc_quests/664/AR3 Secret Dungeon 2.mp3",
+      "zc_quests/664/AR3 Shadow Fight.mp3",
+      "zc_quests/664/AR3 Shrine Battle.mp3",
+      "zc_quests/664/AR3 Shrine Ruins.mp3",
+      "zc_quests/664/AR3 Take Em All On L4.mp3",
+      "zc_quests/664/AR3 Take Em All On.mp3",
+      "zc_quests/664/AR3 Temmie Village.mp3",
+      "zc_quests/664/AR3 Underwater.mp3",
+      "zc_quests/664/AR3 Warp Zone.mp3",
+      "zc_quests/664/AR3 Yoll Graveyard.mp3"
+    ]
   },
   {
     "name": "Demo Quest SP",
@@ -19823,7 +20229,30 @@
         11
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/674/BossSC.ogg",
+      "zc_quests/674/CavesSC.ogg",
+      "zc_quests/674/CreditsSC.ogg",
+      "zc_quests/674/Desert DungeonSC.ogg",
+      "zc_quests/674/DesertSC.ogg",
+      "zc_quests/674/Dream DungeonSC.ogg",
+      "zc_quests/674/Final Boss 1SC.ogg",
+      "zc_quests/674/Final Boss 2SC.ogg",
+      "zc_quests/674/Final DungeonSC.ogg",
+      "zc_quests/674/Goron SettlementSC.ogg",
+      "zc_quests/674/HouseSC.ogg",
+      "zc_quests/674/LoZ OoS.gbs",
+      "zc_quests/674/Mini-BossSC.ogg",
+      "zc_quests/674/Mountain DungeonSC.ogg",
+      "zc_quests/674/MountainSC.ogg",
+      "zc_quests/674/PerilansSC.ogg",
+      "zc_quests/674/Shadow DungeonSC.ogg",
+      "zc_quests/674/Snow DungeonSC.ogg",
+      "zc_quests/674/SnowSC.ogg",
+      "zc_quests/674/Swamp DungeonSC.ogg",
+      "zc_quests/674/SwampSC.ogg"
+    ]
   },
   {
     "name": "Ballad of a Bloodline Deluxe",
@@ -20137,7 +20566,21 @@
         3
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/684/BossTNoA.ogg",
+      "zc_quests/684/CavesTNoA.ogg",
+      "zc_quests/684/Fields DungeonTNoA.ogg",
+      "zc_quests/684/Fields and ForestTNoA.ogg",
+      "zc_quests/684/Forest DungeonTNoA.ogg",
+      "zc_quests/684/HouseTNoA.ogg",
+      "zc_quests/684/LoZ OoS.gbs",
+      "zc_quests/684/Ruins DungeonTNoA.ogg",
+      "zc_quests/684/RuinsTNoA.ogg",
+      "zc_quests/684/Snow DungeonTNoA.ogg",
+      "zc_quests/684/SnowTNoA.ogg",
+      "zc_quests/684/TownTNoA.ogg"
+    ]
   },
   {
     "name": "Board Gmae",
@@ -20171,7 +20614,10 @@
         2
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/685/We_Are_Finally_Cowboys.ogg"
+    ]
   },
   {
     "name": "The Legend of Zelda: Brotherhood",
@@ -20489,7 +20935,16 @@
         12
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/696/09_Apocalypse.ogg",
+      "zc_quests/696/101 snake eater.ogg",
+      "zc_quests/696/Battle_of_Providence_-_Bravely_Second.ogg",
+      "zc_quests/696/Battle_of_Providence_2_-_Bravely_Second.ogg",
+      "zc_quests/696/I_Wanna_Be_The_Boshy_OST_-_MegaMan_s_Theme_mp3_pm_.ogg",
+      "zc_quests/696/Mega_Man_2Dr_Wily_Stage_1_Techno_Arrange_Ver_Exten.ogg",
+      "zc_quests/696/We_Are_Finally_Cowboys.ogg"
+    ]
   },
   {
     "name": "Wizzrobe's Big Day Out",
@@ -21212,7 +21667,36 @@
         2
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/715/LanaG-M-Ancient Castle.mp3",
+      "zc_quests/715/LanaG-M-Battlefield - Shiver.ogg",
+      "zc_quests/715/LanaG-M-DMW - Dusk Battle Theme 2 Remix.mp3",
+      "zc_quests/715/LanaG-M-Dusk and Dawn City.ogg",
+      "zc_quests/715/LanaG-M-Evolution.ogg",
+      "zc_quests/715/LanaG-M-Four Seasons Wandering in the Lost Forest.mp3",
+      "zc_quests/715/LanaG-M-Gaia's Navel - Jayson Litrio .mp3",
+      "zc_quests/715/LanaG-M-Hoist the Sword with Pride in the Heart.ogg",
+      "zc_quests/715/LanaG-M-Mirror world.ogg",
+      "zc_quests/715/LanaG-M-The Fallen Capital of Shinjuku.mp3",
+      "zc_quests/715/LanaG-M-To a Distant Place.mp3",
+      "zc_quests/715/LanaG-M-Unrest - Scatter About.mp3",
+      "zc_quests/715/LanaG-M-Yggdrassil Region.mp3",
+      "zc_quests/715/LanaG-M-Your Adventure Has Ended.mp3",
+      "zc_quests/715/LanaG-M-moonlightdance.mp3",
+      "zc_quests/715/LanaG-M1-Psy-old.mp3",
+      "zc_quests/715/LanaG-M1-Psy.ogg",
+      "zc_quests/715/LanaG-M2-EcMoon.mp3",
+      "zc_quests/715/LanaG-M2-EcMoon.ogg",
+      "zc_quests/715/LanaG-M3-Prime3In.ogg",
+      "zc_quests/715/LanaG-M4-Battle of Ordeal.mp3",
+      "zc_quests/715/LanaG-M5-Battle of Anne.mp3",
+      "zc_quests/715/LanaG-M6-Wicked Flight.mp3",
+      "zc_quests/715/LanaG-M7-You are My Hope.ogg",
+      "zc_quests/715/M1.ogg",
+      "zc_quests/715/M2.ogg",
+      "zc_quests/715/M3.ogg"
+    ]
   },
   {
     "name": "Reikon",
@@ -21248,7 +21732,57 @@
         6
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/716/DreamZone0.ogg",
+      "zc_quests/716/DreamZone1.ogg",
+      "zc_quests/716/DreamZone10.ogg",
+      "zc_quests/716/DreamZone11.ogg",
+      "zc_quests/716/DreamZone12.ogg",
+      "zc_quests/716/DreamZone13.ogg",
+      "zc_quests/716/DreamZone14.ogg",
+      "zc_quests/716/DreamZone15.ogg",
+      "zc_quests/716/DreamZone2.ogg",
+      "zc_quests/716/DreamZone3.ogg",
+      "zc_quests/716/DreamZone4.ogg",
+      "zc_quests/716/DreamZone5.ogg",
+      "zc_quests/716/DreamZone6.ogg",
+      "zc_quests/716/DreamZone7.ogg",
+      "zc_quests/716/DreamZone8.ogg",
+      "zc_quests/716/DreamZone9.ogg",
+      "zc_quests/716/Reikon - AnotherKindOfMadness.ogg",
+      "zc_quests/716/Reikon - BloodChamber.ogg",
+      "zc_quests/716/Reikon - Cathedral.ogg",
+      "zc_quests/716/Reikon - Cemetery.ogg",
+      "zc_quests/716/Reikon - Collapse.ogg",
+      "zc_quests/716/Reikon - Determination.ogg",
+      "zc_quests/716/Reikon - DistantBattle.ogg",
+      "zc_quests/716/Reikon - Drowned.ogg",
+      "zc_quests/716/Reikon - Drowned2.ogg",
+      "zc_quests/716/Reikon - Factory.ogg",
+      "zc_quests/716/Reikon - Flashback.ogg",
+      "zc_quests/716/Reikon - Flect.ogg",
+      "zc_quests/716/Reikon - GuiltAndGrief.ogg",
+      "zc_quests/716/Reikon - Hart.ogg",
+      "zc_quests/716/Reikon - Hatred.ogg",
+      "zc_quests/716/Reikon - LacDAmour.ogg",
+      "zc_quests/716/Reikon - MadDance.ogg",
+      "zc_quests/716/Reikon - MidnightPark.ogg",
+      "zc_quests/716/Reikon - Mirr.ogg",
+      "zc_quests/716/Reikon - Neon.ogg",
+      "zc_quests/716/Reikon - Overworld.ogg",
+      "zc_quests/716/Reikon - SilentSea.ogg",
+      "zc_quests/716/Reikon - SilverSprings.ogg",
+      "zc_quests/716/Reikon - Sky.ogg",
+      "zc_quests/716/Reikon - Title.ogg",
+      "zc_quests/716/Reikon - Vanice.ogg",
+      "zc_quests/716/Reikon - VenterMortis.ogg",
+      "zc_quests/716/Reikon - WarpSpace.ogg",
+      "zc_quests/716/Reikon - WhataTwist.ogg",
+      "zc_quests/716/Reikon - Wind.ogg",
+      "zc_quests/716/Reikon - WispBattle.ogg",
+      "zc_quests/716/Reikon - YuureiBattle.ogg"
+    ]
   },
   {
     "name": "The Legend of Nayru: Ralph's Adventure",
@@ -21423,7 +21957,55 @@
         2
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/722/Absolution.ogg",
+      "zc_quests/722/Bad Ending.mp3",
+      "zc_quests/722/Boss.mp3",
+      "zc_quests/722/Cave.ogg",
+      "zc_quests/722/Darknut.ogg",
+      "zc_quests/722/Death Darknut Final.ogg",
+      "zc_quests/722/Demon Temple.ogg",
+      "zc_quests/722/Ending 1.mp3",
+      "zc_quests/722/Extra Level.mp3",
+      "zc_quests/722/Final Boss Cutscene.mp3",
+      "zc_quests/722/Final Boss.ogg",
+      "zc_quests/722/Final Encounter.mp3",
+      "zc_quests/722/Final Final Boss.mp3",
+      "zc_quests/722/Forsaken_Castle.ogg",
+      "zc_quests/722/Fortress of Winds.ogg",
+      "zc_quests/722/Four_Heavenly_Knights.nsf",
+      "zc_quests/722/Goron Mountains.ogg",
+      "zc_quests/722/Ice Mountains.ogg",
+      "zc_quests/722/InsideAlpha.mp3",
+      "zc_quests/722/Legend of Zelda - Oracle of Ages.gbs",
+      "zc_quests/722/Legend of Zelda - Oracle of Seasons.gbs",
+      "zc_quests/722/Level 1.ogg",
+      "zc_quests/722/Level 2.ogg",
+      "zc_quests/722/Level 3.mp3",
+      "zc_quests/722/Level 4.ogg",
+      "zc_quests/722/Level 5.mp3",
+      "zc_quests/722/Level 7.mp3",
+      "zc_quests/722/LinksAwakening.gbs",
+      "zc_quests/722/Lost World.mp3",
+      "zc_quests/722/Midboss.mp3",
+      "zc_quests/722/Nightmare.mp3",
+      "zc_quests/722/Oil Factory.mp3",
+      "zc_quests/722/Overworld.ogg",
+      "zc_quests/722/Pre Final Boss.ogg",
+      "zc_quests/722/Sea of Storms.ogg",
+      "zc_quests/722/Shangan.ogg",
+      "zc_quests/722/Snowball City.mp3",
+      "zc_quests/722/SubBoss.ogg",
+      "zc_quests/722/Survival Kids.gbs",
+      "zc_quests/722/Temple Of Time.mp3",
+      "zc_quests/722/Tower of Truth.ogg",
+      "zc_quests/722/Turtle Rock.mp3",
+      "zc_quests/722/Twieves Hideout.ogg",
+      "zc_quests/722/Water Ruins.mp3",
+      "zc_quests/722/Water Temple.ogg",
+      "zc_quests/722/unknown.ogg"
+    ]
   },
   {
     "name": "Medley of the Grass Bow",
@@ -21459,7 +22041,34 @@
         1
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/724/Astrid's House.ogg",
+      "zc_quests/724/Bravely Default Boss (Wicked Fight).ogg",
+      "zc_quests/724/Ciela's Parting Words.ogg",
+      "zc_quests/724/Danger.ogg",
+      "zc_quests/724/GC2 - Ship.ogg",
+      "zc_quests/724/GC2 - Snow.ogg",
+      "zc_quests/724/Ghost Ship Battle.ogg",
+      "zc_quests/724/MegaMari OST - Patchouli Stage 4.ogg",
+      "zc_quests/724/Megamari OST - Sakuya Stage.ogg",
+      "zc_quests/724/Miitopia - Elf Sisters.ogg",
+      "zc_quests/724/Miitopia - Finale.ogg",
+      "zc_quests/724/Miitopia - New Lumos.ogg",
+      "zc_quests/724/Miitopia Boss II.ogg",
+      "zc_quests/724/Ocean King's Theme.ogg",
+      "zc_quests/724/One Piece GBA (Stage 1-2).ogg",
+      "zc_quests/724/SMB2 Alternate Reality - Wart.ogg",
+      "zc_quests/724/Super Mario Odyssey - Inside the Moon Cave.ogg",
+      "zc_quests/724/Super Monkey Ball - Storm.ogg",
+      "zc_quests/724/Tetris Type A.ogg",
+      "zc_quests/724/The Festival of Servants.ogg",
+      "zc_quests/724/The Four Warriors of Dawn.ogg",
+      "zc_quests/724/The Horde's Festival Castlevania Harmony of Despair.ogg",
+      "zc_quests/724/Under Martial Law.ogg",
+      "zc_quests/724/Undertale OST - Mad Mew Mew.ogg",
+      "zc_quests/724/Zinnia.ogg"
+    ]
   },
   {
     "name": "The legend of Zelda, Titans' gate",
@@ -21664,7 +22273,24 @@
         1
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/730/albw.mp3",
+      "zc_quests/730/alttp.mp3",
+      "zc_quests/730/botw.mp3",
+      "zc_quests/730/mc.mp3",
+      "zc_quests/730/mc2.mp3",
+      "zc_quests/730/oot.mp3",
+      "zc_quests/730/oot2.mp3",
+      "zc_quests/730/oot3.mp3",
+      "zc_quests/730/oot4.mp3",
+      "zc_quests/730/oot5.mp3",
+      "zc_quests/730/oot6.mp3",
+      "zc_quests/730/tp.mp3",
+      "zc_quests/730/tp2.mp3",
+      "zc_quests/730/winds of.mp3",
+      "zc_quests/730/ww.mp3"
+    ]
   },
   {
     "name": "Go Gollab: The Conflictions of Morality",
@@ -21920,7 +22546,33 @@
         2
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/734/Dearly Beloved 8bit.ogg",
+      "zc_quests/734/S-Lib 1 - Crocodile.gbs",
+      "zc_quests/734/S-Lib 2 - FourSwords.gbs",
+      "zc_quests/734/S-Lib 3 - Katana.gbs",
+      "zc_quests/734/S-Lib 4 - Bubble.gbs",
+      "zc_quests/734/S-Lib 5 - Legend Returns.gbs",
+      "zc_quests/734/S-Lib 6 - Castlev.gbs",
+      "zc_quests/734/S-Lib 7 - Mana.gbs",
+      "zc_quests/734/S-Lib 8 - Zelda.nsf",
+      "zc_quests/734/S-Lib 9 - Oracles.gbs",
+      "zc_quests/734/Song # - Battle Kid.nsf",
+      "zc_quests/734/Song # - cascade.nsf",
+      "zc_quests/734/Song # - turtemple.nsf",
+      "zc_quests/734/Song - - Necrofantasia.nsf",
+      "zc_quests/734/Song 1 - Awakening.nsf",
+      "zc_quests/734/Song 2 - Fields of Comfort (Before EQ).ogg",
+      "zc_quests/734/Song 2 - Fields of Comfort.ogg",
+      "zc_quests/734/Song 3 - Gilded Guild.nsf",
+      "zc_quests/734/Song 5 - Dank Cave.ogg",
+      "zc_quests/734/Song 6 - Determination.ogg",
+      "zc_quests/734/Song 7 - TFW No Hookshot.nsf",
+      "zc_quests/734/Song 8 - Distress.nsf",
+      "zc_quests/734/Song 8 - Insanity.nsf",
+      "zc_quests/734/Song 9 - Warm Dreams.nsf"
+    ]
   },
   {
     "name": "Destiny of the Oracles",
@@ -22549,7 +23201,10 @@
         1
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/753/Maze of DOOM.mp3"
+    ]
   },
   {
     "name": "Fantastic Dungeons and Where To Find Them!",
@@ -22729,7 +23384,13 @@
         3
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/759/FengYinDao.nsf",
+      "zc_quests/759/Z1nosquare1.ogg",
+      "zc_quests/759/Z1nosquare2.ogg",
+      "zc_quests/759/zelda.nsf"
+    ]
   },
   {
     "name": "Zelda NES Remastered Version 2.0: 2.55 Version",
@@ -22905,7 +23566,11 @@
         0
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/764/final battle 1.mp3",
+      "zc_quests/764/final dungeon 2.mp3"
+    ]
   },
   {
     "name": "Armageddon Quest2",
@@ -23334,7 +23999,11 @@
         7
       ]
     },
-    "playable": true
+    "playable": true,
+    "extraResources": [
+      "zc_quests/448/Level 8 (Amy Rose 2).mp3",
+      "zc_quests/448/Passion For Exploring.mp3"
+    ]
   },
   {
     "name": "Quest 744: Legacy Edition",
@@ -23378,6 +24047,31 @@
     "errors": [
       "bad warp, screen does not exist: dmap 2 dmap.xoff -1 screen -1",
       "bad warp, screen does not exist: dmap 2 dmap.xoff -1 screen -1"
+    ],
+    "extraResources": [
+      "zc_quests/449/Reality.mp3",
+      "zc_quests/449/castle.mp3",
+      "zc_quests/449/castle2.mp3",
+      "zc_quests/449/colordungeon.mp3",
+      "zc_quests/449/eagletower.mp3",
+      "zc_quests/449/faceshrine.mp3",
+      "zc_quests/449/frozen.mp3",
+      "zc_quests/449/gerudo.mp3",
+      "zc_quests/449/house.mp3",
+      "zc_quests/449/kakariko.mp3",
+      "zc_quests/449/lalev1.mp3",
+      "zc_quests/449/lostwoods.mp3",
+      "zc_quests/449/lwdgnmix.mp3",
+      "zc_quests/449/sanctuary.mp3",
+      "zc_quests/449/snippet.mp3",
+      "zc_quests/449/vkc.mp3",
+      "zc_quests/449/z34owmedley.mp3",
+      "zc_quests/449/z3cave.mp3",
+      "zc_quests/449/z3deathmt.mp3",
+      "zc_quests/449/z3dgn2arr.mp3",
+      "zc_quests/449/z3dw.mp3",
+      "zc_quests/449/z3prologue.mp3",
+      "zc_quests/449/z3shop.mp3"
     ]
   },
   {
@@ -23595,9 +24289,26 @@
     },
     "playable": true,
     "extraResources": [
+      "zc_quests/613/Boss.ogg",
+      "zc_quests/613/Cave.ogg",
+      "zc_quests/613/Death Mountain.ogg",
+      "zc_quests/613/Desert.ogg",
+      "zc_quests/613/Desert_Palace.ogg",
+      "zc_quests/613/Dungeon 2.ogg",
+      "zc_quests/613/Dungeon.ogg",
+      "zc_quests/613/House.ogg",
+      "zc_quests/613/MiniBoss.ogg",
+      "zc_quests/613/OW.ogg",
+      "zc_quests/613/Past.ogg",
+      "zc_quests/613/Shrines.ogg",
+      "zc_quests/613/Temple.ogg",
+      "zc_quests/613/Temple_Of_Time.ogg",
       "zc_quests/613/The Dark Treasure/Legend of Zelda - Links Awakening DX.gbs",
       "zc_quests/613/The Dark Treasure/Legend of Zelda - Oracle of Ages.gbs",
-      "zc_quests/613/The Dark Treasure/Legend of Zelda - Oracle of Seasons.gbs"
+      "zc_quests/613/The Dark Treasure/Legend of Zelda - Oracle of Seasons.gbs",
+      "zc_quests/613/Town.ogg",
+      "zc_quests/613/Turtle Rock.ogg",
+      "zc_quests/613/unknown.ogg"
     ]
   },
   {
