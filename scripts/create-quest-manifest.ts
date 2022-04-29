@@ -222,7 +222,7 @@ async function main() {
   for (const quest of questsMap.values()) {
     const questDir = quest.urls[0].split('/', 2).join('/');
     const text = quest.descriptionHtml + quest.informationHtml;
-    const match = text.match(/(https?:\/\/([^\s]*?)\.zip)/);
+    const match = text.match(/(https?:\/\/([^\s]*?)\.zip)/) || text.match(/(https?:\/\/drive\.google\.com([^\s]*))"/);
     if (!match) continue;
 
     let url = match[1];
@@ -254,6 +254,13 @@ async function main() {
         return document.querySelector('*[aria-label="Download file"]')?.href;
       });
       if (!url) throw new Error('...');
+    } else if (host === 'drive.google.com') {
+      const id = new URL(url).searchParams.get('id') || (url.match(/([^\/]{20,})/) || [])[0];
+      await page.goto(`https://drive.google.com/uc?export=download&id=${id}`);
+      url = await page.evaluate(() => {
+        // @ts-expect-error
+        return document.querySelector('#downloadForm')?.action;
+      });
     } else if (directAccessHosts.includes(host)) {
       // OK!
     } else if (host === 'www.dropbox.com') {
