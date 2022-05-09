@@ -1,0 +1,12 @@
+{
+  "name": "Memory of Koholint",
+  "author": "Mitsukara",
+  "imageUrls": ["zc_quests/memory_koholint/image1.png"],
+  "urls": ["zc_quests/memory_koholint/Memory of Koholint 2018.qst"],
+  "playable": true,
+  "informationHtml": "Really cool demo showing off 3d sailing",
+  "descriptionHtml": "",
+  "storyHtml": "",
+  "tipsAndCheatsHtml": "",
+  "creditsHtml": ""
+}

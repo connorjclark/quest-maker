@@ -40,12 +40,13 @@ function loadQuests() {
 function saveQuests() {
   const quests = [...questsMap.values()];
   const featuredQuests = [
+    '7th Quest',
     'BS Zelda 1st Quest',
   ];
   quests.sort((a, b) => {
     if (featuredQuests.includes(a.name) && !featuredQuests.includes(b.name)) return -1;
     if (featuredQuests.includes(b.name) && !featuredQuests.includes(a.name)) return 1;
-    return 0;
+    return featuredQuests.indexOf(a.name) - featuredQuests.indexOf(b.name);
   });
   fs.writeFileSync('data/quest-manifest.json', JSON.stringify(quests, null, 2));
 }

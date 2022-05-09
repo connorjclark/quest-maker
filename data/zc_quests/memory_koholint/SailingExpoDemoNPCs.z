@@ -1,0 +1,83 @@
+
+ffc script DemoNPCs{
+	void run(int FirstMessage, int SecondMessage, int WantRupees, int ChestOrFairy, int FairyData)
+		{
+bool IsColliding;
+int EndMovement;
+int FairyY = -104;
+int FairyOffset;
+bool Sway;
+int DelayOffset;
+
+	while(true)
+		{
+		Waitframe();
+
+if (ChestOrFairy == 0){	
+	if (Link->Y < 136 && Link->X > 80 && Link->X < 156 && IsColliding == false) IsColliding = true;
+	if (IsColliding == true){
+		if (FairyY < 32){
+			FairyY ++;
+			Link->InputUp = false;
+			Link->InputDown = false;
+			Link->InputLeft = false;
+			Link->InputRight = false;
+			Link->PressUp = false;
+			Link->PressDown = false;
+			Link->PressLeft = false;
+			Link->PressRight = false;
+			Link->PressB = false;
+			Link->PressA = false;
+			Link->InputB = false;
+			Link->InputA = false;
+		}
+		else if (EndMovement == 0){
+			this->Data = FairyData;
+			EndMovement = 1;
+		}
+		if (EndMovement == 49 && NumLWeaponsOf(LW_SPARKLE) == 0 && FairyY > 0) lweapon FairySparkle = CreateLWeaponAt(LW_SPARKLE,this->X-8+Rand(48),FairyY - 8+Rand(48));
+		if (EndMovement > 0){
+			if (DelayOffset > 0) DelayOffset --;
+			else{
+				if (Sway == true){
+					if (FairyOffset < 2) FairyOffset ++;
+					else Sway = false;
+				}
+				if (Sway == false){
+					if (FairyOffset > -2) FairyOffset --;
+					else Sway = true;
+				}
+				DelayOffset = 8;
+			}
+			if (EndMovement < 48) EndMovement ++;
+			else if (EndMovement != 49){
+				EndMovement = 49;
+				Screen->Message(FirstMessage);
+			}
+		}
+		Screen->DrawCombo(3,this->X,FairyY+FairyOffset,this->Data,3,3,this->CSet,-1,-1,0,0,0,-1,0,true,128);
+	}
+}
+
+else{
+	if (Link->Item[ChestOrFairy] == false){
+		if (this->Flags[FFCF_LENSVIS] == true) this->Flags[FFCF_LENSVIS] = false;
+		if (LinkCollision(this)){
+			if (Game->Counter[CR_RUPEES] >= WantRupees){
+				Link->Item[ChestOrFairy] = true;
+				Game->Counter[CR_RUPEES] = Game->Counter[CR_RUPEES] - WantRupees;
+				Screen->Message(FirstMessage);
+			}
+			else if (IsColliding == false){
+				IsColliding = true;
+				Screen->Message(SecondMessage);
+			}
+		}
+		else if (IsColliding == true) IsColliding = false;
+	}	
+	if (Link->Item[ChestOrFairy] == true && this->Flags[FFCF_LENSVIS] == false) this->Flags[FFCF_LENSVIS] = true;
+}
+
+}
+}
+}

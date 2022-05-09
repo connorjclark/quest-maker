@@ -1,5 +1,36 @@
 [
   {
+    "name": "7th Quest",
+    "author": "Moosh",
+    "imageUrls": [
+      "zc_quests/7th/image1.png"
+    ],
+    "urls": [
+      "zc_quests/7th/7th.qst"
+    ],
+    "playable": true,
+    "informationHtml": "Moosh submitted '7th Quest' as part of <a href=https://www.purezc.net/forums/index.php?showtopic=75382 target=_blank>The 6th Quest Contest</a>, which was held in 2019. This quest came in second place. It uses many of the newest features of the ZQuest game engine.",
+    "descriptionHtml": "",
+    "storyHtml": "",
+    "tipsAndCheatsHtml": "",
+    "creditsHtml": "",
+    "extraResources": [
+      "zc_quests/7th/6th OW.nsf",
+      "zc_quests/7th/BestGirl.nsf",
+      "zc_quests/7th/Fires of Hokkai.nsf",
+      "zc_quests/7th/Inevitabilis.nsf",
+      "zc_quests/7th/L7.nsf",
+      "zc_quests/7th/Nightmare.nsf",
+      "zc_quests/7th/Q7 - FinalB.nsf",
+      "zc_quests/7th/RubyIllusions.nsf",
+      "zc_quests/7th/Sonic 2.nsf",
+      "zc_quests/7th/Ys II.nsf",
+      "zc_quests/7th/Ys III - Wanderers from Ys.nsf",
+      "zc_quests/7th/Ys.nsf",
+      "zc_quests/7th/Zelda - The Legend of Link.nsf"
+    ]
+  },
+  {
     "name": "BS Zelda 1st Quest",
     "author": "Nintendo, Radien - original rip by Phantom Menace, 1st update by VEL",
     "imageUrls": [
@@ -29,7 +60,10 @@
     "descriptionHtml": "<div>In one of the darkest times in the Kingdom of Hyrule, a young, pointy-eared boy named Link takes on an epic quest to restore the fragmented Triforce of Wisdom and save the Princess Zelda from the clutches of the evil, power-hungry Ganon.</div><br> <div>The Legend of Zelda marks the first title of the Zelda series. Players must make their way through the various forests, graveyards, plains, and deserts of the Overworld to find the secret entrances of the eight dungeons in an attempt to piece together the broken Triforce. Once all pieces are joined, Link will be able to gain entry to Death Mountain, home of Ganon, and prison of Princess Zelda.</div><br> <div>The game is drawn in a top-down perspective. Link begins his quest in the Overworld, which features forests, mountains and lakes and is divided into several screens. Link can explore the Overworld freely, though when he enters a screen, he will encounter several enemies. He can attack them with his sword. If Link is at full health, he can toss his sword to attack enemies from afar, but when he is hurt, even slightly, he can only fight in melee range.</div><br> <div>Link's health is represented by hearts; initially he can have a maximum of three hearts, but as he progresses in the game, he will find heart containers that increase his maximum health. The enemies are varied - some attack from up close, some shoot projectiles. When killed, they often leave behind an item - a heart to restore energy, rupees that function as money (and can be used to buy stuff in various shops in the Overworld), or bombs which can be picked up and set down to attack enemies or destroy some walls. Some items function as weapons or armor, while others are used to solve puzzles. When enemies are killed, they stay dead and will not re-appear once the screen is entered again.</div><br> <div>To find the Triforce pieces, Link must explore dungeons. Once he finds an entrance to the dungeon and goes in, he must explore the rooms, fight enemies and collect keys until he finds the boss monster he must defeat. He will then be able to pick up a Triforce piece and gain a permanent health increase. Once he does so, however, all the monsters in the Overworld come back to life.</div><br> <div>If Link dies on his quest, he can continue it; he will go back to his start position in the Overworld (or the entrance to a dungeon), but with the items he managed to collect so far. When Link finishes his quest, the player can choose to play the 'second quest', which is essentially a harder version of the game.</div><br> <div>The Legend of Zelda is known for several factors that were advanced at the time: a continuous world that could be freely explored, power-ups that would permanently enhance the main character's abilities, and a battery back-up save feature that allowed players to retain their progress instead of having to start over. The gameplay balanced out frequent action sequences with discovery, secrets, and exploration.</div>",
     "storyHtml": "",
     "tipsAndCheatsHtml": "",
-    "creditsHtml": ""
+    "creditsHtml": "",
+    "extraResources": [
+      "zc_quests/classic/zelda.nsf"
+    ]
   },
   {
     "name": "2nd Quest",
@@ -45,7 +79,10 @@
     "descriptionHtml": "",
     "storyHtml": "",
     "tipsAndCheatsHtml": "",
-    "creditsHtml": ""
+    "creditsHtml": "",
+    "extraResources": [
+      "zc_quests/classic/zelda.nsf"
+    ]
   },
   {
     "name": "3rd Quest",
@@ -61,7 +98,10 @@
     "descriptionHtml": "",
     "storyHtml": "",
     "tipsAndCheatsHtml": "",
-    "creditsHtml": ""
+    "creditsHtml": "",
+    "extraResources": [
+      "zc_quests/classic/zelda.nsf"
+    ]
   },
   {
     "name": "4th Quest",
@@ -77,7 +117,10 @@
     "descriptionHtml": "",
     "storyHtml": "",
     "tipsAndCheatsHtml": "",
-    "creditsHtml": ""
+    "creditsHtml": "",
+    "extraResources": [
+      "zc_quests/classic/zelda.nsf"
+    ]
   },
   {
     "name": "5th Quest",
@@ -93,7 +136,10 @@
     "descriptionHtml": "Don't let the difficulty of Level 1 fool you. The quest is very difficult. I figured that for a quest to be numbered 5, it shouldn't slack in this regard. A minimal equipment run is probably not a good idea, you'll want to find items as early as you can get them. The levels are large. I guess I felt it necessary to mention this.",
     "storyHtml": "",
     "tipsAndCheatsHtml": "",
-    "creditsHtml": ""
+    "creditsHtml": "",
+    "extraResources": [
+      "zc_quests/classic/zelda.nsf"
+    ]
   },
   {
     "name": "Ocarina of Power",
@@ -24856,5 +24902,21 @@
       "distribution": []
     },
     "playable": true
+  },
+  {
+    "name": "Memory of Koholint",
+    "author": "Mitsukara",
+    "imageUrls": [
+      "zc_quests/memory_koholint/image1.png"
+    ],
+    "urls": [
+      "zc_quests/memory_koholint/Memory of Koholint 2018.qst"
+    ],
+    "playable": true,
+    "informationHtml": "Really cool demo showing off 3d sailing",
+    "descriptionHtml": "",
+    "storyHtml": "",
+    "tipsAndCheatsHtml": "",
+    "creditsHtml": ""
   }
 ]

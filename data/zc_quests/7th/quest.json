@@ -1,0 +1,16 @@
+{
+  "name": "7th Quest",
+  "author": "Moosh",
+  "imageUrls": [
+    "zc_quests/7th/image1.png"
+  ],
+  "urls": [
+    "zc_quests/7th/7th.qst"
+  ],
+  "playable": true,
+  "informationHtml": "Moosh submitted '7th Quest' as part of <a href=https://www.purezc.net/forums/index.php?showtopic=75382 target=_blank>The 6th Quest Contest</a>, which was held in 2019. This quest came in second place. It uses many of the newest features of the ZQuest game engine.",
+  "descriptionHtml": "",
+  "storyHtml": "",
+  "tipsAndCheatsHtml": "",
+  "creditsHtml": ""
+}

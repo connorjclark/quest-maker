@@ -1,0 +1,150 @@
+const int LTM_ZELDA = 143;
+const int LTM_MARIN = 144;
+
+//For HorizonStuff[] array; set before using HorizonDraw
+const int HorizonObjX = 1;
+const int HorizonObjY = 2;
+const int HorizonObjTile = 3;
+const int HorizonObjWidth = 4;
+const int HorizonObjHeight = 5;
+const int HorizonObjCSet = 6;
+const int RelativeObjX = 7;
+const int RelativeObjY = 8;
+const int HorizonObjOffset = 9;
+const int HorizonObjScale = 10;
+
+int HorizonStuff[12];
+
+void HorizonDraw()
+{
+	Screen->DrawTile(
+	(2+Max(0,Min(1,HorizonStuff[HorizonObjY]-HorizonStuff[RelativeObjY])))
+		- Floor(Max(0,Min(1,(((Floor(HorizonStuff[RelativeObjY] - HorizonStuff[HorizonObjY])/10)*0.12))))),// int layer
+	(132-((HorizonStuff[HorizonObjScale]-1)*16))+((HorizonStuff[HorizonObjX]-HorizonStuff[RelativeObjX])*(1.60+((Floor(HorizonStuff[RelativeObjY] - HorizonStuff[HorizonObjY])/10)*-.02))), // int x
+	(Max(32+(HorizonStuff[HorizonObjOffset]/4),100+((HorizonStuff[HorizonObjY]-HorizonStuff[RelativeObjY])*(1.60-((Floor(HorizonStuff[RelativeObjY] - HorizonStuff[HorizonObjY])/10)*0.09)))+(HorizonStuff[HorizonObjOffset]/4)))-(((HorizonStuff[HorizonObjHeight]*HorizonStuff[HorizonObjScale])-1)*16)
+	 	+(((Floor(HorizonStuff[RelativeObjY] - HorizonStuff[HorizonObjY])/10)*4))+(Link->Z/2)-20,// int y
+	HorizonStuff[HorizonObjTile],// int tile
+	HorizonStuff[HorizonObjWidth],// int blockw
+	HorizonStuff[HorizonObjHeight],// int blockh
+	HorizonStuff[HorizonObjCSet],// int cset
+	Max(0,((16*HorizonStuff[HorizonObjScale])*HorizonStuff[HorizonObjWidth]+((Floor(HorizonStuff[RelativeObjY] - HorizonStuff[HorizonObjY])/10)*-4))),// int xscale
+	Max(0,((16*HorizonStuff[HorizonObjScale])*HorizonStuff[HorizonObjHeight]+((Floor(HorizonStuff[RelativeObjY] - HorizonStuff[HorizonObjY])/10)*-4))),// int yscale
+	0,// int rx
+	0,// int ry
+	0,// int rangle
+	0,// int flip
+	true,// bool transparency
+	128// int opacity)
+	);
+// Huge horizon objects cover the hud with a second draw on layer 7
+	if ((HorizonStuff[HorizonObjHeight]*HorizonStuff[HorizonObjScale]) >= 8){
+		if (HorizonStuff[RelativeObjY] > HorizonStuff[HorizonObjY] - 24 && HorizonStuff[RelativeObjY] < HorizonStuff[HorizonObjY] + 136) Screen->DrawTile(
+		7,// int layer
+		(132-((HorizonStuff[HorizonObjScale]-1)*16))+((HorizonStuff[HorizonObjX]-HorizonStuff[RelativeObjX])*(1.60+((Floor(HorizonStuff[RelativeObjY] - HorizonStuff[HorizonObjY])/10)*-.02))), // int X
+		(Max(32+(HorizonStuff[HorizonObjOffset]/4),100+((HorizonStuff[HorizonObjY]-HorizonStuff[RelativeObjY])*(1.60-((Floor(HorizonStuff[RelativeObjY] - HorizonStuff[HorizonObjY])/10)*0.09)))+(HorizonStuff[HorizonObjOffset]/4)))-(((HorizonStuff[HorizonObjHeight]*HorizonStuff[HorizonObjScale])-1)*16)
+		 	+(((Floor(HorizonStuff[RelativeObjY] - HorizonStuff[HorizonObjY])/10)*4))+(Link->Z/2),// int y
+		HorizonStuff[HorizonObjTile],// int tile
+		HorizonStuff[HorizonObjWidth],// int blockw
+		HorizonStuff[HorizonObjHeight]/2,// int blockh
+		HorizonStuff[HorizonObjCSet],// int cset
+		Max(0,((16*HorizonStuff[HorizonObjScale])*HorizonStuff[HorizonObjWidth]+((Floor(HorizonStuff[RelativeObjY] - HorizonStuff[HorizonObjY])/10)*-4))),// int xscale
+		Max(0,(((16*HorizonStuff[HorizonObjScale])*HorizonStuff[HorizonObjHeight]+((Floor(HorizonStuff[RelativeObjY] - HorizonStuff[HorizonObjY])/10)*-4)))/2),// int yscale
+		0,// int rx
+		0,// int ry
+		0,// int rangle
+		0,// int flip
+		true,// bool transparency
+		128// int opacity)
+		);
+	}
+}
+
+global script MemoryOfKoholintActiveGlobal{
+	void run(){
+
+		while(true){
+			Waitframe();
+
+			// --- Tunic switch
+			if (Link->PressEx3){
+				if (Link->Item[18] == true) Link->Item[18] = false;
+				else if (Link->Item[17] == true){
+					Link->Item[17] = false;
+					Link->Item[18] = true;
+				}
+				else Link->Item[17] = true;
+			}
+					
+			// --- Character switch
+	
+			if (Link->PressEx2){
+				if (Link->Item[LTM_MARIN] == false){
+					if (Link->Item[LTM_ZELDA] == false){
+						Link->Item[LTM_ZELDA] = true;
+						CopyTileRow(58500,58791,7);
+						CopyTileRow(58520,58811,7);
+						CopyTileRow(58540,58831,7);
+						CopyTileRow(58560,58851,7);
+						CopyTileRow(58580,58871,7);
+						CopyTileRow(58600,58891,7);
+						CopyTileRow(58620,58911,7);
+						CopyTileRow(58640,58931,7);
+						CopyTileRow(58660,58951,7);
+						CopyTileRow(58680,58971,7);
+						CopyTileRow(25551,25485,3);
+						CopyTile(25619,25599);
+						Game->PlaySound(69);
+					}
+					else{
+						Link->Item[LTM_MARIN] = true;
+						CopyTileRow(58760,58791,7);
+						CopyTileRow(58780,58811,7);
+						CopyTileRow(58800,58831,7);
+						CopyTileRow(58820,58851,7);
+						CopyTileRow(58840,58871,7);
+						CopyTileRow(58860,58891,7);
+						CopyTileRow(58880,58911,7);
+						CopyTileRow(58900,58931,7);
+						CopyTileRow(58920,58951,7);
+						CopyTileRow(58940,58971,7);
+						CopyTileRow(25554,25485,3);
+						CopyTile(25617,25599);
+						Game->PlaySound(70);
+						Link->Item[94] = false;
+					}
+				}
+				else{
+					Link->Item[LTM_ZELDA] = false;
+					Link->Item[LTM_MARIN] = false;
+					CopyTileRow(58507,58791,7);
+					CopyTileRow(58527,58811,7);
+					CopyTileRow(58547,58831,7);
+					CopyTileRow(58567,58851,7);
+					CopyTileRow(58587,58871,7);
+					CopyTileRow(58607,58891,7);
+					CopyTileRow(58627,58911,7);
+					CopyTileRow(58647,58931,7);
+					CopyTileRow(58667,58951,7);
+					CopyTileRow(58687,58971,7);
+					CopyTileRow(25548,25485,3);
+					CopyTile(25618,25599);
+					Game->PlaySound(68);
+					Link->Item[94] = true;
+				}
+			}
+
+			Waitdraw();
+
+			// --- Shadows
+
+			if (Game->GetCurDMap() != 0 && !IsSideview() && Link->Action != LA_SWIMMING && Link->Action != LA_HOLD1WATER && Link->Action != LA_HOLD2WATER && Link->Action != LA_DIVING){
+				//if (Game->GetCurDMap() != 0 && !IsSideview()) Screen->FastTile(1,Link->X,Link->Y+1,33579,6,128); // It should be as simple as just this line, but Link's dumb head is supposed to be behind him. Thanks, LTTP.
+				if (Link->Item[LTM_ZELDA] == true || Link->Item[LTM_MARIN] == true || Link->Dir == DIR_DOWN || Link->Dir == DIR_UP) Screen->FastTile(1,Link->X,Link->Y+1,33579,6,128);
+				else{
+					if (Link->Dir == DIR_LEFT) Screen->FastTile(1,Link->X-1,Link->Y+1,33579,6,128);
+					if (Link->Dir == DIR_RIGHT) Screen->FastTile(1,Link->X+1,Link->Y+1,33579,6,128);
+				}
+			}
+		}
+	}
+}

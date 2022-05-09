@@ -4,5 +4,5 @@ node_modules
 .DS_Store
 decode_zc/third_party/allegro
 tmp
-zc_quests
+/zc_quests
 zc_sfx

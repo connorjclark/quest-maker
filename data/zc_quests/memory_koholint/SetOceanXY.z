@@ -1,0 +1,24 @@
+
+ffc script SetOceanXY{
+	void run(int OceanX, int OceanY, int Touch)
+		{
+Game->MCounter[30] = 65535;
+Game->MCounter[31] = 65535;
+
+if (Touch == 0){
+	Game->Counter[30] = OceanX;
+	Game->Counter[31] = OceanY;
+}
+else{
+	while(true)
+		{
+		Waitframe();
+		if (LinkCollision(this)){
+			if (Game->Counter[30] != OceanX) Game->Counter[30] = OceanX;
+			if (Game->Counter[31] != OceanY) Game->Counter[31] = OceanY;
+		}
+	}	
+}
+
+}
+}

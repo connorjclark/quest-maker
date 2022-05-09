@@ -1,0 +1,1337 @@
+//To-do:
+	//Warps from warp combos:
+		//Make non-solid stairs just do the fade withuut the shrink.
+		//Sensitives that shift the boatmap and BoatX/BoatY?! 
+		//Warp that makes you move up more, for islands and horizon Hyrule?
+//Solidity
+	//?Smart scrolling? Fix or remove old attempt (malfunctions on screen 15 currently)
+	//?Check each corner for solidity when walking with the bitwise operators, not just "!= 0"?
+	//Wraparound scrolling?
+//Enemies
+	// Random encounters / ZII style
+	// ZC enemies that get moved (keese, etc)
+	// Yoshi's Safari / Phantom Hourglass style
+//LWeapons
+	// Make lweapons only 'scroll' when boat is actually moving
+	// Lweapon combo location checking relative to Link??
+//Ideas for items/puzzles
+	// Cannon (mouse controls?)
+	// Go over rocks (jump with boat, bounce if you're goingto hit them)
+	// Persisting damage floors (fences from Phantom Hourglass?)
+	// Destroy rocks
+	// Destroy mines
+	// Boat only items, or make other items work properly with boat?
+//Efficiency
+	//Copytile that one water tile instead of using several pages to animate the quads?
+
+
+// ~~~~~~~~~~~~~~~~~~~~~~ The above scrap notes will be cut from the release, obviously
+
+
+
+// FFC Arguments:
+// D0, OceanLandMap: Map to draw mode 7 land from, also used for solidity and combo type checks.
+// D1, BoatWarpDMap: The DMap to warp the player to from warp combos.
+// D2, BoatWarpMap: The map used by the above dmap. It will get Auto Side Warp combos placed on it (see below)
+// D3, HorizonObjectSet: Chooses one among a few hardcoded sets of Horizon Objects (things that stick up when approached, which are not from the mode 7 combo map). Leave at 0 for no such objects to appear.
+// NOT YET IMPLEMENTED - D4, GraphicsSet: Chooses different graphics/cset for the backdrop, and possibly for the water.
+
+// Auto Sidewarp Combos: Adjust if changing the combo table!
+const int WarpomatComboA = 996;
+const int WarpomatComboB = 997;
+const int WarpomatComboC = 998;
+const int WarpomatComboD = 999;
+//"Random" warp combos do work with this system, but instead of placing a random combo, it just chooses one of these four at random.
+
+// Sail[] array
+const int BoatX = 1;
+const int BoatY = 2;
+const int BoatDir = 3;
+const int BoatAngle = 4;
+const int BoatStartX = 5;
+const int BoatStartY = 6;
+const int BoatLanding = 7;
+const int BoatLandAniTimer = 8;
+const int BoatLandAniY = 9;
+const int BoatLandLayer = 10;
+const int BoatLandScaleOne = 11;
+const int BoatLandScaleTwo = 12;
+const int BoatSploosh = 13;
+const int BoatDelayRotation = 14;
+//const int BoatStoreLinkDir = 15; Unused
+const int WhirlpoolWarp = 15;
+const int BoatXScreen = 16;
+const int BoatYScreen = 17;
+//const int BoatRemoteBehind = 18; Unused
+//const int BoatRemoteForward = 19; Unused
+//const int BoatFarForward = 20; Unused
+//const int BoatLeftForward = 21; Unused
+//const int BoatRightForward = 22; Unused
+//const int BoatLeftLeft = 23; Unused
+//const int BoatRightRight = 24; Unused
+//const int BoatRotateCombos = 25; Unused
+const int BoatMap = 26;
+const int BoatZ = 27;
+const int WhirlpoolTimer = 28;
+const int WhirlpoolSpinSpeed = 29;
+const int BoatSidewarp = 30;
+const int BoatCombo = 31;
+const int ShowMapOffsetX = 32;
+const int ShowMapOffsetY = 33;
+const int WeaponXScreen = 34;
+const int WeaponYScreen = 35;
+const int WeaponCombo = 36;
+const int WeaponXMove = 37;
+const int WeaponYMove = 38;
+// const int SecretsMap = #; unused
+
+// Offsets[] array
+const int WaterX = 1;
+const int WaterY = 2;
+const int CloudX = 3;
+const int WaterFrame = 4;
+const int SurfaceScaledY = 5;
+const int ShiftUp = 6;
+const int SlowTimer = 7;
+const int SteadySlowTimer = 8;
+const int ReliableTimer = 9;
+const int DontGoUp = 10;
+//const int WaterTide = 11; unused
+
+// Rows for drawing combos from screens
+const int RowX = 1;
+const int RowY = 2;
+
+// BoatDir values
+// Actually, this is semi-outdated?
+// 1: X=0, Y-4		North
+// 2: X+1, Y-3
+// 3: X+2, Y-2		Northeast
+// 4: X+3, Y-1
+// 5: X+4, Y=0		East
+// 6: X+3, Y+1
+// 7: X+2, Y+2		Southeast
+// 8: X+1, Y+3
+// 9: X=0, Y+4		South
+//10: X-1, Y+3
+//11: X-2, Y+2		Southwest
+//12: X-3, Y+1
+//13: X-4, Y=0		West
+//14: X-3, Y-1
+//15: X-2, Y-2		Northwest
+//16: X-1, Y-3
+
+ffc script OceanSailing{
+	void run(int OceanLandMap, int BoatWarpDMap, int BoatWarpMap, int HorizonObjectSet)
+		{
+
+//bool Departing = true;
+bool ShowMap;
+bool ZoomMap;
+bool HitSolid;
+int Frame;
+bool AlternatingFrameTimer;
+int Offsets[12];
+Offsets[WaterX] = 8;
+//Offsets[WaterTide] = Rand(-64,0);
+int RowNumber[4];
+int CompassDir;
+bool RaiseLower;
+int Sail[39];
+Sail[BoatAngle] = -90; // This is used, but not adjusted. It's a leftover from when I was still tying to allow angular turning, and is still used by the Mode 7 drawing. Changing it will change the mode 7 drawing, but not the solidity checking and movement.
+Sail[BoatLandLayer] = 1;
+Sail[BoatLandScaleOne] = 16;
+Sail[BoatLandScaleTwo] = 32;
+Link->Dir = DIR_DOWN;
+int q;
+int j;
+lweapon lw;
+int BlackScreen[4];
+bool CantMove;
+npc e;
+eweapon ew;
+int SpawnEnemies = Rand (256,1024);
+bool LeftEdge;
+bool RightEdge;
+
+if (Game->MCounter[30] < 65535){
+	Game->MCounter[30] = 65535;
+	Game->MCounter[31] = 65535;
+}
+
+Sail[BoatStartX] = Game->Counter[30]; // not used?
+Sail[BoatStartY] = Game->Counter[31] + 8; // not used?
+Sail[BoatX] = Game->Counter[30] * 8;
+Sail[BoatY] = Game->Counter[31] * 4;
+
+// Clear bitmaps 1-3 on startup
+Screen->SetRenderTarget(RT_BITMAP1);
+Screen->Rectangle(7,0,0,512,512,0,1,0,0,0,true,128);
+Screen->Rectangle(6,0,0,512,512,0,1,0,0,0,true,128);
+Screen->Rectangle(5,0,0,512,512,0,1,0,0,0,true,128);
+Screen->Rectangle(4,0,0,512,512,0,1,0,0,0,true,128);
+Screen->Rectangle(3,0,0,512,512,0,1,0,0,0,true,128);
+Screen->Rectangle(2,0,0,512,512,0,1,0,0,0,true,128);
+Screen->Rectangle(1,0,0,512,512,0,1,0,0,0,true,128);
+Screen->Rectangle(0,0,0,512,512,0,1,0,0,0,true,128);
+
+Screen->SetRenderTarget(RT_BITMAP2);
+Screen->Rectangle(7,0,0,512,512,0,1,0,0,0,true,128);
+Screen->Rectangle(6,0,0,512,512,0,1,0,0,0,true,128);
+Screen->Rectangle(5,0,0,512,512,0,1,0,0,0,true,128);
+Screen->Rectangle(4,0,0,512,512,0,1,0,0,0,true,128);
+Screen->Rectangle(3,0,0,512,512,0,1,0,0,0,true,128);
+Screen->Rectangle(2,0,0,512,512,0,1,0,0,0,true,128);
+Screen->Rectangle(1,0,0,512,512,0,1,0,0,0,true,128);
+Screen->Rectangle(0,0,0,512,512,0,1,0,0,0,true,128);
+
+Screen->SetRenderTarget(RT_BITMAP3);
+Screen->Rectangle(7,0,0,512,512,0,1,0,0,0,true,128);
+Screen->Rectangle(6,0,0,512,512,0,1,0,0,0,true,128);
+Screen->Rectangle(5,0,0,512,512,0,1,0,0,0,true,128);
+Screen->Rectangle(4,0,0,512,512,0,1,0,0,0,true,128);
+Screen->Rectangle(3,0,0,512,512,0,1,0,0,0,true,128);
+Screen->Rectangle(2,0,0,512,512,0,1,0,0,0,true,128);
+Screen->Rectangle(1,0,0,512,512,0,1,0,0,0,true,128);
+Screen->Rectangle(0,0,0,512,512,0,1,0,0,0,true,128);
+
+Screen->SetRenderTarget(RT_SCREEN);
+
+		while(true)
+			{
+			Waitframe();
+
+
+// --- Camera shift
+Offsets[ShiftUp] = 40 - (Link->Z/2);
+
+// X & Y tracker
+Game->Counter[30] = Sail[BoatX]/8;
+Game->Counter[31] = Sail[BoatY]/4;
+
+// --- Map
+if (Link->PressMap){
+	Link->InputMap = false;
+	Link->PressMap = false;
+//	if (ZoomMap == false){
+		if (ShowMap == false){
+			ShowMap = true;
+			Sail[ShowMapOffsetX] = 0;
+			Sail[ShowMapOffsetY] = 0;
+		}
+		else{
+//			ZoomMap = true;
+			ShowMap = false;
+		}
+//	}
+//	else ZoomMap = false;
+}
+if (Link->InputMap){
+	Link->InputMap = false;
+	Link->PressMap = false;
+}
+//if (ZoomMap == true){
+//	Screen->Rectangle(6,0,-56,256,176,55,1,0,0,0,true,128);
+//	Screen->DrawBitmap(
+//	6, //int layer, 
+//	2, //int bitmap_id, 
+//	0, //int source_x, 
+//	0, //int source_y, 
+//	512,//int source_w, 
+//	512,//int source_h, 
+//	0,//int dest_x, 
+//	0,//int dest_y, 
+//	256,//int dest_w, 
+//	256,//int dest_h, 
+//	0,//float rotation, 
+//	true)//bool mask
+//	;
+//
+//	if (Offsets[ReliableTimer] >= 20) Screen->FastTile(6,120,80,33775,6,128);
+//}
+if (ShowMap == true){
+	if (Link->InputDown && Sail[ShowMapOffsetY] > -176) Sail[ShowMapOffsetY] --;
+	if (Link->InputUp && Sail[ShowMapOffsetY] < 120) Sail[ShowMapOffsetY] ++;
+	if (Link->InputRight && Sail[ShowMapOffsetX] > -256) Sail[ShowMapOffsetX] --;
+	if (Link->InputLeft && Sail[ShowMapOffsetX] < 256) Sail[ShowMapOffsetX] ++;
+
+	if (Link->InputDown && Sail[ShowMapOffsetY] > -175) Sail[ShowMapOffsetY] --;
+	if (Link->InputUp && Sail[ShowMapOffsetY] < 119) Sail[ShowMapOffsetY] ++;
+	if (Link->InputRight && Sail[ShowMapOffsetX] > -255) Sail[ShowMapOffsetX] --;
+	if (Link->InputLeft && Sail[ShowMapOffsetX] < 255) Sail[ShowMapOffsetX] ++;
+
+	Screen->DrawScreen(7,OceanLandMap,128,0+Sail[ShowMapOffsetX],-176+Sail[ShowMapOffsetY],0);
+	Screen->DrawScreen(7,OceanLandMap,128,0+Sail[ShowMapOffsetX],0+Sail[ShowMapOffsetY],0);
+
+	if ((Sail[BoatXScreen]+(Sail[BoatYScreen]*16)-16) >= 0) Screen->DrawScreen(7,OceanLandMap,Sail[BoatXScreen]+(Sail[BoatYScreen]*16)-16,0+Sail[ShowMapOffsetX],-176+Sail[ShowMapOffsetY],0);
+	Screen->DrawScreen(7,OceanLandMap,Sail[BoatXScreen]+(Sail[BoatYScreen]*16),0+Sail[ShowMapOffsetX],0+Sail[ShowMapOffsetY],0);
+
+	Screen->DrawScreen(7,OceanLandMap,128,-256+Sail[ShowMapOffsetX],0+Sail[ShowMapOffsetY],0);
+	Screen->DrawScreen(7,OceanLandMap,128,-256+Sail[ShowMapOffsetX],-176+Sail[ShowMapOffsetY],0);
+	if ((Sail[BoatXScreen]+(Sail[BoatYScreen]*16)-17) >= 0) Screen->DrawScreen(7,OceanLandMap,Sail[BoatXScreen]+(Sail[BoatYScreen]*16)-17,-256+Sail[ShowMapOffsetX],-176+Sail[ShowMapOffsetY],0);
+	if ((Sail[BoatXScreen]+(Sail[BoatYScreen]*16)-1) >= 0) Screen->DrawScreen(7,OceanLandMap,Sail[BoatXScreen]+(Sail[BoatYScreen]*16)-1,-256+Sail[ShowMapOffsetX],0+Sail[ShowMapOffsetY],0);
+
+	Screen->DrawScreen(7,OceanLandMap,128,256+Sail[ShowMapOffsetX],0+Sail[ShowMapOffsetY],0);
+	Screen->DrawScreen(7,OceanLandMap,128,256+Sail[ShowMapOffsetX],-176+Sail[ShowMapOffsetY],0);
+	if ((Sail[BoatXScreen]+(Sail[BoatYScreen]*16)-15) >= 0) Screen->DrawScreen(7,OceanLandMap,Sail[BoatXScreen]+(Sail[BoatYScreen]*16)-15,256+Sail[ShowMapOffsetX],-176+Sail[ShowMapOffsetY],0);
+	if ((Sail[BoatXScreen]+(Sail[BoatYScreen]*16)+1) >= 0) Screen->DrawScreen(7,OceanLandMap,Sail[BoatXScreen]+(Sail[BoatYScreen]*16)+1,256+Sail[ShowMapOffsetX],0+Sail[ShowMapOffsetY],0);
+
+	Screen->DrawScreen(7,OceanLandMap,128,0+Sail[ShowMapOffsetX],176+Sail[ShowMapOffsetY],0);
+	if ((Sail[BoatXScreen]+(Sail[BoatYScreen]*16)+16) >= 0) Screen->DrawScreen(7,OceanLandMap,Sail[BoatXScreen]+(Sail[BoatYScreen]*16)+16,0+Sail[ShowMapOffsetX],176+Sail[ShowMapOffsetY],0);
+
+	Screen->DrawScreen(7,OceanLandMap,128,-256+Sail[ShowMapOffsetX],176+Sail[ShowMapOffsetY],0);
+	if ((Sail[BoatXScreen]+(Sail[BoatYScreen]*16)+15) >= 0) Screen->DrawScreen(7,OceanLandMap,Sail[BoatXScreen]+(Sail[BoatYScreen]*16)+15,-256+Sail[ShowMapOffsetX],176+Sail[ShowMapOffsetY],0);
+
+	Screen->DrawScreen(7,OceanLandMap,128,256+Sail[ShowMapOffsetX],176+Sail[ShowMapOffsetY],0);
+	if ((Sail[BoatXScreen]+(Sail[BoatYScreen]*16)+17) >= 0) Screen->DrawScreen(7,OceanLandMap,Sail[BoatXScreen]+(Sail[BoatYScreen]*16)+17,256+Sail[ShowMapOffsetX],176+Sail[ShowMapOffsetY],0);
+
+
+	if (Offsets[ReliableTimer] >= 10) Screen->FastTile(7,-8+Sail[BoatX]-(Sail[BoatXScreen]*256)+Sail[ShowMapOffsetX],0+Sail[BoatY]-(Sail[BoatYScreen]*176)+Sail[ShowMapOffsetY],33775,6,128);
+
+	Link->PressUp = false;
+	Link->PressDown = false;
+	Link->PressLeft = false;
+	Link->PressRight = false;
+	Link->InputUp = false;
+	Link->InputDown = false;
+	Link->InputLeft = false;
+	Link->InputRight = false;
+	Link->PressB = false;
+	Link->InputB = false;
+	Link->PressA = false;
+	Link->InputA = false;
+	Link->PressEx1 = false;
+	Link->InputEx1 = false;
+	Link->PressEx2 = false;
+	Link->InputEx2 = false;
+	Link->PressEx3 = false;
+	Link->InputEx3 = false;
+	Link->PressEx4 = false;
+	Link->InputEx4 = false;
+	Link->InputStart = false;
+	Link->PressStart = false;
+}
+
+if (Offsets[ReliableTimer] < 60) Offsets[ReliableTimer] ++;
+else Offsets[ReliableTimer] = 0;
+
+// --- Timer / offset stuff
+
+if (Offsets[SteadySlowTimer] > 0) Offsets[SteadySlowTimer] --;
+else Offsets[SteadySlowTimer] = 8;
+
+if (Offsets[SlowTimer] == 16 || Offsets[SlowTimer] == 8 || Offsets[SlowTimer] == 24 || Offsets[SlowTimer] == 0){
+	if (RaiseLower == false){
+		if (Offsets[WaterY] < 16) Offsets[WaterY] ++;
+		else RaiseLower = true;
+	}
+	if (RaiseLower == true){
+		if (Offsets[WaterY] > 0) Offsets[WaterY] --;	
+		else RaiseLower = false;
+	}
+}
+if (Offsets[SlowTimer] > 0) Offsets[SlowTimer] --;
+else{
+	if (Sail[BoatDelayRotation] == 0){
+		if (Link->InputDown) Offsets[SlowTimer] = 2;
+		if (Link->InputUp || Link->InputLeft || Link->InputRight) Offsets[SlowTimer]= 1;
+	}
+	if (!Link->InputUp && !Link->InputDown && !Link->InputLeft && !Link->InputRight) Offsets[SlowTimer] = 24;
+}
+
+// -- Drawing the sky
+//Screen->Rectangle(1,0,-56,256,176,50,1,0,0,0,true,128);
+Screen->DrawTile(
+1,// int layer
+0,// int x
+-56,// int y
+41896,// int tile
+1,// int blockw
+4,// int blockh
+10,// int cset
+256,// int xscale
+88+(Link->Z/2),// int yscale
+0,// int rx
+0,// int ry
+0,// int rangle
+0,// int flip
+true,// bool transparency
+128// int opacity)
+);
+
+if (Offsets[WaterFrame] != 0){
+	Screen->DrawTile(1, 0-Offsets[CloudX], -56-(Offsets[WaterY]/8), 49660, 20, 2, 3, 320, 32-(Offsets[WaterY]/8), 0, 0, 0, 0, true, 128);
+	Screen->DrawTile(1, 0-Offsets[CloudX], -24-(Offsets[WaterY]/8), 49700, 20, 2, 3, 320, 12-(Offsets[WaterY]/4), 0, 0, 0, 0, true, 128);
+}
+else{
+	Screen->DrawTile(1, 0-Offsets[CloudX], -56, 49660, 20, 2, 3, 320, 32, 0, 0, 0, 0, true, 128);
+	Screen->DrawTile(1, 0-Offsets[CloudX], -24, 49700, 20, 2, 3, 320, 16, 0, 0, 0, 0, true, 128);
+}
+
+
+// --- Horizon objects (non-flat objects)
+
+HorizonStuff[RelativeObjX] = Sail[BoatX];
+HorizonStuff[RelativeObjY] = Sail[BoatY];
+HorizonStuff[HorizonObjOffset] = Offsets[WaterY];
+
+if (HorizonObjectSet == 2){
+// Cliffs along entire north edge of map
+	if (Sail[BoatY] < 384){
+		Screen->DrawTile(
+		1, //int layer
+		0-(Offsets[CloudX]*2), //int x
+		-48+(Offsets[WaterY]/8)+(Sail[BoatY]/4)+(Link->Z/4), // int y
+		49740, //int tile
+		16, // int blockw
+		4, // int blockh
+		3, //int cset
+		256, // int xscale
+		(Max(0,99-(Sail[BoatY]/5))), // int yscale
+		0, // int rx
+		0, // int ry
+		0, // int rangle
+		0, // int flip
+		true, // bool transparency
+		128// int opacity
+		);
+		Screen->DrawTile(
+		1, //int layer
+		256-(Offsets[CloudX]*2), //int x
+		-48+(Offsets[WaterY]/8)+(Sail[BoatY]/4)+(Link->Z/4), // int y
+		49740, //int tile
+		16, // int blockw
+		4, // int blockh
+		3, //int cset
+		256, // int xscale
+		(Max(0,99-(Sail[BoatY]/5))), // int yscale
+		0, // int rx
+		0, // int ry
+		0, // int rangle
+		0, // int flip
+		true, // bool transparency
+		128// int opacity
+		);
+	}
+// An example island
+	if (Sail[BoatX] > 304 - 180 && Sail[BoatX] < 304 + 240 && Sail[BoatY] > 480 - 160 && Sail[BoatY] < 480 + 180){
+		HorizonStuff[HorizonObjX] = 304;
+		HorizonStuff[HorizonObjY] = 480;
+		HorizonStuff[HorizonObjTile] = 41820;
+		HorizonStuff[HorizonObjWidth] = 8;
+		HorizonStuff[HorizonObjHeight] = 2;
+		HorizonStuff[HorizonObjCSet] = 3;
+		HorizonStuff[HorizonObjScale] = 2;
+		HorizonDraw();
+	}
+
+// Expo Island 1 (Start of Demo fairy)
+	if (Sail[BoatX] > 2616 - 180 && Sail[BoatX] < 2616 + 240 && Sail[BoatY] > 720 - 160 && Sail[BoatY] < 720 + 180){
+		HorizonStuff[HorizonObjX] = 2608;
+		HorizonStuff[HorizonObjY] = 720;
+		HorizonStuff[HorizonObjTile] = 41820;
+		HorizonStuff[HorizonObjWidth] = 8;
+		HorizonStuff[HorizonObjHeight] = 2;
+		HorizonStuff[HorizonObjCSet] = 3;
+		HorizonStuff[HorizonObjScale] = 2;
+		HorizonDraw();
+	}
+// Expo Island 2 (End of Demo fairy)
+	if (Sail[BoatX] > 2616 - 180 && Sail[BoatX] < 2616 + 240 && Sail[BoatY] > 32 - 160 && Sail[BoatY] < 32 + 180){
+		HorizonStuff[HorizonObjX] = 2624;
+		HorizonStuff[HorizonObjY] = 32;
+		HorizonStuff[HorizonObjTile] = 41780;
+		HorizonStuff[HorizonObjWidth] = 8;
+		HorizonStuff[HorizonObjHeight] = 2;
+		HorizonStuff[HorizonObjCSet] = 3;
+		HorizonStuff[HorizonObjScale] = 2;
+		HorizonDraw();
+	}
+}
+
+
+// --- Conveyor Combos
+if (Game->GetComboType(OceanLandMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256),Sail[BoatY]-(Sail[BoatYScreen]*176)+8)) == CT_CVUP && Game->GetComboSolid(OceanLandMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256),Sail[BoatY]-(Sail[BoatYScreen]*176)-2)) == 0 && AlternatingFrameTimer == true){
+	Sail[BoatY] --;
+	if (Frame > 0) Frame --;
+	else Frame = 8;
+	if (Offsets[WaterFrame] != 1560) Offsets[WaterFrame] = 1560;
+}
+
+if (Game->GetComboType(OceanLandMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256),Sail[BoatY]-(Sail[BoatYScreen]*176)+8)) == CT_CVDOWN && Game->GetComboSolid(OceanLandMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256),Sail[BoatY]-(Sail[BoatYScreen]*176)+2)) == 0 && AlternatingFrameTimer == true){
+	Sail[BoatY] ++;
+	if (Frame < 8) Frame ++;
+	else Frame = 0;
+	if (Offsets[WaterFrame] != 1560) Offsets[WaterFrame] = 1560;
+}
+
+if (Game->GetComboType(OceanLandMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256),Sail[BoatY]-(Sail[BoatYScreen]*176)+8)) == CT_CVLEFT && Game->GetComboSolid(OceanLandMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256)-2,Sail[BoatY]-(Sail[BoatYScreen]*176))) == 0){
+	Sail[BoatX] --;
+	if (Offsets[WaterX] > 0) Offsets[WaterX] --;
+	else Offsets[WaterX] = 16;
+	if (AlternatingFrameTimer == true){
+		if (Offsets[CloudX] > 1) Offsets[CloudX] --;
+		else Offsets[CloudX] = 64;
+	}
+}
+
+if (Game->GetComboType(OceanLandMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256),Sail[BoatY]-(Sail[BoatYScreen]*176)+8)) == CT_CVRIGHT && Game->GetComboSolid(OceanLandMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256)+2,Sail[BoatY]-(Sail[BoatYScreen]*176))) == 0){
+	Sail[BoatX] ++;
+	if (Offsets[WaterX] < 16) Offsets[WaterX] ++;
+	else Offsets[WaterX] = 0;
+	if (AlternatingFrameTimer == true){
+		if (Offsets[CloudX] < 64) Offsets[CloudX] ++;
+		else Offsets[CloudX] = 0;
+	}
+}
+
+
+
+
+// --- Drawing the ocean
+
+if (HorizonObjectSet != 2 || Sail[BoatY] > 380) Screen->Rectangle(1,0,64+(Offsets[WaterY]/4)-Offsets[ShiftUp],256,68+(Offsets[WaterY]/2)-Offsets[ShiftUp],183,1,0,0,0,true,128);
+Screen->Quad(Sail[BoatLandLayer],0-Offsets[WaterX],65+(Offsets[WaterY]/2)-Offsets[ShiftUp],272-Offsets[WaterX],65+(Offsets[WaterY]/2)-Offsets[ShiftUp],436-Offsets[WaterX],244+Offsets[WaterY]-Offsets[ShiftUp]+20,-180-Offsets[WaterX],244+Offsets[WaterY]-Offsets[ShiftUp]+20,16,8,3,0,(41620+(Frame*260))+Offsets[WaterFrame],PT_TEXTURE);
+Screen->Quad(Sail[BoatLandLayer],0-Offsets[WaterX],64+(Offsets[WaterY]/4)-Offsets[ShiftUp],272-Offsets[WaterX],64+(Offsets[WaterY]/4)-Offsets[ShiftUp],436-Offsets[WaterX],222+Offsets[WaterY]-Offsets[ShiftUp]+20,-180-Offsets[WaterX],222+Offsets[WaterY]-Offsets[ShiftUp]+20,16,8,3,0,(41620+(Frame*260))+Offsets[WaterFrame],PT_TRANSTEXTURE);
+
+// Rolling tide periodically; works, but unused because I decided I didn't like it
+//if (Offsets[SteadySlowTimer] == 1 || Offsets[SteadySlowTimer] == 5 || Offsets[WaterFrame] > 0 && AlternatingFrameTimer == true && Link->InputUp){
+//	if (!Link->InputDown || AlternatingFrameTimer == true){
+//		if (Offsets[WaterTide] < 158) Offsets[WaterTide] ++;
+//		if (Offsets[WaterTide] >= 80) Offsets[WaterTide] ++;
+//		if (Offsets[WaterTide] >= 128) Offsets[WaterTide] ++;
+//		if (Offsets[WaterTide] >= 180) Offsets[WaterTide] = 38-Rand(112);
+//	}
+//}
+
+//if (Offsets[WaterTide] >= 40)
+//Screen->DrawTile(
+//Sail[BoatLandLayer],// int layer
+//-16+(Offsets[WaterY]/2)-Offsets[CloudX],// int x
+//Offsets[WaterTide]+(Offsets[WaterY]/4)+(Link->Z/2),// int y
+//42040+Max(0,(20*Floor(Offsets[WaterY]/4))-20),// int tile
+//12,// int blockw
+//1,// int blockh
+//3,// int cset
+//336,// int xscale
+//Max(8,8+(Offsets[WaterTide])-48),// int yscale
+//0,// int rx
+//0,// int ry
+//0,// int rangle
+//0,// int flip
+//true,// bool transparency
+//128// int opacity)
+//);
+
+//Screen->DrawInteger(7, 8, 80, FONT_Z1, 1, -1, -1, -1, (20*Floor(Offsets[WaterY]/4)), 0, 128);
+
+
+// --- Lweapon loop, for water trails and moving weapons
+
+if (Sail[WhirlpoolWarp] == 0){
+	for(q = Screen->NumLWeapons(); q > 0; q--){
+		lw = Screen->LoadLWeapon(q);
+		if(!lw->isValid()) continue;
+		{
+			//if (lw->OriginalTile == 41860){
+			if (lw->ID != LW_SWORD && lw->ID != LW_CANEOFBYRNA && lw->ID != LW_HAMMER && lw->ID != LW_WAND && lw->ID != LW_HOOKSHOT){
+				lw->X += Sail[WeaponXMove];
+			//	if (Link->InputLeft) lw->X ++;
+			//	if (Link->InputRight) lw->X --;
+				if (AlternatingFrameTimer == true){
+					lw->Y += Sail[WeaponYMove];
+			//		if (Link->InputUp) lw->Y ++;
+			//		if (Link->InputDown ) lw->Y --;
+				}
+			}
+// this mine is ass
+
+//if (lw->ID != LW_SPARKLE){
+//	Sail[WeaponXScreen] = Floor((Sail[BoatX]-(Link->X-lw->X))/256);
+//	Sail[WeaponYScreen] = Floor((Sail[BoatY]-(Link->Y-lw->Y))/176);
+//	Sail[WeaponCombo] = Game->GetComboData(OceanLandMap, Sail[WeaponXScreen]+(Sail[WeaponYScreen]*16),ComboAt((Sail[BoatX]+(Link->X-lw->X))-(Sail[WeaponXScreen]*256),(Sail[BoatY]+(Link->Y-lw->Y))-(Sail[WeaponYScreen]*176)+4));
+//	Screen->FastTile(7,0,0,Sail[WeaponCombo],2,128);
+
+
+//	if (Sail[WeaponCombo] == CT_DAMAGE1){
+//	//	Game->SetComboData(OceanLandMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256),Sail[BoatY]-(Sail[BoatYScreen]*176)+4),1);
+//		eweapon KerBEWM = CreateEWeaponAt(EW_SBOMBBLAST,lw->X,lw->Y-4);
+//		KerBEWM->Damage = 4;
+//	}
+//}
+
+			//Attempt to make lweapons destroy mines; WIP, malfunctions badly
+			//if (lw->ID != LW_SPARKLE){
+			//	if (lw->X < Link->X){
+			//		if (lw->Y < Link->Y){
+			//			if (Game->GetComboType(OceanLandMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256)-((Link->X-lw->X)),Sail[BoatY]-(Sail[BoatYScreen]*176)+4)-(Link->Y-lw->Y)) == CT_DAMAGE1){
+			//				Game->SetComboData(OceanLandMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256)-((Link->X-lw->X)),Sail[BoatY]-(Sail[BoatYScreen]*176)+4)-(Link->Y-lw->Y),1);
+			//				eweapon KerBEWM = CreateEWeaponAt(EW_SBOMBBLAST,lw->X,lw->Y-2);
+			//				KerBEWM->Damage = 4;
+			//			}
+			//		}
+			//		else{
+			//			if (Game->GetComboType(OceanLandMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256)-((Link->X-lw->X)),Sail[BoatY]-(Sail[BoatYScreen]*176)+4)-(Link->Y-lw->Y)) == CT_DAMAGE1){
+			//				Game->SetComboData(OceanLandMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256)-((Link->X-lw->X)),Sail[BoatY]-(Sail[BoatYScreen]*176)+4)-(lw->Y - Link->Y),1);
+			//				eweapon KerBEWM = CreateEWeaponAt(EW_SBOMBBLAST,lw->X,lw->Y-2);
+			//				KerBEWM->Damage = 4;
+			//			}
+			//		}
+			//	}
+			//}
+		}
+	}
+}
+
+Sail[WeaponYMove] = 0;
+Sail[WeaponXMove] = 0;
+
+
+// --- Walls / Mode 7 wizardry
+
+// - Remote combo checking
+Sail[BoatXScreen] = Floor(Sail[BoatX]/256);
+Sail[BoatYScreen] = Floor(Sail[BoatY]/176);
+//Sail[BoatRemoteBehind] = Game->GetComboData(OceanLandMap,(Sail[BoatXScreen]+(Sail[BoatYScreen]*16)),ComboAt((Sail[BoatX]-Sail[BoatXScreen]*256),(Sail[BoatY] - ((Sail[BoatYScreen]/16)*176))));
+//Sail[BoatRemoteForward] = Game->GetComboData(OceanLandMap,(Sail[BoatXScreen]+(Sail[BoatYScreen]*16)),ComboAt((Sail[BoatX]+VectorX(2, Sail[BoatAngle])-Sail[BoatXScreen]*256),(Sail[BoatY]+ VectorY(2, Sail[BoatAngle]) - ((Sail[BoatYScreen]/16)*176))));
+
+// --- Wall drawing: Mode 7 madness
+
+// - MODE 7 STEP 1: Draw Surrounding Screens
+
+Screen->SetRenderTarget(RT_BITMAP1);
+// Clear Map
+
+if (Sail[BoatXScreen]+(Sail[BoatYScreen]*16) == 0 || Sail[BoatXScreen]+(Sail[BoatYScreen]*16) == 16 || Sail[BoatXScreen]+(Sail[BoatYScreen]*16) == 32 || Sail[BoatXScreen]+(Sail[BoatYScreen]*16) == 48 || Sail[BoatXScreen]+(Sail[BoatYScreen]*16) == 64 || Sail[BoatXScreen]+(Sail[BoatYScreen]*16) == 80 || Sail[BoatXScreen]+(Sail[BoatYScreen]*16) == 96 || Sail[BoatXScreen]+(Sail[BoatYScreen]*16) == 112) RightEdge = true;
+else RightEdge = false;
+if (Sail[BoatXScreen]+(Sail[BoatYScreen]*16) == 15 || Sail[BoatXScreen]+(Sail[BoatYScreen]*16) == 31 || Sail[BoatXScreen]+(Sail[BoatYScreen]*16) == 47 || Sail[BoatXScreen]+(Sail[BoatYScreen]*16) == 63 || Sail[BoatXScreen]+(Sail[BoatYScreen]*16) == 79 || Sail[BoatXScreen]+(Sail[BoatYScreen]*16) == 95 || Sail[BoatXScreen]+(Sail[BoatYScreen]*16) == 111 || Sail[BoatXScreen]+(Sail[BoatYScreen]*16) == 127) LeftEdge = true;
+else LeftEdge = false;
+// also check the top and bottom
+// then turn rotation on and see if it still works right
+// then if yes, split up the final draw to be small at the top and big at the bottom
+
+Screen->Rectangle(1, 0, 0, 512, 512, 0, 1, 0,0, 0, true, 128);
+
+//N
+if ((Sail[BoatXScreen]+(Sail[BoatYScreen]*16))-16 > -1) 
+Screen-> DrawScreen(1,  //int layer
+OceanLandMap, //int map
+(Sail[BoatXScreen]+(Sail[BoatYScreen]*16))-16,//int source_screen
+256-((Sail[BoatX]-Sail[BoatXScreen]*256)),
+0-(Sail[BoatY]-(Sail[BoatYScreen]*176)),
+0);
+
+Screen-> DrawScreen(1,  //int layer
+OceanLandMap, //int map
+(Sail[BoatXScreen]+(Sail[BoatYScreen]*16)), //int source_screen
+256-((Sail[BoatX]-Sail[BoatXScreen]*256)), 
+176-(Sail[BoatY]-(Sail[BoatYScreen]*176)), 
+0);
+
+// Apparently, Game->SetComboData is represented on DrawScreen, just not ST_SECRETS.
+
+//S
+if ((Sail[BoatXScreen]+(Sail[BoatYScreen]*16))+16 < 128) 
+Screen-> DrawScreen(1,  //int layer
+OceanLandMap, //int map
+(Sail[BoatXScreen]+(Sail[BoatYScreen]*16))+16, //int source_screen
+256-((Sail[BoatX]-Sail[BoatXScreen]*256)), 
+352-(Sail[BoatY]-(Sail[BoatYScreen]*176)), 
+0);
+
+if (LeftEdge == false){
+//NW
+	if ((Sail[BoatXScreen]+(Sail[BoatYScreen]*16))-15 > -1) 
+	Screen-> DrawScreen(1, //int layer
+	OceanLandMap, //int map
+	(Sail[BoatXScreen]+(Sail[BoatYScreen]*16))-15, //int source_screen
+	512-((Sail[BoatX]-Sail[BoatXScreen]*256)), 
+	0-(Sail[BoatY]-(Sail[BoatYScreen]*176)), 
+	0);
+//W
+	Screen-> DrawScreen(1,  //int layer
+	OceanLandMap, //int map
+	(Sail[BoatXScreen]+(Sail[BoatYScreen]*16))+1, //int source_screen
+	512-((Sail[BoatX]-Sail[BoatXScreen]*256)), 
+	176-(Sail[BoatY]-(Sail[BoatYScreen]*176)), 
+	0);
+//SW
+	if ((Sail[BoatXScreen]+(Sail[BoatYScreen]*16))+17 < 126) 
+	Screen-> DrawScreen(1,  //int layer
+	OceanLandMap, //int map
+	(Sail[BoatXScreen]+(Sail[BoatYScreen]*16))+17, //int source_screen
+	512-((Sail[BoatX]-Sail[BoatXScreen]*256)), 
+	352-(Sail[BoatY]-(Sail[BoatYScreen]*176)), 
+	0);
+}
+//-- Attempted wraparound ocean, may come back later
+//else{
+//NW (edge)
+//	if ((Sail[BoatXScreen]+(Sail[BoatYScreen]*16))-15 > -1) 
+//		Screen-> DrawScreen(1, //int layer
+//		2, //int map
+//		(Sail[BoatXScreen]+(Sail[BoatYScreen]*16))-1, //int source_screen
+//		512-((Sail[BoatX]-Sail[BoatXScreen]*256)), 
+//		0-(Sail[BoatY]-(Sail[BoatYScreen]*176)), 
+//		0);
+//	}
+//W (edge)
+//	Screen-> DrawScreen(1,  //int layer
+//	2, //int map
+//	(Sail[BoatXScreen]+(Sail[BoatYScreen]*16))+15, //int source_screen
+//	512-((Sail[BoatX]-Sail[BoatXScreen]*256)), 
+//	176-(Sail[BoatY]-(Sail[BoatYScreen]*176)), 
+//	0);
+//SW (edge)
+//	if ((Sail[BoatXScreen]+(Sail[BoatYScreen]*16))+17 < 129) 
+//	Screen-> DrawScreen(1,  //int layer
+//	2, //int map
+//	(Sail[BoatXScreen]+(Sail[BoatYScreen]*16))+31, //int source_screen
+//	512-((Sail[BoatX]-Sail[BoatXScreen]*256)), 
+//	352-(Sail[BoatY]-(Sail[BoatYScreen]*176)), 
+//	0);
+//}
+
+if (RightEdge == false){
+//NE
+	if ((Sail[BoatXScreen]+(Sail[BoatYScreen]*16))-17 > -1)
+	Screen-> DrawScreen(1,  //int layer
+	OceanLandMap, //int map 
+	(Sail[BoatXScreen]+(Sail[BoatYScreen]*16))-17, //int source_screen
+	0-((Sail[BoatX]-Sail[BoatXScreen]*256)), 
+	0-(Sail[BoatY]-(Sail[BoatYScreen]*176)), 
+	0);
+//E
+	Screen-> DrawScreen(1,  //int layer
+	OceanLandMap, //int map
+	(Sail[BoatXScreen]+(Sail[BoatYScreen]*16))-1, //int source_screen
+	0-((Sail[BoatX]-Sail[BoatXScreen]*256)), 
+	176-(Sail[BoatY]-(Sail[BoatYScreen]*176)), 
+	0);
+//SE
+if ((Sail[BoatXScreen]+(Sail[BoatYScreen]*16))+15 < 128) 
+	Screen-> DrawScreen(1,  //int layer
+	OceanLandMap, //int map
+	(Sail[BoatXScreen]+(Sail[BoatYScreen]*16))+15, //int source_screen
+	0-((Sail[BoatX]-Sail[BoatXScreen]*256)),
+	352-(Sail[BoatY]-(Sail[BoatYScreen]*176)), 
+	0);
+}
+
+//else{
+//NE (edge)
+//	if ((Sail[BoatXScreen]+(Sail[BoatYScreen]*16))-17 > -1)
+//	Screen-> DrawScreen(1,  //int layer
+//	2, //int map 
+//	(Sail[BoatXScreen]+(Sail[BoatYScreen]*16))-15, //int source_screen
+//	0-((Sail[BoatX]-Sail[BoatXScreen]*256)), 
+//	0-(Sail[BoatY]-(Sail[BoatYScreen]*176)), 
+//	0);
+//E (edge)
+//	Screen-> DrawScreen(1,  //int layer
+//	2, //int map
+//	(Sail[BoatXScreen]+(Sail[BoatYScreen]*16))-15, //int source_screen
+//	0-((Sail[BoatX]-Sail[BoatXScreen]*256)), 
+//	176-(Sail[BoatY]-(Sail[BoatYScreen]*176)), 
+//	0);
+//SE (edge)
+//if ((Sail[BoatXScreen]+(Sail[BoatYScreen]*16))+15 < 129) 
+//	Screen-> DrawScreen(1,  //int layer
+//	2, //int map
+//	(Sail[BoatXScreen]+(Sail[BoatYScreen]*16))+17, //int source_screen
+//	0-((Sail[BoatX]-Sail[BoatXScreen]*256)),
+//	352-(Sail[BoatY]-(Sail[BoatYScreen]*176)), 
+//	0);
+//}
+
+
+// - MODE 7 STEP 2: Rotate the whole thing based on the ship's angle
+//...NOT!
+
+//Screen->SetRenderTarget(RT_BITMAP2);
+//Screen->Rectangle(0, 0, 0, 512, 512, 0, 1, 0,0, 0, true, 128);
+//Screen->DrawBitmap(
+//1, //int layer, 
+//1, //int bitmap_id, 
+//0, //int source_x, 
+//0, //int source_y, 
+//512,//int source_w, 
+//512,//int source_h, 
+//0,//int dest_x, 
+//0,//int dest_y, 
+//512,//int dest_w, 
+//512,//int dest_h, 
+//WrapDegrees(Sail[BoatAngle]+90),//float rotation, 
+//true)//bool mask
+//;
+
+// - MODE 7 STEP 3: Squish accordingly
+// This worked out kind of funky and might be inefficient; most of the squishing actually happens in stage 4 instead
+Screen->SetRenderTarget(RT_BITMAP2);
+Screen->Rectangle(0, 0, 0, 512, 512, 0, 1, 0,0, 0, true, 128);
+
+Screen->DrawBitmap(
+1, //int layer, 
+//2,
+1, //int bitmap_id, 
+128, //int source_x, //76 min
+88, //int source_y, //76 min; when this baby hits 88fps uncapped, you're gonna see some serious slowdown
+256,//int source_w, //360 max
+256, //int source_h, //360 max
+0,//int dest_x, 
+0,//int dest_y, 
+360,//int dest_w, 
+315,//int dest_h, 
+WrapDegrees(Sail[BoatAngle]+90),//float rotation, 
+true)//bool mask
+;
+
+// - MODE 7 STEP 3.5: Account for lweapon positions
+//if (Sail[WhirlpoolWarp] == 0){
+//	for(q = Screen->NumLWeapons(); q > 0; q--){
+//		lw = Screen->LoadLWeapon(q);
+//		if(!lw->isValid() || lw->ID == LW_SPARKLE) continue;
+//		{
+//			
+//	Sail[WeaponXScreen] = Floor((Sail[BoatX]+(Link->X-lw->X))/256);
+//	Sail[WeaponYScreen] = Floor((Sail[BoatY]+(Link->Y-lw->Y))/176);
+//	Screen->FastTile(7,)
+//
+//	Sail[WeaponCombo] = Game->GetComboType(OceanLandMap, Sail[WeaponXScreen]+(Sail[WeaponYScreen]*16),ComboAt((Sail[BoatX]+(Link->X-lw->X))-(Sail[WeaponXScreen]*256),(Sail[BoatY]+(Link->Y-lw->Y))-(Sail[WeaponYScreen]*176)+4));
+//	if (Sail[WeaponCombo] == CT_DAMAGE1){
+//	//	Game->SetComboData(OceanLandMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256),Sail[BoatY]-(Sail[BoatYScreen]*176)+4),1);
+//		eweapon KerBEWM = CreateEWeaponAt(EW_SBOMBBLAST,lw->X,lw->Y-4);
+//		KerBEWM->Damage = 4;
+//	}
+//}
+
+
+
+
+// - MODE 7 STEP 4: Draw the beautiful(?) final result.
+Screen->SetRenderTarget(RT_SCREEN);
+
+
+for(q = 16; q > 0; q-- ){
+	if (q > 1) Offsets[SurfaceScaledY] = 2 * ((q + 1)-2) * ((q / 2));
+	else Offsets[SurfaceScaledY] = 0;
+	Screen->DrawBitmap(
+	1, //int layer, 
+//	3,
+	2, //int bitmap_id, 
+	52, //int source_x, 
+	0+(13*q), //int source_y, 
+	256,//int source_w, 
+	13,//int source_h, 
+	0-(3*(q-1)),//int dest_x, 
+	(63+(Offsets[WaterY]/4)+Offsets[SurfaceScaledY])-Offsets[ShiftUp],//int dest_y, 
+	256+(6*(q-1)),//int dest_w, 
+	2*q,//int dest_h, 
+	0,//float rotation, 
+	true//bool mask
+	);
+}
+
+
+
+
+
+
+
+// --- Warp combos
+// Go up towards caves, islands, etc
+if (Link->InputUp && BlackScreen[2] >= 160 && Sail[BoatLanding] == 0){
+	if (Game->GetComboSolid(OceanLandMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256),Sail[BoatY]-(Sail[BoatYScreen]*176)-2)) != 0 && BlackScreen[1] == 0){
+		if (Game->GetComboType(OceanLandMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256),Sail[BoatY]-(Sail[BoatYScreen]*176)-2)) == CT_STAIR){
+			Link->Dir = DIR_UP;
+			Link->DrawYOffset = 200;
+			BlackScreen[1] = 150;
+			BlackScreen[2] = 180;
+			Sail[BoatLanding] = 1;
+			Sail[BoatSidewarp] = 1;
+			Game->PlayMIDI(0);
+		}
+		if (Game->GetComboType(OceanLandMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256),Sail[BoatY]-(Sail[BoatYScreen]*176)-2)) == CT_STAIRB){
+			Link->Dir = DIR_UP;
+			Link->DrawYOffset = 200;
+			BlackScreen[1] = 150;
+			BlackScreen[2] = 180;
+			Sail[BoatLanding] = 1;
+			Sail[BoatSidewarp] = 2;
+			Game->PlayMIDI(0);
+		}
+		if (Game->GetComboType(OceanLandMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256),Sail[BoatY]-(Sail[BoatYScreen]*176)-2)) == CT_STAIRC){
+			Link->Dir = DIR_UP;
+			Link->DrawYOffset = 200;
+			BlackScreen[1] = 150;
+			BlackScreen[2] = 180;
+			Sail[BoatLanding] = 1;
+			Sail[BoatSidewarp] = 3;
+			Game->PlayMIDI(0);
+		}
+		if (Game->GetComboType(OceanLandMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256),Sail[BoatY]-(Sail[BoatYScreen]*176)-2)) == CT_STAIRD){
+			Link->Dir = DIR_UP;
+			Link->DrawYOffset = 200;
+			BlackScreen[1] = 150;
+			BlackScreen[2] = 180;
+			Sail[BoatLanding] = 1;
+			Sail[BoatSidewarp] = 4;
+			Game->PlayMIDI(0);
+		}
+		if (Game->GetComboType(OceanLandMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256),Sail[BoatY]-(Sail[BoatYScreen]*176)-2)) == CT_STAIRR){
+			Link->Dir = DIR_UP;
+			Link->DrawYOffset = 200;
+			BlackScreen[1] = 150;
+			BlackScreen[2] = 180;
+			Sail[BoatLanding] = 1;
+			Sail[BoatSidewarp] = Rand(1,4);
+			Game->PlayMIDI(0);
+		}
+	}
+}
+
+if (BlackScreen[1] > 1) BlackScreen[1] --;
+if (BlackScreen[1] == 1){
+	Link->DrawYOffset = 0;
+	if (Sail[BoatSidewarp] == 1) Game->SetComboData(BoatWarpMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16), 0, WarpomatComboA);
+	if (Sail[BoatSidewarp] == 2) Game->SetComboData(BoatWarpMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16), 0, WarpomatComboB);
+	if (Sail[BoatSidewarp] == 3) Game->SetComboData(BoatWarpMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16), 0, WarpomatComboC);
+	if (Sail[BoatSidewarp] == 4) Game->SetComboData(BoatWarpMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16), 0, WarpomatComboD);
+	Link->Warp(BoatWarpDMap,Sail[BoatXScreen]+(Sail[BoatYScreen]*16));
+}
+
+
+//Whirlpools
+
+if (Sail[WhirlpoolWarp] == 0){
+	if (Game->GetComboType(OceanLandMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256),Sail[BoatY]-(Sail[BoatYScreen]*176)+8)) == CT_SWIMWARP && Link->Z == 0){
+		Sail[WhirlpoolWarp] = 1;
+		Sail[BoatSidewarp] = 1;
+		Game->PlayMIDI(0);
+	}
+	if (Game->GetComboType(OceanLandMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256),Sail[BoatY]-(Sail[BoatYScreen]*176)+8)) == CT_SWIMWARPB && Link->Z == 0){
+		Sail[WhirlpoolWarp] = 1;
+		Sail[BoatSidewarp] = 2;
+		Game->PlayMIDI(0);
+	}
+	if (Game->GetComboType(OceanLandMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256),Sail[BoatY]-(Sail[BoatYScreen]*176)+8)) == CT_SWIMWARPC && Link->Z == 0){
+		Sail[WhirlpoolWarp] = 1;
+		Sail[BoatSidewarp] = 3;
+		Game->PlayMIDI(0);
+	}
+	if (Game->GetComboType(OceanLandMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256),Sail[BoatY]-(Sail[BoatYScreen]*176)+8)) == CT_SWIMWARPD && Link->Z == 0){
+		Sail[WhirlpoolWarp] = 1;
+		Sail[BoatSidewarp] = 4;
+		Game->PlayMIDI(0);
+	}
+}
+else{
+	Link->PressUp = false;
+	Link->PressDown = false;
+	Link->PressLeft = false;
+	Link->PressRight = false;
+	Link->InputUp = false;
+	Link->InputDown = false;
+	Link->InputLeft = false;
+	Link->InputRight = false;
+	Link->PressB = false;
+	Link->InputB = false;
+	Link->PressA = false;
+	Link->InputA = false;
+	Link->PressEx1 = false;
+	Link->InputEx1 = false;
+	Link->PressEx2 = false;
+	Link->InputEx2 = false;
+	Link->PressEx3 = false;
+	Link->InputEx3 = false;
+	Link->PressEx4 = false;
+	Link->InputEx4 = false;
+	if (Sail[WhirlpoolTimer] < 20 && Screen->NumLWeapons() < 40){
+		for(q = (Sail[WhirlpoolTimer]/2); q > 0; q--){
+			lweapon WhirlpoolSparkles = CreateLWeaponAt(LW_SPARKLE,Link->X+Rand(-Sail[WhirlpoolTimer]*2,Sail[WhirlpoolTimer]*2),Rand(0,160));
+			WhirlpoolSparkles->UseSprite(Choose(88,89,29));
+		}
+	}
+//	if (Sail[WhirlpoolTimer] < 28) Screen->Wavy = Sail[WhirlpoolTimer];
+	if (Sail[WhirlpoolSpinSpeed] == 0){
+		if (Sail[WhirlpoolTimer] < 15 && Link->Dir == DIR_DOWN) Game->PlaySound(62);
+		if (Sail[WhirlpoolTimer] == 15) Game->PlaySound(67);
+		if (Link->Dir == DIR_UP) Link->Dir = DIR_RIGHT;
+			else if (Link->Dir == DIR_RIGHT) Link->Dir = DIR_DOWN;
+				else if (Link->Dir == DIR_DOWN) Link->Dir = DIR_LEFT;
+					else Link->Dir = DIR_UP;
+		if (Sail[WhirlpoolWarp] < 5) Sail[WhirlpoolWarp] ++;
+		else{
+			Sail[WhirlpoolWarp] = 1;
+			Sail[WhirlpoolTimer] ++;
+		}
+		Sail[WhirlpoolSpinSpeed] = Max(1, 6 - Sail[WhirlpoolTimer]);
+	}
+	else Sail[WhirlpoolSpinSpeed] --;
+	Screen->Rectangle(2,Link->X+8-Sail[WhirlpoolTimer],-57,Link->X+8+Sail[WhirlpoolTimer],176,1,1,0,0,0,true,64);
+	Screen->Rectangle(2,Link->X+8-(Sail[WhirlpoolTimer]*0.35),-57,Link->X+8+(Sail[WhirlpoolTimer]*0.35),176,1,1,0,0,0,true,128);
+	if (Sail[WhirlpoolTimer] > 19) Screen->Rectangle(7,-1,-57,256,176,1,1,0,0,0,true,64);
+	if (Sail[WhirlpoolTimer] > 20) Screen->Rectangle(7,-1,-57,256,176,1,1,0,0,0,true,128);
+	if (Sail[WhirlpoolTimer] > 27){
+//		Link->DrawYOffset = 0;
+		if (Sail[BoatSidewarp] == 1) Game->SetComboData(BoatWarpMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16), 0, WarpomatComboA);
+		if (Sail[BoatSidewarp] == 2) Game->SetComboData(BoatWarpMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16), 0, WarpomatComboB);
+		if (Sail[BoatSidewarp] == 3) Game->SetComboData(BoatWarpMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16), 0, WarpomatComboC);
+		if (Sail[BoatSidewarp] == 4) Game->SetComboData(BoatWarpMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16), 0, WarpomatComboD);
+		Link->Warp(BoatWarpDMap,Sail[BoatXScreen]+(Sail[BoatYScreen]*16));
+	}
+	else{
+		Link->Z = Sail[WhirlpoolTimer] * 3;
+		Link->Jump = 0;
+	}
+//Link->DrawYOffset = -Sail[WhirlpoolTimer]*2;
+}
+
+
+// --- Other combos to step on
+Sail[BoatCombo] = Game->GetComboType(OceanLandMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256),Sail[BoatY]-(Sail[BoatYScreen]*176)+4));
+
+// Mines
+if (Sail[BoatCombo] == CT_DAMAGE1 && Link->Z == 0){
+	Game->SetComboData(OceanLandMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256),Sail[BoatY]-(Sail[BoatYScreen]*176)+4),1);
+	eweapon KerBEWM = CreateEWeaponAt(EW_SBOMBBLAST,Link->X,Link->Y-4);
+	KerBEWM->Damage = 4;
+}
+// Rupees
+if (Sail[BoatCombo] == CT_TALLGRASSC && Link->Z == 0){
+	Game->SetComboData(OceanLandMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256),Sail[BoatY]-(Sail[BoatYScreen]*176)+4),1);
+	Game->PlaySound(66);
+	lweapon RupeeGet = CreateLWeaponAt(LW_SPARKLE,Link->X,Link->Y-16);
+	RupeeGet->UseSprite(90);
+	RupeeGet->OriginalTile = 21501;
+	RupeeGet->Step = 20;
+	Game->Counter[CR_RUPEES] ++;
+}
+// Hearts
+if (Sail[BoatCombo] == CT_CHEST && Link->Z == 0){
+	Game->SetComboData(OceanLandMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256),Sail[BoatY]-(Sail[BoatYScreen]*176)+4),1);
+	Game->PlaySound(22);
+	lweapon HeartGet = CreateLWeaponAt(LW_SPARKLE,Link->X,Link->Y-16);
+	HeartGet->UseSprite(90);
+	HeartGet->OriginalTile = 21119;
+	HeartGet->Step = 20;
+	Game->DCounter[CR_LIFE] = Game->DCounter[CR_LIFE]+16;
+}
+
+// --- Move around in "3D"
+
+if (AlternatingFrameTimer == true) AlternatingFrameTimer = false;
+else AlternatingFrameTimer = true;
+
+if (BlackScreen[3] < 160){
+	BlackScreen[3] ++;
+	Link->PressUp = false;
+	Link->PressDown = false;
+	Link->PressLeft = false;
+	Link->PressRight = false;
+	Link->InputUp = false;
+	Link->InputDown = false;
+	Link->InputLeft = false;
+	Link->InputRight = false;
+	Link->PressB = false;
+	Link->InputB = false;
+	Link->PressA = false;
+	Link->InputA = false;
+	Link->PressEx1 = false;
+	Link->InputEx1 = false;
+	Link->PressEx2 = false;
+	Link->InputEx2 = false;
+	Link->PressEx3 = false;
+	Link->InputEx3 = false;
+	Link->PressEx4 = false;
+	Link->InputEx4 = false;
+	if (Sail[BoatLanding] == 0)Link->Dir = DIR_DOWN;
+}
+
+// Wraparound map (16x8; may amend to 16x16 later)
+//if (Sail[BoatX] < 0) Sail[BoatX] = 4096;
+//if (Sail[BoatY] < 0) Sail[BoatY] = 1408;
+//if (Sail[BoatX] > 4096) Sail[BoatX] = 0;
+//if (Sail[BoatY] > 1408) Sail[BoatY] = 0;
+
+// Forwards
+if (Sail[BoatY] - 1 > 0 && Link->InputUp){ //non-rotating version, actually goes up.
+	if (AlternatingFrameTimer == true || Game->GetComboType(OceanLandMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256),Sail[BoatY]-(Sail[BoatYScreen]*176)+4)) != CT_NONE && Game->GetComboType(OceanLandMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256),Sail[BoatY]-(Sail[BoatYScreen]*176)+4)) != CT_CVDOWN && Link->Z != 0){
+		if (Link->Action != LA_CHARGING && Link->Action != LA_SPINNING && BlackScreen[2] > 128) Link->Dir = DIR_UP;
+		if (Game->GetComboSolid(OceanLandMap,(Sail[BoatXScreen]+(Sail[BoatYScreen]*16)),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256)-4, Sail[BoatY]-(Sail[BoatYScreen]*176)-1)) == 0 && Game->GetComboSolid(OceanLandMap,(Sail[BoatXScreen]+(Sail[BoatYScreen]*16)),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256)+4, Sail[BoatY]-(Sail[BoatYScreen]*176)-1)) == 0){
+			//nonworking smart scrolling //if (Sail[BoatY]-Sail[BoatYScreen] < 175 || Game->GetComboSolid(OceanLandMap,(Sail[BoatXScreen]+(Sail[BoatYScreen]*16)-16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256)-4, 0)) == 0 && Game->GetComboSolid(OceanLandMap,(Sail[BoatXScreen]+(Sail[BoatYScreen]*16)-16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256)+4, 0)) == 0 || (Sail[BoatXScreen]+(Sail[BoatYScreen]*16)-16) < 16){
+				if (CantMove == false && BlackScreen[1] == 0 && BlackScreen[3] >= 160){
+					if (Frame == 0) Frame = 8;
+					else Frame --;
+					if (Sail[BoatSploosh] > 0) Sail[BoatSploosh] --;
+					else{
+						Sail[BoatSploosh] = Rand(32,128);
+						Game->PlaySound(Choose(62,63));
+					}	
+					if (Sail[BoatDelayRotation] == 0 && RaiseLower == false && NumLWeaponsOf(LW_SPARKLE) < 6 && Link->Z == 0) lweapon ConTrail = CreateLWeaponAt(LW_SPARKLE,(Rand(Link->X-4,Link->X+4)),Link->Y+12);
+					if (ConTrail->isValid()){
+						if (ConTrail->OriginalTile != 41860){
+							ConTrail->UseSprite(Choose(88,89));
+							ConTrail->CSet=Choose(3,10);
+							ConTrail->Dir = Choose(DIR_DOWN,DIR_DOWN,DIR_LEFTDOWN,DIR_RIGHTDOWN);
+							ConTrail->Step = Rand(64,112);
+						}
+					}
+					if (Sail[BoatDelayRotation] == 0 && Offsets[WaterFrame] == 0) Offsets[WaterFrame] = 1560;
+					Sail[BoatY] --;
+					Sail[WeaponYMove] = 1;
+				}
+			//}
+		}
+		else if (Offsets[WaterFrame] != 0) Offsets[WaterFrame] = 0;
+	}
+}
+// Backwards
+if (Sail[BoatY] + 1 < 1408 && Link->InputDown){ // Non rotating version.
+	if (AlternatingFrameTimer == true || Game->GetComboType(OceanLandMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256),Sail[BoatY]-(Sail[BoatYScreen]*176)+4)) != CT_NONE && Game->GetComboType(OceanLandMap, Sail[BoatXScreen]+(Sail[BoatYScreen]*16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256),Sail[BoatY]-(Sail[BoatYScreen]*176)+4)) != CT_CVUP && Link->Z != 0){
+		if (Link->Action != LA_CHARGING && Link->Action != LA_SPINNING && Sail[BoatLanding] == 0) Link->Dir = DIR_DOWN;
+		if (Game->GetComboSolid(OceanLandMap,(Sail[BoatXScreen]+(Sail[BoatYScreen]*16)),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256)-4, Sail[BoatY]-(Sail[BoatYScreen]*176)+14)) == 0 && Game->GetComboSolid(OceanLandMap,(Sail[BoatXScreen]+(Sail[BoatYScreen]*16)),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256)+4, Sail[BoatY]-(Sail[BoatYScreen]*176)+14)) == 0){
+			//if (Sail[BoatY]-Sail[BoatYScreen] > 1 || Game->GetComboSolid(OceanLandMap,(Sail[BoatXScreen]+(Sail[BoatYScreen]*16)+16),ComboAt(Sail[BoatX]-Sail[BoatXScreen]-4, 172)) == 0 && Game->GetComboSolid(OceanLandMap,(Sail[BoatXScreen]+(Sail[BoatYScreen]*16)+16),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256)+4, 172)) == 0 || (Sail[BoatXScreen]+(Sail[BoatYScreen]*16)+16) > 111){
+				if (CantMove == false && BlackScreen[1] == 0 && BlackScreen[3] >= 160){
+					if (Frame < 8) Frame ++;
+					else Frame = 0;
+					if (Sail[BoatSploosh] > 0) Sail[BoatSploosh] --;
+					else{
+						Sail[BoatSploosh] = Rand(32,128);
+						Game->PlaySound(Choose(62,63));
+					}	
+					if (Sail[BoatDelayRotation] == 0 && RaiseLower == false && NumLWeaponsOf(LW_SPARKLE) < 4 && Link->Z == 0) lweapon ConTrail = CreateLWeaponAt(LW_SPARKLE,(Rand(Link->X-4,Link->X+4)),Rand(Link->Y-2,Link->Y+2));
+					if (ConTrail->isValid()){
+						if (ConTrail->OriginalTile != 41860){
+							ConTrail->X = Choose(Link->X-8,Link->X+8);
+							ConTrail->UseSprite(89);
+							ConTrail->CSet=Choose(3,10);
+							if (ConTrail->X < Link->X && !Link->InputLeft || Link->InputRight) ConTrail->Dir = DIR_LEFTUP;
+							else ConTrail->Dir = DIR_RIGHTUP;
+							ConTrail->Step = Rand(32,56);
+							if (Link->InputLeft){
+								ConTrail->X = Link->X+Rand(6,12);
+								ConTrail->Dir = Choose(DIR_RIGHT,DIR_RIGHTUP);
+								ConTrail->Step = ConTrail->Step*2;
+							}
+							if (Link->InputRight){
+								ConTrail->X = Link->X-Rand(6,12);
+								ConTrail->Dir = Choose(DIR_LEFT,DIR_LEFTUP);
+								ConTrail->Step = ConTrail->Step*2;
+							}
+						}
+					}
+					if (Sail[BoatDelayRotation] == 0 && Offsets[WaterFrame] == 0) Offsets[WaterFrame] = 1560;
+					Sail[BoatY] ++;
+					Sail[WeaponYMove] = -1;
+				}
+			//}
+		}
+		else if (Offsets[WaterFrame] != 0) Offsets[WaterFrame] = 0;
+	}
+}
+if (Sail[BoatDelayRotation] == 0 && !Link->InputUp && !Link->InputDown && Offsets[WaterFrame] == 1560) Offsets[WaterFrame] = 0;
+
+// Rotating
+// Or so it was going to be, but now it's just left/right.
+if (CantMove == false && BlackScreen[1] == 0 && Sail[BoatDelayRotation] == 0 && BlackScreen[3] >= 160){
+	if (Link->InputLeft){
+		if (Link->Action != LA_CHARGING && Link->Action != LA_SPINNING) Link->Dir = DIR_LEFT;
+		if (Game->GetComboSolid(OceanLandMap,(Sail[BoatXScreen]+(Sail[BoatYScreen]*16)),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256)-8, Sail[BoatY]-(Sail[BoatYScreen]*176))) == 0 && Game->GetComboSolid(OceanLandMap,(Sail[BoatXScreen]+(Sail[BoatYScreen]*16)),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256)-8, Sail[BoatY]-(Sail[BoatYScreen]*176)+12)) == 0 && Sail[BoatX] - 1 >= 0){ // Arbitrarily move left instead of rotating
+			//failed smart scrolling//if (Sail[BoatX] - Sail[BoatXScreen] > 9 || Game->GetComboSolid(OceanLandMap,(Sail[BoatXScreen]+(Sail[BoatYScreen]*16)-1),ComboAt(250, Sail[BoatY]-(Sail[BoatYScreen]*176))) == 0 || LeftEdge == true){
+				Sail[BoatX] --; 
+				Sail[WeaponXMove] = 1;
+				if (Sail[BoatDelayRotation] == 0 && RaiseLower == false && NumLWeaponsOf(LW_SPARKLE) < 4 && Link->Z == 0) lweapon ConTrail = CreateLWeaponAt(LW_SPARKLE,(Rand(Link->X-4,Link->X+4)),Rand(Link->Y+4,Link->Y+12));
+				if (ConTrail->isValid()){
+					if (ConTrail->OriginalTile != 41860){
+						ConTrail->X = Choose(Link->X-8,Link->X+12);
+						ConTrail->UseSprite(Choose(88,89));
+						ConTrail->CSet=Choose(3,10);
+						ConTrail->Step = Rand(40,112);
+						ConTrail->X = Link->X+Rand(8,16);
+						ConTrail->Dir = Choose(DIR_RIGHT,DIR_RIGHT,DIR_RIGHTUP,DIR_RIGHTDOWN);
+						if (ConTrail->Dir != DIR_RIGHT) ConTrail->Step = ConTrail->Step/1.5;
+					}
+				}
+				if (Sail[BoatSploosh] > 0) Sail[BoatSploosh] --;
+				else{
+					Sail[BoatSploosh] = Rand(32,128);
+					Game->PlaySound(Choose(62,63));
+				}	
+				if (Offsets[WaterX] > 0) Offsets[WaterX] --;
+				else Offsets[WaterX] = 16;
+				if (AlternatingFrameTimer == true){
+					if (Offsets[CloudX] > 1) Offsets[CloudX] --;
+					else Offsets[CloudX] = 64;
+				}
+			//}
+		}
+	}
+	if (Link->InputRight){
+		if (Link->Action != LA_CHARGING && Link->Action != LA_SPINNING) Link->Dir = DIR_RIGHT;
+		if (Game->GetComboSolid(OceanLandMap,(Sail[BoatXScreen]+(Sail[BoatYScreen]*16)),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256)+8, Sail[BoatY]-(Sail[BoatYScreen]*176))) == 0 && Game->GetComboSolid(OceanLandMap,(Sail[BoatXScreen]+(Sail[BoatYScreen]*16)),ComboAt(Sail[BoatX]-(Sail[BoatXScreen]*256)+8, Sail[BoatY]-(Sail[BoatYScreen]*176)+12)) == 0 && Sail[BoatX] + 1 <= 4095){ // Arbitrarily move right instead of rotating
+			//if (Sail[BoatX] - Sail[BoatXScreen] < 247 || Game->GetComboSolid(OceanLandMap,(Sail[BoatXScreen]+(Sail[BoatYScreen]*16)+1),ComboAt(0, Sail[BoatY]-(Sail[BoatYScreen]*176))) == 0 || RightEdge == true){
+				Sail[BoatX] ++;
+				Sail[WeaponXMove] = -1;
+				if (Sail[BoatDelayRotation] == 0 && RaiseLower == false && NumLWeaponsOf(LW_SPARKLE) < 4 && Link->Z == 0) lweapon ConTrail = CreateLWeaponAt(LW_SPARKLE,(Rand(Link->X-4,Link->X+4)),Rand(Link->Y+4,Link->Y+12));
+				if (ConTrail->isValid()){
+					if (ConTrail->OriginalTile != 41860){
+						ConTrail->X = Choose(Link->X-8,Link->X+8);
+						ConTrail->UseSprite(Choose(88,89));
+						ConTrail->CSet=Choose(3,10);
+						ConTrail->Step = Rand(40,112);
+						ConTrail->X = Link->X-Rand(8,16);
+						ConTrail->Dir = Choose(DIR_LEFT,DIR_LEFT,DIR_LEFTUP,DIR_LEFTDOWN);
+						if (ConTrail->Dir != DIR_LEFT) ConTrail->Step = ConTrail->Step/1.5;
+					}
+				}
+				if (Sail[BoatSploosh] > 0) Sail[BoatSploosh] --;
+				else{
+					Sail[BoatSploosh] = Rand(32,128);
+					Game->PlaySound(Choose(62,63));
+				}	
+				if (Offsets[WaterX] < 16) Offsets[WaterX] ++;
+				else Offsets[WaterX] = 0;
+				if (AlternatingFrameTimer == true){
+					if (Offsets[CloudX] < 64) Offsets[CloudX] ++;
+					else Offsets[CloudX] = 0;
+				}
+			//}
+		}
+	}
+}
+if (Sail[BoatDelayRotation] > 0) Sail[BoatDelayRotation] --;
+
+// --- Splash when Link falls/jumps
+if (Link->Z == 1){
+	if (Sail[BoatLandAniY] < 20){
+		if (Sail[BoatZ] == 0) Game->PlaySound(64);
+		else Game->PlaySound(65);
+	}
+	if (Screen->NumLWeapons() < 16 && Sail[BoatLanding] <= 0){
+		for(q = 8; q > 0; q--){
+			lweapon Splooosh = CreateLWeaponAt(LW_SPARKLE,Rand(Link->X-4,Link->X+4),Link->Y+18);
+			Splooosh->UseSprite(Choose(88,89));
+			Splooosh->CSet=Choose(3,10);
+			Splooosh->Dir = q;
+			if (q != 1 && q < 6) Splooosh->Step = Rand(96,160);
+			else Splooosh->Step = Rand(32,64);
+		}
+	}
+}
+
+
+
+// --- Enemies
+
+// For loop of NPCs, to affect movement/behavior
+for(q = Screen->NumNPCs(); q > 0; q-- ){
+	e = Screen->LoadNPC(q);
+	if(!e->isValid()) continue;
+	{
+		if (Link->InputLeft) e->X ++;
+		if (Link->InputRight) e->X --;
+		if (Link->InputUp) e->Y ++;
+//		if (Link->InputDown && e->Y > 112 || Link->InputDown && e->Y > 72 && Offsets[SteadySlowTimer] < 3 || Link->InputDown && e->Type != NPCT_ZORA) e->Y --;
+		if (Link->InputDown && e->Y > 72 || Link->InputDown && e->Type != NPCT_ZORA) e->Y --;
+		if (Offsets[WaterFrame] != 0 && Offsets[SteadySlowTimer] == 1){
+			if (Link->InputUp || Link->InputDown){
+				if (e->Y > 176 || e->Y < 0 || e->X < 0 || e->X > 256){
+					e->HP = Choose(e->HP,e->HP,e->HP,e->HP,e->HP,Choose(e->HP,e->HP,e->HP,e->HP,e->HP,Choose(e->HP,HP_SILENT)));
+				}
+			}
+		}
+	}
+}
+
+// For loop of eweapons
+for(q = Screen->NumEWeapons(); q > 0; q-- ){
+	ew = Screen->LoadEWeapon(q);
+	if(!ew->isValid()) continue;
+	{
+		if (Link->InputLeft) ew->X ++;
+		if (Link->InputRight) ew->X --;
+		if (Link->InputUp) ew->Y ++;
+		if (Link->InputDown) ew->Y --;
+	}
+}
+
+
+
+// --- Link animation/movement stuff
+
+if (Sail[WhirlpoolWarp] > 0) Sail[BoatZ] = (Sail[WhirlpoolTimer]/2)*3;
+else if (Link->Item[63] == true) Sail[BoatZ] = Link->Z/2;
+
+// Draw raft
+if (Link->Dir == DIR_LEFT || Link->Dir == DIR_RIGHT) Screen->DrawTile(Sail[BoatLandLayer]+1, Link->X-8+(Sail[BoatLandAniY]/2), Link->Y-4-Sail[BoatLandAniY]-Sail[BoatZ]+((Link->Z/2)-(Sail[BoatZ]*2))+Offsets[DontGoUp], 42820, 2, 2, 1, Sail[BoatLandScaleTwo], Sail[BoatLandScaleTwo], 0, 0, 0, 0, true, 128);
+else Screen->DrawTile(Sail[BoatLandLayer]+1, Link->X-8+(Sail[BoatLandAniY]/2), Link->Y-4-Sail[BoatLandAniY]-Sail[BoatZ]+((Link->Z/2)-(Sail[BoatZ]*2))+Offsets[DontGoUp], 42822, 2, 2, 1, Sail[BoatLandScaleTwo], Sail[BoatLandScaleTwo], 0, 0, 0, 0, true, 128);
+// Draw sail
+if (RaiseLower == true){
+	if (Link->Dir == DIR_UP) Screen->DrawTile(Sail[BoatLandLayer]+1, Link->X-8+(Sail[BoatLandAniY]/2), Link->Y-24-(Sail[BoatLandAniY]/3)-Sail[BoatZ]+((Link->Z/2)-(Sail[BoatZ]*2))+Offsets[DontGoUp], 42828, 2, 2, 1, Sail[BoatLandScaleTwo], Sail[BoatLandScaleTwo], 0, 0, 0, 0, true, 128);
+	if (Link->Dir == DIR_DOWN) Screen->DrawTile(Sail[BoatLandLayer]+1, Link->X-8+(Sail[BoatLandAniY]/2), Link->Y-24-(Sail[BoatLandAniY]/3)-Sail[BoatZ]+((Link->Z/2)-(Sail[BoatZ]*2))+Offsets[DontGoUp], 42824, 2, 2, 1, Sail[BoatLandScaleTwo], Sail[BoatLandScaleTwo], 0, 0, 0, 0, true, 128);
+	if (Link->Dir == DIR_LEFT) Screen->DrawTile(Sail[BoatLandLayer]+1, Link->X-8+(Sail[BoatLandAniY]/2), Link->Y-24-(Sail[BoatLandAniY]/3)-Sail[BoatZ]+((Link->Z/2)-(Sail[BoatZ]*2))+Offsets[DontGoUp], 42832, 2, 2, 1, Sail[BoatLandScaleTwo], Sail[BoatLandScaleTwo], 0, 0, 0, 0, true, 128);
+	if (Link->Dir == DIR_RIGHT) Screen->DrawTile(Sail[BoatLandLayer]+1, Link->X-8+(Sail[BoatLandAniY]/2), Link->Y-24-(Sail[BoatLandAniY]/3)-Sail[BoatZ]+((Link->Z/2)-(Sail[BoatZ]*2))+Offsets[DontGoUp], 42836, 2, 2, 1, Sail[BoatLandScaleTwo], Sail[BoatLandScaleTwo], 0, 0, 0, 0, true, 128);
+}
+else{
+	if (Link->Dir == DIR_UP) Screen->DrawTile(Sail[BoatLandLayer]+1, Link->X-8+(Sail[BoatLandAniY]/2), Link->Y-24-(Sail[BoatLandAniY]/3)-Sail[BoatZ]+((Link->Z/2)-(Sail[BoatZ]*2))+Offsets[DontGoUp], 42830, 2, 2, 1, Sail[BoatLandScaleTwo], Sail[BoatLandScaleTwo], 0, 0, 0, 0, true, 128);
+	if (Link->Dir == DIR_DOWN) Screen->DrawTile(Sail[BoatLandLayer]+1, Link->X-8+(Sail[BoatLandAniY]/2), Link->Y-24-(Sail[BoatLandAniY]/3)-Sail[BoatZ]+((Link->Z/2)-(Sail[BoatZ]*2))+Offsets[DontGoUp], 42826, 2, 2, 1, Sail[BoatLandScaleTwo], Sail[BoatLandScaleTwo], 0, 0, 0, 0, true, 128);
+	if (Link->Dir == DIR_LEFT) Screen->DrawTile(Sail[BoatLandLayer]+1, Link->X-8+(Sail[BoatLandAniY]/2), Link->Y-24-(Sail[BoatLandAniY]/3)-Sail[BoatZ]+((Link->Z/2)-(Sail[BoatZ]*2))+Offsets[DontGoUp], 42834, 2, 2, 1, Sail[BoatLandScaleTwo], Sail[BoatLandScaleTwo], 0, 0, 0, 0, true, 128);
+	if (Link->Dir == DIR_RIGHT) Screen->DrawTile(Sail[BoatLandLayer]+1, Link->X-8+(Sail[BoatLandAniY]/2), Link->Y-24-(Sail[BoatLandAniY]/3)-Sail[BoatZ]+((Link->Z/2)-(Sail[BoatZ]*2))+Offsets[DontGoUp], 42838, 2, 2, 1, Sail[BoatLandScaleTwo], Sail[BoatLandScaleTwo], 0, 0, 0, 0, true, 128);
+}
+// Draw water around raft
+if (Sail[BoatZ] == 0 && Link->DrawYOffset != 200 && Sail[WhirlpoolWarp] == 0){
+	if (Link->InputUp || Link->InputDown || Link->InputLeft || Link->InputRight){
+		Screen->DrawCombo(Sail[BoatLandLayer]+1,Link->X-8+(Sail[BoatLandAniY]/4),Link->Y+9-Sail[BoatLandAniY]+(Link->Z/2)+Offsets[DontGoUp],25602,1,1,3,Sail[BoatLandScaleOne],Sail[BoatLandScaleOne],0,0,0,-1,0,true,128);
+		Screen->DrawCombo(Sail[BoatLandLayer]+1,Link->X+8+(Sail[BoatLandAniY]/4),Link->Y+9-Sail[BoatLandAniY]+(Link->Z/2)+Offsets[DontGoUp],25603,1,1,3,Sail[BoatLandScaleOne],Sail[BoatLandScaleOne],0,0,0,-1,0,true,128);
+	}
+	else{
+		Screen->DrawCombo(Sail[BoatLandLayer]+1,Link->X-8+(Sail[BoatLandAniY]/4),Link->Y+9-Sail[BoatLandAniY]+(Link->Z/2)+Offsets[DontGoUp],25600,1,1,3,Sail[BoatLandScaleOne],Sail[BoatLandScaleOne],0,0,0,-1,0,true,128);
+		Screen->DrawCombo(Sail[BoatLandLayer]+1,Link->X+8+(Sail[BoatLandAniY]/4),Link->Y+9-Sail[BoatLandAniY]+(Link->Z/2)+Offsets[DontGoUp],25601,1,1,3,Sail[BoatLandScaleOne],Sail[BoatLandScaleOne],0,0,0,-1,0,true,128);
+	}
+}
+
+if (Link->Action != LA_ATTACKING){
+	Link->InputUp = false;
+	Link->InputDown = false;
+	Link->InputLeft = false;
+	Link->InputRight = false;
+}
+
+
+if (Sail[BoatLanding] > 0){
+	Link->Dir = DIR_UP;
+	if (Link->Z > 0) Link->Z --;
+	if (Link->Z > 1 && Sail[BoatLandAniY] > 20) Link->Z --;
+	Screen->DrawTile(Sail[BoatLandLayer]+1,Link->X+(Sail[BoatLandAniY]/4),Link->Y-16-(Sail[BoatLandAniY]/2)+Offsets[DontGoUp]-(Link->Z),Link->Tile-20, 1, 2, 6, Sail[BoatLandScaleOne], Sail[BoatLandScaleTwo], 0, 0, 0, 0, true, 128);
+	if (Sail[BoatLandAniTimer] < 5) Sail[BoatLandAniTimer] ++;
+	else{
+		Sail[BoatLandAniTimer] = 0;
+		if (Sail[BoatLandAniY] < 48){
+			Sail[BoatLandAniY] = Sail[BoatLandAniY] + 2; 
+			Offsets[DontGoUp] = Offsets[DontGoUp]+2;
+		}
+		if (Sail[BoatLandScaleOne] > 1) Sail[BoatLandScaleOne] --;
+		if (Sail[BoatLandScaleTwo] > 2) Sail[BoatLandScaleTwo] = Sail[BoatLandScaleTwo] - 2;
+	}
+}
+
+
+// --- Fade effect
+
+if (BlackScreen[2] < 180 && BlackScreen[1] == 0 || BlackScreen[1] > 0){
+	Screen->Rectangle(6+Sail[BoatLanding],-128-BlackScreen[2]*2.25,-128-BlackScreen[2]/1.75,256-BlackScreen[2]*2.25,320-BlackScreen[2]/1.5,2,1,128,88,45,true,128);
+	Screen->Rectangle(6+Sail[BoatLanding],0+BlackScreen[2]*2.25,-128+BlackScreen[2]/1.75,384+BlackScreen[2]*2.25,320+BlackScreen[2]/1.5,2,1,128,88,-45,true,128);
+	Screen->Rectangle(6+Sail[BoatLanding],-1,-57+BlackScreen[2]*1.8,256,176,2,1,0,0,0,true,128);
+	if (BlackScreen[1] == 0) BlackScreen[2] ++;
+	else if (BlackScreen[2] > 0) BlackScreen[2] --;
+}
+
+// --- Keep 'real' Link centered at all times, and bob up and down with the waves
+if (Link->X != 120) Link->X = 120;
+if (Link->Y != 82 && RaiseLower == true) Link->Y = 82;
+if (Link->Y != 83 && RaiseLower == false) Link->Y = 83;
+
+}
+}
+}
