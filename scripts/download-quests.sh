@@ -8,7 +8,7 @@ cd ..
 mkdir -p zc_quests
 cd zc_quests
 
-for i in {1..771}
+for i in {1..787}
 do
   if [ ! -d "$i" ]
   then

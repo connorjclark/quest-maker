@@ -7,7 +7,7 @@ import { QuestRules } from './quest-rules.js';
 import struct from './third_party/struct.mjs';
 import { EnemyFamily, Sfx, WarpType, WeaponTypeGameEngine } from './zc-constants.js';
 
-const { tileSize, screenWidth, screenHeight } = constants;
+const { tileSize, screenWidth, screenHeight, mapWidth } = constants;
 
 function makeEnum<T>(vals: { [id: number]: T }) {
   return (id: number) => vals[id];
@@ -605,8 +605,8 @@ export async function convertZCQst(qstData: any): Promise<{ quest: QuestMaker.Qu
   function getDmapCoord(zcDmap: any, scr: number) {
     scr += zcDmap.xoff;
     return {
-      x: scr % screenWidth,
-      y: Math.floor(scr / screenWidth) % screenHeight,
+      x: scr % mapWidth,
+      y: Math.floor(scr / mapWidth),
     };
   }
 
