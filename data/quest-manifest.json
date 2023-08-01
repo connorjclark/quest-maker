@@ -10375,42 +10375,6 @@
     }
   },
   {
-    "name": "The Hero's Memory",
-    "author": "Aevin",
-    "urls": [
-      "zc_quests/370/Hero's Memory.qst"
-    ],
-    "projectUrl": "https://www.purezc.net/index.php?page=quests&id=370",
-    "imageUrls": [
-      "zc_quests/370/image0.gif",
-      "zc_quests/370/image1.gif",
-      "zc_quests/370/image2.gif",
-      "zc_quests/370/image3.gif",
-      "zc_quests/370/image4.gif",
-      "zc_quests/370/image5.png",
-      "zc_quests/370/image6.gif",
-      "zc_quests/370/image7.gif"
-    ],
-    "genre": "NES-style",
-    "zcVersion": "2.50",
-    "informationHtml": "My love letter to the Zelda series, made from a highly customized Pure tileset and featuring some midis sequenced or composed by yours truly especially for this quest. I can't promise it's the best thing ever, but I will say that a year of hard work and a lot of heart went into its making.",
-    "descriptionHtml": "My love letter to the Zelda series, made from a highly customized Pure tileset and featuring some midis sequenced or composed by yours truly especially for this quest. I can't promise it's the best thing ever, but I will say that a year of hard work and a lot of heart went into its making.<br><br>Features:<br>- Explore a big overworld with tons of secrets in the style of the original Zelda<br>- Challenge 9 dungeons and 4 mini-dungeons inspired by Zelda series classics<br>- Experience non-linear game play and beat dungeons in many different orders<br>- Battle many familiar enemies spanning most of the Zelda series<br>- Accessible difficulty with plenty of ways to challenge yourself<br>- Unique puzzles and environments created completely without scripting<br><br>Update - 6/1/2016<br>-Removed slow walk combos for underwater areas.<br>-Saving inside dungeons now starts you inside the dungeons on load.<br>-Removed all but one door repair.<br>-Made some adjustments to a few boss rooms to try to put a unique spin on some of the Zelda 1 bosses.<br>-Changed a few unfair enemy and room layouts. (No more red bubble + Lv2 Gibdos).<br>-Removed 1-way shutter traps that were impossible to deduce from visited areas on the map.<br>-Fixed level 3's mixed up palette.<br>-Provided better clues for a couple of obscure secrets (including the path to level eight).<br>-Fixed numerous tile errors and other small aesthetic issues.",
-    "storyHtml": "-The time of the ancient heroes has long passed ... But their legends live on.-<br><br>A boy awakes on a strange island, with monsters all around him and not a single memory in his head. His only clue? An alien voice echoing deep within the chambers of his mind:<br><br>“The Temples ... Seek answers in the Temples ...”<br><br>With only a flimsy shield and the clothes on his back, he sets out in search of the truth.",
-    "tipsAndCheatsHtml": "- If the dungeons start to get frustrating, try taking a break to search the overworld for powerups.<br>- As in the original Zelda, dungeons can be completed out of order, but some require items from earlier levels. It should be clear when you're missing something you need.<br>-The later levels have many hidden bomb and walk-through walls. The lens is available on the overworld after getting a bomb upgrade, so if this bothers you, find it as soon as possible.",
-    "creditsHtml": "Zelda Classic by Armageddon Games<br>Pure Tileset Update Extreme by Mr. Z<br>Original Zelda games copyright Nintendo<br><br>Graphics and Music:<br>Way too many to name. Please see the credits file or beat the game for a full list of credits.",
-    "rating": {
-      "score": 4.65,
-      "distribution": [
-        0,
-        0,
-        0,
-        1,
-        10,
-        28
-      ]
-    }
-  },
-  {
     "name": "Abigail",
     "author": "Stanislas",
     "urls": [
@@ -13687,62 +13651,6 @@
     }
   },
   {
-    "name": "Hitodama",
-    "author": "Aevin",
-    "urls": [
-      "zc_quests/494/HitodamaDX.qst"
-    ],
-    "projectUrl": "https://www.purezc.net/index.php?page=quests&id=494",
-    "imageUrls": [
-      "zc_quests/494/image0.png",
-      "zc_quests/494/image1.png",
-      "zc_quests/494/image2.png",
-      "zc_quests/494/image3.png",
-      "zc_quests/494/image4.png",
-      "zc_quests/494/image5.png"
-    ],
-    "genre": "Metroidvania",
-    "zcVersion": "2.50",
-    "informationHtml": "Hitodama is a metroidvania quest featuring a big Labyrinth, unique characters, magic spells, and a completely original tileset.<br> <br> <span>Important: Download the enhanced music pack <a href=\"https://www.dropbox.com/s/mu9sbpn5e9p173y/HitodamaMusic.zip?dl=0\" class=\"bbc_url\" title=\"External link\" rel=\"nofollow external\">here</a>.</span>",
-    "descriptionHtml": "<span><strong class=\"bbc\">Features</strong></span><ul class=\"bbc\"><li>Explore a giant Labyrinth with many unique areas</li><li>Collect magic spells to best your foes and open the way forward</li><li>Face off against mysterious and sisnister opponents</li><li>Uncover countless secrets within the Labyrinth's walls</li><li>Select difficulty to match your own challenge preference and skill level</li></ul> This latest version is what I'm calling the DX Update, in which the quest has been completely overhauled in the Yuurand system. This means that all the spell and enemy balancing, quality of life improvements, interface additions, and bug fixes from the past four years years have been applied. If you're looking for the original version, here's a download for <a href=\"https://www.dropbox.com/s/yhfu03tyn4e6ki2/HitodamaClassic.qst?dl=0\" class=\"bbc_url\" title=\"External link\" rel=\"nofollow external\">Hitodama Classic</a>.<br> <br> For some supplementary info and a list of key changes this update brings, please see the forum topic <a href=\"https://www.purezc.net/forums/index.php?showtopic=75182&amp;hl=\" class=\"bbc_url\" title=\"\">here</a>.<br> <br> For discussion of the series and a casual place to hang out, you can also join the <a href=\"https://discord.gg/UhjNrJs\" class=\"bbc_url\" title=\"External link\" rel=\"nofollow external\">Labyrinth Discord server</a>.<br> <div class=\"bbc_spoiler\"> <span class=\"spoiler_title\">Update 8/14/2019</span> <input type=\"button\" class=\"bbc_spoiler_show\" value=\"Show\"> <div class=\"bbc_spoiler_wrapper\"><div class=\"bbc_spoiler_content\"><ul class=\"bbc\"><li>Fixed a progression oversight in Lyll</li><li>Nerfed the Will boss's summons, and buffed Jack's</li><li>Fixed odd Thunder spell behavior where it would transform or duplicate enemies</li><li>Fixed the Smoke Cloud/Jellyfish flinging you into walls or adjacent screens under certain circumstances</li><li>Various other small bug fixes</li></ul></div></div> </div>",
-    "storyHtml": "While out walking one night, Hito spots strange, colored flames in the darkness. When he follows them, he is spirited away to the Labyrinth, an enormous dungeon where he'll have to use all of his wits to escape.",
-    "tipsAndCheatsHtml": "<ul class=\"bbc\"><li>Use your spells! Smart spell use can make seemingly impossible situations a breeze.</li><li>If you find things too difficult, spend some time searching for upgrades</li><li>Odd color patterns or textures in the walls can hint at secrets</li><li>Bosses are about pattern recognition and finding weak points and safe spots. If you rush in with guns blazing, you're going to have a bad time</li><li>If you're feeling overwhelmed, try reducing difficulty from the warp point menu</li></ul>",
-    "creditsHtml": "Please clear the game for a full list of credits.<br><br>I wanted to give a special mention to Russ. He put in a huge amount of effort for this update, as well as the underlying Yuurand system. Without him, this update would not be what it is now, and likely would have never been finished at all. He is not only a partner in my quest-making, but a personal confidant and inspiration for me in game making and life in general. I truly can't thank him enough.<br><br>Special thanks also goes to Moosh and Evan for scripting support, brainstorming, and repeated test runs.<br><br>And, of course, thanks to all the fans of Yuurand, Hitodama, and Yuurei for your continued interest and support.",
-    "rating": {
-      "score": 4.57143,
-      "distribution": [
-        0,
-        0,
-        0,
-        2,
-        6,
-        19
-      ]
-    },
-    "extraResources": [
-      "zc_quests/494/HitoNoMura.ogg",
-      "zc_quests/494/LordoftheLost.ogg",
-      "zc_quests/494/Lost Desert.ogg",
-      "zc_quests/494/OGAcheron.ogg",
-      "zc_quests/494/OGAsphodel.ogg",
-      "zc_quests/494/OGCocytus.ogg",
-      "zc_quests/494/OGCorridor.ogg",
-      "zc_quests/494/OGGranite.ogg",
-      "zc_quests/494/OGJackland.ogg",
-      "zc_quests/494/OGLethe.ogg",
-      "zc_quests/494/OGLyll.ogg",
-      "zc_quests/494/OGMasquerade.ogg",
-      "zc_quests/494/OGPhlegethon.ogg",
-      "zc_quests/494/OGStyx.ogg",
-      "zc_quests/494/OGToyBox.ogg",
-      "zc_quests/494/Prismia.ogg",
-      "zc_quests/494/TartarusChallenge.ogg",
-      "zc_quests/494/Willville.ogg",
-      "zc_quests/494/WispBattle.ogg",
-      "zc_quests/494/Wisps.ogg"
-    ]
-  },
-  {
     "name": "One More Journey",
     "author": "2024",
     "urls": [
@@ -16403,40 +16311,6 @@
     }
   },
   {
-    "name": "Steveamentus Universe",
-    "author": "Aevin",
-    "urls": [
-      "zc_quests/588/SteveamentusUniverse.qst"
-    ],
-    "projectUrl": "https://www.purezc.net/index.php?page=quests&id=588",
-    "imageUrls": [
-      "zc_quests/588/image0.png",
-      "zc_quests/588/image1.png",
-      "zc_quests/588/image2.png",
-      "zc_quests/588/image3.png",
-      "zc_quests/588/image4.png",
-      "zc_quests/588/image5.png"
-    ],
-    "genre": "Story-driven",
-    "zcVersion": "2.50",
-    "informationHtml": "A mysterious warrior named Steve embarks on a quest to slay the legendary Beast.",
-    "descriptionHtml": "The culmination of a year's worth of time and a day's worth of effort, Steveamentus Universe might just be the longest quest in the database! It's the quest that keeps giving long after you've had enough. Two rooms, endless adventure!™<ul class=\"bbc\"><li>1 unforgettable dungon!</li><li>2 screens full of one navigation based puzzle and a bloodthirsty foe!</li><li>A deep, soul-probing story with several shocking twists.</li></ul>",
-    "storyHtml": "Ever since he was a small child, Steve has lived only for one ambition - to seek out and slay the Beast. Waking to find himself in the Beast's lair, he must journey through a perplexing couple of rooms to at last fulfill his destiny. But his course is not as easy as it seems, and along the way he must wrestle with probing questions of identity and the nature of life. In the end, is his foe truly the Beast, or himself?",
-    "tipsAndCheatsHtml": "The Beast's 3-way fireball attack may seem tricky at a glance, but if you keep your distance and attack with sword beams, you can stay fairly safe. If you take damage you'll have to be more creative - approach with care and watch its movements to avoid colliding with it to take it down. Its vulnerable point is its head!",
-    "creditsHtml": "Main Quest: Aevin<br><br>Additional Scripts: Moosh<br><br>Additional Music: Marine<br><br>Beta Testers:<br>-Kaden<br>-Moosh<br>-Russ",
-    "rating": {
-      "score": 4.14286,
-      "distribution": [
-        0,
-        0,
-        1,
-        3,
-        2,
-        7
-      ]
-    }
-  },
-  {
     "name": "TLoZ 2.5 Classic + Koten 1.3",
     "author": "Anthus",
     "urls": [
@@ -17229,106 +17103,6 @@
       "zc_quests/614/Q745P2.mp3",
       "zc_quests/614/Q745P3.mp3",
       "zc_quests/614/Q745P4.mp3"
-    ]
-  },
-  {
-    "name": "Yuurei",
-    "author": "Aevin",
-    "urls": [
-      "zc_quests/616/YuureiDX.qst"
-    ],
-    "projectUrl": "https://www.purezc.net/index.php?page=quests&id=616",
-    "imageUrls": [
-      "zc_quests/616/image0.png",
-      "zc_quests/616/image1.png",
-      "zc_quests/616/image2.png",
-      "zc_quests/616/image3.png",
-      "zc_quests/616/image4.png",
-      "zc_quests/616/image5.png",
-      "zc_quests/616/image6.png",
-      "zc_quests/616/image7.png"
-    ],
-    "genre": "Metroidvania",
-    "zcVersion": "2.50",
-    "informationHtml": "The sequel to Hitodama, Yuurei is a deep metroidvania quest featuring a big labyrinth, an engrossing story, and more playable characters than any other Zelda Classic quest! Each of the main characters has their own fully developed story and some different bosses, making no two playthroughs exactly the same. While playing Hitodama leads to a deeper understanding of the story, Yuurei should be accessible even to new players. <strong class=\"bbc\"><span>Download the <a href=\"http://www.mediafire.com/file/eg9341xbp0mdftz/Yuurei_DX_Music.zip/file\" class=\"bbc_url\" title=\"External link\" rel=\"nofollow external\">enhanced music here</a><a href=\"http://www.mediafire.com/file/eg9341xbp0mdftz/Yuurei_DX_Music.zip/file\" class=\"bbc_url\" title=\"External link\" rel=\"nofollow external\">.</a></span></strong>",
-    "descriptionHtml": "Features:<ul class=\"bbc\"><li>Explore one of several big labyrinths with tons of secrets and hidden collectibles</li><li>Over twenty unique spells, without a single vanilla Zelda Classic weapon in sight!</li><li>Choose your character! Each of nine main characters have their own fully-developed stories!</li><li>Every playable character has their own unique upgrades, traits, and signature weapons.</li><li>Many challenging bosses to overcome.</li><li>Multiple difficulty settings, maps, and secret characters for lots of replayability</li></ul> For discussion of the series and a casual place to hang out, you can also join the <a href=\"https://discord.gg/UhjNrJs\" class=\"bbc_url\" title=\"External link\" rel=\"nofollow external\">Labyrinth Discord server</a>.<br> <br> Update:<br> <br> 11/27/2020<br> -Reduced the number of water elementals in certain areas<br> -Fixed a few rooms that would crash with poison field<br> -Adjusted some shortcuts in Yuurand's Stomach<br> -Made the traps in Yuurei's Play Room more forgiving<br> Yuurand recently received a huge update in line with Hitodama's DX update. The quest has been rebuilt in the Yuurand system, bringing all the convenience features, bug fixes, and balance changes from years of Yuurand development. For a more detailed list of changes, please see the forum thread <a href=\"https://www.purezc.net/forums/index.php?showtopic=75245\" class=\"bbc_url\" title=\"\">here</a>.",
-    "storyHtml": "The Labyrinth. A place where the souls of the lost roam in eternal torment. A place outside of normal time, not bound by normal rules, full of illusions built of the minds of those wandering within ...<br><br>Everyone has their own reasons for getting lost in the Labyrinth. Some desire godlike power. Some seek to relieve their pain. Others want only to reunite with their loving families. But only those who overcome the challenges within the confines of the walls and defeat powerful foes will find what they seek.",
-    "tipsAndCheatsHtml": "<ul class=\"bbc\"><li>Your Sound Wave can charge for a powerful shot that can reveal special breakable blocks.</li><li>Some blocks require special weapons to break.</li><li>Collecting hidden coins powers up your defenses, spells and other abilities.</li><li>Visual cues usually hint at hidden secrets</li></ul> You can play as any character by entering that character's name. If you don't, you can either select randomly or by taking a brief quiz. Here's some brief character descriptions if you'd like to choose someone you like:<br> <div class=\"bbc_spoiler\"> <span class=\"spoiler_title\">Characters</span> <input type=\"button\" class=\"bbc_spoiler_show\" value=\"Show\"> <div class=\"bbc_spoiler_wrapper\"><div class=\"bbc_spoiler_content\"><br> <strong class=\"bbc\">Rhone:</strong> A scientific-minded youth searching for his lost siblings.<br> <strong class=\"bbc\">Seine:</strong> A troubled boy haunted by his bloodstained past.<br> <strong class=\"bbc\">Loire:</strong> An optimistic girl with a hidden dark side.<br> <strong class=\"bbc\">Hito:</strong> A disinterested boy. One of the self-proclaimed masters of the Labyrinth.<br> <strong class=\"bbc\">Jack:</strong> A rude, foul-mouthed hothead. One of the self-proclaimed masters of the Labyrinth.<br> <strong class=\"bbc\">Will:</strong> A gentle, timid boy. One of the self-proclaimed masters of the Labyrinth.<br> <strong class=\"bbc\">Naiya:</strong> A lost young girl with little memory of her past.<br> <strong class=\"bbc\">Jandra:</strong> A cruel, arrogant woman who calls herself the most beautiful in the world.<br> <strong class=\"bbc\">Tyre:</strong> A mysterious gentleman with mysterious motives. He's mysterious.<br> </div></div> </div><br> Here's some <a href=\"http://imgur.com/a/h5wu4\" class=\"bbc_url\" title=\"External link\" rel=\"nofollow external\">nifty character banners</a>, on the off chance anyone wants to use them.",
-    "creditsHtml": "Please beat the quest for a full list of credits.<br><br>Special thanks to Russ for all the hard work he put into Yuurand and this update, as well as the invaluable support he's given me in quest building and life in general.",
-    "rating": {
-      "score": 4.79167,
-      "distribution": [
-        0,
-        0,
-        0,
-        0,
-        3,
-        20
-      ]
-    },
-    "extraResources": [
-      "zc_quests/616/AssassinBattle.ogg",
-      "zc_quests/616/Assassins.ogg",
-      "zc_quests/616/AudioThatMightEnsueWhenYouEncounterEuphoria.ogg",
-      "zc_quests/616/Beach 2.ogg",
-      "zc_quests/616/Beach.ogg",
-      "zc_quests/616/BlackHills.ogg",
-      "zc_quests/616/Castle.ogg",
-      "zc_quests/616/Caverns.ogg",
-      "zc_quests/616/Drowned.ogg",
-      "zc_quests/616/DrownedFinal.ogg",
-      "zc_quests/616/EXBoss1.ogg",
-      "zc_quests/616/EXBoss2.ogg",
-      "zc_quests/616/EXBoss5.ogg",
-      "zc_quests/616/ExBoss10.ogg",
-      "zc_quests/616/ExBoss11.ogg",
-      "zc_quests/616/ExBoss12.ogg",
-      "zc_quests/616/ExBoss13.ogg",
-      "zc_quests/616/ExBoss15.ogg",
-      "zc_quests/616/ExBoss16.ogg",
-      "zc_quests/616/ExBoss17.ogg",
-      "zc_quests/616/ExBoss3.ogg",
-      "zc_quests/616/ExBoss6.ogg",
-      "zc_quests/616/ExBoss7.ogg",
-      "zc_quests/616/ExBoss8.ogg",
-      "zc_quests/616/ExBoss9.ogg",
-      "zc_quests/616/FloodedTemple.ogg",
-      "zc_quests/616/ForestGlade.ogg",
-      "zc_quests/616/Forzen Fortress.ogg",
-      "zc_quests/616/Hikaridoki.ogg",
-      "zc_quests/616/JandraFinal.ogg",
-      "zc_quests/616/Jungle.ogg",
-      "zc_quests/616/JupiterDesert.ogg",
-      "zc_quests/616/LakeOfLightning.ogg",
-      "zc_quests/616/Lethe.ogg",
-      "zc_quests/616/Memories.ogg",
-      "zc_quests/616/Phlegethon.ogg",
-      "zc_quests/616/PoisonousCorridor.ogg",
-      "zc_quests/616/RoseGarden.ogg",
-      "zc_quests/616/RoyalGardens.ogg",
-      "zc_quests/616/Sakura.ogg",
-      "zc_quests/616/SilicateSands.ogg",
-      "zc_quests/616/SixthArea.ogg",
-      "zc_quests/616/Sky.ogg",
-      "zc_quests/616/Sky2.ogg",
-      "zc_quests/616/SneakPeak.ogg",
-      "zc_quests/616/Stomach.ogg",
-      "zc_quests/616/Storm.ogg",
-      "zc_quests/616/Styx.ogg",
-      "zc_quests/616/Swamp.ogg",
-      "zc_quests/616/TechnoZone.ogg",
-      "zc_quests/616/Title.ogg",
-      "zc_quests/616/Train.ogg",
-      "zc_quests/616/Tyre.ogg",
-      "zc_quests/616/TyreFinal.ogg",
-      "zc_quests/616/VenterMortis.ogg",
-      "zc_quests/616/Volcano.ogg",
-      "zc_quests/616/Watchers.ogg",
-      "zc_quests/616/WhataTwist.ogg",
-      "zc_quests/616/WispBattle.ogg",
-      "zc_quests/616/WispFinal.ogg",
-      "zc_quests/616/Wisps.ogg",
-      "zc_quests/616/YuureiBattle.ogg"
     ]
   },
   {
@@ -20853,91 +20627,6 @@
       "zc_quests/715/M1.ogg",
       "zc_quests/715/M2.ogg",
       "zc_quests/715/M3.ogg"
-    ]
-  },
-  {
-    "name": "Reikon",
-    "author": "Aevin",
-    "urls": [
-      "zc_quests/716/Reikon.qst"
-    ],
-    "projectUrl": "https://www.purezc.net/index.php?page=quests&id=716",
-    "imageUrls": [
-      "zc_quests/716/image0.png",
-      "zc_quests/716/image1.png",
-      "zc_quests/716/image2.png",
-      "zc_quests/716/image3.png",
-      "zc_quests/716/image4.png",
-      "zc_quests/716/image5.png",
-      "zc_quests/716/image6.png"
-    ],
-    "genre": "Story-driven",
-    "zcVersion": "2.50.2",
-    "informationHtml": "Reikon is a story-driven Metroidvana, the conclusion to the trilogy that started with Hitodama and Yuurei. Switch off between two characters with unique spells to unravel the final mysteries of the Yuurei and the Labyrinth! <strong class=\"bbc\"><span>Don't forget to pick up the</span> <a href=\"https://www.dropbox.com/s/x0y83yzzrakq7en/ReikonMusic.zip?dl=0\" class=\"bbc_url\" title=\"External link\" rel=\"nofollow external\">enhanced music here</a>.</strong>",
-    "descriptionHtml": "Features:<ul class=\"bbc\"><li>Explore a big Labyrinth full of unique new areas - and some familiar ones.</li><li>Switch between two characters with distinct spells and abilities.</li><li>Discover hidden powerups such as secret coins.</li><li>Face challenging foes, including never-before-seen bosses!</li><li>Choose from multiple difficulties to suit your personal tastes.</li></ul> For discussion of the series and a casual place to hang out, you can also join the <a href=\"https://discord.gg/UhjNrJs\" class=\"bbc_url\" title=\"External link\" rel=\"nofollow external\">Labyrinth Discord server</a>.<br> <br> <strong class=\"bbc\"><span>Flashing Lights Warning: The game contains flashing lights that may be uncomfortable or unsuitable for some players.</span></strong><br> <br> Update (8/9/2020)<br> -Reduced the duration, and increased the time between, the blinding light bursts<br> -Updated the Dream Zone screen exceptions list, which should dramatically decrease the number of unbeatable floors<br> <br> Update (7/28/2020):<br> -Fixed a bug where Weeping Angels would get stuck in the upper left corner<br> -Ensured the level 1 angels would deal damage<br> -Made Thunder triggers much more forgiving with when they get triggered<br> -Resolved a handful of oddities with the event triggers<br> -A handful of other small bugs and oddities were resolved",
-    "storyHtml": "Hundreds of years after the events of Yuurei, a young boy called Holm awakes in the desolate Lac D'Amour with no memory of his past. Soon, he meets Flect, a mysterious girl with deep knowledge of the Labyrinth. Join the two of them on their treacherous journey to find the source of all ghosts and save the world from a powerful force.",
-    "tipsAndCheatsHtml": "<ul class=\"bbc\"><li>Holm has reduced defense at the start - don't let it take you by surprise!</li><li>Magic stream powers up the longer you hold the button down. Use this strategically to mow down your foes!</li><li>Some obstacles can be more easily tackled with one character or the other. Switch carefully to make things easier!</li><li>Press the Map button on the subscreen to quick switch between characters.</li><li>Difficulty can be set from warp gates in-game.</li></ul> <div class=\"bbc_spoiler\"> <span class=\"spoiler_title\">About Sadistic Difficulty</span> <input type=\"button\" class=\"bbc_spoiler_show\" value=\"Show\"> <div class=\"bbc_spoiler_wrapper\"><div class=\"bbc_spoiler_content\">Sadistic difficulty is an open secret, ultra-high difficulty mode that can be accessed by holding down from Difficult on the title screen. It is HIGHLY recommended you do not attempt this difficulty for your first run of the game. It has some big challenges verging on the unfair, and will not be enjoyable for the majority of players. Know what you're getting into. Just say no to Sadistic, kids!</div></div> </div>",
-    "creditsHtml": "Please beat the game for a full list of credits.<br><br>However, I'd like to give a special shout-out to Dimi, Evan, Moosh, and Russ, all of whom tested and contributed content such as bosses. And in particular, I'd like to thank Russ for being endlessly encouraging and patient over the long time I've been making this game. I couldn't have done it without him.",
-    "rating": {
-      "score": 4.625,
-      "distribution": [
-        0,
-        0,
-        0,
-        0,
-        1,
-        6
-      ]
-    },
-    "extraResources": [
-      "zc_quests/716/DreamZone0.ogg",
-      "zc_quests/716/DreamZone1.ogg",
-      "zc_quests/716/DreamZone10.ogg",
-      "zc_quests/716/DreamZone11.ogg",
-      "zc_quests/716/DreamZone12.ogg",
-      "zc_quests/716/DreamZone13.ogg",
-      "zc_quests/716/DreamZone14.ogg",
-      "zc_quests/716/DreamZone15.ogg",
-      "zc_quests/716/DreamZone2.ogg",
-      "zc_quests/716/DreamZone3.ogg",
-      "zc_quests/716/DreamZone4.ogg",
-      "zc_quests/716/DreamZone5.ogg",
-      "zc_quests/716/DreamZone6.ogg",
-      "zc_quests/716/DreamZone7.ogg",
-      "zc_quests/716/DreamZone8.ogg",
-      "zc_quests/716/DreamZone9.ogg",
-      "zc_quests/716/Reikon - AnotherKindOfMadness.ogg",
-      "zc_quests/716/Reikon - BloodChamber.ogg",
-      "zc_quests/716/Reikon - Cathedral.ogg",
-      "zc_quests/716/Reikon - Cemetery.ogg",
-      "zc_quests/716/Reikon - Collapse.ogg",
-      "zc_quests/716/Reikon - Determination.ogg",
-      "zc_quests/716/Reikon - DistantBattle.ogg",
-      "zc_quests/716/Reikon - Drowned.ogg",
-      "zc_quests/716/Reikon - Drowned2.ogg",
-      "zc_quests/716/Reikon - Factory.ogg",
-      "zc_quests/716/Reikon - Flashback.ogg",
-      "zc_quests/716/Reikon - Flect.ogg",
-      "zc_quests/716/Reikon - GuiltAndGrief.ogg",
-      "zc_quests/716/Reikon - Hart.ogg",
-      "zc_quests/716/Reikon - Hatred.ogg",
-      "zc_quests/716/Reikon - LacDAmour.ogg",
-      "zc_quests/716/Reikon - MadDance.ogg",
-      "zc_quests/716/Reikon - MidnightPark.ogg",
-      "zc_quests/716/Reikon - Mirr.ogg",
-      "zc_quests/716/Reikon - Neon.ogg",
-      "zc_quests/716/Reikon - Overworld.ogg",
-      "zc_quests/716/Reikon - SilentSea.ogg",
-      "zc_quests/716/Reikon - SilverSprings.ogg",
-      "zc_quests/716/Reikon - Sky.ogg",
-      "zc_quests/716/Reikon - Title.ogg",
-      "zc_quests/716/Reikon - Vanice.ogg",
-      "zc_quests/716/Reikon - VenterMortis.ogg",
-      "zc_quests/716/Reikon - WarpSpace.ogg",
-      "zc_quests/716/Reikon - WhataTwist.ogg",
-      "zc_quests/716/Reikon - Wind.ogg",
-      "zc_quests/716/Reikon - WispBattle.ogg",
-      "zc_quests/716/Reikon - YuureiBattle.ogg"
     ]
   },
   {
